@@ -1,0 +1,38 @@
+[tool.poetry]
+name = "blumenhorizon"
+version = "0.1.0"
+description = ""
+authors = ["Leviinson <votosi197@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.group.dev.dependencies]
+flake8 = "^7.1.1"
+black = "^24.10.0"
+isort = "^5.13.2"
+
+[virtualenvs]
+in-project = true
+
+[tool.poetry.dependencies]
+python = "^3.12"
+django = "^5.1.1"
+mysqlclient = "^2.2.4"
+python-dotenv = "^1.0.1"
+django-debug-toolbar = "^4.4.6"
+
+celery = "^5.4.0"
+django-redis = "^5.4.0"
+django-redisboard = "^8.4.0"
+
+django-tinymce = "^4.1.0"
+django-rosetta = "^0.10.1"
+[tool.black]
+line-length=88
+
+[tool.isort]
+line_length=88
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
