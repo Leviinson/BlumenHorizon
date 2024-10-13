@@ -19,12 +19,11 @@ def inspect_db_queries(function: Callable):
             (f"Args: {args}" if args else ""),
             (f"Kwargs: {kwargs}" if kwargs else ""),
             sep="\n",
-            end="\n\n"
+            end="\n\n",
         )
-        pprint(connection.queries) 
+        pprint(connection.queries)
         print(
-            f"Amount of queries: {len(connection.queries)}",
-            end="-------------------"
+            f"Amount of queries: {len(connection.queries)}", end="-------------------"
         )
         return result
 

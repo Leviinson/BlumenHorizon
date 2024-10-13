@@ -195,65 +195,79 @@ LOGGING_HANDLERS = {
 LOGGING_HANDLERS = {k: v for k, v in LOGGING_HANDLERS.items() if v is not None}
 
 
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "formatters": {
-        "verbose": {
-            "format": "[%(asctime)s: %(levelname)s/%(name)s] %(message)s",
-            "datefmt": "%Y-%m-%d %H:%M:%S",
+LOGGING = (
+    {
+        "version": 1,
+        "disable_existing_loggers": False,
+        "formatters": {
+            "verbose": {
+                "format": "[%(asctime)s: %(levelname)s/%(name)s] %(message)s",
+                "datefmt": "%Y-%m-%d %H:%M:%S",
+            },
+            "django": {
+                "format": "[%(asctime)s: %(levelname)s/%(name)s] %(message)s %(status_code)s %(request)s",
+                "datefmt": "%Y-%m-%d %H:%M:%S",
+            },
         },
-        "django": {
-            "format": "[%(asctime)s: %(levelname)s/%(name)s] %(message)s %(status_code)s %(request)s",
-            "datefmt": "%Y-%m-%d %H:%M:%S",
+        "handlers": LOGGING_HANDLERS,
+        "loggers": {
+            "django.request": {
+                "handlers": (
+                    ["django_error", "django_info", "mail_admins"]
+                    if not DEBUG
+                    else [
+                        "django_error",
+                        "django_info",
+                    ]
+                ),
+                "level": "ERROR",
+                "propagate": False,
+            },
+            "django.server": {
+                "handlers": (
+                    ["django_error", "django_info", "mail_admins"]
+                    if not DEBUG
+                    else [
+                        "django_error",
+                        "django_info",
+                    ]
+                ),
+                "lever": "ERROR",
+                "propagate": False,
+            },
+            "celery.task": {
+                "handlers": (
+                    ["celery_info", "mail_admins"] if not DEBUG else ["celery_info"]
+                ),
+                "level": "INFO",
+                "propagate": False,
+            },
+            "celery.task": {
+                "handlers": (
+                    ["celery_error", "mail_admins"] if not DEBUG else ["celery_error"]
+                ),
+                "level": "ERROR",
+                "propagate": False,
+            },
+            "django.db.backends": {
+                "handlers": (
+                    ["mysql_error", "mail_admins"] if not DEBUG else ["mysql_error"]
+                ),
+                "level": "ERROR",
+                "propagate": False,
+            },
+            "django_redis": {
+                "handlers": (
+                    ["redis_error", "mail_admins"] if not DEBUG else ["redis_error"]
+                ),
+                "level": "ERROR",
+                "propagate": False,
+            },
         },
-    },
-    "handlers": LOGGING_HANDLERS,
-    "loggers": {
-        "django.request": {
-            "handlers": (
-                ["django_error", "django_info", "mail_admins"] if not DEBUG else ["django_error", "django_info", ]
-            ),
-            "level": "ERROR",
-            "propagate": False,
-        },
-        "django.server": {
-            "handlers": (
-                ["django_error", "django_info", "mail_admins"] if not DEBUG else ["django_error", "django_info",]
-            ),
-            "lever": "ERROR",
-            "propagate": False,
-        },
-        "celery.task": {
-            "handlers": (
-                ["celery_info", "mail_admins"] if not DEBUG else ["celery_info"]
-            ),
-            "level": "INFO",
-            "propagate": False,
-        },
-        "celery.task": {
-            "handlers": (
-                ["celery_error", "mail_admins"] if not DEBUG else ["celery_error"]
-            ),
-            "level": "ERROR",
-            "propagate": False,
-        },
-        "django.db.backends": {
-            "handlers": (
-                ["mysql_error", "mail_admins"] if not DEBUG else ["mysql_error"]
-            ),
-            "level": "ERROR",
-            "propagate": False,
-        },
-        "django_redis": {
-            "handlers": (
-                ["redis_error", "mail_admins"] if not DEBUG else ["redis_error"]
-            ),
-            "level": "ERROR",
-            "propagate": False,
-        },
-    },
-} if not DEBUG else None
+    }
+    if not DEBUG
+    else None
+)
 
 # Cache
 # https://docs.djangoproject.com/en/5.1/topics/cache/#redis

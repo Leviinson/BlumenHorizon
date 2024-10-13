@@ -5,4 +5,3 @@ from django.views.generic.detail import DetailView
 
 class UserDetailView(DetailView):
     model = get_user_model()
-    

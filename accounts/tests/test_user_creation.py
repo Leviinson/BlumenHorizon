@@ -22,9 +22,7 @@ class UserCreationTest(TestCase):
 
     def test_user_creation(self):
 
-        response = self.client.post(
-            self.signup_url, asdict(self.signup_data)
-        )
+        response = self.client.post(self.signup_url, asdict(self.signup_data))
         self.assertEqual(response.status_code, 200, "The user wasn't created")
         self.assertRedirects(response, self.signin_url)
 
