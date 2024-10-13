@@ -55,7 +55,7 @@ LOCAL_APPS = [
     "accounts.apps.AccountsConfig",
 ]
 
-THIRDPARTY_APPS = ["redisboard", "tinymce"]
+THIRDPARTY_APPS = ["tinymce"]
 
 INSTALLED_APPS = DJANGO_APPS + THIRDPARTY_APPS + LOCAL_APPS
 
@@ -140,6 +140,12 @@ LOGGING_HANDLERS = {
         "filename": os.path.join(DJANGO_LOG_DIR, "django_error.log"),
         "formatter": "django",
     },
+    "django_info": {
+        "level": "INFO",
+        "class": "logging.FileHandler",
+        "filename": os.path.join(DJANGO_LOG_DIR, "django_info.log"),
+        "formatter": "django",
+    },
     "celery_tasks_info": {
         "level": "INFO",
         "class": "logging.FileHandler",
@@ -206,14 +212,14 @@ LOGGING = {
     "loggers": {
         "django.request": {
             "handlers": (
-                ["django_error", "mail_admins"] if not DEBUG else ["django_error"]
+                ["django_error", "django_info", "mail_admins"] if not DEBUG else ["django_error", "django_info", ]
             ),
             "level": "ERROR",
             "propagate": False,
         },
         "django.server": {
             "handlers": (
-                ["django_error", "mail_admins"] if not DEBUG else ["django_error"]
+                ["django_error", "django_info", "mail_admins"] if not DEBUG else ["django_error", "django_info",]
             ),
             "lever": "ERROR",
             "propagate": False,
@@ -247,13 +253,13 @@ LOGGING = {
             "propagate": False,
         },
     },
-}
+} if not DEBUG else None
 
 # Cache
 # https://docs.djangoproject.com/en/5.1/topics/cache/#redis
 CACHES = {
     "default": {
-        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "BACKEND": "django_redis.cache.RedisCache",
         "LOCATION": os.getenv("REDIS_LOCATION"),
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
@@ -288,22 +294,18 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 AUTHENTICATION_BACKENDS = [
-    "blumenhorizon.accounts.backends.UserAuthenticationBackend",
+    "accounts.backends.UserAuthenticationBackend",
 ]
 
-# AUTH_USER_MODEL = "accounts.User"
+AUTH_USER_MODEL = "accounts.User"
 
-# Sessions
-
-SESSION_ENGINE = "django.contrib.sessions.backends.cache"
-SESSION_CACHE_ALIAS = "default"
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Europe/Berlin"
 
 USE_I18N = True
 

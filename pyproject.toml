@@ -22,10 +22,10 @@ django-debug-toolbar = "^4.4.6"
 
 celery = "^5.4.0"
 django-redis = "^5.4.0"
-django-redisboard = "^8.4.0"
 
 django-tinymce = "^4.1.0"
 django-rosetta = "^0.10.1"
+phonenumbers = "^8.13.47"
 [tool.black]
 line-length=88
 
