@@ -7,6 +7,6 @@ from ..forms.user_signup_form import UserSignUpForm
 
 class UserSignUpView(CreateView):
     model = get_user_model()
-    success_url = reverse_lazy("accounts:me")
+    success_url = reverse_lazy("accounts:signin")
     form_class = UserSignUpForm
     template_name = "accounts/authorization/sign_up.html"
