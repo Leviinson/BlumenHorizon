@@ -1,9 +1,8 @@
 from dataclasses import asdict, dataclass
-from pprint import pprint
 
 from django.contrib.auth import get_user_model
 from django.test import TestCase
-from django.urls import NoReverseMatch, reverse_lazy
+from django.urls import reverse_lazy
 
 
 class UserCreationTest(TestCase):
