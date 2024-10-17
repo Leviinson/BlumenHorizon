@@ -9,9 +9,25 @@ readme = "README.md"
 flake8 = "^7.1.1"
 black = "^24.10.0"
 isort = "^5.13.2"
+pytest-django = "^4.9.0"
+pytest = "^8.3.3"
 
 [virtualenvs]
 in-project = true
+
+[tool.black]
+line-length=88
+
+[tool.isort]
+line_length=88
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "core.settings"
+addopts = "--reuse-db -v --no-migrations"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.dependencies]
 python = "^3.12"
@@ -19,20 +35,8 @@ django = "^5.1.1"
 mysqlclient = "^2.2.4"
 python-dotenv = "^1.0.1"
 django-debug-toolbar = "^4.4.6"
-
 celery = "^5.4.0"
 django-redis = "^5.4.0"
-
 django-tinymce = "^4.1.0"
 django-rosetta = "^0.10.1"
 phonenumbers = "^8.13.47"
-[tool.black]
-line-length=88
-
-[tool.isort]
-line_length=88
-
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
