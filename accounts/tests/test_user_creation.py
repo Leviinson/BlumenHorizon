@@ -1,16 +1,18 @@
 from dataclasses import asdict, dataclass
+from pprint import pprint
 
 from django.contrib.auth import get_user_model
 from django.test import TestCase
-from django.urls import reverse_lazy
+from django.urls import NoReverseMatch, reverse_lazy
 
 
 class UserCreationTest(TestCase):
 
     @dataclass
     class UserCredentials:
-        username: str = "melnykov.vitalii197@gmail.com"
-        password: str = "fhjeuio**^321"
+        email: str = "melnykov.vitalii197@gmail.com"
+        password1: str = "fhjeuio**^321"
+        password2: str = "fhjeuio**^321"
         first_name: str = "Vitalii"
         last_name: str = "Melnykov"
 
@@ -19,23 +21,29 @@ class UserCreationTest(TestCase):
         self.signin_url = reverse_lazy("accounts:signin")
         self.signup_data = self.UserCredentials()
         return super().setUp()
+    
+    def test_getting_reverse_url(self):
+        str(self.signin_url)
 
     def test_user_creation(self):
 
         response = self.client.post(self.signup_url, asdict(self.signup_data))
-        self.assertEqual(response.status_code, 200, "The user wasn't created")
+        if response.status_code == 200 and response.content["form"].errors:
+            self.fail(
+                f"Form errors: {response.context["form"].errors}.\nUser wasn't created."
+            )
         self.assertRedirects(response, self.signin_url)
 
-        user = get_user_model().objects.filter(username=self.signup_data.username)
+        user_filtered = get_user_model().objects.filter(email=self.signup_data.email)
         self.assertTrue(
-            user.exists(),
+            user_filtered.exists(),
             f"The controller of user creation returned 201 code"
             f" but record in DB wasn't created.",
         )
-        user = get_user_model().objects.get(username=self.signup_data.username)
+        user = user_filtered.first()
         self.assertEqual(
-            user.username,
-            self.signup_data.username,
+            user.email,
+            self.signup_data.email,
             "Username from request and in DB is different",
         )
         self.assertEqual(
@@ -49,7 +57,7 @@ class UserCreationTest(TestCase):
             "User last name from request and in DB is different",
         )
         self.assertTrue(
-            user.check_password(self.signup_data.password),
+            user.check_password(self.signup_data.password1),
             "Password from request and in DB is different",
         )
         self.assertTrue(
