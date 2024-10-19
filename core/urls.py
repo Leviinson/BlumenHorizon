@@ -18,7 +18,7 @@ Including another URLconf
 from debug_toolbar.toolbar import debug_toolbar_urls
 from django.conf import settings
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import include, path, re_path
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -27,3 +27,6 @@ urlpatterns = [
 
 if settings.DEBUG and not settings.TESTING:
     urlpatterns.extend(debug_toolbar_urls())
+
+if "rosetta" in settings.INSTALLED_APPS:
+    urlpatterns += [re_path(r"^rosetta/", include("rosetta.urls"))]

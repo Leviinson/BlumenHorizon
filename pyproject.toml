@@ -23,7 +23,8 @@ line_length=88
 
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "core.settings"
-addopts = "--reuse-db -v --no-migrations"
+addopts = "--reuse-db -v"
+log_level = "INFO"
 
 [build-system]
 requires = ["poetry-core"]
@@ -40,3 +41,5 @@ django-redis = "^5.4.0"
 django-tinymce = "^4.1.0"
 django-rosetta = "^0.10.1"
 phonenumbers = "^8.13.47"
+django-phonenumber-field = {extras = ["phonenumbers"], version = "^8.0.0"}
+babel = "^2.16.0"

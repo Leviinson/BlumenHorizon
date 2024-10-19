@@ -14,6 +14,7 @@ import os
 import sys
 from pathlib import Path
 
+from django.urls import reverse_lazy
 from dotenv import load_dotenv
 
 load_dotenv(override=True)
@@ -39,6 +40,8 @@ INTERNAL_IPS = [
     "localhost",
 ]
 
+SECURE_CROSS_ORIGIN_OPENER_POLICY = None
+
 
 # Application definition
 
@@ -49,13 +52,17 @@ DJANGO_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.sites",
 ]
 
 LOCAL_APPS = [
     "accounts.apps.AccountsConfig",
 ]
 
-THIRDPARTY_APPS = ["tinymce"]
+THIRDPARTY_APPS = [
+    "tinymce",
+    "rosetta",
+]
 
 INSTALLED_APPS = DJANGO_APPS + THIRDPARTY_APPS + LOCAL_APPS
 
@@ -313,6 +320,9 @@ AUTHENTICATION_BACKENDS = [
 
 AUTH_USER_MODEL = "accounts.User"
 
+ROSETTA_LOGIN_URL = "admin:login"
+LOGIN_URL = "accounts:signin"
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
@@ -324,6 +334,11 @@ TIME_ZONE = "Europe/Berlin"
 USE_I18N = True
 
 USE_TZ = True
+USE_L10N = True
+LANGUAGES = [("en", "English"), ("ru", "Russian")]
+LOCALE_PATHS = [
+    BASE_DIR / "locale",
+]
 
 
 # Static files (CSS, JavaScript, Images)
@@ -351,3 +366,10 @@ TESTING = "test" in sys.argv
 if not TESTING and DEBUG:
     INSTALLED_APPS.append("debug_toolbar")
     MIDDLEWARE.append("debug_toolbar.middleware.DebugToolbarMiddleware")
+
+
+# REGION_SETTINGS ISO 3166-1
+PHONENUMBER_DEFAULT_REGION = os.getenv("PHONENUMBER_DEFAULT_REGION")
+
+# SITES
+SITE_ID = 1
