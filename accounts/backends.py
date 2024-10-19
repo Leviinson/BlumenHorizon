@@ -12,7 +12,7 @@ class UserAuthenticationBackend(ModelBackend):
             return
 
         user_query = UserModel.objects.filter(
-            Q(email=username) | Q(phone_number=username)
+            Q(email=username) | Q(phonenumber=username)
         ).all()
 
         if user_query.exists() and len(user_query) < 2:
