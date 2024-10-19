@@ -1,0 +1,15 @@
+{% extends "templates/base.html" %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-6 mx-auto mt-5 text-left">
+                <h1>Sign In</h1>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_div }}
+                    <button type="submit">Sign In</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock body %}
