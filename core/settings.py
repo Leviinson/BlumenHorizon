@@ -318,6 +318,8 @@ AUTHENTICATION_BACKENDS = [
     "accounts.backends.UserAuthenticationBackend",
 ]
 
+PASSWORD_RESET_TIMEOUT = 60 * 15
+
 AUTH_USER_MODEL = "accounts.User"
 
 ROSETTA_LOGIN_URL = "admin:login"
@@ -374,3 +376,5 @@ PHONENUMBER_DEFAULT_REGION = os.getenv("PHONENUMBER_DEFAULT_REGION")
 
 # SITES
 SITE_ID = 1
+SITE_NAME = os.getenv("SITE_NAME") # for tests
+SITE_DOMAIN = os.getenv("SITE_DOMAIN") # for tests
