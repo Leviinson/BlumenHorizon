@@ -1,22 +1,25 @@
 from typing import Type
+
 from django.contrib import messages
+from django.contrib.auth import get_user_model
+from django.contrib.auth.base_user import AbstractBaseUser
+from django.contrib.auth.tokens import default_token_generator
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import EmailMessage
+from django.db import transaction
 from django.http import HttpRequest, HttpResponseRedirect
+from django.shortcuts import redirect
+from django.template.loader import render_to_string
 from django.urls import reverse_lazy
+from django.utils.encoding import force_bytes, force_str
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import CreateView
 from django.views.generic.base import ContextMixin
-from django.template.loader import render_to_string
-from django.contrib.auth.tokens import default_token_generator
-from django.contrib.sites.shortcuts import get_current_site
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.utils.encoding import force_bytes, force_str
-from django.db import transaction
-from django.core.mail import EmailMessage
-from django.contrib.auth.base_user import AbstractBaseUser
 
 from core.services.mixins.views import CommonContextMixin, NotAuthenticatedMixin
 
-from ..forms.user_signup_form import UserSignUpForm
+from ..forms import UserSignUpForm
 
 
 class UserSignUpView(
@@ -78,3 +81,31 @@ class UserSignUpView(
                     f"Дорогой пользователь, неудалось отправить письмо с просьбой о подтверждении почты. Проверьте правильно ли она написана: {email}"
                 ),
             )
+
+
+def activate_user_account(request, uidb64, token):
+    User = get_user_model()
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+
+    if user is not None and default_token_generator.check_token(user, token):
+        user.is_active = True
+        user.save(
+            update_fields=["is_active"],
+        )
+
+        messages.success(
+            request,
+            _("Ваша почта успешно подтверждена, теперь Вы можете пойти в аккаунт."),
+        )
+        return redirect("accounts:signin")
+    else:
+        messages.error(
+            request, _("Ссылка для подтверждения почты истекла или неверна.")
+        )
+        redirect("accounts:signup")
+
+    return redirect("accounts:me")
