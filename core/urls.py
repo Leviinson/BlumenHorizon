@@ -18,11 +18,13 @@ Including another URLconf
 from debug_toolbar.toolbar import debug_toolbar_urls
 from django.conf import settings
 from django.contrib import admin
+from django.contrib.auth.views import LogoutView
 from django.urls import include, path, re_path
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("accounts/", include("accounts.urls")),
+    path("logout/", LogoutView.as_view(), name="logout"),
 ]
 
 if settings.DEBUG and not settings.TESTING:
