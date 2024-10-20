@@ -1,28 +1,80 @@
+from typing import Type
 from django.contrib import messages
-from django.contrib.auth import get_user_model
+from django.http import HttpRequest, HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import CreateView
 from django.views.generic.base import ContextMixin
+from django.template.loader import render_to_string
+from django.contrib.auth.tokens import default_token_generator
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_str
+from django.db import transaction
+from django.core.mail import EmailMessage
+from django.contrib.auth.base_user import AbstractBaseUser
 
-from core.services.mixins.views import CommonContextMixin
+from core.services.mixins.views import CommonContextMixin, NotAuthenticatedMixin
 
 from ..forms.user_signup_form import UserSignUpForm
 
 
-class UserSignUpView(CommonContextMixin, CreateView, ContextMixin):
-    model = get_user_model()
+class UserSignUpView(
+    NotAuthenticatedMixin,
+    CommonContextMixin,
+    CreateView,
+    ContextMixin,
+):
     success_url = reverse_lazy("accounts:signin")
     form_class = UserSignUpForm
     template_name = "accounts/authorization/sign_up.html"
     extra_context = {"title": _("Регистрация")}
 
     def form_valid(self, form):
-        email = form.cleaned_data["email"]
-        messages.success(
-            self.request,
-            _(
-                f"Дорогой пользователь, зайдите на почту {email} и подтвердите активацию аккаунта."
-            ),
+        with transaction.atomic():
+            user = form.save()
+            email = form.cleaned_data["email"]
+            first_name = form.cleaned_data["first_name"]
+            last_name = form.cleaned_data["last_name"]
+            self.send_email_confirmation_link(
+                self.request, first_name, last_name, user, to_email=email
+            )
+        return HttpResponseRedirect(self.success_url)
+
+    def send_email_confirmation_link(
+        self,
+        request: HttpRequest,
+        first_name: str,
+        last_name: str,
+        user: Type[AbstractBaseUser],
+        to_email: str,
+    ):
+        current_site = get_current_site(request).name
+        mail_subject = _(f"{current_site} | Подтвердите Ваш Email")
+
+        message = render_to_string(
+            "accounts/email_confirmation/email_body.html",
+            {
+                "first_name": first_name,
+                "last_name": last_name,
+                "domain": get_current_site(request).domain,
+                "uid": urlsafe_base64_encode(force_bytes(user.pk)),
+                "token": default_token_generator.make_token(user),
+                "protocol": "https" if request.is_secure() else "http",
+            },
         )
-        return super().form_valid(form)
+        email = EmailMessage(mail_subject, message, to=[to_email])
+        if email.send():
+            messages.success(
+                request,
+                _(
+                    f"Дорогой пользователь, зайдите на почту {to_email} и подтвердите активацию аккаунта."
+                ),
+            )
+        else:
+            messages.error(
+                request,
+                _(
+                    f"Дорогой пользователь, неудалось отправить письмо с просьбой о подтверждении почты. Проверьте правильно ли она написана: {email}"
+                ),
+            )

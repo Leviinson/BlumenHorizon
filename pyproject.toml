@@ -23,7 +23,7 @@ line_length=88
 
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "core.settings"
-addopts = "--reuse-db -v"
+addopts = "-v"
 log_level = "INFO"
 
 [build-system]

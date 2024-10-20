@@ -322,6 +322,7 @@ AUTH_USER_MODEL = "accounts.User"
 
 ROSETTA_LOGIN_URL = "admin:login"
 LOGIN_URL = "accounts:signin"
+LOGIN_REDIRECT_URL = "accounts:me"
 
 
 # Internationalization

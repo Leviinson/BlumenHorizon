@@ -1,9 +1,7 @@
-from abc import ABC
-
 from django.contrib.sites.shortcuts import get_current_site
 
 
-class CommonContextMixin(ABC):
+class CommonContextMixin:
     def get_context_data(self, *args, **kwargs):
         "Must be implemented and inherited by every view"
         context = super().get_context_data(*args, **kwargs)

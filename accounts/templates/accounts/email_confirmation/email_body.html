@@ -1,0 +1,22 @@
+{% load i18n %}
+
+{% autoescape off %}
+{% if first_name %}
+{% blocktranslate %}
+Уважаемый {{ first_name }},
+{% endblocktranslate %}
+{% elif last_name %}
+{% blocktranslate %}
+Уважаемый {{ last_name }},
+{% endblocktranslate %}
+{% else %}
+{% translate 'Уважаемый пользователь,' %}
+{% endif %}
+Пожалуйста, нажмите на ссылку ниже чтобы подтвердить Вашу почту.
+
+{{ uid }}
+{{ token }}
+{{ protocol }}://{{ domain }}
+{asd% url 'activate' uidb64=uid token=token %dsa}
+
+{% endautoescape %}

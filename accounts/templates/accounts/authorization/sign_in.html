@@ -1,15 +1,41 @@
 {% extends "templates/base.html" %}
 {% block body %}
-    <div class="container">
-        <div class="row">
-            <div class="col-6 mx-auto mt-5 text-left">
-                <h1>{{ title }}</h1>
-                <form method="post">
-                    {% csrf_token %}
-                    {{ form.as_div }}
-                    <button type="submit">Sign In</button>
-                </form>
+{% load i18n %}
+{% load static %}
+
+{% block additional_head_styles %}
+<link rel="stylesheet" href="{% static 'accounts/styles/forms.css' %}">
+{% endblock %}
+
+<div class="container mb-5 authentication-forms">
+    <div class="row">
+        <div class="col-10 mx-auto mt-5">
+            <h1>{{ title }}</h1>
+            {% for message in messages %}
+            <div class="alert {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %} alert-success {% elif  %}" role="alert">
+                {{ message }}
             </div>
+            {% endfor %}
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="inputEmail" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp" name="email"">
+                    <div id="emailHelp" class="form-text">
+                    {% translate 'Мы не передаём Ваш Email третьим лицам.' %}
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="inputPassword2" class="form-label">{% translate 'Повторите пароль' %}</label>
+                    <input type="password" class="form-control" id="inputPassword2" autocomplete="current-password" name="password2">
+                </div>
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="rememberMeCheck">
+                    <label class="form-check-label" for="rememberMeCheck">{% translate "Запомнить меня" %}</label>
+                </div>
+                <button type="submit" class="btn btn-dark-green">{% translate "Войти" %}</button>
+            </form>
         </div>
     </div>
+</div>
 {% endblock body %}

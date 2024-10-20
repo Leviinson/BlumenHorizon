@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-19 15:07+0200\n"
+"POT-Creation-Date: 2024-10-20 11:37+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,20 +19,30 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
-#: accounts/admin.py:46
+
+#: accounts/admin.py:55
 msgid "Поиск по адресу электронной почты, номеру телефона, имени или фамилии."
 msgstr ""
 
-#: accounts/forms/user_form.py:8 accounts/models.py:36
+#: accounts/forms/user_form.py:37 accounts/models.py:36
+#: accounts/templates/accounts/authorization/sign_up.html:31
 msgid "Номер телефона"
 msgstr ""
 
-#: accounts/forms/user_form.py:20
+#: accounts/forms/user_form.py:50
 msgid "Пользователь с этой электронной почтой уже существует."
 msgstr ""
 
-#: accounts/forms/user_form.py:30
+#: accounts/forms/user_form.py:51
+msgid "Email нужно обязательно внести."
+msgstr ""
+
+#: accounts/forms/user_form.py:62 accounts/forms/user_form.py:67
 msgid "Пользователь с этим номером телефона уже существует."
+msgstr ""
+
+#: accounts/forms/user_signup_form.py:9
+msgid "Пароли не совпадают. Пожалуйста, введите одинаковые пароли."
 msgstr ""
 
 #: accounts/models.py:33
@@ -40,10 +50,12 @@ msgid "Электронная почта"
 msgstr ""
 
 #: accounts/models.py:41
+#: accounts/templates/accounts/authorization/sign_up.html:47
 msgid "Имя"
 msgstr ""
 
 #: accounts/models.py:42
+#: accounts/templates/accounts/authorization/sign_up.html:58
 msgid "Фамилия"
 msgstr ""
 
@@ -63,13 +75,61 @@ msgstr ""
 msgid "Пользователи"
 msgstr ""
 
-#: accounts/views/signup.py:19
+#: accounts/templates/accounts/authorization/sign_in.html:20
+#: accounts/templates/accounts/authorization/sign_up.html:27
+msgid "Мы не передаём Ваш Email третьим лицам."
+msgstr ""
+
+#: accounts/templates/accounts/authorization/sign_in.html:24
+#: accounts/templates/accounts/authorization/sign_up.html:80
+msgid "Повторите пароль"
+msgstr ""
+
+#: accounts/templates/accounts/authorization/sign_in.html:29
+msgid "Запомнить меня"
+msgstr ""
+
+#: accounts/templates/accounts/authorization/sign_in.html:31
+msgid "Войти"
+msgstr ""
+
+#: accounts/templates/accounts/authorization/sign_up.html:36
+msgid "Мы передаём Ваш номер телефона нашим партнёрам по доставке."
+msgstr ""
+
+#: accounts/templates/accounts/authorization/sign_up.html:69
+msgid "Пароль"
+msgstr ""
+
+#: accounts/templates/accounts/authorization/sign_up.html:90
+msgid "Зарегистрироваться"
+msgstr ""
+
+#: accounts/views/me.py:14
+msgid "Личный кабинет"
+msgstr ""
+
+#: accounts/views/signin.py:14
+msgid "Вход"
+msgstr ""
+
+#: accounts/views/signup.py:30
 msgid "Регистрация"
 msgstr ""
 
-#: accounts/views/signup.py:28
+#: accounts/views/signup.py:37 accounts/views/signup.py:65
 #, python-brace-format
 msgid ""
 "Дорогой пользователь, зайдите на почту {email} и подтвердите активацию "
 "аккаунта."
+msgstr ""
+
+#: accounts/views/signup.py:48
+msgid "{get_current_site().name} | Подтвердите Ваш Email"
+msgstr ""
+
+#: accounts/views/signup.py:72
+msgid ""
+"Дорогой пользователь, неудалось отправить письмо с просьбой о подтверждении "
+"почты."
 msgstr ""
