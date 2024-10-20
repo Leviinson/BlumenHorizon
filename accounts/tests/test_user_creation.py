@@ -2,8 +2,13 @@ from dataclasses import asdict
 from pprint import pprint
 
 from django.contrib.auth import get_user_model
+from django.contrib.auth.tokens import default_token_generator
+from django.contrib.sites.shortcuts import get_current_site
 from django.test import TestCase
 from django.urls import reverse_lazy
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode
+
 from core.tests.common_dataclasses.user import UserSignUpCredentials
 
 
@@ -47,9 +52,21 @@ class UserCreationTest(TestCase):
         self.assertTrue(user.check_password(signup_data.password1))
         self.assertFalse(user.is_active)
 
-        confirm_email_url = None
-        confirm_user_email_response = self.client.get(confirm_email_url)
-        self.assertTrue(user.is_active, "User wasn't activated after email confirmation by link")
+        protocol = ("https://" if response.wsgi_request.is_secure() else "http://",)
+        domain = get_current_site(response.wsgi_request).domain
+        uid = urlsafe_base64_encode(force_bytes(user.pk))
+        token = default_token_generator.make_token(user)
+        confirm_email_url = (
+            protocol[0]
+            + domain
+            + reverse_lazy("accounts:activate", kwargs={"uidb64": uid, "token": token})
+        )
+        self.client.get(confirm_email_url)
+        user = get_user_model().objects.get(pk=user.pk)
+        self.assertTrue(
+            user.is_active,
+            "User wasn't activated after email confirmation by link",
+        )
 
     def test_user_creation_with_duplicated_phone_number(self):
         signup_data_1 = UserSignUpCredentials(
