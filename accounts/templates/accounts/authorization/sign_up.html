@@ -7,89 +7,91 @@
 {% endblock %}
 
 {% block body %}
-<div class="container mb-5 authentication-forms">
-    <div class="row">
-        <div class="col-10 mx-auto mt-5">
-            <h1>{{ title }}</h1>
-            <form method="post">
-              {% csrf_token %}
-                <div class="mb-3">
-                  <label for="inputEmail" class="form-label">Email</label>
-                  <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp" name="email"">
-                  {% if form.errors.email %}
-                    {% for error in form.errors.email %}
-                    <div class="form-text text-danger">
-                      {{ error|striptags }}
-                    </div>
-                    {% endfor %}
-                  {% endif %}
-                  <div id="emailHelp" class="form-text">
-                    {% translate 'Мы не передаём Ваш Email третьим лицам.' %}
-                  </div>
-                </div>
-                <div class="mb-3">
-                  <label for="id_phonenumber_0" class="form-label">{% translate "Номер телефона" %}</label>
-                  <div class="d-flex">
-                    {{ form.phonenumber }}
-                  </div>
-                  <div id="phoneNumberHelp" class="form-text">
-                    {% translate 'Мы передаём Ваш номер телефона нашим партнёрам по доставке.' %}
-                  </div>
-                  {% if form.errors.phonenumber %}
-                    {% for error in form.errors.phonenumber %}
-                    <div class="form-text text-danger">
-                      {{ error|striptags }}
-                    </div>
-                    {% endfor %}
-                  {% endif %}
-                </div>
-                <div class="mb-3">
-                  <label for="inputFirstName" class="form-label">{% translate 'Имя' %}</label>
-                  <input class="form-control" id="inputFirstName" autocomplete="given-name" name="first_name">
-                  {% if form.errors.first_name %}
-                    {% for error in form.errors.first_name %}
-                    <div class="form-text text-danger">
-                      {{ error|striptags }}
-                    </div>
-                    {% endfor %}
-                  {% endif %}
-                </div>
-                <div class="mb-3">
-                  <label for="inputPassword1" class="form-label">{% translate 'Фамилия' %}</label>
-                  <input class="form-control" id="inputLastName" autocomplete="family-name" name="last_name">
-                  {% if form.errors.last_name %}
-                    {% for error in form.errors.last_name %}
-                    <div class="form-text text-danger">
-                      {{ error|striptags }}
-                    </div>
-                    {% endfor %}
-                  {% endif %}
-                </div>
-                <div class="mb-3">
-                  <label for="inputPassword1" class="form-label">{% translate 'Пароль' %}</label>
-                  <input type="password" class="form-control" id="inputPassword1" autocomplete="new-password" name="password1">
-                  {% if form.errors.password1 %}
-                    {% for error in form.errors.password1 %}
-                    <div class="form-text text-danger">
-                      {{ error|striptags }}
-                    </div>
-                    {% endfor %}
-                  {% endif %}
-                </div>
-                <div class="mb-3">
-                  <label for="inputPassword2" class="form-label">{% translate 'Повторите пароль' %}</label>
-                  <input type="password" class="form-control" id="inputPassword2" autocomplete="current-password" name="password2">
-                  {% if form.errors.password2 %}
-                    {% for error in form.errors.password2 %}
-                    <div class="form-text text-danger">
-                      {{ error|striptags }}
-                    </div>
-                    {% endfor %}
-                  {% endif %}
-                </div>
-                <button type="submit" class="btn btn-dark-green">{% translate 'Зарегистрироваться' %}</button>
-              </form>
+<div class="container mb-5 authentication-form">
+  <div class="row">
+    <div class="col-10 mx-auto mt-5">
+      <h1>{{ title }}</h1>
+      <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="inputEmail" class="form-label">Email</label>
+          <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp" name="email" autofocus
+            autocomplete="email">
+          {% if form.errors.email %}
+          {% for error in form.errors.email %}
+          <div class="form-text text-danger">
+            {{ error|striptags }}
+          </div>
+          {% endfor %}
+          {% endif %}
+          <div id="emailHelp" class="form-text">
+            {% translate 'Мы не передаём Ваш Email третьим лицам.' %}
+          </div>
         </div>
+        <div class="mb-3">
+          <label for="id_phonenumber_0" class="form-label">{% translate "Номер телефона" %}</label>
+          <div class="d-flex">
+            {{ form.phonenumber }}
+          </div>
+          <div id="phoneNumberHelp" class="form-text">
+            {% translate 'Мы передаём Ваш номер телефона нашим партнёрам по доставке.' %}
+          </div>
+          {% if form.errors.phonenumber %}
+          {% for error in form.errors.phonenumber %}
+          <div class="form-text text-danger">
+            {{ error|striptags }}
+          </div>
+          {% endfor %}
+          {% endif %}
+        </div>
+        <div class="mb-3">
+          <label for="inputFirstName" class="form-label">{% translate 'Имя' %}</label>
+          <input class="form-control" id="inputFirstName" autocomplete="given-name" name="first_name">
+          {% if form.errors.first_name %}
+          {% for error in form.errors.first_name %}
+          <div class="form-text text-danger">
+            {{ error|striptags }}
+          </div>
+          {% endfor %}
+          {% endif %}
+        </div>
+        <div class="mb-3">
+          <label for="inputLastName" class="form-label">{% translate 'Фамилия' %}</label>
+          <input class="form-control" id="inputLastName" autocomplete="family-name" name="last_name">
+          {% if form.errors.last_name %}
+          {% for error in form.errors.last_name %}
+          <div class="form-text text-danger">
+            {{ error|striptags }}
+          </div>
+          {% endfor %}
+          {% endif %}
+        </div>
+        <div class="mb-3">
+          <label for="inputPassword1" class="form-label">{% translate 'Пароль' %}</label>
+          <input type="password" class="form-control" id="inputPassword1" autocomplete="new-password" name="password1">
+          {% if form.errors.password1 %}
+          {% for error in form.errors.password1 %}
+          <div class="form-text text-danger">
+            {{ error|striptags }}
+          </div>
+          {% endfor %}
+          {% endif %}
+        </div>
+        <div class="mb-3">
+          <label for="inputPassword2" class="form-label">{% translate 'Повторите пароль' %}</label>
+          <input type="password" class="form-control" id="inputPassword2" autocomplete="current-password"
+            name="password2">
+          {% if form.errors.password2 %}
+          {% for error in form.errors.password2 %}
+          <div class="form-text text-danger">
+            {{ error|striptags }}
+          </div>
+          {% endfor %}
+          {% endif %}
+        </div>
+        <button type="submit" class="btn btn-dark-green">{% translate 'Зарегистрироваться' %}</button>
+      </form>
     </div>
+  </div>
 </div>
 {% endblock body %}
