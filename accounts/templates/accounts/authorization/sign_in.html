@@ -7,35 +7,45 @@
 <link rel="stylesheet" href="{% static 'accounts/styles/forms.css' %}">
 {% endblock %}
 
-<div class="container mb-5 authentication-forms">
+<div class="container mb-5 authentication-form">
     <div class="row">
         <div class="col-10 mx-auto mt-5">
             <h1>{{ title }}</h1>
             {% for message in messages %}
-            <div class="alert {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %} alert-success {% elif  %}" role="alert">
+            <div class="alert {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %} alert-success {% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %} alert-danger {% endif %}"
+                role="alert">
                 {{ message }}
             </div>
             {% endfor %}
+            {% for error in form.non_field_errors %}
+            <div class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
+            {% endfor %}
+
             <form method="post">
                 {% csrf_token %}
                 <div class="mb-3">
-                    <label for="inputEmail" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp" name="email"">
-                    <div id="emailHelp" class="form-text">
-                    {% translate 'Мы не передаём Ваш Email третьим лицам.' %}
-                    </div>
+                    <label for="inputUsername" class="form-label">Email/{% translate 'Номер телефона' %}</label>
+                    <input class="form-control" id="inputUsername" aria-describedby="usernameHelp" name="username"
+                        autofocus>
                 </div>
-                <div class="mb-3">
-                    <label for="inputPassword2" class="form-label">{% translate 'Повторите пароль' %}</label>
-                    <input type="password" class="form-control" id="inputPassword2" autocomplete="current-password" name="password2">
-                </div>
-                <div class="mb-3 form-check">
-                    <input type="checkbox" class="form-check-input" id="rememberMeCheck">
-                    <label class="form-check-label" for="rememberMeCheck">{% translate "Запомнить меня" %}</label>
-                </div>
-                <button type="submit" class="btn btn-dark-green">{% translate "Войти" %}</button>
-            </form>
         </div>
+        <div class="mb-3">
+            <label for="inputPassword" class="form-label">{% translate 'Введите пароль' %}</label>
+            <input type="password" class="form-control" id="inputPassword" autocomplete="current-password"
+                name="password">
+        </div>
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input checkbox-dark" id="rememberMeCheck" name="remember">
+            <label class="form-check-label" for="rememberMeCheck">{% translate "Запомнить меня" %}</label>
+        </div>
+        <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-dark-green">{% translate "Войти" %}</button>
+            <a href="{% url 'accounts:signup' %}" class="btn btn-dark-green">{% translate "Зарегистрироваться" %}</a>
+        </div>
+        </form>
     </div>
+</div>
 </div>
 {% endblock body %}
