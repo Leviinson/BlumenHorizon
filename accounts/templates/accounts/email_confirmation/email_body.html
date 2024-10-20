@@ -14,9 +14,6 @@
 {% endif %}
 Пожалуйста, нажмите на ссылку ниже чтобы подтвердить Вашу почту.
 
-{{ uid }}
-{{ token }}
-{{ protocol }}://{{ domain }}
-{asd% url 'activate' uidb64=uid token=token %dsa}
 
+{{ protocol }}://{{ domain }}{% url 'accounts:activate' uidb64=uid token=token %}
 {% endautoescape %}
