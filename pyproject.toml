@@ -43,3 +43,6 @@ django-rosetta = "^0.10.1"
 phonenumbers = "^8.13.47"
 django-phonenumber-field = {extras = ["phonenumbers"], version = "^8.0.0"}
 babel = "^2.16.0"
+pillow = "^11.0.0"
+django-filter = "^24.3"
+django-parler = "^2.3"
