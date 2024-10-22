@@ -24,6 +24,8 @@ from django.urls import include, path, re_path
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("accounts/", include("accounts.urls")),
+    path("products/", include("products.urls.products")),
+    path("bouquets/", include("products.urls.bouquets")),
     path("logout/", LogoutView.as_view(), name="logout"),
 ]
 
@@ -32,3 +34,7 @@ if settings.DEBUG and not settings.TESTING:
 
 if "rosetta" in settings.INSTALLED_APPS:
     urlpatterns += [re_path(r"^rosetta/", include("rosetta.urls"))]
+
+from django.conf.urls.static import static
+
+urlpatterns.extend(static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT))
