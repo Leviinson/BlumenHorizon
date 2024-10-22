@@ -1,18 +1,100 @@
 {% extends "templates/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block additional_head_styles %}
+<link rel="stylesheet" href="{% static 'accounts/styles/userprofile.css' %}">
+<link rel="stylesheet" href="{% static 'accounts/styles/forms.css' %}">
+{% endblock %}
+
 {% block body %}
-    <div class="container">
-        <div class="row">
-            <div class="col-6 mx-auto mt-5 text-center">
-                <h1>{{ title }}</h1>
-                {{ user }}
-                <div id="server-message" class="d-flex flex-column align-items-center">
-                    {{ server_message }}
+<div class="container">
+    <div>
+        <div class="d-flex flex-column justify-content-start align-items-center mx-auto my-5">
+            <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
+                {% for tab_key, tab in tabs.items %}
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link {% if request.path == tab.url and not tab.disabled %}active{% endif %} {% if tab.disabled %} disabled {% endif %}"
+                        id="{{ tab_key }}-tab" type="button" role="tab" aria-controls="{{ tab_key }}-tab-pane"
+                        aria-selected="true" href="{{ tab.url }}">{{ tab.name }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+            <div class="tab-content authentication-form mt-3" id="userprofileTabsContent">
+                {% for tab_key, tab in tabs.items %}
+                {% if request.path == tab.url %}
+                <div class="tab-pane fade show active" id="{{ tab_key }}-tab-pane" role="tabpanel"
+                    aria-labelledby="{{ tab_key }}-tab" tabindex="0">
+                    <form method="post">
+                        {% csrf_token %}
+                        <fieldset disabled>
+                            <div class="mb-3">
+                                <label for="inputEmail" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="inputEmail" name="email" autofocus
+                                    autocomplete="email" placeholder="{{ user.email }}">
+                                {% if form.errors.email %}
+                                {% for error in form.errors.email %}
+                                <div class="form-text text-danger">
+                                    {{ error|striptags }}
+                                </div>
+                                {% endfor %}
+                                {% endif %}
+                            </div>
+                            <div class="mb-3">
+                                <label for="phonenumber" class="form-label">
+                                    {% translate "Номер телефона"%}
+                                </label>
+                                <input class="form-control" id="phonenumber" autocomplete="tel" name="phonenumber"
+                                    placeholder="{{ user.phonenumber }}">
+                                {% if form.errors.phonenumber %}
+                                {% for error in form.errors.phonenumber %}
+                                <div class="form-text text-danger">
+                                    {{ error|striptags }}
+                                </div>
+                                {% endfor %}
+                                {% endif %}
+                            </div>
+                            <div class="mb-3">
+                                <label for="inputFirstName" class="form-label">{% translate 'Имя' %}</label>
+                                <input class="form-control" id="inputFirstName" autocomplete="given-name"
+                                    name="first_name" placeholder="{{ user.first_name }}">
+                                {% if form.errors.first_name %}
+                                {% for error in form.errors.first_name %}
+                                <div class="form-text text-danger">
+                                    {{ error|striptags }}
+                                </div>
+                                {% endfor %}
+                                {% endif %}
+                            </div>
+                            <div class="mb-3">
+                                <label for="inputLastName" class="form-label">{% translate 'Фамилия' %}</label>
+                                <input class="form-control" id="inputLastName" autocomplete="family-name"
+                                    name="last_name" placeholder="{{ user.last_name }}">
+                                {% if form.errors.last_name %}
+                                {% for error in form.errors.last_name %}
+                                <div class="form-text text-danger">
+                                    {{ error|striptags }}
+                                </div>
+                                {% endfor %}
+                                {% endif %}
+                            </div>
+                        </fieldset>
+                    </form>
+                    <div class="d-flex justify-content-between">
+                        <form action="{% url 'logout' %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-dark-green">{% translate 'Выйти' %}</button>
+                        </form>
+                        <a href="" class="btn btn-dark-green disabled">
+                            {% translate "Редактировать"%}
+                        </a>
+                    </div>
                 </div>
-                <form action="{% url "logout" %}" method="post">
-                    {% csrf_token %}
-                    <button type="submit">Logout</button>
-                </form>
+                {% endif %}
+                {% endfor %}
             </div>
+
         </div>
     </div>
+</div>
 {% endblock body %}
