@@ -1,5 +1,4 @@
 from dataclasses import asdict, dataclass
-from pprint import pprint
 
 from core.tests.base import BaseTestCase
 
