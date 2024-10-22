@@ -1,0 +1,11 @@
+.tab-content {
+    border-left-color: var(--bs-nav-tabs-border-color);
+}
+
+.nav-link {
+    color: var(--bs-nav-tabs-link-active-color);
+}
+
+.nav-link:hover {
+    color: var(--turquoise-color);
+}
