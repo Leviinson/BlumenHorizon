@@ -46,6 +46,7 @@ SECURE_CROSS_ORIGIN_OPENER_POLICY = None
 # Application definition
 
 DJANGO_APPS = [
+    "modeltranslation",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -58,13 +59,14 @@ DJANGO_APPS = [
 LOCAL_APPS = [
     "accounts.apps.AccountsConfig",
     "products.apps.ProductsConfig",
+    "extended_contrib_models.apps.ExtendedContribModelsConfig",
 ]
 
 THIRDPARTY_APPS = [
     "tinymce",
     "rosetta",
     "django_filters",
-    "parler",
+    "colorfield",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRDPARTY_APPS + LOCAL_APPS
@@ -87,6 +89,7 @@ MIDDLEWARE = [
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
@@ -335,18 +338,18 @@ LOGOUT_REDIRECT_URL = "accounts:signin"
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
 LANGUAGE_CODE = "ru"
-
+DEFAULT_LANGUAGE = "ru"
+LANGUAGES = [
+    ("ru", "Russian"),
+    ("en", "English"),
+]
 TIME_ZONE = "Europe/Berlin"
-
 USE_I18N = True
-
 USE_TZ = True
 USE_L10N = True
-LANGUAGES = [("en", "English"), ("ru", "Russian")]
 LOCALE_PATHS = [
     BASE_DIR / "locale",
 ]
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
@@ -356,6 +359,7 @@ STATIC_ROOT = BASE_DIR / "static"
 STATICFILES_DIRS = [
     "core/staticfiles/",
     "accounts/templates/",
+    "products/templates/",
 ]
 
 MEDIA_URL = "/media/"
@@ -380,5 +384,5 @@ PHONENUMBER_DEFAULT_REGION = os.getenv("PHONENUMBER_DEFAULT_REGION")
 
 # SITES
 SITE_ID = 1
-SITE_NAME = os.getenv("SITE_NAME") # for tests
-SITE_DOMAIN = os.getenv("SITE_DOMAIN") # for tests
+SITE_NAME = os.getenv("SITE_NAME")  # for tests
+SITE_DOMAIN = os.getenv("SITE_DOMAIN")  # for tests
