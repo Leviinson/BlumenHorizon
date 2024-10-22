@@ -17,17 +17,26 @@ Including another URLconf
 
 from debug_toolbar.toolbar import debug_toolbar_urls
 from django.conf import settings
+from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
 from django.contrib.auth.views import LogoutView
 from django.urls import include, path, re_path
 
-urlpatterns = [
+service_urlpatterns = [
+    path('i18n/', include('django.conf.urls.i18n')),
     path("admin/", admin.site.urls),
+
+    path("logout/", LogoutView.as_view(), name="logout"),
+]
+
+i18n_urlpatterns = i18n_patterns(
     path("accounts/", include("accounts.urls")),
     path("products/", include("products.urls.products")),
     path("bouquets/", include("products.urls.bouquets")),
-    path("logout/", LogoutView.as_view(), name="logout"),
-]
+    prefix_default_language=False
+)
+
+urlpatterns = service_urlpatterns + i18n_urlpatterns
 
 if settings.DEBUG and not settings.TESTING:
     urlpatterns.extend(debug_toolbar_urls())
