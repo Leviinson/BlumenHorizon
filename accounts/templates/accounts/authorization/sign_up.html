@@ -89,7 +89,10 @@
           {% endfor %}
           {% endif %}
         </div>
-        <button type="submit" class="btn btn-dark-green">{% translate 'Зарегистрироваться' %}</button>
+        <div class="d-flex justify-content-between">
+          <a href="{% url 'accounts:signin' %}" class="btn btn-dark-green">{% translate 'Войти' %}</a>
+          <button type="submit" class="btn btn-dark-green">{% translate 'Зарегистрироваться' %}</button>
+      </div>
       </form>
     </div>
   </div>
