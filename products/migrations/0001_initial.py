@@ -71,7 +71,6 @@ class Migration(migrations.Migration):
                     models.CharField(
                         help_text="Введите HEX-код цвета, например: #FFFFFF (белый) или #FFF (сокращённый формат).",
                         max_length=7,
-                        validators=[products.models.validate_hex_color],
                     ),
                 ),
             ],
