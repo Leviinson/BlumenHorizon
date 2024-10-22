@@ -42,16 +42,14 @@ class User(TimeStampAdbstractModel, AbstractUser, PermissionsMixin):
     is_staff = models.BooleanField(
         "Администратор?",
         default=False,
-        help_text=_("Определяет может ли пользователь попасть в админ-панель"),
+        help_text="Определяет может ли пользователь попасть в админ-панель",
         editable=False,
     )
     is_active = models.BooleanField(
         "Активный?",
         default=False,
-        help_text=_(
-            f"Определяет может ли пользователь авторизоваться."
-            f" Выберите это вместо удаления аккаунта!!!"
-        ),
+        help_text=f"Определяет может ли пользователь авторизоваться."
+        f" Выберите это вместо удаления аккаунта!!!",
     )
     is_superuser = models.BooleanField(
         "Суперпользователь?",
@@ -70,8 +68,8 @@ class User(TimeStampAdbstractModel, AbstractUser, PermissionsMixin):
     REQUIRED_FIELDS = []
 
     class Meta:
-        verbose_name = _("Пользователь")
-        verbose_name_plural = _("Пользователи")
+        verbose_name = "Пользователь"
+        verbose_name_plural = "Пользователи"
 
     def get_short_name(self):
         """Return the short name for the user."""
