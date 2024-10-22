@@ -1,12 +1,11 @@
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import AbstractUser, PermissionsMixin, UserManager
-from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from phonenumber_field.modelfields import PhoneNumberField
 
-from core.base_models import TimeStampModelMixin
+from core.base_models import TimeStampAdbstractModel
 
 
 class UserManager(UserManager):
@@ -28,7 +27,7 @@ class UserManager(UserManager):
         return super().create_superuser(email, password, **extra_fields)
 
 
-class User(TimeStampModelMixin, AbstractUser, PermissionsMixin):
+class User(TimeStampAdbstractModel, AbstractUser, PermissionsMixin):
     username = None
     email = models.EmailField(verbose_name=_("Электронная почта"), unique=True)
     phonenumber = PhoneNumberField(
