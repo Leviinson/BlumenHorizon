@@ -1,0 +1,18 @@
+.card-header {
+    display: none;
+}
+
+@media (max-width: 767px) {
+    .filters-container {
+        margin-bottom: 10px;
+    }
+
+    .filters-button-container {
+        max-width: 120px;
+        margin-bottom: 10px;
+    }
+
+    .card-header {
+        display: inline-block;
+    }
+}

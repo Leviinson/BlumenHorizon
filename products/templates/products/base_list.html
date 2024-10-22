@@ -1,0 +1,81 @@
+{% extends "templates/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block additional_head_styles %}
+<link rel="stylesheet" href="{% static 'products/styles/common.css' %}">
+<link rel="stylesheet" href="{% static 'products/styles/products_list.css' %}">
+{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-3 filters-container">
+            <div class="card-header filters-button-container">
+                <h4 class="mb-0">
+                    <button class="btn bg-dark-green text-light" data-bs-toggle="collapse"
+                        data-bs-target="#filterAccordion" aria-expanded="true" aria-controls="filterAccordion"
+                        id="filtersButton">
+                        Фильтры
+                    </button>
+                </h4>
+            </div>
+            <div class="card" id="filtersCard">
+                <div id="filterAccordion" class="collapse show" aria-labelledby="headingOne">
+                    <div class="card-body">
+                        <form>
+                            <label for="price__lt" class="form-label mb-2">{% translate 'Цена' %}</label>
+                            <div class="d-flex">
+                                <div class="me-2 d-flex justify-content-center align-items-center">
+                                    {{ filter.form.price__lt }}
+                                    <span class="ms-2">{{ currency_symbol }}</span>
+                                </div>
+                                <div class="ms-2 d-flex justify-content-center align-items-center">
+                                    {{ filter.form.price__gt }}
+                                    <span class="ms-2">{{ currency_symbol }}</span>
+                                </div>
+                            </div>
+
+                            <div class="mb-3 form-check" >
+                                <label for="{{ filter.form.with_discount.id_for_label }}" class="form-label">{% translate 'Со скидкой?' %}</label>
+                                {{ filter.form.with_discount }}
+                            </div>
+                            <button type="submit" class="btn btn-dark-green mt-3">Фильтровать</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <div class="row">
+                {% for product in products %}
+                <div class="col-6 col-md-4 mb-4">
+                    <a href="{% url 'products:detail' product.slug %}" class="text-decoration-none text-dark">
+                        <div class="card">
+                            <div class="image-wrapper">
+                                <img src="{{ product.images.first.image.url }}" class="card-img-top square-image"
+                                    alt="{{ product.name }}">
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">{{ product.name }}</h5>
+                                <p class="card-text">{{ product.price }} {{ currency_symbol }}</p>
+                                <a href="#" class="btn btn-success">{% translate 'Добавить в корзину' %}</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                {% empty %}
+                <div class="col-12">
+                    <p class="text-center">Нет доступных товаров.</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block additional_scripts %}
+<script src="{% static 'products/scripts/filterAccordionCollaps.js' %}" async defer></script>
+{% endblock %}
