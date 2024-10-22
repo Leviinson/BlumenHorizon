@@ -57,11 +57,14 @@ DJANGO_APPS = [
 
 LOCAL_APPS = [
     "accounts.apps.AccountsConfig",
+    "products.apps.ProductsConfig",
 ]
 
 THIRDPARTY_APPS = [
     "tinymce",
     "rosetta",
+    "django_filters",
+    "parler",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRDPARTY_APPS + LOCAL_APPS
@@ -325,12 +328,13 @@ AUTH_USER_MODEL = "accounts.User"
 ROSETTA_LOGIN_URL = "admin:login"
 LOGIN_URL = "accounts:signin"
 LOGIN_REDIRECT_URL = "accounts:me"
+LOGOUT_REDIRECT_URL = "accounts:signin"
 
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "ru"
 
 TIME_ZONE = "Europe/Berlin"
 
