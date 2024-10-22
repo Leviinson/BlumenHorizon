@@ -8,8 +8,8 @@ from ..forms import UserSignInForm
 
 
 class UserLoginView(
-    CommonContextMixin,
     LoginView,
+    CommonContextMixin,
     ContextMixin,
 ):
     extra_context = {"title": _("Вход")}
