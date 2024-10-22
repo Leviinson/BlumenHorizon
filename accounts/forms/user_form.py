@@ -26,6 +26,7 @@ class BootstrapSplitPhoneNumberField(SplitPhoneNumberField):
                     "class": "form-control ms-2",
                     "autocomplete": "tel-national",
                     "area-describedby": "phoneNumberHelp",
+                    "maxlength": 10
                 }
             )
         )
