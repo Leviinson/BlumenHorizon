@@ -52,8 +52,8 @@ class UserSignUpView(
         user: Type[AbstractBaseUser],
         to_email: str,
     ):
-        current_site = get_current_site(request).name
-        mail_subject = _(f"{current_site} | Подтвердите Ваш Email")
+        site_name = get_current_site(request).name
+        mail_subject = _(f"{site_name} | Подтвердите Ваш Email")
 
         message = render_to_string(
             "accounts/email_confirmation/email_body.html",
