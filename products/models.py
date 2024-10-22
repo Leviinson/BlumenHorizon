@@ -1,6 +1,5 @@
-import re
-
-from django.core.exceptions import ValidationError
+from colorfield.fields import ColorField
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from tinymce.models import HTMLField
@@ -50,8 +49,9 @@ class Subcategory(MetaDataAbstractModel):
     )
     category = models.ForeignKey(
         Category,
-        on_delete=models.DO_NOTHING,
+        on_delete=models.PROTECT,
         verbose_name=_("Категория"),
+        related_name="subcategories",
     )
 
     class Meta:
@@ -75,8 +75,18 @@ class ProductAbstract(TimeStampAdbstractModel, MetaDataAbstractModel):
             "Цена продукта до 10ти значений, два из которых плавающая запятая. Т.е. до 99999999.99"
         ),
     )
+    discount = models.IntegerField(
+        validators=(
+            MinValueValidator(0),
+            MaxValueValidator(100),
+        ),
+        verbose_name=_("Скидка"),
+        null=True,
+    )
     subcategory = models.ForeignKey(
-        Subcategory, on_delete=models.DO_NOTHING, verbose_name=_("Подкатегория")
+        Subcategory,
+        on_delete=models.PROTECT,
+        verbose_name=_("Подкатегория"),
     )
     description = HTMLField(
         verbose_name=_("Описание"),
@@ -126,21 +136,18 @@ class ProductImage(models.Model):
         return f"{self.product.name} - Image"
 
 
-def validate_hex_color(value):
-    if not re.match(r"^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$", value):
-        raise ValidationError(
-            _('Введите корректный HEX-код цвета, начинающийся с "#".')
-        )
-
-
 class Color(models.Model):
-    name = models.CharField(max_length=15)
-    hex_code = models.CharField(
-        max_length=7,
-        validators=[validate_hex_color],
+    name = models.CharField(
+        max_length=15,
+        verbose_name=_("Название"),
+        unique=True,
+    )
+    hex_code = ColorField(
+        verbose_name=_("HEX код цвета (#f4678a к примеру)"),
         help_text=_(
             "Введите HEX-код цвета, например: #FFFFFF (белый) или #FFF (сокращённый формат)."
         ),
+        unique=True,
     )
 
     class Meta:
@@ -152,7 +159,11 @@ class Color(models.Model):
 
 
 class Flower(models.Model):
-    name = models.CharField(max_length=30)
+    name = models.CharField(
+        max_length=30,
+        verbose_name=_("Название"),
+        unique=True,
+    )
 
     class Meta:
         verbose_name = _("Цветок")
@@ -163,7 +174,9 @@ class Flower(models.Model):
 
 
 class Bouquet(ProductAbstract):
-    size = models.IntegerField(verbose_name=_("Диаметр букета"))
+    size = models.IntegerField(
+        verbose_name=_("Диаметр букета"),
+    )
     amount_of_flowers = models.IntegerField(
         verbose_name=_("Количество цветов в букете")
     )
