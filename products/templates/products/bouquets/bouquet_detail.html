@@ -1,0 +1,186 @@
+{% extends "templates/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block additional_head_styles %}
+<!-- Дополнительные стили, если нужно -->
+<style>
+    .image-wrapper {
+        position: relative;
+        width: 100%;
+        /* Ширина блока */
+        padding-top: 100%;
+        /* Соотношение сторон 1:1 */
+        overflow: hidden;
+        /* Скрываем лишние части изображения */
+    }
+
+    .square-image {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        /* Обрезка изображения, чтобы оно занимало весь блок */
+        transform: translate(-50%, -50%);
+        /* Центрируем изображение */
+    }
+
+    .product-info-card {
+        padding: 1.5rem;
+        background-color: #f8f9fa;
+        border-radius: 0.5rem;
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    }
+
+    .product-attributes-list li {
+        margin-bottom: 0.5rem;
+    }
+
+    .badge-color {
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+        border-radius: 50%;
+        margin-right: 5px;
+    }
+
+    @media (max-width: 767px) {
+        .product-info-container {
+            margin-top: 0.5rem;
+        }
+    }
+
+    .info-block {
+        background-color: #f9f9f9;
+        border-radius: 0.5rem;
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
+        border-left: 4px solid var(--turquoise-color);
+        /* Акцентная линия */
+    }
+
+    .info-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+    }
+
+    .info-text {
+        font-size: 1rem;
+        line-height: 1.6;
+        color: #6c757d;
+    }
+
+    @media (max-width: 767px) {
+        .info-block {
+            padding: 1.5rem;
+        }
+
+        .info-title {
+            font-size: 1.125rem;
+        }
+
+        .info-text {
+            font-size: 0.95rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    {% for image in bouquet.images.all %}
+                    <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                        <div class="image-wrapper">
+                            <img src="{{ image.image.url }}" class="square-image rounded img-thumbnail"
+                                alt="{{ bouquet.name }} {{ forloop.counter }}">
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Предыдущее</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#productCarousel"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Следующее</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="col-md-6 product-info-container">
+            <div class="product-info-card">
+                <h2 class="mb-3">{{ bouquet.name }}</h2>
+                <h3 class="text-success mb-4">{% translate 'Цена' %}: {{ bouquet.price }} €</h3>
+
+                <h4 class="mb-3">{% translate 'Описание' %}</h4>
+                <ul class="list-unstyled product-attributes-list">
+                    <li>
+                        <strong>{% translate 'Количество цветков' %}:</strong> {{ bouquet.amount_of_flowers }}
+                    </li>
+                    <li>
+                        <strong>{% translate 'Состав' %}:</strong>
+                        <ul class="list-inline">
+                            {% for flower in bouquet.flowers.all %}
+                            <li class="list-inline-item badge bg-soft-turquoise">{{ flower.name }}</li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>{% translate 'Цветовая гамма' %}:</strong>
+                        <ul class="list-inline d-flex">
+                            {% for color in bouquet.colors.all %}
+                            <li class="list-inline-item d-flex justify-content-center align-items-center">
+                                <span class="badge-color" style="background-color: {{ color.hex_code }};"></span>
+                                {{ color.name }}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="d-flex justify-content-between mt-4">
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-money-bill-wave"></i> {% translate 'Купить' %}
+                        </button>
+                    </form>
+
+                    <form action="" method="post" class="me-2">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-dark-green">
+                            <i class="fas fa-shopping-cart"></i> {% translate 'Добавить в корзину' %}
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col">
+            <div class="info-block p-4 mb-4">
+                <h4 class="info-title">{% translate 'Описание' %}</h4>
+                <p class="info-text">{{ bouquet.description|safe }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col">
+            <div class="info-block p-4">
+                <h4 class="info-title">{% translate 'Характеристики' %}</h4>
+                <p class="info-text">{{ bouquet.specs|safe }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
