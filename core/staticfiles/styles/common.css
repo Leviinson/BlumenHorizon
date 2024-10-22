@@ -8,7 +8,11 @@ body {
 }
 
 .bg-soft-turquoise {
-    background-color: var(--turquoise-color);
+    background-color: var(--turquoise-color) !important;
+}
+
+.bg-dark-green {
+    background-color: var(--dark-green-color) !important;
 }
 
 .btn-outline-dark-green{
