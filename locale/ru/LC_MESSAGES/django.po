@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-20 11:37+0200\n"
+"POT-Creation-Date: 2024-10-22 13:59+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,116 +20,323 @@ msgstr ""
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: accounts/admin.py:55
-msgid "Поиск по адресу электронной почты, номеру телефона, имени или фамилии."
-msgstr ""
-
-#: accounts/forms/user_form.py:37 accounts/models.py:36
-#: accounts/templates/accounts/authorization/sign_up.html:31
+#: accounts/forms/user_form.py:38 accounts/models.py:35
+#: accounts/templates/accounts/authorization/sign_in.html:29
+#: accounts/templates/accounts/authorization/sign_up.html:32
+#: accounts/templates/accounts/index.html:45
 msgid "Номер телефона"
 msgstr ""
 
-#: accounts/forms/user_form.py:50
+#: accounts/forms/user_form.py:51
 msgid "Пользователь с этой электронной почтой уже существует."
 msgstr ""
 
-#: accounts/forms/user_form.py:51
+#: accounts/forms/user_form.py:52
 msgid "Email нужно обязательно внести."
 msgstr ""
 
-#: accounts/forms/user_form.py:62 accounts/forms/user_form.py:67
+#: accounts/forms/user_form.py:63 accounts/forms/user_form.py:68
 msgid "Пользователь с этим номером телефона уже существует."
+msgstr ""
+
+#: accounts/forms/user_signin_form.py:11
+msgid ""
+"Пожалуйста, введите корректную электронную почтуи пароль. Помните, что оба "
+"поля чувствительны к регистру"
+msgstr ""
+
+#: accounts/forms/user_signin_form.py:14
+msgid ""
+"Почта не подтверждена. Мы отправили письмо на Вашу почту, проверьте папку "
+"\"Входящие\"/\"Спам\"."
 msgstr ""
 
 #: accounts/forms/user_signup_form.py:9
 msgid "Пароли не совпадают. Пожалуйста, введите одинаковые пароли."
 msgstr ""
 
-#: accounts/models.py:33
+#: accounts/models.py:32
 msgid "Электронная почта"
 msgstr ""
 
-#: accounts/models.py:41
-#: accounts/templates/accounts/authorization/sign_up.html:47
+#: accounts/models.py:40
+#: accounts/templates/accounts/authorization/sign_up.html:48
+#: accounts/templates/accounts/index.html:58
 msgid "Имя"
 msgstr ""
 
-#: accounts/models.py:42
-#: accounts/templates/accounts/authorization/sign_up.html:58
+#: accounts/models.py:41
+#: accounts/templates/accounts/authorization/sign_up.html:59
+#: accounts/templates/accounts/index.html:70
 msgid "Фамилия"
 msgstr ""
 
-#: accounts/models.py:46
-msgid "Определяет может ли пользователь попасть в админ-панель"
+#: accounts/templates/accounts/authorization/sign_in.html:34
+msgid "Введите пароль"
 msgstr ""
 
-#: accounts/models.py:53
-msgid "Определяет может ли пользователь авторизоваться."
-msgstr ""
-
-#: accounts/models.py:74
-msgid "Пользователь"
-msgstr ""
-
-#: accounts/models.py:75
-msgid "Пользователи"
-msgstr ""
-
-#: accounts/templates/accounts/authorization/sign_in.html:20
-#: accounts/templates/accounts/authorization/sign_up.html:27
-msgid "Мы не передаём Ваш Email третьим лицам."
-msgstr ""
-
-#: accounts/templates/accounts/authorization/sign_in.html:24
-#: accounts/templates/accounts/authorization/sign_up.html:80
-msgid "Повторите пароль"
-msgstr ""
-
-#: accounts/templates/accounts/authorization/sign_in.html:29
+#: accounts/templates/accounts/authorization/sign_in.html:40
 msgid "Запомнить меня"
 msgstr ""
 
-#: accounts/templates/accounts/authorization/sign_in.html:31
+#: accounts/templates/accounts/authorization/sign_in.html:43
+#: accounts/templates/accounts/authorization/sign_up.html:93
 msgid "Войти"
 msgstr ""
 
-#: accounts/templates/accounts/authorization/sign_up.html:36
-msgid "Мы передаём Ваш номер телефона нашим партнёрам по доставке."
-msgstr ""
-
-#: accounts/templates/accounts/authorization/sign_up.html:69
-msgid "Пароль"
-msgstr ""
-
-#: accounts/templates/accounts/authorization/sign_up.html:90
+#: accounts/templates/accounts/authorization/sign_in.html:45
+#: accounts/templates/accounts/authorization/sign_up.html:94
 msgid "Зарегистрироваться"
 msgstr ""
 
-#: accounts/views/me.py:14
+#: accounts/templates/accounts/authorization/sign_up.html:28
+msgid "Мы не передаём Ваш Email третьим лицам."
+msgstr ""
+
+#: accounts/templates/accounts/authorization/sign_up.html:37
+msgid "Мы передаём Ваш номер телефона нашим партнёрам по доставке."
+msgstr ""
+
+#: accounts/templates/accounts/authorization/sign_up.html:70
+msgid "Пароль"
+msgstr ""
+
+#: accounts/templates/accounts/authorization/sign_up.html:81
+msgid "Повторите пароль"
+msgstr ""
+
+#: accounts/templates/accounts/email_confirmation/email_body.html:5
+#, python-format
+msgid ""
+"\n"
+"Уважаемый %(first_name)s,\n"
+msgstr ""
+
+#: accounts/templates/accounts/email_confirmation/email_body.html:9
+#, python-format
+msgid ""
+"\n"
+"Уважаемый %(last_name)s,\n"
+msgstr ""
+
+#: accounts/templates/accounts/email_confirmation/email_body.html:13
+msgid "Уважаемый пользователь,"
+msgstr ""
+
+#: accounts/templates/accounts/index.html:86
+msgid "Выйти"
+msgstr ""
+
+#: accounts/templates/accounts/index.html:89
+msgid "Редактировать"
+msgstr ""
+
+#: accounts/views/me.py:17
+msgid "Профиль"
+msgstr ""
+
+#: accounts/views/me.py:22
+msgid "Настройки"
+msgstr ""
+
+#: accounts/views/me.py:27
+msgid "Заказы"
+msgstr ""
+
+#: accounts/views/me.py:52
 msgid "Личный кабинет"
 msgstr ""
 
-#: accounts/views/signin.py:14
+#: accounts/views/signin.py:15
 msgid "Вход"
 msgstr ""
 
-#: accounts/views/signup.py:30
+#: accounts/views/signup.py:34
 msgid "Регистрация"
 msgstr ""
 
-#: accounts/views/signup.py:37 accounts/views/signup.py:65
+#: accounts/views/signup.py:55
+msgid "{get_current_site(request).name} | Подтвердите Ваш Email"
+msgstr ""
+
+#: accounts/views/signup.py:73
 #, python-brace-format
 msgid ""
-"Дорогой пользователь, зайдите на почту {email} и подтвердите активацию "
+"Дорогой пользователь, зайдите на почту {to_email} и подтвердите активацию "
 "аккаунта."
 msgstr ""
 
-#: accounts/views/signup.py:48
-msgid "{get_current_site().name} | Подтвердите Ваш Email"
-msgstr ""
-
-#: accounts/views/signup.py:72
+#: accounts/views/signup.py:80
+#, python-brace-format
 msgid ""
 "Дорогой пользователь, неудалось отправить письмо с просьбой о подтверждении "
-"почты."
+"почты. Проверьте правильно ли она написана: {email}"
+msgstr ""
+
+#: accounts/views/signup.py:101
+msgid "Ваша почта успешно подтверждена, теперь Вы можете пойти в аккаунт."
+msgstr ""
+
+#: accounts/views/signup.py:106
+msgid "Ссылка для подтверждения почты истекла или неверна."
+msgstr ""
+
+#: core/base_models.py:6
+msgid "Дата создания"
+msgstr ""
+
+#: core/base_models.py:7
+msgid "Дата обновления"
+msgstr ""
+
+#: products/models.py:11 products/models.py:128 products/models.py:145
+msgid "Название"
+msgstr ""
+
+#: products/models.py:16
+msgid "Название в ссылке"
+msgstr ""
+
+#: products/models.py:20
+msgid "Активный?"
+msgstr ""
+
+#: products/models.py:30 products/models.py:45
+msgid "Картинка"
+msgstr ""
+
+#: products/models.py:36 products/models.py:52
+msgid "Категория"
+msgstr ""
+
+#: products/models.py:37
+msgid "Категории"
+msgstr ""
+
+#: products/models.py:56 products/models.py:77
+msgid "Подкатегория"
+msgstr ""
+
+#: products/models.py:57
+msgid "Подкатегории"
+msgstr ""
+
+#: products/models.py:71
+#: products/templates/products/bouquets/bouquet_detail.html:121
+msgid "Цена"
+msgstr ""
+
+#: products/models.py:73
+msgid ""
+"Цена продукта до 10ти значений, два из которых плавающая запятая. Т.е. до "
+"99999999.99"
+msgstr ""
+
+#: products/models.py:80
+#: products/templates/products/bouquets/bouquet_detail.html:123
+#: products/templates/products/bouquets/bouquet_detail.html:171
+msgid "Описание"
+msgstr ""
+
+#: products/models.py:83
+#: products/templates/products/bouquets/bouquet_detail.html:180
+msgid "Характеристики"
+msgstr ""
+
+#: products/models.py:99 products/models.py:111
+msgid "Продукт"
+msgstr ""
+
+#: products/models.py:100
+msgid "Продукты"
+msgstr ""
+
+#: products/models.py:115 products/models.py:193
+msgid "Изображение"
+msgstr ""
+
+#: products/models.py:120
+msgid "Изображение продукта"
+msgstr ""
+
+#: products/models.py:121
+msgid "Изображения продуктов"
+msgstr ""
+
+#: products/models.py:130
+msgid "HEX код цвета (#f4678a к примеру)"
+msgstr ""
+
+#: products/models.py:132
+msgid ""
+"Введите HEX-код цвета, например: #FFFFFF (белый) или #FFF (сокращённый "
+"формат)."
+msgstr ""
+
+#: products/models.py:137
+msgid "Цвет"
+msgstr ""
+
+#: products/models.py:138 products/models.py:163
+msgid "Цвета"
+msgstr ""
+
+#: products/models.py:148
+msgid "Цветок"
+msgstr ""
+
+#: products/models.py:149 products/models.py:169
+msgid "Цветы"
+msgstr ""
+
+#: products/models.py:156
+msgid "Диаметр букета"
+msgstr ""
+
+#: products/models.py:158
+msgid "Количество цветов в букете"
+msgstr ""
+
+#: products/models.py:164
+msgid "Выберите какого цвета букет."
+msgstr ""
+
+#: products/models.py:170
+msgid "Выберите какие цветы в букете."
+msgstr ""
+
+#: products/models.py:174 products/models.py:189
+msgid "Букет"
+msgstr ""
+
+#: products/models.py:175
+msgid "Букеты"
+msgstr ""
+
+#: products/models.py:197
+msgid "Изображение букета"
+msgstr ""
+
+#: products/models.py:198
+msgid "Изображения букетов"
+msgstr ""
+
+#: products/templates/products/bouquets/bouquet_detail.html:126
+msgid "Количество цветков"
+msgstr ""
+
+#: products/templates/products/bouquets/bouquet_detail.html:129
+msgid "Состав"
+msgstr ""
+
+#: products/templates/products/bouquets/bouquet_detail.html:137
+msgid "Цветовая гамма"
+msgstr ""
+
+#: products/templates/products/bouquets/bouquet_detail.html:153
+msgid "Купить"
+msgstr ""
+
+#: products/templates/products/bouquets/bouquet_detail.html:160
+msgid "Добавить в корзину"
 msgstr ""
