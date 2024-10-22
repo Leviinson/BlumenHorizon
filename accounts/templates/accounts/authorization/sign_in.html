@@ -30,21 +30,23 @@
                     <input class="form-control" id="inputUsername" aria-describedby="usernameHelp" name="username"
                         autofocus>
                 </div>
+                <div class="mb-3">
+                    <label for="inputPassword" class="form-label">{% translate 'Введите пароль' %}</label>
+                    <input type="password" class="form-control" id="inputPassword" autocomplete="current-password"
+                        name="password">
+                </div>
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input checkbox-dark" id="rememberMeCheck" name="remember">
+                    <label class="form-check-label" for="rememberMeCheck">{% translate "Запомнить меня" %}</label>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-dark-green">{% translate "Войти" %}</button>
+                    <a href="{% url 'accounts:signup' %}" class="btn btn-dark-green">
+                        {% translate "Зарегистрироваться"%}
+                    </a>
+                </div>
+            </form>
         </div>
-        <div class="mb-3">
-            <label for="inputPassword" class="form-label">{% translate 'Введите пароль' %}</label>
-            <input type="password" class="form-control" id="inputPassword" autocomplete="current-password"
-                name="password">
-        </div>
-        <div class="mb-3 form-check">
-            <input type="checkbox" class="form-check-input checkbox-dark" id="rememberMeCheck" name="remember">
-            <label class="form-check-label" for="rememberMeCheck">{% translate "Запомнить меня" %}</label>
-        </div>
-        <div class="d-flex justify-content-between">
-            <button type="submit" class="btn btn-dark-green">{% translate "Войти" %}</button>
-            <a href="{% url 'accounts:signup' %}" class="btn btn-dark-green">{% translate "Зарегистрироваться" %}</a>
-        </div>
-        </form>
     </div>
 </div>
 </div>
