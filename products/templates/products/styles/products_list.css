@@ -2,6 +2,10 @@
     display: none;
 }
 
+.noUi-connect {
+    background: var(--turquoise-color) !important;
+}
+
 @media (max-width: 767px) {
     .filters-container {
         margin-bottom: 10px;
@@ -15,4 +19,13 @@
     .card-header {
         display: inline-block;
     }
+}
+
+.pagination {
+    --bs-pagination-color: var(--dark-green-color) !important;
+    --bs-pagination-hover-color: var(--dark-green-color) !important;
+    --bs-pagination-focus-color: var(--dark-green-color) !important;
+    --bs-pagination-active-bg: var(--turquoise-color) !important;
+    --bs-pagination-active-border-color: var(--turquoise-color) !important;
+    --bs-pagination-focus-box-shadow: 0 0 0 0.25rem var(--turquoise-color);
 }
