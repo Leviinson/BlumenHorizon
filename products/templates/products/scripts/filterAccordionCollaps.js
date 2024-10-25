@@ -11,11 +11,7 @@ function toggleFilterAccordion() {
         filterAccordion.classList.remove('show');
     }
 }
-
-document.addEventListener('DOMContentLoaded', function () {
-    toggleFilterAccordion();
-});
-
+toggleFilterAccordion();
 window.addEventListener('resize', toggleFilterAccordion);
 
 const filtersButton = document.getElementById('filtersButton');
@@ -32,12 +28,9 @@ function updateBorder() {
         flag += 1
     }
 }
-
-document.addEventListener('DOMContentLoaded', function () {
-    updateBorder();
-});
-
+updateBorder();
 filtersButton.addEventListener('click', updateBorder);
+
 
 function toggleFilterBorder() {
     const mediaQuery = window.matchMedia('(min-width: 767px)');
@@ -48,9 +41,6 @@ function toggleFilterBorder() {
         card.style.border = 'none';
     }
 }
-
-document.addEventListener('DOMContentLoaded', function () {
-    toggleFilterBorder();
-});
+toggleFilterBorder();
 
 window.addEventListener('resize', toggleFilterBorder);
