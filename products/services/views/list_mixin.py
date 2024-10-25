@@ -1,3 +1,3 @@
 class ListViewMixin:
-    allow_empty = False
-    paginate_by = 10
+    allow_empty = True
+    paginate_by = 9
