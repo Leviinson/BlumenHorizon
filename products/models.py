@@ -10,7 +10,7 @@ from core.base_models import TimeStampAdbstractModel
 class MetaDataAbstractModel(models.Model):
     name = models.CharField(
         verbose_name=_("Название"),
-        max_length=20,
+        max_length=40,
         unique=True,
     )
     slug = models.SlugField(
@@ -123,9 +123,8 @@ class ProductImage(models.Model):
         verbose_name=_("Продукт"),
     )
     image = models.ImageField(
-        upload_to="products/%Y-%m-%d/",
+        upload_to="products_media/%Y-%m-%d/",
         verbose_name=_("Изображение"),
-        default="defaults/no-image.webp",
     )
 
     class Meta:
