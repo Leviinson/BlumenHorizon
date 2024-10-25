@@ -12,10 +12,10 @@
         <div class="col-md-6">
             <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
-                    {% for image in product.images.all %}
+                    {% for image_url in images_url %}
                     <div class="carousel-item {% if forloop.first %}active{% endif %}">
                         <div class="image-wrapper">
-                            <img src="{{ image.image.url }}" class="square-image rounded img-thumbnail"
+                            <img src="{{ image_url }}" class="square-image rounded img-thumbnail"
                                  alt="{{ product.name }} {{ forloop.counter }}">
                         </div>
                     </div>
@@ -26,12 +26,12 @@
                 <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel"
                         data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Предыдущее</span>
+                    <span class="visually-hidden">{% translate 'Предыдущее фото букета' %}</span>
                 </button>
                 <button class="carousel-control-next" type="button" data-bs-target="#productCarousel"
                         data-bs-slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Следующее</span>
+                    <span class="visually-hidden">{% translate 'Следующее фото букета' %}</span>
                 </button>
                 {% endif %}
             </div>
