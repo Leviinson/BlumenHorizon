@@ -1,10 +1,12 @@
 {% extends "templates/base.html" %}
 {% load static %}
 {% load i18n %}
+{% load replace_query_params %}
 
 {% block additional_head_styles %}
 <link rel="stylesheet" href="{% static 'products/styles/common.css' %}">
 <link rel="stylesheet" href="{% static 'products/styles/products_list.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.6.3/nouislider.min.css" />
 {% endblock %}
 
 {% block body %}
@@ -16,7 +18,7 @@
                     <button class="btn bg-dark-green text-light" data-bs-toggle="collapse"
                         data-bs-target="#filterAccordion" aria-expanded="true" aria-controls="filterAccordion"
                         id="filtersButton">
-                        Фильтры
+                        {% translate 'Фильтры' %}
                     </button>
                 </h4>
             </div>
@@ -24,38 +26,47 @@
                 <div id="filterAccordion" class="collapse show" aria-labelledby="headingOne">
                     <div class="card-body">
                         <form>
-                            <label for="price__lt" class="form-label mb-2">{% translate 'Цена' %}</label>
-                            <div class="d-flex">
-                                <div class="me-2 d-flex justify-content-center align-items-center">
-                                    {{ filter.form.price__lt }}
-                                    <span class="ms-2">{{ currency_symbol }}</span>
-                                </div>
-                                <div class="ms-2 d-flex justify-content-center align-items-center">
-                                    {{ filter.form.price__gt }}
-                                    <span class="ms-2">{{ currency_symbol }}</span>
+                            <label for="price__gte" class="form-label mb-3">{% translate 'Цена' %}</label>
+                            <div class="d-flex flex-column">
+                                <div id="priceSlider" class="form-range px-3"></div>
+                                <div class="d-flex mt-4">
+                                    <div class="me-2 d-flex justify-content-center align-items-center">
+                                        {{ filter.form.price__gte }}
+                                        <span class="ms-2">{{ currency_symbol }}</span>
+                                    </div>
+                                    <div class="ms-2 d-flex justify-content-center align-items-center">
+                                        {{ filter.form.price__lte }}
+                                        <span class="ms-2">{{ currency_symbol }}</span>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="mb-3 form-check" >
-                                <label for="{{ filter.form.with_discount.id_for_label }}" class="form-label">{% translate 'Со скидкой?' %}</label>
+                            <div class="form-check mt-3">
+                                <label for="{{ filter.form.with_discount.id_for_label }}" class="form-label">
+                                    {% translate 'Со скидкой?' %}</label>
                                 {{ filter.form.with_discount }}
                             </div>
-                            <button type="submit" class="btn btn-dark-green mt-3">Фильтровать</button>
+                            <button type="submit" class="btn btn-dark-green mt-2">Фильтровать</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-9">
-            <div class="row">
-                {% for product in products %}
+        <div class="col-md-9 d-flex flex-column align-items-center">
+            <div class="row w-100">
+                {% for product in page_obj %}
                 <div class="col-6 col-md-4 mb-4">
                     <a href="{% url 'products:detail' product.slug %}" class="text-decoration-none text-dark">
                         <div class="card">
                             <div class="image-wrapper">
-                                <img src="{{ product.images.first.image.url }}" class="card-img-top square-image"
-                                    alt="{{ product.name }}">
+                                {% if product.first_image %}
+                                <img src="{{ MEDIA_URL }}{{ product.first_image }}" class="card-img-top square-image"
+                                    alt="{{ product.name }}">                             
+                                {% else %}
+                                <img src="{% static 'defaults/no-image.webp' %}" class="card-img-top square-image"
+                                    alt="Нет изображения">
+                                {% endif %}
                             </div>
                             <div class="card-body">
                                 <h5 class="card-title">{{ product.name }}</h5>
@@ -66,16 +77,122 @@
                     </a>
                 </div>
                 {% empty %}
-                <div class="col-12">
-                    <p class="text-center">Нет доступных товаров.</p>
+                <div class="d-flex flex-column justify-content-center align-items-center mt-5">
+                    <div id="no-products-svg-container" class="mb-3">
+                        <svg width="314" height="287" viewBox="0 0 314 287" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <title>{% translate 'Отсутствие продуктов' %}</title>
+                            <desc>
+                            {% translate 'Иконка, представляющая отсутствие доступных продуктов по запросу пользователя.' %}
+                            </desc>
+                            <path d="M312.13 2.65939H0.768555V284.393H312.13V2.65939Z" fill="white" />
+                            <path
+                                d="M209.644 103.162C187.559 103.162 165.077 102.267 144.047 96.4215C123.413 90.7079 104.468 79.6228 87.5802 66.8C76.5242 58.4533 66.4709 51.7917 52.1166 52.7923C38.0739 53.5505 24.645 58.7832 13.8034 67.7215C-4.45614 83.6777 -1.71194 113.247 5.59714 133.942C16.5739 165.196 49.9793 186.971 78.3713 201.058C111.17 217.409 147.214 226.914 183.337 232.365C215.001 237.183 255.689 240.659 283.131 220.042C308.33 201.058 315.243 157.771 309.069 128.544C307.571 119.91 302.964 112.12 296.113 106.638C278.408 93.7095 251.995 102.346 232.099 102.767C224.711 102.925 217.191 103.109 209.644 103.162Z"
+                                fill="#F2F2F2" />
+                            <path
+                                d="M156.661 283.603C210.158 283.603 253.526 280.904 253.526 277.574C253.526 274.244 210.158 271.544 156.661 271.544C103.164 271.544 59.7957 274.244 59.7957 277.574C59.7957 280.904 103.164 283.603 156.661 283.603Z"
+                                fill="#F2F2F2" />
+                            <path
+                                d="M19.978 45.1038L54.2805 42.2075C58.558 41.8337 62.8344 42.9375 66.3937 45.3341C69.953 47.7307 72.5793 51.2746 73.833 55.3726L106.711 165.17L100.272 176.676C98.6186 179.641 97.8023 182.998 97.9103 186.389C98.0183 189.78 99.0466 193.079 100.886 195.933C102.725 198.787 105.305 201.089 108.353 202.595C111.4 204.1 114.799 204.752 118.189 204.481L249.858 193.317"
+                                stroke="#BABABA" stroke-linecap="round" stroke-linejoin="round" />
+                            <path
+                                d="M78.741 72.0396L231.783 59.0851C233.291 58.9563 234.808 59.1677 236.222 59.7038C237.637 60.24 238.912 61.087 239.954 62.1821C240.996 63.2773 241.777 64.5924 242.24 66.0299C242.703 67.4674 242.835 68.9905 242.628 70.4862L232.258 145.185C231.943 147.426 230.882 149.497 229.245 151.063C227.608 152.63 225.491 153.601 223.234 153.821L106.711 165.17L78.741 72.0396Z"
+                                fill="white" stroke="#BABABA" stroke-linecap="round" stroke-linejoin="round" />
+                            <path
+                                d="M132.834 229.653C139.697 229.653 145.262 224.1 145.262 217.251C145.262 210.402 139.697 204.85 132.834 204.85C125.97 204.85 120.406 210.402 120.406 217.251C120.406 224.1 125.97 229.653 132.834 229.653Z"
+                                fill="white" stroke="#BABABA" stroke-linecap="round" stroke-linejoin="round" />
+                            <path
+                                d="M219.381 222.333C226.245 222.333 231.809 216.781 231.809 209.931C231.809 203.082 226.245 197.53 219.381 197.53C212.517 197.53 206.953 203.082 206.953 209.931C206.953 216.781 212.517 222.333 219.381 222.333Z"
+                                fill="white" stroke="#BABABA" stroke-linecap="round" stroke-linejoin="round" />
+                            <path
+                                d="M47.1416 39.2427L14.8024 41.9808C11.9999 42.2181 9.9208 44.6775 10.1586 47.474C10.3964 50.2706 12.861 52.3452 15.6635 52.1079L48.0028 49.3698C50.8053 49.1325 52.8844 46.6731 52.6466 43.8766C52.4088 41.0801 49.9441 39.0054 47.1416 39.2427Z"
+                                fill="#D2D2D2" />
+                            <path
+                                d="M143.177 129.729C143.808 124.924 146.066 120.478 149.577 117.129C153.088 113.781 157.641 111.73 162.48 111.319C167.32 110.907 172.155 112.158 176.183 114.865C180.212 117.572 183.192 121.572 184.63 126.201"
+                                stroke="#BABABA" stroke-linecap="round" stroke-linejoin="round" />
+                            <path
+                                d="M184.973 101.319C186.605 101.319 187.928 99.9986 187.928 98.3699C187.928 96.7413 186.605 95.421 184.973 95.421C183.341 95.421 182.018 96.7413 182.018 98.3699C182.018 99.9986 183.341 101.319 184.973 101.319Z"
+                                fill="#BABABA" />
+                            <path
+                                d="M138.137 105.268C139.769 105.268 141.092 103.948 141.092 102.32C141.092 100.691 139.769 99.3705 138.137 99.3705C136.505 99.3705 135.181 100.691 135.181 102.32C135.181 103.948 136.505 105.268 138.137 105.268Z"
+                                fill="#BABABA" />
+                            <path d="M54.8875 213.591V224.94" stroke="#BABABA" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M49.2146 219.252H60.5608" stroke="#BABABA" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M236.189 2.63303V13.955" stroke="#BABABA" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M230.516 8.2941H241.863" stroke="#BABABA" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M101.855 36.4674V47.7895" stroke="#BABABA" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M96.1558 42.1284H107.528" stroke="#BABABA" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path
+                                d="M264.502 78.0956C265.988 78.0956 267.193 76.8932 267.193 75.4099C267.193 73.9266 265.988 72.7242 264.502 72.7242C263.016 72.7242 261.811 73.9266 261.811 75.4099C261.811 76.8932 263.016 78.0956 264.502 78.0956Z"
+                                fill="white" stroke="#BABABA" stroke-linecap="round" stroke-linejoin="round" />
+                            <path
+                                d="M163.917 53.9507C165.345 53.9507 166.503 52.7955 166.503 51.3704C166.503 49.9453 165.345 48.79 163.917 48.79C162.489 48.79 161.331 49.9453 161.331 51.3704C161.331 52.7955 162.489 53.9507 163.917 53.9507Z"
+                                fill="#CFCFCF" />
+                            <path
+                                d="M181.279 241.212C182.707 241.212 183.865 240.056 183.865 238.631C183.865 237.206 182.707 236.051 181.279 236.051C179.851 236.051 178.693 237.206 178.693 238.631C178.693 240.056 179.851 241.212 181.279 241.212Z"
+                                fill="#CFCFCF" />
+
+                        </svg>
+                    </div>
+                    <p>{% translate 'К сожалению не нашлось продуктов по заданным фильтрам.' %}</p>
                 </div>
                 {% endfor %}
             </div>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?{% param_replace page=page_obj.previous_page_number %}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" aria-label="Previous" aria-disabled="true">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                    {% endif %}
+
+                    {% with left=page_obj.number|add:"-3" right=page_obj.number|add:"3" %}
+                        {% for num in paginator.page_range %}
+                            {% if num >= left and num <= right %}
+                                <li class="page-item {% if num == page_obj.number %}active{% endif %}">
+                                    <a class="page-link" href="?{% param_replace page=num %}">{{ num }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    {% endwith %}
+
+                    {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?{% param_replace page=page_obj.next_page_number %}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" aria-label="Next" aria-disabled="true">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
         </div>
     </div>
 </div>
+
 {% endblock %}
 
 {% block additional_scripts %}
-<script src="{% static 'products/scripts/filterAccordionCollaps.js' %}" async defer></script>
+<script src="{% static 'products/scripts/filterAccordionCollaps.js' %}" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.6.3/nouislider.min.js" defer></script>
+<script src="{% static 'products/scripts/noUiSlider.js' %}" defer></script>
 {% endblock %}
