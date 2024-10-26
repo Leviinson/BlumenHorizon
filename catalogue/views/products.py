@@ -8,11 +8,12 @@ from django.utils.translation import gettext_lazy as _
 from core.services.mixins.views import CommonContextMixin
 
 from ..models import Product, ProductImage
-from ..services.views import ListViewMixin
+from ..services.views import ListViewMixin, DetailViewMixin
 from django.db.models import OuterRef, Subquery
 
 
 class ProductView(
+    DetailViewMixin,
     CommonContextMixin,
     DetailView,
     TemplateResponseMixin,
@@ -23,7 +24,20 @@ class ProductView(
         Product.objects.filter(is_active=True)
         .order_by("name")
         .prefetch_related("images")
-        .only("name", "price", "description", "specs", "images", "discount")
+        .select_related(
+            "subcategory",
+            "subcategory__category",
+        )
+        .only(
+            "name",
+            "price",
+            "description",
+            "specs",
+            "images",
+            "discount",
+            "subcategory__slug",
+            "subcategory__category__slug",
+        )
     )
     context_object_name = "product"
     slug_url_kwarg = "product_slug"
@@ -102,11 +116,11 @@ class ProductListView(
 
     def get_queryset(self):
         first_image_subquery = ProductImage.objects.filter(
-            product=OuterRef('pk')
-        ).order_by('id')[:1]
+            product=OuterRef("pk")
+        ).order_by("id")[:1]
 
         return (
             Product.objects.filter(is_active=True)
             .order_by("name")
-            .annotate(first_image=Subquery(first_image_subquery.values('image')[:1]))
+            .annotate(first_image=Subquery(first_image_subquery.values("image")[:1]))
         )

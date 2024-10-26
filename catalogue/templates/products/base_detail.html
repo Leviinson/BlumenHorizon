@@ -4,10 +4,18 @@
 
 {% block additional_head_styles %}
 <link rel="stylesheet" href="{% static 'products/styles/common.css' %}">
+<link rel="stylesheet" href="{% static 'products/styles/products_details.css' %}">
 {% endblock %}
 
 {% block body %}
 <div class="container mt-5">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#" class="text-dark">{{ category_slug_breadcrumbs }}</a></li>
+            <li class="breadcrumb-item"><a href="#" class="text-dark">{{ subcategory_slug_breadcrumbs }}</a></li>
+            <li class="breadcrumb-item"><a href="#" class="text-dark">{{ product.name }}</a></li>
+        </ol>
+    </nav>
     <div class="row">
         <div class="col-md-6">
             <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">

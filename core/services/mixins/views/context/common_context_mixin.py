@@ -2,7 +2,7 @@ from django.conf import settings
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.sites.models import Site
 
-from products.models import Category
+from catalogue.models import Category
 
 
 class CommonContextMixin:

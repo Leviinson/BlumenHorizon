@@ -31,8 +31,9 @@ service_urlpatterns = [
 
 i18n_urlpatterns = i18n_patterns(
     path("accounts/", include("accounts.urls")),
-    path("products/", include("products.urls.products")),
-    path("bouquets/", include("products.urls.bouquets")),
+    path("products/", include("catalogue.urls.products")),
+    path("bouquets/", include("catalogue.urls.bouquets")),
+    path("catalogue/", include("catalogue.urls.catalogue")),
     prefix_default_language=False
 )
 

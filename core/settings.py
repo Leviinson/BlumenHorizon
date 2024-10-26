@@ -63,7 +63,7 @@ DJANGO_APPS = [
 
 LOCAL_APPS = [
     "accounts.apps.AccountsConfig",
-    "products.apps.ProductsConfig",
+    "catalogue.apps.CatalogueConfig",
     "extended_contrib_models.apps.ExtendedContribModelsConfig",
 ]
 
@@ -366,7 +366,7 @@ STATIC_ROOT = BASE_DIR / "static"
 STATICFILES_DIRS = [
     "core/staticfiles/",
     "accounts/templates/",
-    "products/templates/",
+    "catalogue/templates/",
     MEDIA_ROOT
 ]
 
