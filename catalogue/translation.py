@@ -1,6 +1,6 @@
 from modeltranslation.translator import TranslationOptions, register
 
-from .models import Category, Subcategory, Product, Color, Flower, Bouquet
+from .models import Bouquet, Category, Color, Flower, Product, Subcategory
 
 
 @register(Category)

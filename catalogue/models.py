@@ -1,6 +1,7 @@
 from colorfield.fields import ColorField
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from tinymce.models import HTMLField
 
@@ -111,8 +112,15 @@ class Product(ProductAbstract):
         verbose_name = _("Продукт")
         verbose_name_plural = _("Продукты")
 
-    def get_absolute_url(self):
-        return "products/%s/" % self.slug
+    def get_detail_url(self):
+        return reverse_lazy(
+            "catalogue:product-details",
+            kwargs={
+                "category_slug": self.subcategory.category.slug,
+                "subcategory_slug": self.subcategory.slug,
+                "product_slug": self.slug,
+            },
+        )
 
 
 class ProductImage(models.Model):
@@ -199,8 +207,15 @@ class Bouquet(ProductAbstract):
     def __str__(self):
         return f"{self.name} ({self.size} см, {self.amount_of_flowers} цветов)"
 
-    def get_absolute_url(self):
-        return "bouquets/%s/" % self.slug
+    def get_detail_url(self):
+        return reverse_lazy(
+            "catalogue:bouquet-details",
+            kwargs={
+                "category_slug": self.subcategory.category.slug,
+                "subcategory_slug": self.subcategory.slug,
+                "bouquet_slug": self.slug,
+            },
+        )
 
 
 class BouquetImage(models.Model):
