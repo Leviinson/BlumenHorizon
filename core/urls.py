@@ -23,18 +23,15 @@ from django.contrib.auth.views import LogoutView
 from django.urls import include, path, re_path
 
 service_urlpatterns = [
-    path('i18n/', include('django.conf.urls.i18n')),
+    path("i18n/", include("django.conf.urls.i18n")),
     path("admin/", admin.site.urls),
-
     path("logout/", LogoutView.as_view(), name="logout"),
 ]
 
 i18n_urlpatterns = i18n_patterns(
     path("accounts/", include("accounts.urls")),
-    path("products/", include("catalogue.urls.products")),
-    path("bouquets/", include("catalogue.urls.bouquets")),
-    path("catalogue/", include("catalogue.urls.catalogue")),
-    prefix_default_language=False
+    path("catalogue/", include("catalogue.urls")),
+    prefix_default_language=False,
 )
 
 urlpatterns = service_urlpatterns + i18n_urlpatterns
