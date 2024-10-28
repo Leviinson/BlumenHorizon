@@ -1,37 +1,32 @@
-{% extends "templates/base.html" %}
+{% extends "products/base_list.html" %}
 {% load static %}
 {% load i18n %}
 
-{% block additional_head_styles %}
-{% endblock %}
+{% block additional_filters %}
+<label for="{{ filter.form.min_size.id_for_label }}" class="form-label my-3">{% translate 'Диаметр букета' %}</label>
+<div class="d-flex flex-column">
+    <div id="sizeSlider" class="form-range px-3"></div>
+    <div class="d-flex mt-4">
+        <div class="me-2">
+            {{ filter.form.min_size }}
+        </div>
+        <div class="ms-2">
+            {{ filter.form.max_size }}
+        </div>
+    </div>
+</div>
 
-{% block body %}
-<div class="container">
-    <div class="row">
-        <div class="col-6 mx-auto text-center">
-            <ul>
-                {% for bouquet in bouquets %}
-                    <li>{{ bouquet.name }}</li>
-                {% endfor %}
-            </ul>
-            
-            <div class="pagination">
-                <span class="step-links">
-                    {% if page_obj.has_previous %}
-                        <a href="?page=1">&laquo; первая</a>
-                        <a href="?page={{ page_obj.previous_page_number }}">предыдущая</a>
-                    {% endif %}
-            
-                    <span class="current">
-                        Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
-                    </span>
-            
-                    {% if page_obj.has_next %}
-                        <a href="?page={{ page_obj.next_page_number }}">следующая</a>
-                        <a href="?page={{ page_obj.paginator.num_pages }}">последняя &raquo;</a>
-                    {% endif %}
-                </span>
-            </div>
+<label for="{{ filter.form.min_amount_of_flowers.id_for_label }}" class="form-label my-3">
+    {% translate 'Количество цветов в букете' %}
+</label>
+<div class="d-flex flex-column">
+    <div id="amountOfFlowersSlider" class="form-range px-3"></div>
+    <div class="d-flex mt-4">
+        <div class="me-2">
+            {{ filter.form.min_amount_of_flowers }}
+        </div>
+        <div class="ms-2">
+            {{ filter.form.max_amount_of_flowers }}
         </div>
     </div>
 </div>
