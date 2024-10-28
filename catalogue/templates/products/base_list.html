@@ -53,11 +53,6 @@
 
                             {% block additional_filters %}
                             {% endblock %}
-                            <div class="form-check mt-3">
-                                <label for="{{ filter.form.with_discount.id_for_label }}" class="form-label">
-                                    {% translate 'Со скидкой?' %}</label>
-                                {{ filter.form.with_discount }}
-                            </div>
                             <button type="submit" class="btn btn-dark-green mt-2">Фильтровать</button>
                         </form>
                     </div>
