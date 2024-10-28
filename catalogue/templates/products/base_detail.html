@@ -20,10 +20,10 @@
         <div class="col-md-6">
             <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
-                    {% for image_url in images_url %}
+                    {% for image in product.images.all %}
                     <div class="carousel-item {% if forloop.first %}active{% endif %}">
                         <div class="image-wrapper">
-                            <img src="{{ image_url }}" class="square-image rounded img-thumbnail"
+                            <img src="{{ image.image.url }}" class="square-image rounded img-thumbnail"
                                  alt="{{ product.name }} {{ forloop.counter }}">
                         </div>
                     </div>
@@ -51,6 +51,11 @@
                 <h3 class="text-success mb-4">{{ product.price }} {{ currency_symbol }}</h3>
 
                 <h4 class="mb-3">{% translate 'Описание' %}</h4>
+                <ul class="list-unstyled product-attributes-list">
+                    <li>
+                        <strong>{% translate 'Скидка' %}:</strong> {{ product.discount }}
+                    </li>
+                </ul>
                 {% block additional_attributes %}
                 {% endblock %}
 
