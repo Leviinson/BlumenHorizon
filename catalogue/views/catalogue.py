@@ -34,3 +34,28 @@ class SubcategoryProductsListView(
     queryset = Product.objects.filter(is_active=True).order_by("name")
     context_object_name = "products"
     template_name = "products/bouquets/bouquet_list.html"
+
+
+class CategoryBouquetListView(
+    ListViewMixin,
+    CommonContextMixin,
+    ListView,
+    TemplateResponseMixin,
+    ContextMixin,
+):
+    model = Product
+    queryset = Product.objects.filter(is_active=True).order_by("name")
+    context_object_name = "products"
+    template_name = "products/bouquets/bouquet_list.html"
+
+class SubcategoryBouquetListView(
+    ListViewMixin,
+    CommonContextMixin,
+    ListView,
+    TemplateResponseMixin,
+    ContextMixin,
+):
+    model = Product
+    queryset = Product.objects.filter(is_active=True).order_by("name")
+    context_object_name = "products"
+    template_name = "products/bouquets/bouquet_list.html"
