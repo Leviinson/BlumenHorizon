@@ -3,18 +3,20 @@ from modeltranslation.admin import TranslationAdmin
 
 from .models import (
     Bouquet,
+    BouquetCategory,
     BouquetImage,
-    Category,
+    BouquetSubcategory,
     Color,
     Flower,
     Product,
+    ProductCategory,
     ProductImage,
-    Subcategory,
+    ProductSubcategory,
 )
 
 
-@admin.register(Category)
-class CategoryAdmin(TranslationAdmin):
+@admin.register(ProductCategory)
+class ProductCategoryAdmin(TranslationAdmin):
     fieldsets = ((None, {"fields": ("name", "slug", "is_active", "image")}),)
     list_filter = ("is_active",)
     search_fields = (
@@ -29,8 +31,8 @@ class CategoryAdmin(TranslationAdmin):
     ordering = ("name",)
 
 
-@admin.register(Subcategory)
-class SubcategoryAdmin(TranslationAdmin):
+@admin.register(ProductSubcategory)
+class ProductSubcategoryAdmin(TranslationAdmin):
     fieldsets = (
         (None, {"fields": ("name", "slug", "category", "is_active", "image")}),
     )
@@ -124,6 +126,41 @@ class BouquetImagesInLine(admin.TabularInline):
     model = BouquetImage
     extra = 1
     max_num = 3
+
+
+@admin.register(BouquetCategory)
+class BouquetCategoryAdmin(TranslationAdmin):
+    fieldsets = ((None, {"fields": ("name", "slug", "is_active", "image")}),)
+    list_filter = ("is_active",)
+    search_fields = (
+        "name",
+        "slug",
+    )
+    list_display = (
+        "name",
+        "slug",
+        "is_active",
+    )
+    ordering = ("name",)
+
+
+@admin.register(BouquetSubcategory)
+class BouquetSubcategoryAdmin(TranslationAdmin):
+    fieldsets = (
+        (None, {"fields": ("name", "slug", "category", "is_active", "image")}),
+    )
+    list_filter = ("is_active",)
+    search_fields = (
+        "name",
+        "slug",
+    )
+    list_display = (
+        "name",
+        "slug",
+        "category",
+        "is_active",
+    )
+    ordering = ("category",)
 
 
 @admin.register(Bouquet)
