@@ -14,7 +14,6 @@ import os
 import sys
 from pathlib import Path
 
-from django.urls import reverse_lazy
 from dotenv import load_dotenv
 
 load_dotenv(override=True)
@@ -59,6 +58,7 @@ DJANGO_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sites",
+    "carton",
 ]
 
 LOCAL_APPS = [
