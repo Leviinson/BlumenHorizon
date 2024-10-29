@@ -1,18 +1,43 @@
 from modeltranslation.translator import TranslationOptions, register
 
-from .models import Bouquet, Category, Color, Flower, Product, Subcategory
+from .models import (
+    Bouquet,
+    BouquetCategory,
+    BouquetSubcategory,
+    Color,
+    Flower,
+    Product,
+    ProductCategory,
+    ProductSubcategory,
+)
 
 
-@register(Category)
-class CategoryTranslationOptions(TranslationOptions):
+@register(ProductCategory)
+class ProductCategoryTranslationOptions(TranslationOptions):
     fields = (
         "name",
         "slug",
     )
 
 
-@register(Subcategory)
-class SubcategoryTranslationOptions(TranslationOptions):
+@register(ProductSubcategory)
+class ProductSubcategoryTranslationOptions(TranslationOptions):
+    fields = (
+        "name",
+        "slug",
+    )
+
+
+@register(BouquetCategory)
+class BouquetCategoryTranslationOptions(TranslationOptions):
+    fields = (
+        "name",
+        "slug",
+    )
+
+
+@register(BouquetSubcategory)
+class BouquetSubcategoryTranslationOptions(TranslationOptions):
     fields = (
         "name",
         "slug",
