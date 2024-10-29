@@ -27,7 +27,7 @@ class MetaDataAbstractModel(models.Model):
         abstract = True
 
 
-class Category(MetaDataAbstractModel):
+class ProductCategory(MetaDataAbstractModel):
     image = models.ImageField(
         verbose_name=_("Картинка"),
         upload_to="categories/%Y-%m-%d",
@@ -35,29 +35,29 @@ class Category(MetaDataAbstractModel):
     )
 
     class Meta:
-        verbose_name = _("Категория")
-        verbose_name_plural = _("Категории")
+        verbose_name = _("Категория продукта")
+        verbose_name_plural = _("Категории продуктов")
 
     def __str__(self):
         return self.name
 
 
-class Subcategory(MetaDataAbstractModel):
+class ProductSubcategory(MetaDataAbstractModel):
     image = models.ImageField(
         verbose_name=_("Картинка"),
         upload_to="subcategories/%Y-%m-%d",
         default="defaults/no-image.webp",
     )
     category = models.ForeignKey(
-        Category,
+        ProductCategory,
         on_delete=models.PROTECT,
         verbose_name=_("Категория"),
         related_name="subcategories",
     )
 
     class Meta:
-        verbose_name = _("Подкатегория")
-        verbose_name_plural = _("Подкатегории")
+        verbose_name = _("Подкатегория продукта")
+        verbose_name_plural = _("Подкатегории продуктов")
 
     def __str__(self):
         return self.name
@@ -84,11 +84,6 @@ class ProductAbstract(TimeStampAdbstractModel, MetaDataAbstractModel):
         verbose_name=_("Скидка"),
         null=True,
     )
-    subcategory = models.ForeignKey(
-        Subcategory,
-        on_delete=models.PROTECT,
-        verbose_name=_("Подкатегория"),
-    )
     description = HTMLField(
         verbose_name=_("Описание"),
     )
@@ -108,6 +103,12 @@ class ProductAbstract(TimeStampAdbstractModel, MetaDataAbstractModel):
 
 
 class Product(ProductAbstract):
+    subcategory = models.ForeignKey(
+        ProductSubcategory,
+        on_delete=models.PROTECT,
+        verbose_name=_("Подкатегория"),
+        related_name="products",
+    )
     class Meta:
         verbose_name = _("Продукт")
         verbose_name_plural = _("Продукты")
@@ -178,9 +179,54 @@ class Flower(models.Model):
 
     def __str__(self):
         return self.name
+    
+class BouquetCategory(MetaDataAbstractModel):
+    image = models.ImageField(
+        verbose_name=_("Картинка"),
+        upload_to="categories/%Y-%m-%d",
+        default="defaults/no-image.webp",
+    )
+
+    class Meta:
+        verbose_name = _("Категория букета")
+        verbose_name_plural = _("Категории букетов")
+
+    def __str__(self):
+        return self.name
+
+
+class BouquetSubcategory(MetaDataAbstractModel):
+    image = models.ImageField(
+        verbose_name=_("Картинка"),
+        upload_to="subcategories/%Y-%m-%d",
+        default="defaults/no-image.webp",
+    )
+    category = models.ForeignKey(
+        BouquetCategory,
+        on_delete=models.PROTECT,
+        verbose_name=_("Категория"),
+        related_name="subcategories",
+    )
+
+    class Meta:
+        verbose_name = _("Подкатегория букета")
+        verbose_name_plural = _("Подкатегории букетов")
+
+    def __str__(self):
+        return self.name
+
+    def clean_category(self):
+        if self.category is None:
+            self.is_active = False
 
 
 class Bouquet(ProductAbstract):
+    subcategory = models.ForeignKey(
+        BouquetSubcategory,
+        on_delete=models.PROTECT,
+        verbose_name=_("Подкатегория"),
+        related_name="bouquets",
+    )
     size = models.IntegerField(
         verbose_name=_("Диаметр букета"),
     )
