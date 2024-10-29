@@ -1,5 +1,5 @@
 from django.utils.translation import gettext_lazy as _
-from django_filters import ModelMultipleChoiceFilter, NumberFilter
+from django_filters import CharFilter, NumberFilter
 
 from ..models import Bouquet, Color, Flower
 from .base_filter import BaseFilter
@@ -8,25 +8,23 @@ from .base_filter import BaseFilter
 class BouquetFilter(BaseFilter):
     aggregate_fields = ["price", "size", "amount_of_flowers"]
 
-    colors = ModelMultipleChoiceFilter(
-        queryset=Color.objects.all(),
-        field_name="colors",
-        label=_("Цвета букета"),
+    colors = CharFilter(
+        method="filter_by_colors",
+        label=_("Цветовая гамма букета"),
     )
-    flowers = ModelMultipleChoiceFilter(
-        queryset=Flower.objects.all(),
-        field_name="flowers",
-        label=_("Цветы в букете"),
+    flowers = CharFilter(
+        method="filter_by_flowers",
+        label=_("Состав"),
     )
     min_size = NumberFilter(
         field_name="size",
         lookup_expr="gte",
-        label=_("Минимальный размер"),
+        label=_("Минимальный диаметр букета"),
     )
     max_size = NumberFilter(
         field_name="size",
         lookup_expr="lte",
-        label=_("Максимальный размер"),
+        label=_("Максимальный диаметр букета"),
     )
     min_amount_of_flowers = NumberFilter(
         field_name="amount_of_flowers",
@@ -94,3 +92,16 @@ class BouquetFilter(BaseFilter):
             "size",
             "amount_of_flowers",
         ]
+
+
+    def filter_by_colors(self, queryset, name: str, value: str):
+        if value:
+            color_names = value.split(",")
+            queryset = queryset.filter(colors__name__in=color_names)
+        return queryset
+    
+    def filter_by_flowers(self, queryset, name: str, value: str):
+        if value:
+            flower_names = value.split(",")
+            queryset = queryset.filter(flowers__name__in=flower_names)
+        return queryset
