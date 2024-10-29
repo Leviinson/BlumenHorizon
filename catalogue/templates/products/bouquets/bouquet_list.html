@@ -30,4 +30,71 @@
         </div>
     </div>
 </div>
+
+<label for="colors-input" class="form-check-label mt-3">{% translate 'Цветовая гамма' %}</label>
+<input style="display: none;" name="colors" id="colors-input" value="{{ request.GET.colors|default:'' }}">
+<ul class="list-group my-1">
+    {% for color in colors %}
+    <li class="list-group-item d-flex justify-content-start align-items-center">
+        <input type="checkbox" class="form-check-input color-checkbox" value="{{ color.name }}" id="{{ color.name }}" {% if color.name in request.GET.colors %}checked{% endif %}>
+        <label class="form-check-label d-flex justify-content-center align-items-center ms-3" for="{{ color.name }}">
+            <span class="badge-color" style="background-color: {{ color.hex_code }};"></span>
+            {{ color.name }}
+        </label>
+    </li>
+    {% endfor %}
+</ul>
+
+<label for="flowers-input" class="form-check-label mt-3">{% translate 'Состав' %}</label>
+<input style="display: none;" name="flowers" id="flowers-input" value="{{ request.GET.flowers|default:'' }}">
+<ul class="list-group my-1">
+    {% for flower in flowers %}
+    <li class="list-group-item d-flex justify-content-start align-items-center">
+        <input type="checkbox" class="form-check-input flower-checkbox" value="{{ flower.name }}" id="{{ flower.name }}" {% if flower.name in request.GET.flowers %}checked{% endif %}>
+        <label class="form-check-label d-flex justify-content-center align-items-center ms-3" for="{{ flower.name }}">
+            {{ flower.name }}
+        </label>
+    </li>
+    {% endfor %}
+</ul>
+
+<script>
+document.querySelectorAll('.color-checkbox').forEach(checkbox => {
+    checkbox.addEventListener('change', function() {
+        const selectedColors = Array.from(document.querySelectorAll('.color-checkbox:checked'))
+            .map(i => i.value);
+        
+        document.getElementById('colors-input').value = selectedColors.join(',');
+        
+        const params = new URLSearchParams(window.location.search);
+        
+        if (selectedColors.length) {
+            params.set('colors', selectedColors.join(','));
+        } else {
+            params.delete('colors');
+        }
+
+        window.history.replaceState({}, '', `${window.location.pathname}?${params}`);
+    });
+});
+
+document.querySelectorAll('.flower-checkbox').forEach(checkbox => {
+    checkbox.addEventListener('change', function() {
+        const selectedFlowers = Array.from(document.querySelectorAll('.flower-checkbox:checked'))
+            .map(i => i.value);
+        
+        document.getElementById('flowers-input').value = selectedFlowers.join(',');
+        
+        const params = new URLSearchParams(window.location.search);
+        
+        if (selectedFlowers.length) {
+            params.set('flowers', selectedFlowers.join(','));
+        } else {
+            params.delete('flowers');
+        }
+
+        window.history.replaceState({}, '', `${window.location.pathname}?${params}`);
+    });
+});
+</script>
 {% endblock %}
