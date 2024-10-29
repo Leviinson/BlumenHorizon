@@ -33,17 +33,17 @@ class ProductView(
             "images",
             "discount",
             "subcategory__slug",
+            "subcategory__name",
             "subcategory__category__slug",
+            "subcategory__category__name",
         )
     )
     context_object_name = "product"
     slug_url_kwarg = "product_slug"
     template_name = "products/base_detail.html"
-
-    def get_context_data(self, *args, **kwargs):
-        context = super().get_context_data(*args, **kwargs)
-        context["title"] = self.object.name
-        return context
+    detail_url_name = "product-details"
+    category_url_name = "products-category"
+    subcategory_url_name = "products-subcategory"
 
 
 class ProductListView(
