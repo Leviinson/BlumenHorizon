@@ -15,6 +15,6 @@ class ListViewMixin:
             }
         ).order_by("id")[:1]
 
-        return qs.filter(is_active=True).annotate(
+        return qs.filter(is_active=True, subcategory__is_active=True, subcategory__category__is_active=True).annotate(
             first_image_uri=Subquery(first_image_subquery.values("image")[:1]),
         ).order_by("name")
