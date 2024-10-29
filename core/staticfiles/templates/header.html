@@ -5,7 +5,7 @@
   <nav class="navbar navbar-expand-lg bg-soft-turquoise text-light">
     <div class="container">
       <a href="#" class="fw-bold navbar-brand fs-3 text-light">
-        <img src="{% static 'templates/favicon.png' %}" alt="BlumenHorizon logo" width="72" height="72" class="me-2">
+        <img src="{% static 'templates/favicon.png' %}" alt="{{ site_name }} logo" width="72" height="72" class="me-2">
         {{ site_name }}
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
@@ -43,9 +43,14 @@
     </div>
   </nav>
   <nav class="nav nav-pills nav-fill mx-2 mt-2 d-flex flex-wrap justify-content-start gap-2">
-    {% for category in categories %}
+    {% for category in products_categories %}
     <a class="text-light text-center nav-item nav-link bg-soft-turquoise d-flex justify-content-center align-items-center"
-      style="flex: 1 1 calc(25% - 10px);" href="#">{{ category.name }}</a>
+      style="flex: 1 1 calc(25% - 10px);" href="{% url 'catalogue:products-category' category.slug %}">{{ category.name }}</a>
     {% endfor %}
+    {% for category in bouquets_categories %}
+    <a class="text-light text-center nav-item nav-link bg-soft-turquoise d-flex justify-content-center align-items-center"
+      style="flex: 1 1 calc(25% - 10px);" href="{% url 'catalogue:bouquets-category' category.slug %}">{{ category.name }}</a>
+    {% endfor %}
+
   </nav>
 </div>
