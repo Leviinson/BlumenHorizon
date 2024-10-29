@@ -1,4 +1,3 @@
-from pprint import pprint
 from django.contrib.auth.views import LoginView
 from django.utils.translation import gettext_lazy as _
 from django.views.generic.base import ContextMixin
