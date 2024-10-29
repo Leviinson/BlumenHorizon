@@ -3,9 +3,11 @@ from django.urls import path
 from .views import (
     BouquetListView,
     BouquetView,
+    CategoryBouquetListView,
     CategoryProductsListView,
     ProductListView,
     ProductView,
+    SubcategoryBouquetListView,
     SubcategoryProductsListView,
 )
 
@@ -28,7 +30,7 @@ urlpatterns = [
         name="products-subcategory",
     ),
     path(
-        "products/<slug:category_slug>/<slug:subcategory_slug>/<slug:product_slug>",
+        "products/<slug:category_slug>/<slug:subcategory_slug>/<slug:product_slug>/",
         ProductView.as_view(),
         name="product-details",
     ),
@@ -39,16 +41,16 @@ urlpatterns = [
     ),
     path(
         "bouquets/<slug:category_slug>/",
-        CategoryProductsListView.as_view(),
+        CategoryBouquetListView.as_view(),
         name="bouquets-category",
     ),
     path(
         "bouquets/<slug:category_slug>/<slug:subcategory_slug>/",
-        SubcategoryProductsListView.as_view(),
+        SubcategoryBouquetListView.as_view(),
         name="bouquets-subcategory",
     ),
     path(
-        "bouquets/<slug:category_slug>/<slug:subcategory_slug>/<slug:bouquet_slug>",
+        "bouquets/<slug:category_slug>/<slug:subcategory_slug>/<slug:bouquet_slug>/",
         BouquetView.as_view(),
         name="bouquet-details",
     ),
