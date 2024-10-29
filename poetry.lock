@@ -373,6 +373,16 @@ argon2 = ["argon2-cffi (>=19.1.0)"]
 bcrypt = ["bcrypt"]
 
 [[package]]
+name = "django-carton"
+version = "1.2.1"
+description = "django-carton is a simple and lightweight application for shopping carts and wish lists."
+optional = false
+python-versions = "*"
+files = [
+    {file = "django-carton-1.2.1.tar.gz", hash = "sha256:247f4c427c6b651e9aa910020ba08606b9c46f5443b1c7e0c89ba75aba2bc6c1"},
+]
+
+[[package]]
 name = "django-colorfield"
 version = "0.11.0"
 description = "color field for django models with a nice color-picker in the admin."
@@ -1007,4 +1017,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "7ee0fce385c9ddc8c1e8cc514a12c04065eab53ee7aa5a213e9870be8ffb2846"
+content-hash = "da6bf3c2d6b650031b9c541eb764dadfba3067dd5dc91d94ea3ec36f0c01df57"
