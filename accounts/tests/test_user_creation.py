@@ -1,5 +1,4 @@
 from dataclasses import asdict
-from pprint import pprint
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.tokens import default_token_generator
