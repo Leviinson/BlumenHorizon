@@ -65,6 +65,7 @@ LOCAL_APPS = [
     "accounts.apps.AccountsConfig",
     "catalogue.apps.CatalogueConfig",
     "extended_contrib_models.apps.ExtendedContribModelsConfig",
+    "cart.apps.CartConfig",
 ]
 
 THIRDPARTY_APPS = [
