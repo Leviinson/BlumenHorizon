@@ -122,7 +122,10 @@ class Product(ProductAbstract):
                 "product_slug": self.slug,
             },
         )
-
+    
+    @property
+    def is_bouquet(self) -> bool:
+        return False
 
 class ProductImage(models.Model):
     product = models.ForeignKey(
@@ -262,6 +265,10 @@ class Bouquet(ProductAbstract):
                 "bouquet_slug": self.slug,
             },
         )
+    
+    @property
+    def is_bouquet(self) -> bool:
+        return True
 
 
 class BouquetImage(models.Model):
