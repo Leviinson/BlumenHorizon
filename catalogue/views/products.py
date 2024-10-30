@@ -27,6 +27,7 @@ class ProductView(
         )
         .only(
             "name",
+            "slug",
             "price",
             "description",
             "specs",

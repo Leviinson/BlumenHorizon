@@ -27,6 +27,7 @@ class BouquetView(
         )
         .only(
             "name",
+            "slug",
             "price",
             "amount_of_flowers",
             "description",
