@@ -392,3 +392,9 @@ PHONENUMBER_DEFAULT_REGION = os.getenv("PHONENUMBER_DEFAULT_REGION")
 SITE_ID = 1
 SITE_NAME = os.getenv("SITE_NAME")  # for tests
 SITE_DOMAIN = os.getenv("SITE_DOMAIN")  # for tests
+
+CART_PRODUCT_LOOKUP = {
+    'is_active': True,
+    'subcategory__is_active': True,
+    'subcategory__category__is_active': True,
+}

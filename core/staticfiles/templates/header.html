@@ -36,10 +36,17 @@
           </li>
         </ul>
       </div>
-      <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
-        <button class="btn btn-dark-green" type="submit">{% translate 'Поиск' %}</button>
-      </form>
+      <div id="header-right-panel" class="d-flex justify-content-center">
+        <div id="header-right-panel-cart" class="me-2">
+          <a class="btn btn-dark-green" href="{% url 'cart:show' %}">
+            <i class="fas fa-shopping-cart me-2 my-2"></i>
+            {% translate 'Корзина' %}</a>
+        </div>
+        <form class="d-flex">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
+          <button class="btn btn-dark-green" type="submit">{% translate 'Поиск' %}</button>
+        </form>
+      </div>
     </div>
   </nav>
   <nav class="nav nav-pills nav-fill mx-2 mt-2 d-flex flex-wrap justify-content-start gap-2">

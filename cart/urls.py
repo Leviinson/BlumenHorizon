@@ -1,11 +1,20 @@
 from django.urls import path
 
-from .views import CartItemAdd, CartItemRemove, cart_clear
+from .views import (
+    CartBouquetAdd,
+    CartBouquetRemove,
+    CartProductAdd,
+    CartProductRemove,
+    CartView,
+    cart_clear,
+)
 
 app_name = "cart"
 urlpatterns = (
-    path("add/", CartItemAdd.as_view(), name="add"),
-    path("remove/", CartItemRemove.as_view(), name="remove"),
+    path("bouquet/add/", CartBouquetAdd.as_view(), name="bouquet-add"),
+    path("bouquet/remove/", CartBouquetRemove.as_view(), name="bouquet-remove"),
+    path("product/add/", CartProductAdd.as_view(), name="product-add"),
+    path("product/remove/", CartProductRemove.as_view(), name="product-remove"),
     path("clear/", cart_clear, name="clear"),
-    # path("", CartView.as_view(), name="show"),
+    path("", CartView.as_view(), name="show"),
 )
