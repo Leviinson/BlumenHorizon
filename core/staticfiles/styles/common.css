@@ -1,5 +1,5 @@
 :root {
-    --turquoise-color: rgb(113, 151, 156);
+    --turquoise-color: rgb(87, 123, 128);
     --dark-green-color: rgb(44, 73, 75);
     --light-green-color: rgb(55, 92, 94);
 }
@@ -14,8 +14,13 @@ input[type="number"]::-webkit-inner-spin-button {
     display: none;
 }
 
+input {
+    padding: .375rem 0 .375rem .75rem;
+    text-align: center;
+}
+
 body {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Manrope', sans-serif;
 }
 
 .bg-soft-turquoise {

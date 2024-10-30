@@ -16,7 +16,6 @@ class DetailViewMixin:
             )
         context = super().get_context_data(*args, **kwargs)
         context["title"] = self.object.name
-        context["images_url"] = (image.image.url for image in self.object.images.all())
         context["breadcrumbs"] = [
             {
                 "name": self.object.subcategory.category.name,

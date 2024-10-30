@@ -2,14 +2,13 @@ function createSlider(sliderId, minInputId, maxInputId, step = 10) {
     var slider = document.getElementById(sliderId);
     var minInput = document.getElementById(minInputId);
     var maxInput = document.getElementById(maxInputId);
-    var minRange = parseInt(minInput.getAttribute('min'));
     var maxRange = parseInt(maxInput.getAttribute('max'));
 
     noUiSlider.create(slider, {
         start: [minInput.value, maxInput.value],
         connect: true,
         range: {
-            'min': minRange,
+            'min': 0,
             'max': maxRange
         },
         step: step

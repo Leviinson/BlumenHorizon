@@ -1,8 +1,3 @@
-const translations = {
-    addToCart: gettext("В корзину"),
-    removeFromCart: gettext("Убрать")
-};
-
 document.addEventListener("DOMContentLoaded", function () {
     const cartContainer = document.getElementById("cart-container");
 
@@ -11,11 +6,9 @@ document.addEventListener("DOMContentLoaded", function () {
         form.dataset.isInCart = isInCart ? "true" : "false";
 
         if (isInCart) {
-            button.classList.replace("btn-dark-green", "btn-warning");
-            button.querySelector("span").textContent = translations.removeFromCart;
+            button.classList.replace("btn-dark-green", "btn-success");
         } else {
-            button.classList.replace("btn-warning", "btn-dark-green");
-            button.querySelector("span").textContent = translations.addToCart;
+            button.classList.replace("btn-success", "btn-dark-green");
         }
     };
 
@@ -39,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if (data.status === "success") {
                 updateButtonState(form, !isInCart);
-                showToast(data.message, "success");
+                showToast(data.message, isInCart ? "danger" : "success");
             } else {
                 showToast(data.message, "danger");
             }
@@ -79,13 +72,13 @@ function showToast(message, type) {
     const toastContainer = document.getElementById("toast-container");
 
     const toastElement = document.createElement("div");
-    toastElement.className = `toast align-items-center text-bg-${type} border-0`;
+    toastElement.className = `toast align-items-center border-0`;
     toastElement.setAttribute("role", "alert");
     toastElement.setAttribute("aria-live", "assertive");
     toastElement.setAttribute("aria-atomic", "true");
-
+    console.log(type);
     toastElement.innerHTML = `
-        <div class="d-flex mt-2">
+        <div class="d-flex mt-2 text-bg-${type}">
             <div class="toast-body">
                 ${message}
             </div>

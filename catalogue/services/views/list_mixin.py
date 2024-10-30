@@ -3,7 +3,7 @@ from django.db.models import OuterRef, Subquery
 
 class ListViewMixin:
     allow_empty = True
-    paginate_by = 9
+    paginate_by = 8
     image_model = None
     image_model_related_name = None
 

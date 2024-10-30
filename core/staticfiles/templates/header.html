@@ -4,11 +4,11 @@
 <div class="d-flex flex-column">
   <nav class="navbar navbar-expand-lg bg-soft-turquoise text-light">
     <div class="container">
-      <a href="#" class="fw-bold navbar-brand fs-3 text-light">
+      <a href="#" class="navbar-brand fs-3 text-light">
         <img src="{% static 'templates/favicon.png' %}" alt="{{ site_name }} logo" width="72" height="72" class="me-2">
         {{ site_name }}
       </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+      <button class="navbar-toggler ms-auto mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
         aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -36,11 +36,12 @@
           </li>
         </ul>
       </div>
-      <div id="header-right-panel" class="d-flex justify-content-center">
+      <div id="header-right-panel w-100" class="d-flex justify-content-center">
         <div id="header-right-panel-cart" class="me-2">
           <a class="btn btn-dark-green" href="{% url 'cart:show' %}">
-            <i class="fas fa-shopping-cart me-2 my-2"></i>
-            {% translate 'Корзина' %}</a>
+            <i class="fas fa-shopping-cart my-2"></i>
+            <meta itemprop="name" content="Добавить в корзину">
+          </a>
         </div>
         <form class="d-flex">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
