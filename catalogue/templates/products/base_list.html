@@ -68,10 +68,10 @@
         </div>
 
         <div class="col-md-9 d-flex flex-column align-items-center">
-            <div class="row w-100">
+            <div class="row w-100" id="cart-container">
                 {% for product in page_obj %}
                 <div class="col-6 col-md-4 mb-4 d-flex">
-                    <a href="{{ product.get_detail_url }}" class="text-decoration-none text-dark">
+                    <a href="{{ product.get_detail_url }}" class="text-decoration-none text-dark w-100">
                         <div class="card h-100 w-100">
                             <div class="image-wrapper">
                                 {% if product.first_image_uri %}
@@ -86,7 +86,17 @@
                                 <h5 class="card-title">{{ product.name }}</h5>
                                 <div class="d-flex flex-column justify-content-center mt-auto">
                                     <p class="card-text">{{ product.price }} {{ currency_symbol }}</p>
-                                    <a href="#" class="btn btn-success">{% translate 'В корзину' %}</a>
+                                    <form
+                                        method="post"
+                                        class="add-to-cart-form w-100 me-2"
+                                        data-add-url="{% if product.is_bouquet %}{% url 'cart:bouquet-add' %}{% else %}{% url 'cart:product-add' %}{% endif %}"
+                                        data-remove-url="{% if product.is_bouquet %}{% url 'cart:bouquet-remove' %}{% else %}{% url 'cart:product-remove' %}{% endif %}"
+                                        data-is-in-cart="{% if product in products_cart or product in bouquets_cart %}true{% else %}false{% endif %}"
+                                    >
+                                        {% csrf_token %}
+                                        <input type="hidden" name="product_slug" value="{{ product.slug }}">
+                                        {% include 'templates/cartButton.html' %}
+                                    </form>
                                 </div>
                             </div>
                         </div>

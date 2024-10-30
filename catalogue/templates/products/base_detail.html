@@ -75,11 +75,17 @@
                 {% endblock %}
 
                 <div class="d-flex mt-4">
-                    <form action="" method="post" class="w-100 me-2">
+                    <form
+                        id="add-to-cart-form"
+                        method="post"
+                        class="w-100 me-2"
+                        data-add-url="{% if product.is_bouquet %}{% url 'cart:bouquet-add' %}{% else %}{% url 'cart:product-add' %}{% endif %}"
+                        data-remove-url="{% if product.is_bouquet %}{% url 'cart:bouquet-remove' %}{% else %}{% url 'cart:product-remove' %}{% endif %}"
+                        data-is-in-cart="{% if product in products_cart or product in bouquets_cart %}true{% else %}false{% endif %}"
+                    >
                         {% csrf_token %}
-                        <button type="submit" class="btn btn-dark-green w-100">
-                            <i class="fas fa-shopping-cart me-2 my-2"></i>{% translate 'В корзину' %}
-                        </button>
+                        <input type="hidden" name="product_slug" value="{{ product.slug }}">
+                        {% include 'templates/cartButton.html' %}
                     </form>
                     <form action="" method="post" class="w-100">
                         {% csrf_token %}
@@ -110,4 +116,7 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block additional_scripts %}
 {% endblock %}
