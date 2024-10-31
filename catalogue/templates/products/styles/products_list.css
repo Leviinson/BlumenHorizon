@@ -6,7 +6,13 @@
     background: var(--turquoise-color) !important;
 }
 
+
+
 @media (max-width: 767px) {
+    #filtersCard {
+        border: none;
+    }
+
     .filters-container {
         margin-bottom: 10px;
     }
