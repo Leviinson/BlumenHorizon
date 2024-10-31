@@ -26,7 +26,7 @@ class BootstrapSplitPhoneNumberField(SplitPhoneNumberField):
                     "class": "form-control ms-2",
                     "autocomplete": "tel-national",
                     "area-describedby": "phoneNumberHelp",
-                    "maxlength": 10
+                    "maxlength": 10,
                 }
             )
         )
@@ -49,7 +49,7 @@ class UserForm(forms.ModelForm):
         error_messages = {
             "email": {
                 "unique": _("Пользователь с этой электронной почтой уже существует."),
-                "required": _("Email нужно обязательно внести.")
+                "required": _("Email нужно обязательно внести."),
             },
         }
 

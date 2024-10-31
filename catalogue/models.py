@@ -109,6 +109,7 @@ class Product(ProductAbstract):
         verbose_name=_("Подкатегория"),
         related_name="products",
     )
+
     class Meta:
         verbose_name = _("Продукт")
         verbose_name_plural = _("Продукты")
@@ -122,10 +123,11 @@ class Product(ProductAbstract):
                 "product_slug": self.slug,
             },
         )
-    
+
     @property
     def is_bouquet(self) -> bool:
         return False
+
 
 class ProductImage(models.Model):
     product = models.ForeignKey(
@@ -182,7 +184,8 @@ class Flower(models.Model):
 
     def __str__(self):
         return self.name
-    
+
+
 class BouquetCategory(MetaDataAbstractModel):
     image = models.ImageField(
         verbose_name=_("Картинка"),
@@ -265,7 +268,7 @@ class Bouquet(ProductAbstract):
                 "bouquet_slug": self.slug,
             },
         )
-    
+
     @property
     def is_bouquet(self) -> bool:
         return True

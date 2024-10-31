@@ -6,7 +6,9 @@ from .user_form import UserForm
 
 class UserSignUpForm(UserCreationForm, UserForm):
     error_messages = {
-        'password_mismatch': _("Пароли не совпадают. Пожалуйста, введите одинаковые пароли."),
+        "password_mismatch": _(
+            "Пароли не совпадают. Пожалуйста, введите одинаковые пароли."
+        ),
     }
 
     class Meta(UserForm.Meta):

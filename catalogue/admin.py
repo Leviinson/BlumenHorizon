@@ -88,7 +88,7 @@ class ProductAdmin(TranslationAdmin):
     search_fields = (
         "name",
         "slug",
-        "price"
+        "price",
     )
     list_display = (
         "name",
@@ -196,7 +196,7 @@ class BouquetAdmin(TranslationAdmin):
         "colors",
         "flowers",
         "price",
-        "discount"
+        "discount",
     )
     search_fields = (
         "name",

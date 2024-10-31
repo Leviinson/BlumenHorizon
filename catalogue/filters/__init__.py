@@ -1,2 +1,2 @@
-from .products import ProductFilter
 from .bouquets import BouquetFilter
+from .products import ProductFilter

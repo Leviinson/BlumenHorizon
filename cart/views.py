@@ -97,7 +97,8 @@ class CartProductAdd(BaseCartView):
 
     def get_cart(self):
         return ProductCart(self.request.session, session_key="products_cart")
-    
+
+
 class BaseCartRemoveView(BaseFormView, ABC):
     form_class = CartForm
     http_method_names = ["post"]
@@ -115,7 +116,9 @@ class BaseCartRemoveView(BaseFormView, ABC):
         product = self.get_product(form)
         cart.remove(product)
         return self._action_response(
-            message=_("Продукт '{name}' успешно удалён из корзины.").format(name=product.name),
+            message=_("Продукт '{name}' успешно удалён из корзины.").format(
+                name=product.name
+            ),
             status=200,
         )
 
@@ -141,7 +144,9 @@ class BaseCartRemoveView(BaseFormView, ABC):
             status=status,
         )
 
-    def _error_response(self, message: str, errors=None, status: int = 400) -> JsonResponse:
+    def _error_response(
+        self, message: str, errors=None, status: int = 400
+    ) -> JsonResponse:
         response_data = {
             "message": message,
             "status": "error",
@@ -171,6 +176,7 @@ class CartProductRemove(BaseCartRemoveView):
 
     def get_cart(self):
         return ProductCart(self.request.session, session_key="products_cart")
+
 
 def cart_clear(request: HttpRequest) -> Type[JsonResponse]:
     if request.method == "POST":
