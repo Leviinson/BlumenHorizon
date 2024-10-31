@@ -1,8 +1,7 @@
-from django import forms
 from django.db.models import IntegerField, Max, Min
 from django.db.models.functions import Cast
 from django.utils.translation import gettext_lazy as _
-from django_filters import BooleanFilter, FilterSet, NumberFilter
+from django_filters import FilterSet, NumberFilter
 
 
 class BaseFilter(FilterSet):
@@ -26,7 +25,7 @@ class BaseFilter(FilterSet):
             {
                 "class": "form-control",
                 "id": "max_price_input",
-                "min": self._aggregate_limits["min_price"],
+                "min": 0,
                 "max": self._aggregate_limits["max_price"],
                 "value": self._aggregate_limits["max_price"],
             }
@@ -35,7 +34,7 @@ class BaseFilter(FilterSet):
             {
                 "class": "form-control",
                 "id": "min_price_input",
-                "min": self._aggregate_limits["min_price"],
+                "min": 0,
                 "max": self._aggregate_limits["max_price"],
                 "value": self._aggregate_limits["min_price"],
             }
