@@ -10,37 +10,24 @@ from ..models import (
 )
 from .bouquets import BouquetListView
 from .products import ProductListView
+from ..services.views import ListViewMixin
 
 
-class ProductCategoryListViewMixin:
-    def get_queryset(self):
-        self.category = get_object_or_404(
-            ProductCategory, slug=self.kwargs["category_slug"]
-        )
-        qs = super().get_queryset()
-        return qs.filter(
-            subcategory__category=self.category,
-        )
-
+class CategoryListViewMixin(ListViewMixin):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context["breadcrumbs"] = ({"name": self.category.name, "url": None},)
+        context["breadcrumbs"] = (
+            {
+                "name": self.category.name,
+                "url": None,
+            },
+        )
+        context["title"] = self.category.name
         return context
 
 
-class ProductSubcategoryListViewMixin:
+class SubcategoryListViewMixin(ListViewMixin):
     category_url_name = None
-
-    def get_queryset(self):
-        self.subcategory = get_object_or_404(
-            ProductSubcategory.objects.select_related("category"),
-            slug=self.kwargs["subcategory_slug"],
-            category__slug=self.kwargs["category_slug"]
-        )
-        qs = super().get_queryset()
-        return qs.filter(
-            subcategory=self.subcategory,
-        )
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
@@ -60,58 +47,62 @@ class ProductSubcategoryListViewMixin:
             },
             {"name": self.subcategory.name, "url": None},
         )
+        context["title"] = self.subcategory.name
         return context
 
 
-class BouquetCategoryListViewMixin:
+class ProductCategoryListViewMixin(CategoryListViewMixin):
     def get_queryset(self):
+        qs = super().get_queryset()
+        self.category = get_object_or_404(
+            ProductCategory.objects.only("name"), slug=self.kwargs["category_slug"]
+        )
+        return qs.filter(
+            subcategory__category=self.category,
+        )
+
+
+class ProductSubcategoryListViewMixin(SubcategoryListViewMixin):
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        self.subcategory = get_object_or_404(
+            ProductSubcategory.objects.select_related("category").only(
+                "name", "category__name", "category__slug"
+            ),
+            slug=self.kwargs["subcategory_slug"],
+            category__slug=self.kwargs["category_slug"],
+        )
+        return qs.filter(
+            subcategory=self.subcategory,
+        )
+
+
+class BouquetCategoryListViewMixin(CategoryListViewMixin):
+    def get_queryset(self):
+        qs = super().get_queryset()
         self.category = get_object_or_404(
             BouquetCategory, slug=self.kwargs["category_slug"]
         )
-        qs = super().get_queryset()
         return qs.filter(
             subcategory__category=self.category,
         )
 
-    def get_context_data(self, *args, **kwargs):
-        context = super().get_context_data(*args, **kwargs)
-        context["breadcrumbs"] = ({"name": self.category.name, "url": None},)
-        return context
 
-
-class BouquetSubcategoryListViewMixin:
-    category_url_name = None
+class BouquetSubcategoryListViewMixin(SubcategoryListViewMixin):
 
     def get_queryset(self):
-        self.subcategory = get_object_or_404(
-            BouquetSubcategory.objects.select_related("category"),
-            slug=self.kwargs["subcategory_slug"],
-            category__slug=self.kwargs["category_slug"]
-        )
         qs = super().get_queryset()
+        self.subcategory = get_object_or_404(
+            BouquetSubcategory.objects.select_related("category").only(
+                "name", "category__name", "category__slug"
+            ),
+            slug=self.kwargs["subcategory_slug"],
+            category__slug=self.kwargs["category_slug"],
+        )
         return qs.filter(
             subcategory=self.subcategory,
         )
-
-    def get_context_data(self, *args, **kwargs):
-        context = super().get_context_data(*args, **kwargs)
-        if not (self.category_url_name):
-            raise ValueError(
-                "Name of the category url in urls.py has to be specified",
-            )
-        context["breadcrumbs"] = (
-            {
-                "name": self.subcategory.category.name,
-                "url": reverse_lazy(
-                    f"catalogue:{self.category_url_name}",
-                    kwargs={
-                        "category_slug": self.subcategory.category.slug,
-                    },
-                ),
-            },
-            {"name": self.subcategory.name, "url": None},
-        )
-        return context
 
 
 class CategoryProductsListView(ProductCategoryListViewMixin, ProductListView):

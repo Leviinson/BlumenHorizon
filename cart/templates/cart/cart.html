@@ -6,8 +6,163 @@
 {% endblock %}
 
 {% block body %}
+<section class="h-100 gradient-custom">
+    <div class="container py-5">
+        <div class="row d-flex justify-content-center my-4">
+            <div class="col-md-8">
+                <div class="card mb-4">
+                    <div class="card-header py-3">
+                        <h5 class="mb-0">
+                            {% blocktranslate with total_amount=products_cart.count|add:bouquets_cart.count %}
+                            Корзина - {{ total_amount }} продуктов
+                            {% endblocktranslate %}
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <!-- Single item -->
+                        {% for item in products_cart.items %}
+                            <div class="row" id="{{ item.product.slug }}">
+                                <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
+                                    <div class="bg-image hover-overlay hover-zoom ripple image-wrapper">
+                                        <img src="{% if item.product.images.first %}{{ item.product.images.first.image.url }}{% else %}{% static 'defaults/no-image.webp' %}{% endif %}"
+                                            class="square-image rounded img-thumbnail" alt="Blue Jeans Jacket" />
+                                        <a href="#!">
+                                            <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                                    <p><strong>{{ item.product.name }}</strong></p>
+                                    
+                                    <form class="product-remove-form"
+                                          action="{% url 'cart:product-remove' %}"
+                                          method="post"
+                                          data-product-element-id="{{ item.product.slug }}"
+                                          data-hr-Id="{{ item.product.slug }}Hr">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="product_slug" value="{{ item.product.slug }}">
+                                        <button type="submit" class="btn btn-danger btn-sm me-1 mb-2" title="Remove item">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                                <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                                    <div class="d-flex mb-4 mx-l-auto mx-auto" style="max-width: 300px">
+                                        <form action="{% url 'cart:product-remove-single' %}"
+                                            method="post"
+                                            data-subtotal-id="{{ item.product.slug }}Subtotal"
+                                            data-product-quantity-input-id="{{ item.product.slug }}QuantityInput"
+                                            class="product-decrease-form">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="product_slug" value="{{ item.product.slug }}">
+                                            <button type="submit" class="btn btn-dark-green px-3 me-2">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                        </form>
+
+                                        <div class="form-outline text-center">
+                                            <input id="{{ item.product.slug }}QuantityInput" min="1" name="quantity" value="{{ item.quantity }}" type="number"
+                                                class="form-control"/>
+                                            <label class="form-label m-0" for="{{ item.product.slug }}QuantityInput">{% translate 'Количество' %}</label>
+                                        </div>
+
+                                        <form action="{% url 'cart:product-add' %}"
+                                            method="post"
+                                            data-subtotal-id="{{ item.product.slug }}Subtotal"
+                                            data-product-quantity-input-id="{{ item.product.slug }}QuantityInput"
+                                            class="product-increase-form">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="product_slug" value="{{ item.product.slug }}">
+                                            <button type="submit" class="btn btn-dark-green px-3 ms-2">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+
+                                    <p class="text-center text-md-center">
+                                        <strong id="{{ item.product.slug }}Subtotal">{{ item.subtotal }}</strong>
+                                        {{ currency_symbol }}
+                                    </p>
+                                </div>
+                            </div>
+                            {% if not forloop.last  %}
+                                <hr id="{{ item.product.slug }}Hr">
+                            {% endif %}
+                            {% if forloop.last and bouquets_cart.products %}
+                                <hr id="{{ item.product.slug }}Hr">
+                            {% endif %}
+                        {% endfor %}
+                        <!-- Single item -->
+                    </div>
+                </div>
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <p><strong>{% translate 'Ожидаемое время доставки:' %}</strong></p>
+                        <p class="mb-0">12.10.2020 - 14.10.2020</p>
+                    </div>
+                </div>
+                <div class="card mb-4 mb-lg-0">
+                    <div class="card-body">
+                        <p><strong>{% translate 'Мы принимаем' %}</strong></p>
+                        <img class="me-2" width="45px"
+                            alt="Visa" />
+                        <img class="me-2" width="45px"
+                            alt="American Express" />
+                        <img class="me-2" width="45px"
+                            alt="Mastercard" />
+                        <img class="me-2" width="45px"
+                            alt="PayPal acceptance mark" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-header py-3">
+                        <h5 class="mb-0">{% translate 'Итог:' %}</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li
+                                class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                                {% translate 'Продукты' %}
+                                <div class="d-flex">
+                                    <strong id="products-total-price" class="me-1">{{ products_cart.total|add:bouquets_cart.total }}</strong>
+                                    {{ currency_symbol }}
+                                </div>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                {% translate 'Доставка' %}
+                                <span>{% translate 'Бесплатно' %}</span>
+                            </li>
+                            <li
+                                class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+                                <div>
+                                    <strong>{% translate 'Итого' %}</strong>
+                                    <strong>
+                                        <p class="mb-0">{% translate '(Включая НДС)' %}</p>
+                                    </strong>
+                                </div>
+                                <span>
+                                    <strong id="grand-total-price">
+                                        {{ products_cart.total|add:bouquets_cart.total }}
+                                    </strong>
+                                    {{ currency_symbol }}
+                                </span>
+                            </li>
+                        </ul>
+
+                        <button type="button" class="btn btn-dark-green btn-lg btn-block">
+                            {% translate 'Оформить заказ' %}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}
 
 {% block additional_scripts %}
+<script src="{% static 'cart/scripts/increaseOrDecreaseProduct.js' %}"></script>
+<script src="{% static 'cart/scripts/removeProduct.js' %}"></script>
 {% endblock %}
-

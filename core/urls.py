@@ -18,10 +18,10 @@ Including another URLconf
 from debug_toolbar.toolbar import debug_toolbar_urls
 from django.conf import settings
 from django.conf.urls.i18n import i18n_patterns
-from django.views.i18n import JavaScriptCatalog
 from django.contrib import admin
 from django.contrib.auth.views import LogoutView
 from django.urls import include, path, re_path
+from django.views.i18n import JavaScriptCatalog
 
 service_urlpatterns = [
     path("i18n/", include("django.conf.urls.i18n")),
@@ -33,7 +33,7 @@ service_urlpatterns = [
 i18n_urlpatterns = i18n_patterns(
     path("jsi18n/", JavaScriptCatalog.as_view(), name="javascript-catalog"),
     path("accounts/", include("accounts.urls")),
-    path("catalogue/", include("catalogue.urls")),
+    path("catalog/", include("catalogue.urls")),
     prefix_default_language=False,
 )
 

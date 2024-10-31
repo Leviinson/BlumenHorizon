@@ -4,7 +4,6 @@
 
 {% block additional_head_styles %}
 <link rel="stylesheet" href="{% static 'products/styles/common.css' %}">
-<link rel="stylesheet" href="{% static 'products/styles/products_details.css' %}">
 {% endblock %}
 
 {% block body %}
@@ -26,38 +25,6 @@
     </nav>
     <div class="row">
         <div class="col-md-6">
-            <!-- <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    {% for image in images_url %}
-                    <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                        <div class="image-wrapper">
-                            <img src="{{ image.url }}" class="square-image rounded img-thumbnail"
-                                 alt="{{ product.name }} {{ forloop.counter }}">
-                        </div>
-                    </div>
-                    {% empty %}
-                    <div class="carousel-item active">
-                        <div class="image-wrapper">
-                            <img src="{% static 'defaults/no-image.webp' %}" class="square-image rounded img-thumbnail"
-                                 alt="{% translate 'Изображение продукта временно отсутствует.' %}">
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-                
-                {% if product.images.count > 1 %}
-                <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel"
-                        data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">{% translate 'Предыдущее фото букета' %}</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#productCarousel"
-                        data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">{% translate 'Следующее фото букета' %}</span>
-                </button>
-                {% endif %}
-            </div> -->
             <div id="carouselExampleIndicators" class="carousel slide">
                 <div class="carousel-inner">
                     {% for image in product.images.all %}

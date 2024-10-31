@@ -37,7 +37,8 @@
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
     <script src="{% url 'javascript-catalog' %}"></script>
-    <script src="{% static 'scripts/cartButton.js' %}"></script>
+    <script src="{% static 'scripts/cartButton.js' %}" async></script>
+    <script src="{% static 'scripts/showToast.js' %}" async></script>
     {% block additional_scripts %}
     {% endblock %}
 

@@ -368,7 +368,8 @@ STATICFILES_DIRS = [
     "core/staticfiles/",
     "accounts/templates/",
     "catalogue/templates/",
-    MEDIA_ROOT
+    "cart/templates/",
+    MEDIA_ROOT,
 ]
 
 # Default primary key field type
@@ -394,7 +395,7 @@ SITE_NAME = os.getenv("SITE_NAME")  # for tests
 SITE_DOMAIN = os.getenv("SITE_DOMAIN")  # for tests
 
 CART_PRODUCT_LOOKUP = {
-    'is_active': True,
-    'subcategory__is_active': True,
-    'subcategory__category__is_active': True,
+    "is_active": True,
+    "subcategory__is_active": True,
+    "subcategory__category__is_active": True,
 }

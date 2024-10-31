@@ -11,6 +11,7 @@ class UserSignUpCredentials:
     phonenumber_0: str = "DE"
     phonenumber_1: str = "15234815621"
 
+
 @dataclass
 class UserCredentials:
     email: str
