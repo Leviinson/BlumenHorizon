@@ -1,0 +1,21 @@
+{
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "black-formatter.args": [
+        "--config",
+        "pyproject.toml"
+    ],
+    // "isort.check": true,
+    "editor.formatOnSave": true,
+    "files.autoSave": "afterDelay",
+    "isort.interpreter": [
+        ".venv/bin/python3"
+    ],
+    "isort.path": [
+        ".venv/bin/isort"
+    ],
+    "editor.defaultFoldingRangeProvider": "ms-python.isort",
+    "files.exclude": {
+        "**/.DS_Store": false,
+        "**/**/.DS_Store": true
+    }
+}
