@@ -45,9 +45,9 @@
                         {% translate 'Сортировка' %} 
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Action two</a></li>
-                        <li><a class="dropdown-item" href="#">Action three</a></li>
+                        {% for option in sort_options %}
+                            <li><a class="dropdown-item" href="?{% param_replace sort=option.value %}">{{ option.name }}</a></li>
+                        {% endfor %}
                     </ul>
                 </div>
             </div>
@@ -85,7 +85,7 @@
                     <h1>{{ title }}</h1>
                 </div>
                 {% for product in page_obj %}
-                <div class="col-6 col-md-4 mb-4 d-flex">
+                <div class="col-6 col-md-4 col-lg-3 mb-4 d-flex">
                     <a href="{{ product.get_detail_url }}" class="text-decoration-none text-dark w-100">
                         <div class="card h-100 w-100">
                             <div class="image-wrapper">
