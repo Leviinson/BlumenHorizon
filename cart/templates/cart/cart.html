@@ -239,7 +239,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="expected-delivery-time" class="card mb-4">
+                <div id="expected-delivery-time" class="card mb-4 d-none">
                     <div class="card-body">
                         <p><strong>{% translate 'Ожидаемое время доставки:' %}</strong></p>
                         <p class="mb-0">12.10.2020 - 14.10.2020</p>
@@ -294,13 +294,62 @@
                                 </span>
                             </li>
                         </ul>
-
-                        <div class="d-flex justify-content-between align-items-center">
-                            <button type="button" class="btn btn-dark-green btn-block" id="btn-checkout">
-                                {% translate 'Оформить заказ' %}
-                            </button>
-                        </div>
-                        
+                    </div>
+                </div>
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5>{% translate 'Адрес доставки' %}</h2>
+                    </div>
+                    <div class="card-body">
+                        <form id="delivery-address-form">
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="confirm-address">
+                                <label class="form-check-label" for="confirm-address">{% translate 'Уточнить адрес у получателя?' %}</label>
+                            </div>
+                            <div class="mb-3" id="country-container">
+                                <label for="country" class="form-label">{% translate 'Страна' %}</label>
+                                <input type="text" class="form-control" id="country" value="{{ country }}" disabled>
+                            </div>
+                            <div class="mb-3" id="city-container">
+                                <label for="city" class="form-label">{% translate 'Город' %}</label>
+                                <input type="text" class="form-control" id="city" value="{{ city }}" disabled>
+                            </div>
+                            <div class="mb-3" id="postal-code-container">
+                                <label for="postal-code" class="form-label">{% translate 'Почтовый индекс' %}</label>
+                                <input type="text" class="form-control" id="postal-code">
+                            </div>
+                            <div class="mb-3" id="street-container">
+                                <label for="street" class="form-label">{% translate 'Улица' %}</label>
+                                <input type="text" class="form-control" id="street">
+                            </div>
+                            <div class="mb-3" id="building-number-container">
+                                <label for="building-number" class="form-label">{% translate 'Номер здания' %}</label>
+                                <input type="text" class="form-control" id="building-number">
+                            </div>
+                            <div class="mb-3" id="apartment-container">
+                                <label for="apartment" class="form-label">{% translate 'Номер квартиры/офиса' %}</label>
+                                <input type="text" class="form-control" id="apartment">
+                            </div>
+                            <div class="mb-3" id="recipient-name-container">
+                                <label for="recipient-name" class="form-label">{% translate 'Имя получателя' %}</label>
+                                <input type="text" class="form-control" id="recipient-name">
+                            </div>
+                            <div class="mb-3" id="recipient-phone-container">
+                                <label for="recipient-phone" class="form-label">{% translate 'Номер телефона получателя' %}</label>
+                                <input type="text" class="form-control" id="recipient-phone">
+                            </div>
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="recipient-is-customer">
+                                <label class="form-check-label" for="recipient-is-customer">{% translate 'Получатель - заказчик?' %}</label>
+                            </div>
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="surprise-delivery">
+                                <label class="form-check-label" for="surprise-delivery">
+                                    <strong>{% translate 'Сюрприз до последнего!' %}</strong> {% translate 'Мы не раскроем тайну вашего подарка, чтобы сделать момент ещё более волшебным.'%}
+                                </label>
+                            </div>
+                            <button type="submit" class="btn btn-dark-green" id="btn-checkout">{% translate 'Оформить заказ' %}</button>
+                        </form>                      
                     </div>
                 </div>
             </div>
@@ -310,6 +359,7 @@
 {% endblock %}
 
 {% block additional_scripts %}
+<script src="{% static 'cart/scripts/addressInputsToggle.js' %}"></script>
 <script src="{% static 'cart/scripts/emptyCartHandler.js' %}"></script>
 <script src="{% static 'cart/scripts/increaseOrDecreaseProduct.js' %}"></script>
 <script src="{% static 'cart/scripts/removeProduct.js' %}"></script>
