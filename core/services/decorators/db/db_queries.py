@@ -21,8 +21,10 @@ def inspect_db_queries(function: Callable):
             sep="\n",
             end="\n\n",
         )
+        print(f"Total queries: {len(connection.queries)}")
         pprint(connection.queries)
         print("\n\n")
+        reset_queries()
         return result
 
     return wrapper
