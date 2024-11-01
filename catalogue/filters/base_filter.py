@@ -1,7 +1,7 @@
 from django.db.models import IntegerField, Max, Min
 from django.db.models.functions import Cast
 from django.utils.translation import gettext_lazy as _
-from django_filters import FilterSet, NumberFilter, CharFilter, ChoiceFilter
+from django_filters import FilterSet, NumberFilter
 
 
 class BaseFilter(FilterSet):
