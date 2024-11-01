@@ -25,5 +25,7 @@ class CommonContextMixin:
         if not context.get("site_name"):
             context["site_name"] = current_site.name
         context["currency_symbol"] = current_site.extended.currency_symbol
+        context["country"] = current_site.extended.country
+        context["city"] = current_site.extended.city
         context["MEDIA_URL"] = settings.MEDIA_URL
         return context
