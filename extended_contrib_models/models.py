@@ -10,6 +10,8 @@ class ExtendedSite(models.Model):
         max_length=5, verbose_name="Код валюты", unique=True
     )
     currency_symbol = models.CharField(max_length=5, verbose_name="Знак валюты")
+    country = models.CharField(max_length=40, verbose_name="Название страны")
+    city = models.CharField(max_length=40, verbose_name="Название города")
 
     def __str__(self):
         return f"{self.site.name} | {self.site.domain}"
@@ -23,5 +25,5 @@ class ExtendedSite(models.Model):
 def create_extended_site(sender, instance, created, **kwargs):
     if not ExtendedSite.objects.filter(site=instance).exists():
         ExtendedSite.objects.create(
-            site=instance, currency_code="USD", currency_symbol="$"
+            site=instance, currency_code="USD", currency_symbol="$", country="Германия", city="Берлин"
         )
