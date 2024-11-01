@@ -264,6 +264,7 @@ def cart_clear(request: HttpRequest) -> Type[JsonResponse]:
                 "message": _("Корзина успешно очищена."),
                 "status": "success",
                 "grand_total": product_cart.total + bouquet_cart.total,
+                "count": product_cart.count + bouquet_cart.count
             },
             status=200,
         )
