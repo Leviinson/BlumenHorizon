@@ -116,3 +116,11 @@ body {
     background-color: var(--turquoise-color);
 }
 
+.badge-color {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
