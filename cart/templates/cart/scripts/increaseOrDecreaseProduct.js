@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const quantityInput = document.getElementById(form.dataset.productQuantityInputId);
         const subtotalElement = document.getElementById(form.dataset.subtotalId);
         const grandTotalElement = document.getElementById("grand-total-price");
+        const countElement = document.getElementById("total-count");
 
         try {
             const response = await fetch(form.action, {
@@ -22,6 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 quantityInput.value = data.quantity;
                 subtotalElement.textContent = data.subtotal;
                 grandTotalElement.textContent = data.grand_total;
+                countElement.textContent = data.count;
                 document.getElementById('products-total-price').textContent = data.grand_total;
             } else {
                 showToast(data.message, "danger");

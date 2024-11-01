@@ -18,15 +18,23 @@ document.addEventListener("DOMContentLoaded", function () {
                 const productElementId = form.dataset.productElementId;
                 const productElement = document.getElementById(productElementId);
                 const grandTotalElement = document.getElementById("grand-total-price");
+                const countElement = document.getElementById("total-count");
+                document.getElementById('products-total-price').textContent = data.grand_total;
                 if (productElement) {
                     productElement.remove();
-                    hr.remove();
+                    if (hr) {
+                        hr.remove();
+                    }
+                    countElement.textContent = data.count;
                     grandTotalElement.textContent = data.grand_total;
+                    checkCardBodyContent();
                 }
+                showToast(data.message, "danger");
             } else {
                 showToast(data.message, "danger");
             }
         } catch (error) {
+            console.log(error);
             showToast(gettext("Произошла ошибка. Повторите попытку позже."), "danger");
         }
     }

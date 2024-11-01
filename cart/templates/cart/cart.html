@@ -14,17 +14,89 @@
                     <div class="card-header py-3">
                         <h5 class="mb-0">
                             {% blocktranslate with total_amount=products_cart.count|add:bouquets_cart.count %}
-                            Корзина - {{ total_amount }} продуктов
+                            Корзина - <span id="total-count">{{ total_amount }}</span> продуктов
                             {% endblocktranslate %}
                         </h5>
                     </div>
-                    <div class="card-body">
+                    <div id="products-list-container" class="card-body" style="min-height: 423px;">
                         <!-- Single item -->
-                        {% for item in products_cart.items %}
-                            <div class="row" id="{{ item.product.slug }}">
+                        {% for item in bouquets_cart.items %}
+                            <div class="row product-container" id="{{ item.product.slug }}">
                                 <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
                                     <div class="bg-image hover-overlay hover-zoom ripple image-wrapper">
-                                        <img src="{% if item.product.images.first %}{{ item.product.images.first.image.url }}{% else %}{% static 'defaults/no-image.webp' %}{% endif %}"
+                                        <img src="{% if item.product.first_image_uri %}{{ MEDIA_URL }}{{ item.product.first_image_uri }}{% else %}{% static 'defaults/no-image.webp' %}{% endif %}"
+                                            class="square-image rounded img-thumbnail" alt="Blue Jeans Jacket" />
+                                        <a href="#!">
+                                            <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                                    <p><strong>{{ item.product.name }}</strong></p>
+                                    <form class="product-remove-form"
+                                        action="{% url 'cart:bouquet-remove' %}"
+                                        method="post"
+                                        data-product-element-id="{{ item.product.slug }}"
+                                        data-hr-Id="{{ item.product.slug }}Hr">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="product_slug" value="{{ item.product.slug }}">
+                                        <button type="submit" class="btn btn-danger btn-sm me-1 mb-2" title="{% translate 'Удалить продукт' %}">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                                <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                                    <div class="d-flex mb-4 mx-l-auto mx-auto" style="max-width: 300px">
+                                        <form action="{% url 'cart:bouquet-remove-single' %}"
+                                            method="post"
+                                            data-subtotal-id="{{ item.product.slug }}Subtotal"
+                                            data-product-quantity-input-id="{{ item.product.slug }}QuantityInput"
+                                            class="product-decrease-form">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="product_slug" value="{{ item.product.slug }}">
+                                            <button type="submit" class="btn btn-dark-green px-3 me-2" title="{% translate 'Уменьшить количество продукта в корзине' %}">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                        </form>
+
+                                        <div class="form-outline text-center">
+                                            <input id="{{ item.product.slug }}QuantityInput" min="1" name="quantity" value="{{ item.quantity }}" type="number"
+                                                class="form-control"/>
+                                            <label class="form-label m-0" for="{{ item.product.slug }}QuantityInput">{% translate 'Количество' %}</label>
+                                        </div>
+
+                                        <form action="{% url 'cart:bouquet-add' %}"
+                                            method="post"
+                                            data-subtotal-id="{{ item.product.slug }}Subtotal"
+                                            data-product-quantity-input-id="{{ item.product.slug }}QuantityInput"
+                                            class="product-increase-form">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="product_slug" value="{{ item.product.slug }}">
+                                            <button type="submit" class="btn btn-dark-green px-3 ms-2" title="{% translate 'Уменьшить количество продукта в корзине' %}">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+
+                                    <p class="text-center text-md-center">
+                                        <strong id="{{ item.product.slug }}Subtotal">{{ item.subtotal|floatformat:"2u" }}</strong>
+                                        {{ currency_symbol }}
+                                    </p>
+                                </div>
+                            </div>
+                            {% if not forloop.last  %}
+                                <hr id="{{ item.product.slug }}Hr">
+                            {% endif %}
+                            {% if forloop.last and products_cart.products %}
+                                <hr id="{{ item.product.slug }}Hr">
+                            {% endif %}
+                        {% endfor %}
+                        <!-- Single item -->
+                        {% for item in products_cart.items %}
+                            <div class="row product-container" id="{{ item.product.slug }}">
+                                <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
+                                    <div class="bg-image hover-overlay hover-zoom ripple image-wrapper">
+                                        <img src="{% if item.product.first_image_uri %}{{ MEDIA_URL }}{{ item.product.first_image_uri }}{% else %}{% static 'defaults/no-image.webp' %}{% endif %}"
                                             class="square-image rounded img-thumbnail" alt="Blue Jeans Jacket" />
                                         <a href="#!">
                                             <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
@@ -80,7 +152,7 @@
                                     </div>
 
                                     <p class="text-center text-md-center">
-                                        <strong id="{{ item.product.slug }}Subtotal">{{ item.subtotal }}</strong>
+                                        <strong id="{{ item.product.slug }}Subtotal">{{ item.subtotal|floatformat:"2u" }}</strong>
                                         {{ currency_symbol }}
                                     </p>
                                 </div>
@@ -88,11 +160,74 @@
                             {% if not forloop.last  %}
                                 <hr id="{{ item.product.slug }}Hr">
                             {% endif %}
-                            {% if forloop.last and bouquets_cart.products %}
-                                <hr id="{{ item.product.slug }}Hr">
-                            {% endif %}
                         {% endfor %}
                         <!-- Single item -->
+                        <div id="no-image-container" class="d-none flex-column justify-content-center align-items-center mt-5">
+                            <div id="no-products-svg-container" class="mb-3">
+                                <svg width="314" height="287" viewBox="0 0 314 287" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <title>{% translate 'Отсутствие продуктов' %}</title>
+                                    <desc>
+                                        {% translate 'Иконка, представляющая отсутствие доступных продуктов по запросу
+                                        пользователя.' %}
+                                    </desc>
+                                    <path d="M312.13 2.65939H0.768555V284.393H312.13V2.65939Z" fill="white" />
+                                    <path
+                                        d="M209.644 103.162C187.559 103.162 165.077 102.267 144.047 96.4215C123.413 90.7079 104.468 79.6228 87.5802 66.8C76.5242 58.4533 66.4709 51.7917 52.1166 52.7923C38.0739 53.5505 24.645 58.7832 13.8034 67.7215C-4.45614 83.6777 -1.71194 113.247 5.59714 133.942C16.5739 165.196 49.9793 186.971 78.3713 201.058C111.17 217.409 147.214 226.914 183.337 232.365C215.001 237.183 255.689 240.659 283.131 220.042C308.33 201.058 315.243 157.771 309.069 128.544C307.571 119.91 302.964 112.12 296.113 106.638C278.408 93.7095 251.995 102.346 232.099 102.767C224.711 102.925 217.191 103.109 209.644 103.162Z"
+                                        fill="#F2F2F2" />
+                                    <path
+                                        d="M156.661 283.603C210.158 283.603 253.526 280.904 253.526 277.574C253.526 274.244 210.158 271.544 156.661 271.544C103.164 271.544 59.7957 274.244 59.7957 277.574C59.7957 280.904 103.164 283.603 156.661 283.603Z"
+                                        fill="#F2F2F2" />
+                                    <path
+                                        d="M19.978 45.1038L54.2805 42.2075C58.558 41.8337 62.8344 42.9375 66.3937 45.3341C69.953 47.7307 72.5793 51.2746 73.833 55.3726L106.711 165.17L100.272 176.676C98.6186 179.641 97.8023 182.998 97.9103 186.389C98.0183 189.78 99.0466 193.079 100.886 195.933C102.725 198.787 105.305 201.089 108.353 202.595C111.4 204.1 114.799 204.752 118.189 204.481L249.858 193.317"
+                                        stroke="#BABABA" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path
+                                        d="M78.741 72.0396L231.783 59.0851C233.291 58.9563 234.808 59.1677 236.222 59.7038C237.637 60.24 238.912 61.087 239.954 62.1821C240.996 63.2773 241.777 64.5924 242.24 66.0299C242.703 67.4674 242.835 68.9905 242.628 70.4862L232.258 145.185C231.943 147.426 230.882 149.497 229.245 151.063C227.608 152.63 225.491 153.601 223.234 153.821L106.711 165.17L78.741 72.0396Z"
+                                        fill="white" stroke="#BABABA" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path
+                                        d="M132.834 229.653C139.697 229.653 145.262 224.1 145.262 217.251C145.262 210.402 139.697 204.85 132.834 204.85C125.97 204.85 120.406 210.402 120.406 217.251C120.406 224.1 125.97 229.653 132.834 229.653Z"
+                                        fill="white" stroke="#BABABA" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path
+                                        d="M219.381 222.333C226.245 222.333 231.809 216.781 231.809 209.931C231.809 203.082 226.245 197.53 219.381 197.53C212.517 197.53 206.953 203.082 206.953 209.931C206.953 216.781 212.517 222.333 219.381 222.333Z"
+                                        fill="white" stroke="#BABABA" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path
+                                        d="M47.1416 39.2427L14.8024 41.9808C11.9999 42.2181 9.9208 44.6775 10.1586 47.474C10.3964 50.2706 12.861 52.3452 15.6635 52.1079L48.0028 49.3698C50.8053 49.1325 52.8844 46.6731 52.6466 43.8766C52.4088 41.0801 49.9441 39.0054 47.1416 39.2427Z"
+                                        fill="#D2D2D2" />
+                                    <path
+                                        d="M143.177 129.729C143.808 124.924 146.066 120.478 149.577 117.129C153.088 113.781 157.641 111.73 162.48 111.319C167.32 110.907 172.155 112.158 176.183 114.865C180.212 117.572 183.192 121.572 184.63 126.201"
+                                        stroke="#BABABA" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path
+                                        d="M184.973 101.319C186.605 101.319 187.928 99.9986 187.928 98.3699C187.928 96.7413 186.605 95.421 184.973 95.421C183.341 95.421 182.018 96.7413 182.018 98.3699C182.018 99.9986 183.341 101.319 184.973 101.319Z"
+                                        fill="#BABABA" />
+                                    <path
+                                        d="M138.137 105.268C139.769 105.268 141.092 103.948 141.092 102.32C141.092 100.691 139.769 99.3705 138.137 99.3705C136.505 99.3705 135.181 100.691 135.181 102.32C135.181 103.948 136.505 105.268 138.137 105.268Z"
+                                        fill="#BABABA" />
+                                    <path d="M54.8875 213.591V224.94" stroke="#BABABA" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path d="M49.2146 219.252H60.5608" stroke="#BABABA" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path d="M236.189 2.63303V13.955" stroke="#BABABA" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path d="M230.516 8.2941H241.863" stroke="#BABABA" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path d="M101.855 36.4674V47.7895" stroke="#BABABA" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path d="M96.1558 42.1284H107.528" stroke="#BABABA" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path
+                                        d="M264.502 78.0956C265.988 78.0956 267.193 76.8932 267.193 75.4099C267.193 73.9266 265.988 72.7242 264.502 72.7242C263.016 72.7242 261.811 73.9266 261.811 75.4099C261.811 76.8932 263.016 78.0956 264.502 78.0956Z"
+                                        fill="white" stroke="#BABABA" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path
+                                        d="M163.917 53.9507C165.345 53.9507 166.503 52.7955 166.503 51.3704C166.503 49.9453 165.345 48.79 163.917 48.79C162.489 48.79 161.331 49.9453 161.331 51.3704C161.331 52.7955 162.489 53.9507 163.917 53.9507Z"
+                                        fill="#CFCFCF" />
+                                    <path
+                                        d="M181.279 241.212C182.707 241.212 183.865 240.056 183.865 238.631C183.865 237.206 182.707 236.051 181.279 236.051C179.851 236.051 178.693 237.206 178.693 238.631C178.693 240.056 179.851 241.212 181.279 241.212Z"
+                                        fill="#CFCFCF" />
+        
+                                </svg>
+                            </div>
+                            <p>{% translate 'К сожалению корзина пуста.' %}</p>
+                        </div>
                     </div>
                 </div>
                 <div class="card mb-4">
@@ -126,7 +261,7 @@
                                 class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
                                 {% translate 'Продукты' %}
                                 <div class="d-flex">
-                                    <strong id="products-total-price" class="me-1">{{ products_cart.total|add:bouquets_cart.total }}</strong>
+                                    <strong id="products-total-price" class="me-1">{{ grand_total|floatformat:"2u" }}</strong>
                                     {{ currency_symbol }}
                                 </div>
                             </li>
@@ -144,14 +279,14 @@
                                 </div>
                                 <span>
                                     <strong id="grand-total-price">
-                                        {{ products_cart.total|add:bouquets_cart.total }}
+                                        {{ grand_total|floatformat:"2u" }}
                                     </strong>
                                     {{ currency_symbol }}
                                 </span>
                             </li>
                         </ul>
 
-                        <button type="button" class="btn btn-dark-green btn-lg btn-block">
+                        <button type="button" class="btn btn-dark-green btn-lg btn-block" id="btn-checkout">
                             {% translate 'Оформить заказ' %}
                         </button>
                     </div>
@@ -163,6 +298,7 @@
 {% endblock %}
 
 {% block additional_scripts %}
+<script src="{% static 'cart/scripts/checkCardBodyContent.js' %}"></script>
 <script src="{% static 'cart/scripts/increaseOrDecreaseProduct.js' %}"></script>
 <script src="{% static 'cart/scripts/removeProduct.js' %}"></script>
 {% endblock %}
