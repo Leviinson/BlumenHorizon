@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                     countElement.textContent = data.count;
                     grandTotalElement.textContent = data.grand_total;
-                    checkCardBodyContent();
+                    emptyCartHandler();
                 }
                 showToast(data.message, "danger");
             } else {

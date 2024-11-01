@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     productsTotalPrice.textContent = data.grand_total;
                     productContainers.forEach(container => container.remove());
                     hrElements.forEach(hr => hr.remove());
-                    checkCardBodyContent();
+                    emptyCartHandler();
                 }
                 showToast(data.message, "danger");
             } else {
