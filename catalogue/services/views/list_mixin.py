@@ -23,30 +23,27 @@ class ListViewMixin:
             }
         ).order_by("id")[:1]
 
-        sort_option = self.request.GET.get('sort', 'pd')
-        
-        match sort_option:
-            case 'pd':
-                qs = qs.order_by('-price')
-            case 'pi':
-                qs = qs.order_by('price')
-            case 'alph':
-                qs = qs.order_by('name')
-            case 'disc':
-                qs = qs.order_by('-discount')
+        sort_option = self.request.GET.get("sort", "pd")
 
-        return (
-            qs.filter(
-                is_active=True,
-                subcategory__is_active=True,
-                subcategory__category__is_active=True,
-            )
-            .annotate(
-                first_image_uri=Subquery(first_image_subquery.values("image")[:1]),
-            )
+        match sort_option:
+            case "pd":
+                qs = qs.order_by("-price")
+            case "pi":
+                qs = qs.order_by("price")
+            case "alph":
+                qs = qs.order_by("name")
+            case "disc":
+                qs = qs.order_by("-discount")
+        
+        return qs.filter(
+            is_active=True,
+            subcategory__is_active=True,
+            subcategory__category__is_active=True,
+        ).annotate(
+            first_image_uri=Subquery(first_image_subquery.values("image")[:1]),
         )
-    
+
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context['sort_options'] = self.SORT_OPTIONS
+        context["sort_options"] = self.SORT_OPTIONS
         return context
