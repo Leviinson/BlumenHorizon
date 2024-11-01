@@ -11,12 +11,21 @@
         <div class="row d-flex justify-content-center my-4">
             <div class="col-md-8">
                 <div class="card mb-4">
-                    <div class="card-header py-3">
+                    <div class="card-header py-3 d-flex justify-content-between align-items-center">
                         <h5 class="mb-0">
                             {% blocktranslate with total_amount=products_cart.count|add:bouquets_cart.count %}
                             Корзина - <span id="total-count">{{ total_amount }}</span> продуктов
                             {% endblocktranslate %}
                         </h5>
+
+                        <form id="cart-clear-form"
+                              action="{% url 'cart:clear' %}"
+                              method="post">
+                            {% csrf_token %}
+                            <button id="cart-clear-button" type="submit" class="btn btn-danger btn-sm py-2" title="{% translate 'Удалить продукт' %}">
+                                <i class="fas fa-trash me-2"></i>{% translate 'Очистить корзину' %}
+                            </button>
+                        </form>
                     </div>
                     <div id="products-list-container" class="card-body" style="min-height: 423px;">
                         <!-- Single item -->
@@ -230,7 +239,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card mb-4">
+                <div id="expected-delivery-time" class="card mb-4">
                     <div class="card-body">
                         <p><strong>{% translate 'Ожидаемое время доставки:' %}</strong></p>
                         <p class="mb-0">12.10.2020 - 14.10.2020</p>
@@ -286,9 +295,12 @@
                             </li>
                         </ul>
 
-                        <button type="button" class="btn btn-dark-green btn-lg btn-block" id="btn-checkout">
-                            {% translate 'Оформить заказ' %}
-                        </button>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <button type="button" class="btn btn-dark-green btn-block" id="btn-checkout">
+                                {% translate 'Оформить заказ' %}
+                            </button>
+                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -298,7 +310,8 @@
 {% endblock %}
 
 {% block additional_scripts %}
-<script src="{% static 'cart/scripts/checkCardBodyContent.js' %}"></script>
+<script src="{% static 'cart/scripts/emptyCartHandler.js' %}"></script>
 <script src="{% static 'cart/scripts/increaseOrDecreaseProduct.js' %}"></script>
 <script src="{% static 'cart/scripts/removeProduct.js' %}"></script>
+<script src="{% static 'cart/scripts/clearCart.js' %}"></script>
 {% endblock %}
