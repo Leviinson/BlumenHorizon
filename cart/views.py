@@ -1,7 +1,7 @@
+import logging
 from abc import ABC, abstractmethod
 from typing import Type
 
-from carton.cart import Cart
 from django.http import HttpRequest, JsonResponse
 from django.shortcuts import get_object_or_404
 from django.utils.translation import gettext_lazy as _
@@ -13,42 +13,85 @@ from core.services.mixins.views import CommonContextMixin
 
 from .cart import BouquetCart, ProductCart
 from .forms import CartForm
+from .services.dataclasses import CartAction
 
 
 class CartView(CommonContextMixin, TemplateView):
     template_name = "cart/cart.html"
     extra_context = {"title": _("Корзина товаров")}
 
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context["products_cart"] = ProductCart(
+            self.request.session, session_key="products_cart"
+        )
+        context["bouquets_cart"] = BouquetCart(
+            self.request.session, session_key="bouquets_cart"
+        )
+        grand_total = context["products_cart"].total + context["bouquets_cart"].total
+        context["grand_total"] = grand_total
+        return context
 
-class BaseCartAddView(BaseFormView, ABC):
+
+class CartEditAbstractMixin(ABC):
+    cart_action: CartAction = None
     form_class = CartForm
     http_method_names = ["post"]
+    success_message = ""
+    error_message = ""
 
     @abstractmethod
-    def get_product(self, form):
+    def get_product(self, form: CartForm):
         pass
 
     @abstractmethod
     def get_cart(self) -> Type[ProductCart | BouquetCart]:
         pass
 
+    @abstractmethod
+    def get_remaining_cart(self) -> Type[ProductCart | BouquetCart]:
+        pass
+
+    @abstractmethod
+    def get_success_message(self, product: Product | Bouquet):
+        pass
+
+    @abstractmethod
+    def get_error_message(self) -> str:
+        pass
+
     def form_valid(self, form) -> JsonResponse:
         cart = self.get_cart()
+        remaining_cart = self.get_remaining_cart()
         product = self.get_product(form)
-        cart.add(product, price=product.price)
+        match self.cart_action.action:
+            case "add":
+                cart.add(product, price=product.price)
+            case "remove":
+                cart.remove(product)
+            case "remove_single":
+                cart.remove_single(product)
+            case _:
+                logger = logging.getLogger("django.request")
+                logger.log(level="ERROR", msg="Wrong cart action selected.")
+                return self._error_response(
+                    _(
+                        "Ой-ой, мы неправильно обработали Вашу корзину. Скоро администрация это исправит!"
+                    )
+                )
+
         return self._action_response(
-            message=_("Продукт '{name}' успешно добавлен в корзину.").format(
-                name=product.name
-            ),
+            message=self.get_success_message(product),
             status=201,
-            grand_total=cart.total,
+            grand_total=cart.total + remaining_cart.total,
             quantity=cart.get_quantity(product),
-            subtotal=cart.get_subtotal(product)
+            subtotal=cart.get_subtotal(product),
+            count=cart.count + remaining_cart.count
         )
 
     def form_invalid(self, form) -> JsonResponse:
         return self._error_response(
-            message=_("Ошибка добавления продукта в корзину. Обновите страницу."),
+            message=self.get_error_message(),
             errors=form.errors,
             status=400,
         )
@@ -59,7 +102,15 @@ class BaseCartAddView(BaseFormView, ABC):
             status=405,
         )
 
-    def _action_response(self, message: str, status: int, grand_total: float, subtotal: float, quantity: int) -> JsonResponse:
+    def _action_response(
+        self,
+        message: str,
+        status: int,
+        grand_total: float,
+        subtotal: float,
+        quantity: int,
+        count: int,
+    ) -> JsonResponse:
         return JsonResponse(
             {
                 "message": message,
@@ -67,6 +118,7 @@ class BaseCartAddView(BaseFormView, ABC):
                 "grand_total": grand_total,
                 "subtotal": subtotal,
                 "quantity": quantity,
+                "count": count,
             },
             status=status,
         )
@@ -83,7 +135,19 @@ class BaseCartAddView(BaseFormView, ABC):
         return JsonResponse(response_data, status=status)
 
 
-class CartBouquetAdd(BaseCartAddView):
+class CartItemAddMixin:
+    cart_action = CartAction("add")
+
+
+class CartItemRemoveMixin:
+    cart_action = CartAction("remove")
+
+
+class CartItemRemoveSingleMixin:
+    cart_action = CartAction("remove_single")
+
+
+class CartBouquetEditMixin:
     def get_product(self, form):
         return get_object_or_404(
             Bouquet.objects.only("slug", "price", "name"),
@@ -93,9 +157,11 @@ class CartBouquetAdd(BaseCartAddView):
     def get_cart(self):
         return BouquetCart(self.request.session, session_key="bouquets_cart")
 
+    def get_remaining_cart(self):
+        return ProductCart(self.request.session, session_key="products_cart")
 
-class CartProductAdd(BaseCartAddView):
 
+class CartProductEditMixin:
     def get_product(self, form):
         return get_object_or_404(
             Product.objects.only("slug", "price", "name"),
@@ -105,90 +171,86 @@ class CartProductAdd(BaseCartAddView):
     def get_cart(self):
         return ProductCart(self.request.session, session_key="products_cart")
 
-
-class BaseCartRemoveView(BaseFormView, ABC):
-    form_class = CartForm
-    http_method_names = ["post"]
-
-    @abstractmethod
-    def get_product(self, form):
-        pass
-
-    @abstractmethod
-    def get_cart(self) -> Type[Cart]:
-        pass
-
-    def form_valid(self, form) -> JsonResponse:
-        cart = self.get_cart()
-        product = self.get_product(form)
-        cart.remove(product)
-        return self._action_response(
-            message=_("Продукт '{name}' успешно удалён из корзины.").format(
-                name=product.name
-            ),
-            status=200,
-            grand_total=cart.total,
-            quantity=cart.get_quantity(product),
-            subtotal=cart.get_subtotal(product)
-        )
-
-    def form_invalid(self, form) -> JsonResponse:
-        return self._error_response(
-            message=_("Ошибка удаления продукта из корзины. Обновите страницу."),
-            errors=form.errors,
-            status=400,
-        )
-
-    def http_method_not_allowed(self, request, *args, **kwargs) -> JsonResponse:
-        return self._error_response(
-            message=_("Метод не разрешен. Используйте POST."),
-            status=405,
-        )
-
-    def _action_response(self, message: str, status: int, grand_total: float, subtotal: float, quantity: int) -> JsonResponse:
-        return JsonResponse(
-            {
-                "message": message,
-                "status": "success",
-                "grand_total": grand_total,
-                "subtotal": subtotal,
-                "quantity": quantity,
-            },
-            status=status,
-        )
-
-    def _error_response(
-        self, message: str, errors=None, status: int = 400
-    ) -> JsonResponse:
-        response_data = {
-            "message": message,
-            "status": "error",
-        }
-        if errors:
-            response_data["errors"] = errors
-        return JsonResponse(response_data, status=status)
-
-
-class CartBouquetRemove(BaseCartRemoveView):
-    def get_product(self, form):
-        return get_object_or_404(
-            Bouquet.objects.only("slug", "price", "name"),
-            slug=form.cleaned_data["product_slug"],
-        )
-
-    def get_cart(self):
+    def get_remaining_cart(self):
         return BouquetCart(self.request.session, session_key="bouquets_cart")
 
 
-class CartProductRemove(BaseCartRemoveView):
-    def get_product(self, form):
-        return get_object_or_404(
-            Product.objects.only("slug", "price", "name"),
-            slug=form.cleaned_data["product_slug"],
-        )
+class CartBouquetAddView(
+    CartItemAddMixin,
+    CartBouquetEditMixin,
+    CartEditAbstractMixin,
+    BaseFormView,
+):
+    def get_success_message(self, product):
+        return _(f"Букет {product.name} успешно добавлен в корзину.")
 
-    def get_cart(self):
-        return ProductCart(self.request.session, session_key="products_cart")
+    def get_error_message(self):
+        return _("Неизвестная ошибка добавления букета в корзину.")
+
+
+class CartProductAddView(
+    CartItemAddMixin,
+    CartProductEditMixin,
+    CartEditAbstractMixin,
+    BaseFormView,
+):
+    def get_success_message(self, product):
+        return _(f"Продукт {product.name} успешно добавлен в корзину.")
+
+    def get_error_message(self):
+        return _("Ошибка добавления продукта в корзину.")
+
+
+class CartBouquetRemoveView(
+    CartItemRemoveMixin,
+    CartBouquetEditMixin,
+    CartEditAbstractMixin,
+    BaseFormView,
+):
+    def get_success_message(self, product):
+        return _(f"Букет {product.name} успешно убран из корзины.")
+
+    def get_error_message(self):
+        return _("Ошибка уменьшения количества букета в корзине.")
+
+
+class CartProductRemoveView(
+    CartItemRemoveMixin,
+    CartProductEditMixin,
+    CartEditAbstractMixin,
+    BaseFormView,
+):
+    def get_success_message(self, product):
+        return _(f"Продукт {product.name} успешно убран из корзины.")
+
+    def get_error_message(self):
+        return _("Ошибка уменьшения количества продукта в корзине.")
+
+
+class CartBouquetRemoveSingleView(
+    CartItemRemoveSingleMixin,
+    CartBouquetEditMixin,
+    CartEditAbstractMixin,
+    BaseFormView,
+):
+    def get_success_message(self, product):
+        return _(f"Букет {product.name} успешно удалён из корзины.")
+
+    def get_error_message(self):
+        return _("Ошибка удаления букета из корзины.")
+
+
+class CartProductRemoveSingleView(
+    CartItemRemoveSingleMixin,
+    CartProductEditMixin,
+    CartEditAbstractMixin,
+    BaseFormView,
+):
+    def get_success_message(self, product):
+        return _(f"Продукт {product.name} успешно удалён из корзины.")
+
+    def get_error_message(self):
+        return _("Ошибка удаления продукта из корзины.")
 
 
 def cart_clear(request: HttpRequest) -> Type[JsonResponse]:
@@ -201,6 +263,7 @@ def cart_clear(request: HttpRequest) -> Type[JsonResponse]:
             {
                 "message": _("Корзина успешно очищена."),
                 "status": "success",
+                "grand_total": product_cart.total + bouquet_cart.total,
             },
             status=200,
         )
@@ -211,90 +274,3 @@ def cart_clear(request: HttpRequest) -> Type[JsonResponse]:
         },
         status=405,
     )
-
-
-class BaseCartRemoveSingleView(BaseFormView, ABC):
-    form_class = CartForm
-    http_method_names = ["post"]
-
-    @abstractmethod
-    def get_product(self, form):
-        pass
-
-    @abstractmethod
-    def get_cart(self) -> Type[Cart]:
-        pass
-
-    def form_valid(self, form) -> JsonResponse:
-        cart = self.get_cart()
-        product = self.get_product(form)
-        cart.remove_single(product)
-        return self._action_response(
-            message=_("Количество продукта успешно изменено.").format(
-                name=product.name
-            ),
-            status=200,
-            grand_total=cart.total,
-            quantity=cart.get_quantity(product),
-            subtotal=cart.get_subtotal(product)
-        )
-
-    def form_invalid(self, form) -> JsonResponse:
-        return self._error_response(
-            message=_(
-                "Ошибка изменения количества продукта в корзине. Обновите страницу."
-            ),
-            errors=form.errors,
-            status=400,
-        )
-
-    def http_method_not_allowed(self, request, *args, **kwargs) -> JsonResponse:
-        return self._error_response(
-            message=_("Метод не разрешен. Используйте POST."),
-            status=405,
-        )
-
-    def _action_response(self, message: str, status: int, grand_total: float, subtotal: float, quantity: int) -> JsonResponse:
-        return JsonResponse(
-            {
-                "message": message,
-                "status": "success",
-                "grand_total": grand_total,
-                "subtotal": subtotal,
-                "quantity": quantity,
-            },
-            status=status,
-        )
-
-    def _error_response(
-        self, message: str, errors=None, status: int = 400
-    ) -> JsonResponse:
-        response_data = {
-            "message": message,
-            "status": "error",
-        }
-        if errors:
-            response_data["errors"] = errors
-        return JsonResponse(response_data, status=status)
-
-
-class CartBouquetRemoveSingle(BaseCartRemoveSingleView):
-    def get_product(self, form):
-        return get_object_or_404(
-            Bouquet.objects.only("slug", "price", "name"),
-            slug=form.cleaned_data["product_slug"],
-        )
-
-    def get_cart(self):
-        return BouquetCart(self.request.session, session_key="bouquets_cart")
-
-
-class CartProductRemoveSingle(BaseCartRemoveSingleView):
-    def get_product(self, form):
-        return get_object_or_404(
-            Product.objects.only("slug", "price", "name"),
-            slug=form.cleaned_data["product_slug"],
-        )
-
-    def get_cart(self):
-        return ProductCart(self.request.session, session_key="products_cart")
