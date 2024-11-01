@@ -8,8 +8,8 @@ function showToast(message, type) {
     toastElement.setAttribute("aria-atomic", "true");
 
     toastElement.innerHTML = `
-        <div class="d-flex mt-2 text-bg-${type}">
-            <div class="toast-body">
+        <div class="d-flex mt-2 text-bg-${type} rounded">
+            <div class="toast-body rounded">
                 ${message}
             </div>
             <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>

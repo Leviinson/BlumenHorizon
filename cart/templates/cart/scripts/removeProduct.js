@@ -5,10 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
         try {
             const response = await fetch(form.action, {
                 method: 'POST',
-                headers: {
-                    'X-CSRFToken': form.querySelector('input[name="csrfmiddlewaretoken"]').value,
-                },
-                body: new URLSearchParams(new FormData(form))
+                body: new FormData(form)
             });
 
             const data = await response.json();
