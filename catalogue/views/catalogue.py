@@ -2,15 +2,17 @@ from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
+from cart.cart import BouquetCart, ProductCart
+
 from ..models import (
     BouquetCategory,
     BouquetSubcategory,
     ProductCategory,
     ProductSubcategory,
 )
+from ..services.views import ListViewMixin
 from .bouquets import BouquetListView
 from .products import ProductListView
-from ..services.views import ListViewMixin
 
 
 class CategoryListViewMixin(ListViewMixin):
@@ -49,9 +51,26 @@ class SubcategoryListViewMixin(ListViewMixin):
         )
         context["title"] = self.subcategory.name
         return context
+    
+
+class ProductListViewMixin:
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context["products_cart"] = ProductCart(
+            self.request.session, session_key="products_cart"
+        )
+        return context
+
+class BouquetListViewMixin:
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context["bouquets_cart"] = BouquetCart(
+            self.request.session, session_key="bouquets_cart"
+        )
+        return context
 
 
-class ProductCategoryListViewMixin(CategoryListViewMixin):
+class ProductCategoryListViewMixin(ProductListViewMixin, CategoryListViewMixin):
     def get_queryset(self):
         qs = super().get_queryset()
         self.category = get_object_or_404(
@@ -62,7 +81,8 @@ class ProductCategoryListViewMixin(CategoryListViewMixin):
         )
 
 
-class ProductSubcategoryListViewMixin(SubcategoryListViewMixin):
+
+class ProductSubcategoryListViewMixin(ProductListViewMixin, SubcategoryListViewMixin):
 
     def get_queryset(self):
         qs = super().get_queryset()
@@ -78,7 +98,7 @@ class ProductSubcategoryListViewMixin(SubcategoryListViewMixin):
         )
 
 
-class BouquetCategoryListViewMixin(CategoryListViewMixin):
+class BouquetCategoryListViewMixin(BouquetListViewMixin, CategoryListViewMixin):
     def get_queryset(self):
         qs = super().get_queryset()
         self.category = get_object_or_404(
@@ -89,7 +109,7 @@ class BouquetCategoryListViewMixin(CategoryListViewMixin):
         )
 
 
-class BouquetSubcategoryListViewMixin(SubcategoryListViewMixin):
+class BouquetSubcategoryListViewMixin(BouquetListViewMixin, SubcategoryListViewMixin):
 
     def get_queryset(self):
         qs = super().get_queryset()

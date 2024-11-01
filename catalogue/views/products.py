@@ -3,6 +3,7 @@ from django.views.generic.base import ContextMixin, TemplateResponseMixin
 from django.views.generic.detail import DetailView
 from django_filters.views import FilterView
 
+from cart.cart import ProductCart
 from core.services.mixins.views import CommonContextMixin
 
 from ..filters import ProductFilter
@@ -46,6 +47,13 @@ class ProductView(
     category_url_name = "products-category"
     subcategory_url_name = "products-subcategory"
 
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context["products_cart"] = ProductCart(
+            self.request.session, session_key="products_cart"
+        )
+        return context
+
 
 class ProductListView(
     ListViewMixin,
@@ -77,3 +85,10 @@ class ProductListView(
     extra_context = {"title": _("Каталог продуктов")}
     image_model = ProductImage
     image_model_related_name = "product"
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context["products_cart"] = ProductCart(
+            self.request.session, session_key="products_cart"
+        )
+        return context

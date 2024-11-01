@@ -251,7 +251,7 @@ LOGGING = (
                         "django_info",
                     ]
                 ),
-                "lever": "ERROR",
+                "level": "ERROR",
                 "propagate": False,
             },
             "celery.task": {
@@ -259,13 +259,6 @@ LOGGING = (
                     ["celery_info", "mail_admins"] if not DEBUG else ["celery_info"]
                 ),
                 "level": "INFO",
-                "propagate": False,
-            },
-            "celery.task": {
-                "handlers": (
-                    ["celery_error", "mail_admins"] if not DEBUG else ["celery_error"]
-                ),
-                "level": "ERROR",
                 "propagate": False,
             },
             "django.db.backends": {

@@ -3,6 +3,7 @@ from django.views.generic.base import ContextMixin, TemplateResponseMixin
 from django.views.generic.detail import DetailView
 from django_filters.views import FilterView
 
+from cart.cart import BouquetCart
 from core.services.mixins.views import CommonContextMixin
 
 from ..filters import BouquetFilter
@@ -50,6 +51,13 @@ class BouquetView(
     category_url_name = "bouquets-category"
     subcategory_url_name = "bouquets-subcategory"
 
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context["bouquets_cart"] = BouquetCart(
+            self.request.session, session_key="bouquets_cart"
+        )
+        return context
+
 
 class BouquetListView(
     ListViewMixin,
@@ -84,4 +92,7 @@ class BouquetListView(
         context = super().get_context_data(*args, **kwargs)
         context["colors"] = Color.objects.only("name", "hex_code").all()
         context["flowers"] = Flower.objects.only("name").all()
+        context["bouquets_cart"] = BouquetCart(
+            self.request.session, session_key="bouquets_cart"
+        )
         return context
