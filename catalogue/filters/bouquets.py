@@ -50,7 +50,7 @@ class BouquetFilter(BaseFilter):
             {
                 "class": "form-control",
                 "id": "max_size_input",
-                "min": self._aggregate_limits["min_size"],
+                "min": 0,
                 "max": self._aggregate_limits["max_size"],
                 "value": self._aggregate_limits["max_size"],
             }
@@ -59,7 +59,7 @@ class BouquetFilter(BaseFilter):
             {
                 "class": "form-control",
                 "id": "min_size_input",
-                "min": self._aggregate_limits["min_size"],
+                "min": 0,
                 "max": self._aggregate_limits["max_size"],
                 "value": self._aggregate_limits["min_size"],
             }
@@ -69,7 +69,7 @@ class BouquetFilter(BaseFilter):
             {
                 "class": "form-control",
                 "id": "max_amount_of_flowers_input",
-                "min": self._aggregate_limits["min_amount_of_flowers"],
+                "min": 0,
                 "max": self._aggregate_limits["max_amount_of_flowers"],
                 "value": self._aggregate_limits["max_amount_of_flowers"],
             }
@@ -78,7 +78,7 @@ class BouquetFilter(BaseFilter):
             {
                 "class": "form-control",
                 "id": "min_amount_of_flowers_input",
-                "min": self._aggregate_limits["min_amount_of_flowers"],
+                "min": 0,
                 "max": self._aggregate_limits["max_amount_of_flowers"],
                 "value": self._aggregate_limits["min_amount_of_flowers"],
             }
