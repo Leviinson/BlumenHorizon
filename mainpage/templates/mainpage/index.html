@@ -1,0 +1,101 @@
+{% extends "templates/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block additional_head_styles %}
+<link rel="stylesheet" href="{% static 'mainpage/styles/mainpage.css' %}">
+{% endblock %}
+
+{% block body %}
+<div class="container mx-auto text-center">
+  <h1>
+    {% blocktranslate %}
+    Цветочный интернет-магазин {{ city }}
+    {% endblocktranslate %}
+  </h1>
+  <div id="carouselExampleIndicators" class="carousel slide mx-auto" data-bs-ride="carousel"
+    style="max-width: 1050px; max-height: 450px;">
+    <div class="carousel-indicators">
+      {% for image in slider_images %}
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{ forloop.counter0 }}"
+        class="{% if forloop.first %}active{% endif %}" aria-current="true" aria-label="Slide 1"></button>
+      {% endfor %}
+    </div>
+    <div class="carousel-inner">
+      {% for image in slider_images %}
+      <div data-bs-interval="5000" class="carousel-item {% if forloop.first %}active{% endif %}" style="overflow: hidden;">
+        <img src="{{ image.image.url }}" class="d-block w-100" alt="..."
+          style="object-fit: cover; width: 100%; height: 450px;">
+      </div>
+      {% endfor %}
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+      data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+      data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+  <h2 class="text-center my-4">Предлагаем Вам лучшее из лучших</h2>
+  <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      {% for recommended_product_chunk in recommended_products %}
+      <div data-bs-interval="5000" class="carousel-item {% if forloop.first %}active{% endif %}">
+        <div class="row w-100" id="cards-container" style="min-height: 404px;">
+          {% for recommended_product in recommended_product_chunk %}
+            <div class="col-6 col-md-3 col-lg-3 mb-4 d-flex product-card-in-slider">
+              <a href="{{ recommended_product.get_detail_url }}" class="text-decoration-none text-dark w-100">
+                  <div class="card h-100 w-100">
+                      <div class="image-wrapper">
+                          <img src="{% static 'defaults/no-image.webp' %}" class="card-img-top square-image"
+                              alt="{% translate 'Изображение продукта временно отсутствует.' %}">
+                      </div>
+                      <div class="card-body d-flex flex-column">
+                          <h5 class="card-title">{{ recommended_product.name }}</h5>
+                          <div class="d-flex flex-column justify-content-center mt-auto">
+                              <p class="card-text">{{ recommended_product.price }} {{ currency_symbol }}</p>
+                              <form
+                                  method="post"
+                                  class="add-to-cart-form w-100 me-2"
+                                  data-add-url="{% if recommended_product.is_bouquet %}{% url 'cart:bouquet-add' %}{% else %}{% url 'cart:product-add' %}{% endif %}"
+                                  data-remove-url="{% if recommended_product.is_bouquet %}{% url 'cart:bouquet-remove' %}{% else %}{% url 'cart:product-remove' %}{% endif %}"
+                                  data-is-in-cart="{% if recommended_product in products_cart or recommended_product in bouquets_cart %}true{% else %}false{% endif %}"
+                              >
+                                  {% csrf_token %}
+                                  <input type="hidden" name="product_slug" value="{{ product.slug }}">
+                                  {% include 'templates/cartButton.html' %}
+                              </form>
+                          </div>
+                      </div>
+                  </div>
+              </a>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <button class="carousel-control-prev outside-control" type="button" data-bs-target="#productCarousel"
+      data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next outside-control" type="button" data-bs-target="#productCarousel"
+      data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+</div>
+</div>
+
+{% endblock %}
+
+{% block additional_scripts %}
+{% endblock %}

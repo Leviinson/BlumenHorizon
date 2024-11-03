@@ -66,6 +66,7 @@ LOCAL_APPS = [
     "catalogue.apps.CatalogueConfig",
     "extended_contrib_models.apps.ExtendedContribModelsConfig",
     "cart.apps.CartConfig",
+    "mainpage.apps.MainpageConfig",
     # "checkout.apps.CheckoutConfig"
 ]
 
@@ -363,6 +364,7 @@ STATICFILES_DIRS = [
     "accounts/templates/",
     "catalogue/templates/",
     "cart/templates/",
+    "mainpage/templates/",
     MEDIA_ROOT,
 ]
 
