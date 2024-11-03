@@ -25,5 +25,9 @@ class ExtendedSite(models.Model):
 def create_extended_site(sender, instance, created, **kwargs):
     if not ExtendedSite.objects.filter(site=instance).exists():
         ExtendedSite.objects.create(
-            site=instance, currency_code="USD", currency_symbol="$", country="Германия", city="Берлин"
+            site=instance,
+            currency_code="USD",
+            currency_symbol="$",
+            country="Германия",
+            city="Берлин",
         )
