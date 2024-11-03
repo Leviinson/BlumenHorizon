@@ -1,10 +1,10 @@
 {% load static %}
 {% load i18n %}
 
-<div class="d-flex flex-column">
+<div class="d-flex flex-column mb-5">
   <nav class="navbar navbar-expand-lg bg-soft-turquoise text-light">
     <div class="container">
-      <a href="#" class="navbar-brand fs-3 text-light">
+      <a href="{% url 'mainpage:offers' %}" class="navbar-brand fs-3 text-light">
         <img src="{% static 'templates/favicon.png' %}" alt="{{ site_name }} logo" width="72" height="72" class="me-2">
         {{ site_name }}
       </a>

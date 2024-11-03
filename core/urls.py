@@ -32,6 +32,7 @@ service_urlpatterns = [
 
 i18n_urlpatterns = i18n_patterns(
     path("jsi18n/", JavaScriptCatalog.as_view(), name="javascript-catalog"),
+    path("", include("mainpage.urls")),
     path("accounts/", include("accounts.urls")),
     path("catalog/", include("catalogue.urls")),
     prefix_default_language=False,
