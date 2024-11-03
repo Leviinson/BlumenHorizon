@@ -2,10 +2,13 @@ import stripe
 from django.conf import settings
 from django.shortcuts import redirect
 from django.views import View
-from cart.cart import ProductsCart, BouquetsCart
+
+from cart.cart import BouquetsCart, ProductsCart
+
 from .models import PaymentMethod
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
+
 
 class CheckoutView(View):
     def get(self, request, *args, **kwargs):
@@ -14,24 +17,29 @@ class CheckoutView(View):
         payment_method_types = [method.stripe_code for method in active_payment_methods]
 
         # Получаем продукты из корзин
-        cart_products = ProductsCart(request.session, session_key="products_cart").products
-        bouquets_cart = BouquetsCart(request.session, session_key="bouquets_cart").products
+        cart_products = ProductsCart(
+            request.session, session_key="products_cart"
+        ).products
+        bouquets_cart = BouquetsCart(
+            request.session, session_key="bouquets_cart"
+        ).products
 
         # Подготавливаем line_items для Stripe
         line_items = []
         for product in cart_products + bouquets_cart:
-            line_items.append({
-                "price_data": {
-                    "currency": "usd",
-                    "product_data": {
-                        "name": product.name,
+            line_items.append(
+                {
+                    "price_data": {
+                        "currency": "usd",
+                        "product_data": {
+                            "name": product.name,
+                        },
+                        "unit_amount": int(product.price * 100),
                     },
-                    "unit_amount": int(product.price * 100),  # Конвертируем цену в центы
-                },
-                "quantity": 1,  # Укажите нужное количество
-            })
+                    "quantity": 1,
+                }
+            )
 
-        # Создаем сессию Checkout
         try:
             session = stripe.checkout.Session.create(
                 payment_method_types=payment_method_types,
@@ -42,7 +50,5 @@ class CheckoutView(View):
             )
             return redirect(session.url)
         except Exception as e:
-            # Добавьте обработку ошибок
             print(f"Error creating checkout session: {e}")
             return redirect("/error/")
-

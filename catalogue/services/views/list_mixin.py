@@ -34,7 +34,7 @@ class ListViewMixin:
                 qs = qs.order_by("name")
             case "disc":
                 qs = qs.order_by("-discount")
-        
+
         return qs.filter(
             is_active=True,
             subcategory__is_active=True,

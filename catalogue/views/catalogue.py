@@ -51,7 +51,7 @@ class SubcategoryListViewMixin(ListViewMixin):
         )
         context["title"] = self.subcategory.name
         return context
-    
+
 
 class ProductListViewMixin:
     def get_context_data(self, *args, **kwargs):
@@ -60,6 +60,7 @@ class ProductListViewMixin:
             self.request.session, session_key="products_cart"
         )
         return context
+
 
 class BouquetListViewMixin:
     def get_context_data(self, *args, **kwargs):
@@ -79,7 +80,6 @@ class ProductCategoryListViewMixin(ProductListViewMixin, CategoryListViewMixin):
         return qs.filter(
             subcategory__category=self.category,
         )
-
 
 
 class ProductSubcategoryListViewMixin(ProductListViewMixin, SubcategoryListViewMixin):

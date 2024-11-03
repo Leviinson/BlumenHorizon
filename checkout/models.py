@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class PaymentMethod(models.Model):
     name = models.CharField(max_length=50, unique=True)
     stripe_code = models.TextChoices(max_length=50, unique=True)

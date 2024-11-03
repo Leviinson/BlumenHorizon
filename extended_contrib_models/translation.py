@@ -1,8 +1,6 @@
 from modeltranslation.translator import TranslationOptions, register
 
-from .models import (
-    ExtendedSite
-)
+from .models import ExtendedSite
 
 
 @register(ExtendedSite)

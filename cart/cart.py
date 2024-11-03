@@ -1,7 +1,7 @@
 from carton.cart import Cart
+from django.db.models import OuterRef, Subquery
 
 from catalogue.models import Bouquet, BouquetImage, Product, ProductImage
-from django.db.models import OuterRef, Subquery
 
 
 class CartMixin:
