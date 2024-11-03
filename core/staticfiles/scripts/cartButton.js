@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const cartContainer = document.getElementById("cart-container");
+    const cardsContainer = document.getElementById("cards-container");
 
     const updateButtonState = function (form, isInCart) {
         const button = form.querySelector("button");
@@ -43,12 +43,12 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     // Initialize buttons on catalog page
-    if (cartContainer) {
-        cartContainer.querySelectorAll(".add-to-cart-form").forEach(form => {
+    if (cardsContainer) {
+        cardsContainer.querySelectorAll(".add-to-cart-form").forEach(form => {
             updateButtonState(form, form.dataset.isInCart === "true");
         });
 
-        cartContainer.addEventListener("submit", function (event) {
+        cardsContainer.addEventListener("submit", function (event) {
             if (event.target.matches(".add-to-cart-form")) {
                 event.preventDefault();
                 handleCartFormSubmit(event.target);
