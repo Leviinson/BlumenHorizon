@@ -17,7 +17,7 @@ from .services.dataclasses import CartAction
 
 
 class CartView(CommonContextMixin, TemplateView):
-    template_name = "cart/cart.html"
+    template_name = "cart/index.html"
     extra_context = {"title": _("Корзина товаров")}
 
     def get_context_data(self, *args, **kwargs):
@@ -86,7 +86,7 @@ class CartEditAbstractMixin(ABC):
             grand_total=cart.total + remaining_cart.total,
             quantity=cart.get_quantity(product),
             subtotal=cart.get_subtotal(product),
-            count=cart.count + remaining_cart.count
+            count=cart.count + remaining_cart.count,
         )
 
     def form_invalid(self, form) -> JsonResponse:
@@ -264,7 +264,7 @@ def cart_clear(request: HttpRequest) -> Type[JsonResponse]:
                 "message": _("Корзина успешно очищена."),
                 "status": "success",
                 "grand_total": product_cart.total + bouquet_cart.total,
-                "count": product_cart.count + bouquet_cart.count
+                "count": product_cart.count + bouquet_cart.count,
             },
             status=200,
         )
