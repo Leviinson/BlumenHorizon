@@ -1,7 +1,9 @@
+from colorfield.fields import ColorField
 from django.contrib.sites.models import Site
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.utils.translation import gettext_lazy as _
 
 
 class ExtendedSite(models.Model):
@@ -19,6 +21,45 @@ class ExtendedSite(models.Model):
     class Meta:
         verbose_name = "Расширенные данные о сайте"
         verbose_name_plural = verbose_name
+
+
+class Social(models.Model):
+    absolute_url = models.URLField(verbose_name="Ссылка на соц. сеть", unique=True)
+    outline_hex_code = ColorField(
+        verbose_name=_("HEX код цвета обводки (#f4678a к примеру)"),
+        help_text=_(
+            "Введите HEX-код цвета, например: #FFFFFF (белый) или #FFF (сокращённый формат)."
+        ),
+    )
+    background_hex_code = ColorField(
+        verbose_name=_("HEX код цвета фона (#f4678a к примеру)"),
+        help_text=_(
+            "Введите HEX-код цвета, например: #FFFFFF (белый) или #FFF (сокращённый формат)."
+        ),
+    )
+    icon_hex_code = ColorField(
+        verbose_name=_("HEX код цвета иконки (#f4678a к примеру)"),
+        help_text=_(
+            "Введите HEX-код цвета, например: #FFFFFF (белый) или #FFF (сокращённый формат)."
+        ),
+    )
+    bootstrap_icon = models.CharField(
+        max_length=40,
+        verbose_name="Название класса иконки",
+        help_text="https://icons.getbootstrap.com/",
+    )
+    extended_site = models.ForeignKey(
+        ExtendedSite,
+        on_delete=models.PROTECT,
+        related_name="socials",
+    )
+
+    class Meta:
+        verbose_name = "Соц. сеть"
+        verbose_name_plural = "Соц. сети"
+
+    def __str__(self):
+        return f"{self.bootstrap_icon} - {self.absolute_url}"
 
 
 @receiver(post_save, sender=Site)
