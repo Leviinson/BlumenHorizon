@@ -70,6 +70,8 @@ class ProductAdmin(TranslationAdmin):
                     "slug",
                     "price",
                     "discount",
+                    "amount_of_orders",
+                    "amount_of_savings",
                     "is_active",
                     "subcategory",
                     "description",
@@ -79,6 +81,8 @@ class ProductAdmin(TranslationAdmin):
         ),
     )
     list_filter = (
+        "amount_of_orders",
+        "amount_of_savings",
         "slug",
         "created_at",
         "updated_at",
@@ -94,6 +98,8 @@ class ProductAdmin(TranslationAdmin):
         "name",
         "slug",
         "is_active",
+        "amount_of_orders",
+        "amount_of_savings",
     )
     ordering = ("name",)
 
@@ -177,6 +183,8 @@ class BouquetAdmin(TranslationAdmin):
                     "slug",
                     "price",
                     "discount",
+                    "amount_of_orders",
+                    "amount_of_savings",
                     "is_active",
                     "subcategory",
                     "description",
@@ -190,6 +198,8 @@ class BouquetAdmin(TranslationAdmin):
         ),
     )
     list_filter = (
+        "amount_of_orders",
+        "amount_of_savings",
         "is_active",
         "subcategory",
         "size",
@@ -207,6 +217,8 @@ class BouquetAdmin(TranslationAdmin):
         "name",
         "slug",
         "size",
+        "amount_of_orders",
+        "amount_of_savings",
         "amount_of_flowers",
         "is_active",
     )

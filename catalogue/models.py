@@ -90,6 +90,8 @@ class ProductAbstract(TimeStampAdbstractModel, MetaDataAbstractModel):
     specs = HTMLField(
         verbose_name=_("Характеристики"),
     )
+    amount_of_orders = models.IntegerField(verbose_name="Количество заказов", editable=False)
+    amount_of_savings = models.IntegerField(verbose_name="Количество добавлений в корзину", editable=False)
 
     class Meta:
         abstract = True
