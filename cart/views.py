@@ -14,7 +14,7 @@ from core.services.mixins.views import CommonContextMixin
 from .cart import BouquetCart, ProductCart
 from .forms import CartForm
 from .services.dataclasses import CartAction
-
+from django.db import transaction
 
 class CartView(CommonContextMixin, TemplateView):
     template_name = "cart/index.html"
@@ -63,10 +63,13 @@ class CartEditAbstractMixin(ABC):
     def form_valid(self, form) -> JsonResponse:
         cart = self.get_cart()
         remaining_cart = self.get_remaining_cart()
-        product = self.get_product(form)
+        product: Product | Bouquet = self.get_product(form)
         match self.cart_action.action:
             case "add":
-                cart.add(product, price=product.price)
+                with transaction.atomic():
+                    cart.add(product, price=product.price)
+                    product.amount_of_savings += 1
+                    product.save(update_fields=["amount_of_savings"])
             case "remove":
                 cart.remove(product)
             case "remove_single":
