@@ -124,3 +124,29 @@ body {
     margin-right: 5px;
 }
 
+.social-button-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.social-button {
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+}
+
+.social-list {
+    position: absolute;
+    bottom: 70px;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* .social-link {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+} */
