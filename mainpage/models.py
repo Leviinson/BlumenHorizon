@@ -1,7 +1,6 @@
 from django.db import models
 
 
-# Create your models here.
 class MainPageSliderImages(models.Model):
     image = models.ImageField(verbose_name="Фото на главном слайде")
     is_active = models.BooleanField(default=False, verbose_name="Активное?")
