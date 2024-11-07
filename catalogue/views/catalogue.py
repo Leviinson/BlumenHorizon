@@ -57,7 +57,7 @@ class ProductListViewMixin:
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context["products_cart"] = ProductCart(
-            self.request.session, session_key="products_cart"
+            session=self.request.session, session_key="products_cart"
         )
         return context
 
@@ -66,7 +66,7 @@ class BouquetListViewMixin:
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context["bouquets_cart"] = BouquetCart(
-            self.request.session, session_key="bouquets_cart"
+            session=self.request.session, session_key="bouquets_cart"
         )
         return context
 
