@@ -8,13 +8,13 @@
 {% endblock %}
 
 {% block body %}
-<div class="container mx-auto text-center">
+<div class="container mx-auto text-center d-flex flex-column align-items-center">
   <h1>
     {% blocktranslate %}
     Цветочный интернет-магазин {{ city }}
     {% endblocktranslate %}
   </h1>
-  <div id="carouselExampleIndicators" class="carousel slide mx-auto" data-bs-ride="carousel"
+  <div id="carouselExampleIndicators" class="carousel slide w-100" data-bs-ride="carousel"
     style="max-width: 1050px; max-height: 450px;">
     <div class="carousel-indicators">
       {% for image in slider_images %}
@@ -24,7 +24,7 @@
     </div>
     <div class="carousel-inner">
       {% for image in slider_images %}
-      <div data-bs-interval="5000" class="carousel-item {% if forloop.first %}active{% endif %}" style="overflow: hidden;">
+      <div data-bs-interval="5000" class="carousel-item {% if forloop.first %}active{% endif %} w-100" style="overflow: hidden;">
         <img src="{{ image.image.url }}" class="d-block w-100" alt="..."
           style="object-fit: cover; width: 100%; height: 450px;">
       </div>
@@ -33,52 +33,77 @@
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
       data-bs-slide="prev">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
+      <span class="visually-hidden">{% translate 'Назад' %}</span>
     </button>
     <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
       data-bs-slide="next">
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
+      <span class="visually-hidden">{% translate 'Вперёд' %}</span>
     </button>
   </div>
 
-  <h2 class="text-center my-4">Предлагаем Вам лучшее из лучших</h2>
-  <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
+  <div class="card w-40 my-5">
+    <form class="d-flex w-100 flex-column justify-content-start align-items-start text-start card-body">
+      <fieldset class="w-100">
+        <legend class="text-center">
+          {% translate 'Индивидуальный букет за 5 минут' %}
+        </legend>
+        <div class="mb-3 w-100">
+          <label for="customerNameInput" class="form-label">{% translate 'Имя' %}</label>
+          <input autocomplete="given-name" class="form-control text-start" id="customerNameInput" aria-describedby="nameHelp" name="first_name">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">{% translate 'Номер телефона в любой соц. сети' %}</label>
+          <div class="d-flex">
+            {{ individual_order_form.phonenumber }}
+          </div>
+        </div>
+        <div class="mb-3 form-check">
+          <input type="checkbox" class="form-check-input checkbox-dark" id="recallCheckbox" name="can_recall">
+          <label class="form-check-label" for="recallCheckbox">
+            <small>
+              {% translate 'Разрешаю мне перезвонить.' %}
+            </small>
+          </label>
+        </div>
+        <button type="submit" class="btn btn-dark-green">{% translate 'Назначить диалог' %}</button>
+      </fieldset>
+    </form>
+  </div>
+
+  <h2 class="text-center my-4">{% translate 'Рекомендуемые букеты к покупке' %}</h2>
+  <div id="productCarousel" class="carousel slide w-100" data-bs-ride="carousel">
     <div class="carousel-inner" id="cards-container">
-      {% for recommended_products_chunk in recommended_products|chunked:4 %}
+      {% for recommended_bouquets_chunk in recommended_bouquets|chunked:4 %}
       <div data-bs-interval="5000" class="carousel-item {% if forloop.first %}active{% endif %}">
-        <div class="row w-100">
-          {% for recommended_product in recommended_products_chunk %}
+        <div class="row m-0">
+          {% for recommended_bouquet in recommended_bouquets_chunk %}
             <div class="col-6 col-md-3 col-lg-3 mb-4 d-flex product-card-in-slider">
-              <a href="{{ recommended_product.get_detail_url }}" class="text-decoration-none text-dark w-100">
-                  <div class="card h-100 w-100">
+              <a href="{{ recommended_bouquet.get_detail_url }}" class="text-decoration-none text-dark w-100">
+                  <div class="card h-100 w-100" style="min-height: 404px;">
                       <div class="image-wrapper">
-                          {% if recommended_product.first_image_uri %}
-                          <img src="{{ MEDIA_URL }}{{ recommended_product.first_image_uri }}" class="card-img-top square-image"
-                              alt="{% translate 'Изображение продукта временно отсутствует.' %}">
+                          {% if recommended_bouquet.first_image_uri %}
+                          <img src="{{ MEDIA_URL }}{{ recommended_bouquet.first_image_uri }}" class="card-img-top square-image"
+                              alt="{% translate 'Изображение продукта временно отсутствует.' %}" loading="lazy">
                           {% else %}
                           <img src="{% static 'defaults/no-image.webp' %}" class="card-img-top square-image"
-                              alt="{% translate 'Изображение продукта временно отсутствует.' %}">
+                              alt="{% translate 'Изображение продукта временно отсутствует.' %}" loading="lazy">
                           {% endif %}
                       </div>
                       <div class="card-body d-flex flex-column">
-                          <h5 class="card-title">{{ recommended_product.name }}</h5>
+                          <h5 class="card-title">{{ recommended_bouquet.name }}</h5>
                           <div class="d-flex flex-column justify-content-center mt-auto">
-                              <p class="card-text">{{ recommended_product.price }} {{ currency_symbol }}</p>
+                              <p class="card-text">{{ recommended_bouquet.price }} {{ currency_symbol }}</p>
                               <form
                                   method="post"
-                                  {% if recommended_product.is_bouquet %}
                                   action="{% url 'cart:bouquet-add' %}"
-                                  {% else %}
-                                  action="{% url 'cart:product-add' %}"
-                                  {% endif %}
                                   class="add-to-cart-form w-100 me-2"
-                                  data-add-url="{% if recommended_product.is_bouquet %}{% url 'cart:bouquet-add' %}{% else %}{% url 'cart:product-add' %}{% endif %}"
-                                  data-remove-url="{% if recommended_product.is_bouquet %}{% url 'cart:bouquet-remove' %}{% else %}{% url 'cart:product-remove' %}{% endif %}"
-                                  data-is-in-cart="{% if recommended_product in products_cart or recommended_product in bouquets_cart %}true{% else %}false{% endif %}"
+                                  data-add-url="{% url 'cart:bouquet-add' %}"
+                                  data-remove-url="{% url 'cart:bouquet-remove' %}"
+                                  data-is-in-cart="{% if recommended_bouquet in bouquets_cart %}true{% else %}false{% endif %}"
                               >
                                   {% csrf_token %}
-                                  <input type="hidden" name="product_slug" value="{{ recommended_product.slug }}">
+                                  <input type="hidden" name="product_slug" value="{{ recommended_bouquet.slug }}">
                                   {% include 'templates/cartButton.html' %}
                               </form>
                           </div>
@@ -93,14 +118,14 @@
     </div>
 
     <button class="carousel-control-prev outside-control" type="button" data-bs-target="#productCarousel"
-      data-bs-slide="prev" style="height: 10%; top: 50%;">
+      data-bs-slide="prev" style="height: 35%; width: 10%; top: 32.5%;">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
+      <span class="visually-hidden">{% translate 'Предыдущий слайд букетов' %}</span>
     </button>
     <button class="carousel-control-next outside-control" type="button" data-bs-target="#productCarousel"
-      data-bs-slide="next" style="height: 10%; top: 50%;">
+      data-bs-slide="next" style="height: 35%; width: 10%; top: 32.5%;">
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
+      <span class="visually-hidden">{% translate 'Следующий слайд букетов' %}</span>
     </button>
   </div>
 </div>
