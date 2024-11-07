@@ -1,5 +1,8 @@
+from pprint import pprint
 from carton.cart import Cart
+from django.contrib.sessions.backends.base import SessionBase
 from django.db.models import OuterRef, Subquery
+from django.db.models.query import QuerySet
 
 from catalogue.models import Bouquet, BouquetImage, Product, ProductImage
 
@@ -7,6 +10,17 @@ from catalogue.models import Bouquet, BouquetImage, Product, ProductImage
 class CartMixin:
     image_model: ProductImage | BouquetImage = None
     image_model_related_name: str = ""
+
+    def __init__(
+        self,
+        with_images: bool = False,
+        session: SessionBase = None,
+        session_key: str = None,
+        *args,
+        **kwargs
+    ):
+        self.with_images = with_images
+        return super().__init__(session, session_key, *args, **kwargs)
 
     def get_quantity(self, product):
         if product in self.products:
@@ -16,28 +30,29 @@ class CartMixin:
         if product in self.products:
             return self._items_dict[product.pk].subtotal
 
-    def filter_products(self, queryset):
-        first_image_subquery = self.image_model.objects.filter(
-            **{
-                self.image_model_related_name: OuterRef("pk"),
-            }
-        ).order_by("id")[:1]
-        queryset = (
-            queryset.select_related("subcategory", "subcategory__category")
-            .only(
-                "name",
-                "slug",
-                "price",
-                "is_active",
-                "subcategory__is_active",
-                "subcategory__category__is_active",
-            )
-            .annotate(
+    def filter_products(self, queryset: QuerySet[Product | Bouquet]) -> QuerySet[Product | Bouquet]:
+        qs = super().filter_products(queryset)
+        optimized_queryset: QuerySet = qs.select_related(
+            "subcategory", "subcategory__category"
+        )
+        if self.with_images:
+            first_image_subquery = self.image_model.objects.filter(
+                **{
+                    self.image_model_related_name: OuterRef("pk"),
+                }
+            ).order_by("id")[:1]
+            optimized_queryset = optimized_queryset.annotate(
                 first_image_uri=Subquery(first_image_subquery.values("image")[:1]),
             )
+        optimized_queryset = optimized_queryset.only(
+            "name",
+            "slug",
+            "price",
+            "is_active",
+            "subcategory__is_active",
+            "subcategory__category__is_active",
         )
-        qs = super().filter_products(queryset)
-        return qs
+        return optimized_queryset
 
 
 class ProductCart(CartMixin, Cart):
