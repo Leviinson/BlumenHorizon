@@ -1,4 +1,3 @@
-from pprint import pprint
 from carton.cart import Cart
 from django.contrib.sessions.backends.base import SessionBase
 from django.db.models import OuterRef, Subquery
@@ -30,7 +29,9 @@ class CartMixin:
         if product in self.products:
             return self._items_dict[product.pk].subtotal
 
-    def filter_products(self, queryset: QuerySet[Product | Bouquet]) -> QuerySet[Product | Bouquet]:
+    def filter_products(
+        self, queryset: QuerySet[Product | Bouquet]
+    ) -> QuerySet[Product | Bouquet]:
         qs = super().filter_products(queryset)
         optimized_queryset: QuerySet = qs.select_related(
             "subcategory", "subcategory__category"
