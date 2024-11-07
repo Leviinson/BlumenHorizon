@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     if (hr) {
                         hr.remove();
                     }
-                    countElement.textContent = data.count;
+                    countElement.textContent = interpolate(gettext('%s эл.'), [data.count]);
                     grandTotalElement.textContent = data.grand_total;
                     emptyCartHandler();
                 }
