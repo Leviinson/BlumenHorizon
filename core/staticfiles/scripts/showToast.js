@@ -1,6 +1,11 @@
 function showToast(message, type) {
     const toastContainer = document.getElementById("toast-container");
 
+    const existingToasts = toastContainer.getElementsByClassName("toast");
+    if (existingToasts.length >= 3) {
+        toastContainer.removeChild(existingToasts[0]);
+    }
+
     const toastElement = document.createElement("div");
     toastElement.className = `toast align-items-center border-0`;
     toastElement.setAttribute("role", "alert");
