@@ -4,7 +4,7 @@
         "--config",
         "pyproject.toml"
     ],
-    // "isort.check": true,
+    "isort.check": true,
     "editor.formatOnSave": true,
     "files.autoSave": "afterDelay",
     "isort.interpreter": [
