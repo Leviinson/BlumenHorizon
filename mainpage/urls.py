@@ -8,6 +8,7 @@ app_name = "mainpage"
 
 urlpatterns = [
     path("", MainPageView.as_view(), name="offers"),
+    # path("individual-order/", IndividualOrderView.as_view(), name="individual-order-negotiate"),
     # path("about/", AboutUsView.as_view(), name="about"),
     # path("delivery/", DeliveryInstructionsView.as_view(), name="delivery"),
     # path("payment/", PaymentInstructionsView.as_view(), name="payment"),
