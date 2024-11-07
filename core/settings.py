@@ -67,7 +67,7 @@ LOCAL_APPS = [
     "extended_contrib_models.apps.ExtendedContribModelsConfig",
     "cart.apps.CartConfig",
     "mainpage.apps.MainpageConfig",
-    # "checkout.apps.CheckoutConfig"
+    "livesearch",
 ]
 
 THIRDPARTY_APPS = [
