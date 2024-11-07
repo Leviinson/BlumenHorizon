@@ -20,17 +20,17 @@
                 </li>
                 {% endfor %}
             </ul>
-            <div class="tab-content authentication-form mt-3" id="userprofileTabsContent">
+            <div class="tab-content authentication-form mt-3 justify-content-center" id="userprofileTabsContent">
                 {% for tab_key, tab in tabs.items %}
                 {% if request.path == tab.url %}
                 <div class="tab-pane fade show active" id="{{ tab_key }}-tab-pane" role="tabpanel"
                     aria-labelledby="{{ tab_key }}-tab" tabindex="0">
-                    <form method="post">
+                    <form method="post" class="w-50 mx-auto">
                         {% csrf_token %}
                         <fieldset disabled>
                             <div class="mb-3">
                                 <label for="inputEmail" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="inputEmail" name="email" autofocus
+                                <input type="email" class="form-control text-start" id="inputEmail" name="email" autofocus
                                     autocomplete="email" placeholder="{{ user.email }}">
                                 {% if form.errors.email %}
                                 {% for error in form.errors.email %}
@@ -44,7 +44,7 @@
                                 <label for="phonenumber" class="form-label">
                                     {% translate "Номер телефона"%}
                                 </label>
-                                <input class="form-control" id="phonenumber" autocomplete="tel" name="phonenumber"
+                                <input class="form-control text-start" id="phonenumber" autocomplete="tel" name="phonenumber"
                                     placeholder="{{ user.phonenumber }}">
                                 {% if form.errors.phonenumber %}
                                 {% for error in form.errors.phonenumber %}
@@ -56,7 +56,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="inputFirstName" class="form-label">{% translate 'Имя' %}</label>
-                                <input class="form-control" id="inputFirstName" autocomplete="given-name"
+                                <input class="form-control text-start" id="inputFirstName" autocomplete="given-name"
                                     name="first_name" placeholder="{{ user.first_name }}">
                                 {% if form.errors.first_name %}
                                 {% for error in form.errors.first_name %}
@@ -68,7 +68,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="inputLastName" class="form-label">{% translate 'Фамилия' %}</label>
-                                <input class="form-control" id="inputLastName" autocomplete="family-name"
+                                <input class="form-control text-start" id="inputLastName" autocomplete="family-name"
                                     name="last_name" placeholder="{{ user.last_name }}">
                                 {% if form.errors.last_name %}
                                 {% for error in form.errors.last_name %}
@@ -80,7 +80,7 @@
                             </div>
                         </fieldset>
                     </form>
-                    <div class="d-flex justify-content-between">
+                    <div class="d-flex justify-content-between w-50 mx-auto">
                         <form action="{% url 'logout' %}" method="post">
                             {% csrf_token %}
                             <button type="submit" class="btn btn-dark-green">{% translate 'Выйти' %}</button>
