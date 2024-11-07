@@ -3,6 +3,7 @@
 {% load i18n %}
 
 {% block additional_head_styles %}
+<link rel="stylesheet" href="{% static 'cart/styles/cart.css' %}">
 {% endblock %}
 
 {% block body %}
@@ -13,9 +14,12 @@
                 <div class="card mb-4">
                     <div class="card-header py-3 d-flex justify-content-between align-items-center">
                         <h5 class="mb-0">
-                            {% blocktranslate with total_amount=products_cart.count|add:bouquets_cart.count %}
-                            Корзина - <span id="total-count">{{ total_amount }} эл.</span>
-                            {% endblocktranslate %}
+                            {% translate 'Корзина' %} - 
+                            <span id="total-count">
+                                {% blocktranslate with total_amount=products_cart.count|add:bouquets_cart.count %}
+                                    {{ total_amount }} эл.
+                                {% endblocktranslate %}
+                            </span>
                         </h5>
 
                         <form id="cart-clear-form"
@@ -43,7 +47,7 @@
                                         </a>
                                     </div>
                                 </div>
-                                <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                                <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
                                     <p><strong>{{ item.product.name }}</strong></p>
                                     <form class="product-remove-form"
                                         action="{% url 'cart:bouquet-remove' %}"
@@ -57,7 +61,7 @@
                                         </button>
                                     </form>
                                 </div>
-                                <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                                <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
                                     <div class="d-flex mb-4 mx-l-auto mx-auto" style="max-width: 300px">
                                         <form action="{% url 'cart:bouquet-remove-single' %}"
                                             method="post"
@@ -112,8 +116,8 @@
                                         </a>
                                     </div>
                                 </div>
-                                <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
-                                    <p><strong>{{ item.product.name }}</strong></p>
+                                <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                                    <strong class="product-name">{{ item.product.name }}</strong>
                                     
                                     <form class="product-remove-form"
                                           action="{% url 'cart:product-remove' %}"
@@ -127,8 +131,8 @@
                                         </button>
                                     </form>
                                 </div>
-                                <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
-                                    <div class="d-flex mb-4 mx-l-auto mx-auto" style="max-width: 300px">
+                                <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                                    <div class="d-flex mb-4 mx-l-auto mx-auto">
                                         <form action="{% url 'cart:product-remove-single' %}"
                                             method="post"
                                             data-subtotal-id="{{ item.product.slug }}Subtotal"
