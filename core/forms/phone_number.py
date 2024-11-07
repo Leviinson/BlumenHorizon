@@ -13,7 +13,7 @@ class BootstrapSplitPhoneNumberField(SplitPhoneNumberField):
                 attrs={
                     "class": "form-select contry-code-select text-start",
                     "autocomplete": "tel-country-code",
-                    "style": "width: 40%;",
+                    "style": "width: 60%;",
                 }
             )
         )
@@ -27,7 +27,7 @@ class BootstrapSplitPhoneNumberField(SplitPhoneNumberField):
                     "class": "form-control ms-2 text-start",
                     "autocomplete": "tel-national",
                     "area-describedby": "phoneNumberHelp",
-                    "maxlength": 10,
+                    "maxlength": 12,
                 }
             )
         )
