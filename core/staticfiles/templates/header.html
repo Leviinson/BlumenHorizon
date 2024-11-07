@@ -31,9 +31,16 @@
             <meta itemprop="name" content="Добавить в корзину">
           </a>
         </div>
-        <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
+        <form class="d-flex position-relative" id="liveSearchForm" data-url="{% url 'live-search:search' %}">
+          <input class="form-control me-2"
+                 type="search"
+                 placeholder="Search"
+                 aria-label="Search"
+                 name="q"
+                 id="searchInput"
+                 autocomplete="off">
           <button class="btn btn-dark-green" type="submit">{% translate 'Поиск' %}</button>
+          <div class="list-group position-absolute w-100 mt-5" id="searchResults"></div>
         </form>
       </div>
     </div>
