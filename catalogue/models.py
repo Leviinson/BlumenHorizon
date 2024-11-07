@@ -83,6 +83,7 @@ class ProductAbstract(TimeStampAdbstractModel, MetaDataAbstractModel):
         ),
         verbose_name=_("Скидка"),
         null=True,
+        default=0,
     )
     description = HTMLField(
         verbose_name=_("Описание"),
@@ -90,8 +91,12 @@ class ProductAbstract(TimeStampAdbstractModel, MetaDataAbstractModel):
     specs = HTMLField(
         verbose_name=_("Характеристики"),
     )
-    amount_of_orders = models.IntegerField(verbose_name="Количество заказов", editable=False)
-    amount_of_savings = models.IntegerField(verbose_name="Количество добавлений в корзину", editable=False)
+    amount_of_orders = models.IntegerField(
+        verbose_name="Количество заказов", editable=False
+    )
+    amount_of_savings = models.IntegerField(
+        verbose_name="Количество добавлений в корзину", editable=False
+    )
 
     class Meta:
         abstract = True
@@ -102,6 +107,10 @@ class ProductAbstract(TimeStampAdbstractModel, MetaDataAbstractModel):
     def clean_subcategory(self):
         if self.subcategory is None:
             self.is_active = False
+
+    @property
+    def discount_price(self) -> float:
+        return self.price * (1 - self.discount / 100) if self.discount else self.price
 
 
 class Product(ProductAbstract):
