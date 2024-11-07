@@ -14,7 +14,7 @@
                     <div class="card-header py-3 d-flex justify-content-between align-items-center">
                         <h5 class="mb-0">
                             {% blocktranslate with total_amount=products_cart.count|add:bouquets_cart.count %}
-                            Корзина - <span id="total-count">{{ total_amount }}</span> продуктов
+                            Корзина - <span id="total-count">{{ total_amount }} эл.</span>
                             {% endblocktranslate %}
                         </h5>
 
@@ -22,8 +22,8 @@
                               action="{% url 'cart:clear' %}"
                               method="post">
                             {% csrf_token %}
-                            <button id="cart-clear-button" type="submit" class="btn btn-danger btn-sm py-2" title="{% translate 'Удалить продукт' %}">
-                                <i class="fas fa-trash me-2"></i>{% translate 'Очистить корзину' %}
+                            <button id="cart-clear-button" type="submit" class="btn btn-danger btn-sm py-2" title="{% translate 'Очистить корзину' %}">
+                                <i class="fas fa-trash"></i>
                             </button>
                         </form>
                     </div>
@@ -232,7 +232,7 @@
         
                                 </svg>
                             </div>
-                            <p>{% translate 'К сожалению корзина пуста.' %}</p>
+                            <p>{% translate 'К сожалению, корзина пуста.' %}</p>
                         </div>
                     </div>
                 </div>
