@@ -10,6 +10,9 @@
 <div class="container mt-5">
     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
         <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{% url 'mainpage:offers' %}" class="text-dark">{% translate 'Главная страница' %}</a>
+            </li>
             {% for breadcrumb in breadcrumbs %}
             {% if forloop.last %}
                 <li class="breadcrumb-item active" aria-current="page">
@@ -62,18 +65,33 @@
         </div>
 
         <div class="col-md-6 product-info-container h-auto">
-            <div class="product-info-card h-100">
-                <h2 class="mb-3">{{ product.name }}</h2>
-                <h3 class="text-success mb-4">{{ product.price }} {{ currency_symbol }}</h3>
-
-                <h4 class="mb-3">{% translate 'Описание' %}</h4>
-                <ul class="list-unstyled product-attributes-list">
-                    <li>
-                        <strong>{% translate 'Скидка' %}:</strong> {{ product.discount }}%
-                    </li>
-                </ul>
-                {% block additional_attributes %}
-                {% endblock %}
+            <div class="product-info-card h-100 d-flex flex-column justify-content-between">
+                <div id="content-container">
+                    <div id="top-level-information" class="mb-3 d-flex justify-content-between">
+                        <h1>{{ product.name }}</h1>
+                        <span class="badge text-bg-success mt-2" style="height: min-content;">{% translate 'Есть в наличии' %}</span>
+                    </div>
+    
+                    <div class="mb-3 d-flex align-items-end">
+                        {% if product.discount %}
+                            <h2 class="text-danger mb-0 me-2">
+                                {{ product.discount_price }} {{ currency_symbol }}
+                            </h2>
+                            <h2 class="text-muted text-decoration-line-through mb-0" style="font-size: 1.25em;">
+                                {{ product.price }} {{ currency_symbol }}
+                            </h2>
+                        {% else %}
+                          <h2 class="mb-0">
+                            {{ product.price }} {{ currency_symbol }}
+                          </h2>
+                        {% endif %}
+                      </div>
+    
+                    <ul class="list-unstyled product-attributes-list">
+                    </ul>
+                    {% block additional_attributes %}
+                    {% endblock %}
+                </div>
 
                 <div class="d-flex mt-4">
                     <form
