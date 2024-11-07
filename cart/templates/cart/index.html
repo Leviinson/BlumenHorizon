@@ -30,6 +30,9 @@
                     <div id="products-list-container" class="card-body" style="min-height: 423px;">
                         <!-- Single item -->
                         {% for item in bouquets_cart.items %}
+                            {% if not forloop.first %}
+                            <hr id="{{ item.product.slug }}Hr">
+                            {% endif %}
                             <div class="row product-container" id="{{ item.product.slug }}">
                                 <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
                                     <div class="bg-image hover-overlay hover-zoom ripple image-wrapper">
@@ -93,15 +96,12 @@
                                     </p>
                                 </div>
                             </div>
-                            {% if not forloop.last  %}
-                                <hr id="{{ item.product.slug }}Hr">
-                            {% endif %}
-                            {% if forloop.last and products_cart.products %}
-                                <hr id="{{ item.product.slug }}Hr">
-                            {% endif %}
                         {% endfor %}
                         <!-- Single item -->
                         {% for item in products_cart.items %}
+                            {% if bouquets_cart.items %}
+                            <hr id="{{ item.product.slug }}Hr">
+                            {% endif %}
                             <div class="row product-container" id="{{ item.product.slug }}">
                                 <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
                                     <div class="bg-image hover-overlay hover-zoom ripple image-wrapper">
@@ -166,9 +166,6 @@
                                     </p>
                                 </div>
                             </div>
-                            {% if not forloop.last  %}
-                                <hr id="{{ item.product.slug }}Hr">
-                            {% endif %}
                         {% endfor %}
                         <!-- Single item -->
                         <div id="no-image-container" class="d-none flex-column justify-content-center align-items-center mt-5">
