@@ -2,6 +2,7 @@ import logging
 from abc import ABC, abstractmethod
 from typing import Type
 
+from django.db import transaction
 from django.http import HttpRequest, JsonResponse
 from django.shortcuts import get_object_or_404
 from django.utils.translation import gettext_lazy as _
@@ -14,7 +15,7 @@ from core.services.mixins.views import CommonContextMixin
 from .cart import BouquetCart, ProductCart
 from .forms import CartForm
 from .services.dataclasses import CartAction
-from django.db import transaction
+
 
 class CartView(CommonContextMixin, TemplateView):
     template_name = "cart/index.html"
@@ -23,10 +24,10 @@ class CartView(CommonContextMixin, TemplateView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context["products_cart"] = ProductCart(
-            self.request.session, session_key="products_cart"
+            True, self.request.session, session_key="products_cart"
         )
         context["bouquets_cart"] = BouquetCart(
-            self.request.session, session_key="bouquets_cart"
+            True, self.request.session, session_key="bouquets_cart"
         )
         grand_total = context["products_cart"].total + context["bouquets_cart"].total
         context["grand_total"] = grand_total
@@ -158,10 +159,10 @@ class CartBouquetEditMixin:
         )
 
     def get_cart(self):
-        return BouquetCart(self.request.session, session_key="bouquets_cart")
+        return BouquetCart(session=self.request.session, session_key="bouquets_cart")
 
     def get_remaining_cart(self):
-        return ProductCart(self.request.session, session_key="products_cart")
+        return ProductCart(session=self.request.session, session_key="products_cart")
 
 
 class CartProductEditMixin:
@@ -172,10 +173,10 @@ class CartProductEditMixin:
         )
 
     def get_cart(self):
-        return ProductCart(self.request.session, session_key="products_cart")
+        return ProductCart(session=self.request.session, session_key="products_cart")
 
     def get_remaining_cart(self):
-        return BouquetCart(self.request.session, session_key="bouquets_cart")
+        return BouquetCart(session=self.request.session, session_key="bouquets_cart")
 
 
 class CartBouquetAddView(
@@ -258,8 +259,8 @@ class CartProductRemoveSingleView(
 
 def cart_clear(request: HttpRequest) -> Type[JsonResponse]:
     if request.method == "POST":
-        product_cart = ProductCart(request.session, session_key="products_cart")
-        bouquet_cart = BouquetCart(request.session, session_key="bouquets_cart")
+        product_cart = ProductCart(session=request.session, session_key="products_cart")
+        bouquet_cart = BouquetCart(session=request.session, session_key="bouquets_cart")
         for cart in (product_cart, bouquet_cart):
             cart.clear()
         return JsonResponse(
