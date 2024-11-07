@@ -17,11 +17,6 @@ class ListViewMixin:
 
     def get_queryset(self):
         qs = super().get_queryset()
-        first_image_subquery = self.image_model.objects.filter(
-            **{
-                self.image_model_related_name: OuterRef("pk"),
-            }
-        ).order_by("id")[:1]
 
         sort_option = self.request.GET.get("sort", "pd")
 
@@ -35,6 +30,11 @@ class ListViewMixin:
             case "disc":
                 qs = qs.order_by("-discount")
 
+        first_image_subquery = self.image_model.objects.filter(
+            **{
+                self.image_model_related_name: OuterRef("pk"),
+            }
+        ).order_by("id")[:1]
         return qs.filter(
             is_active=True,
             subcategory__is_active=True,
