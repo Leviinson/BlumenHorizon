@@ -64,18 +64,22 @@ document.addEventListener('DOMContentLoaded', function() {
     function renderSearchResults(data) {
         searchResults.innerHTML = ''; // Clear existing results
 
-        // Render products if available
-        if (data.results.products.length > 0) {
-            searchResults.innerHTML += renderCategory(gettext('Продукты:'), data.results.products);
+        // Render products by category
+        if (Object.keys(data.results.products).length > 0) {
+            for (const [category, products] of Object.entries(data.results.products)) {
+                searchResults.innerHTML += renderCategory(category, products, 'Продукты:');
+            }
         }
 
-        // Render bouquets if available
-        if (data.results.bouquets.length > 0) {
-            searchResults.innerHTML += renderCategory(gettext('Букеты:'), data.results.bouquets);
+        // Render bouquets by category
+        if (Object.keys(data.results.bouquets).length > 0) {
+            for (const [category, bouquets] of Object.entries(data.results.bouquets)) {
+                searchResults.innerHTML += renderCategory(category, bouquets, 'Букеты:');
+            }
         }
 
         // No results found
-        if (data.results.products.length === 0 && data.results.bouquets.length === 0) {
+        if (Object.keys(data.results.products).length === 0 && Object.keys(data.results.bouquets).length === 0) {
             searchResults.innerHTML = `<p class="text-muted m-2">${gettext('Нет результатов')}<i class="bi bi-emoji-frown ms-2"></i></p>`;
         }
 
@@ -83,11 +87,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Function to render a category (products or bouquets)
-    function renderCategory(title, items) {
+    function renderCategory(category, items, title) {
         const itemsHtml = items.map(item => 
             `<div><i class="bi bi-search"></i><a href="${item.url}" class="text-dark">${item.name}</a></div>`
         ).join('');
-        return `<h3 class="text-dark">${title}</h3><div class="d-flex flex-column align-items-start">${itemsHtml}</div>`;
+        return `<h3 class="text-dark">${title} ${category}</h3><div class="d-flex flex-column align-items-start">${itemsHtml}</div>`;
     }
 
     // Function to render error message
