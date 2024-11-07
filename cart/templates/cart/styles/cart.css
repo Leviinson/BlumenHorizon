@@ -1,0 +1,7 @@
+.product-name {
+    display: inline;
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    max-width: 100%;
+}
