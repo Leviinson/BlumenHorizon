@@ -27,7 +27,6 @@ service_urlpatterns = [
     path("i18n/", include("django.conf.urls.i18n")),
     path("admin/", admin.site.urls),
     path("logout/", LogoutView.as_view(), name="logout"),
-    path("cart/", include("cart.urls")),
 ]
 
 i18n_urlpatterns = i18n_patterns(
@@ -36,6 +35,7 @@ i18n_urlpatterns = i18n_patterns(
     path("accounts/", include("accounts.urls")),
     path("catalog/", include("catalogue.urls")),
     path("search/", include("livesearch.urls")),
+    path("cart/", include("cart.urls")),
     prefix_default_language=False,
 )
 
