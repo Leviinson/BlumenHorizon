@@ -10,7 +10,7 @@
         <strong>{% translate 'Состав' %}:</strong>
         <ul class="list-inline">
             {% for flower in product.flowers.all %}
-            <li class="list-inline-item badge bg-soft-turquoise">{{ flower.name }}</li>
+            <li class="list-inline-item badge bg-soft-turquoise p-2">{{ flower.name }}</li>
             {% endfor %}
         </ul>
     </li>
