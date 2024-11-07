@@ -1,3 +1,5 @@
+from decimal import ROUND_HALF_UP, Decimal
+
 from colorfield.fields import ColorField
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
@@ -110,7 +112,9 @@ class ProductAbstract(TimeStampAdbstractModel, MetaDataAbstractModel):
 
     @property
     def discount_price(self) -> float:
-        return self.price * (1 - self.discount / 100) if self.discount else self.price
+        discount = Decimal(self.discount)
+        result = self.price * (1 - discount / 100) if discount else self.price
+        return result.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
 
 
 class Product(ProductAbstract):
