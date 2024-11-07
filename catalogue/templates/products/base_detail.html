@@ -61,8 +61,8 @@
             </div>
         </div>
 
-        <div class="col-md-6 product-info-container">
-            <div class="product-info-card">
+        <div class="col-md-6 product-info-container h-auto">
+            <div class="product-info-card h-100">
                 <h2 class="mb-3">{{ product.name }}</h2>
                 <h3 class="text-success mb-4">{{ product.price }} {{ currency_symbol }}</h3>
 
@@ -101,7 +101,7 @@
 
     <div class="row mt-4">
         <div class="col">
-            <div class="info-block p-4 mb-4">
+            <div class="info-block p-4">
                 <h4 class="info-title">{% translate 'Описание' %}</h4>
                 <p class="info-text">{{ product.description|safe }}</p>
             </div>
