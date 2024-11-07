@@ -70,15 +70,19 @@ class ProductAdmin(TranslationAdmin):
                     "slug",
                     "price",
                     "discount",
-                    "amount_of_orders",
-                    "amount_of_savings",
                     "is_active",
                     "subcategory",
                     "description",
+                    "amount_of_orders",
+                    "amount_of_savings",
                     "specs",
                 )
             },
         ),
+    )
+    readonly_fields = (
+        "amount_of_orders",
+        "amount_of_savings",
     )
     list_filter = (
         "amount_of_orders",
@@ -183,19 +187,23 @@ class BouquetAdmin(TranslationAdmin):
                     "slug",
                     "price",
                     "discount",
-                    "amount_of_orders",
-                    "amount_of_savings",
                     "is_active",
                     "subcategory",
                     "description",
                     "specs",
                     "size",
                     "amount_of_flowers",
+                    "amount_of_orders",
+                    "amount_of_savings",
                     "colors",
                     "flowers",
                 )
             },
         ),
+    )
+    readonly_fields = (
+        "amount_of_orders",
+        "amount_of_savings",
     )
     list_filter = (
         "amount_of_orders",
