@@ -1,10 +1,14 @@
 from decimal import ROUND_HALF_UP, Decimal
+from random import choices
+from string import ascii_uppercase, digits
 
 from colorfield.fields import ColorField
+from django.contrib.auth import get_user_model
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
+from phonenumber_field.modelfields import PhoneNumberField
 from tinymce.models import HTMLField
 
 from core.base_models import TimeStampAdbstractModel
@@ -69,6 +73,11 @@ class ProductSubcategory(MetaDataAbstractModel):
             self.is_active = False
 
 
+def generate_sku():
+    sku = "".join(choices(ascii_uppercase + digits, k=6))
+    return sku
+
+
 class ProductAbstract(TimeStampAdbstractModel, MetaDataAbstractModel):
     price = models.DecimalField(
         max_digits=10,
@@ -114,7 +123,7 @@ class ProductAbstract(TimeStampAdbstractModel, MetaDataAbstractModel):
     def discount_price(self) -> float:
         discount = Decimal(self.discount)
         result = self.price * (1 - discount / 100) if discount else self.price
-        return result.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+        return result.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
 
 
 class Product(ProductAbstract):
@@ -124,6 +133,7 @@ class Product(ProductAbstract):
         verbose_name=_("Подкатегория"),
         related_name="products",
     )
+    sku = models.CharField(max_length=6, unique=True, default=generate_sku, null=True)
 
     class Meta:
         verbose_name = _("Продукт")
@@ -266,6 +276,7 @@ class Bouquet(ProductAbstract):
         verbose_name=_("Цветы"),
         help_text=_("Выберите какие цветы в букете."),
     )
+    sku = models.CharField(max_length=6, unique=True, default=generate_sku, null=True)
 
     class Meta:
         verbose_name = _("Букет")
@@ -307,3 +318,42 @@ class BouquetImage(models.Model):
 
     def __str__(self):
         return f"{self.bouquet.name} - Image"
+
+
+class IndividualQuestion(models.Model):
+    user = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.CASCADE,
+        related_name="individual_questions",
+        verbose_name="Связанный аккаунт",
+        null=True,
+        blank=False,
+    )
+    contact_method = models.TextField(
+        max_length=100,
+        verbose_name=_("Способ связи с клиентом"),
+    )
+    recall_me = models.BooleanField(verbose_name="Разрешил ли клиент звонить ему", default=False)
+    product = models.ForeignKey(
+        Product,
+        on_delete=models.SET_NULL,
+        related_name="individual_question",
+        verbose_name="Связанный продукт",
+        null=True,
+        blank=True
+    )
+    bouquet = models.ForeignKey(
+        Bouquet,
+        on_delete=models.SET_NULL,
+        related_name="individual_question",
+        verbose_name="Связанный букет",
+        null=True,
+        blank=True
+    )
+
+    class Meta:
+        verbose_name = "Индивидуальный вопрос о продукте"
+        verbose_name_plural = "Индивидуальные вопросы о продуктах"
+
+    def __str__(self):
+        return f"{self.user if self.user else "Неизвестный пользователь"}"
