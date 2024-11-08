@@ -28,7 +28,7 @@
     </nav>
     <div class="row">
         <div class="col-md-6">
-            <div id="carouselExampleIndicators" class="carousel slide">
+            <div id="carouselProductImage" class="carousel slide">
                 <div class="carousel-inner">
                     {% for image in product.images.all %}
                     <div class="carousel-item {% if forloop.first %}active{% endif %}">
@@ -49,14 +49,14 @@
                 {% if product.images.all.count > 1 %}
                 <div class="carousel-indicators mb-2">
                     {% for image in product.images.all %}
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{ forloop.counter0 }}" {% if forloop.counter0 == 0 %}class="active"{% endif %} aria-current="true" aria-label="{{ product.name }} slide indicator {{ forloop.counter }}"></button>
+                    <button type="button" data-bs-target="#carouselProductImage" data-bs-slide-to="{{ forloop.counter0 }}" {% if forloop.counter0 == 0 %}class="active"{% endif %} aria-current="true" aria-label="{{ product.name }} slide indicator {{ forloop.counter }}"></button>
                     {% endfor %}
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselProductImage" data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">{% translate 'Предыдущее фото букета' %}</span>
                 </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselProductImage" data-bs-slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">{% translate 'Следующее фото букета' %}</span>
                 </button>
@@ -66,34 +66,88 @@
 
         <div class="col-md-6 product-info-container h-auto">
             <div class="product-info-card h-100 d-flex flex-column justify-content-between">
-                <div id="content-container">
-                    <div id="top-level-information" class="mb-3 d-flex justify-content-between">
-                        <h1>{{ product.name }}</h1>
-                        <span class="badge text-bg-success mt-2" style="height: min-content;">{% translate 'Есть в наличии' %}</span>
-                    </div>
-    
-                    <div class="mb-3 d-flex align-items-end">
+                <div id="content-container" class="d-flex flex-column h-100">
+                    <div id="top-level-information" class="mb-3 d-flex justify-content-between align-items-center">
                         {% if product.discount %}
-                            <h2 class="text-danger mb-0 me-2">
+                        <h1 style="font-size: 1.5rem;" class="mb-0 pe-2">{{ product.name }}</h1>
+                        <span class="badge bg-dark-green m-0 p-2 fs-5" style="height: fit-content;">-{{ product.discount }}%</span>
+                        {% else %}
+                        <h1 style="font-size: 1.5rem;" class="mb-0 mx-auto">{{ product.name }}</h1>
+                        {% endif %}
+                    </div>
+                    {% block additional_attributes %}
+                    {% endblock %}
+
+                    <div id="our-advantages" class="d-flex justify-content-between flex-column align-items-center w-100 mb-3" style="max-width: 900px;">
+                        <div id="advantages-container" class="d-flex justify-content-between w-100 mt-3">
+                            {% if product.is_bouquet %}
+                            <div class="advantage-container text-center d-flex flex-column align-items-center" style="max-width: 140px;">
+                            <i id="composition-advantage" class="fa-solid fa-handshake fa-fade" style="color: #2c494b; --fa-animation-duration: 2s; --fa-fade-opacity: 0.6;"></i>
+                            <small>{% translate "Состав букета изменяем" %}</small>
+                        </div>
+                            {% endif %}
+                            <div class="advantage-container text-center d-flex flex-column align-items-center" style="max-width: 140px;">
+                            <i id="connect-advantage" class="fa-solid fa-comments fa-fade" style="color: #2c494b; --fa-animation-duration: 2s; --fa-fade-opacity: 0.6;"></i>
+                            <small>{% translate "Связь на каждом этапе" %}</small>
+                        </div>
+                            <div class="advantage-container text-center d-flex flex-column align-items-center" style="max-width: 140px;">
+                            <i id="anonym-delivery-advantage" class="fa-solid fa-user-secret fa-fade" style="color: #2c494b; --fa-animation-duration: 2s; --fa-fade-opacity: 0.6;"></i>
+                            <small>{% translate "Анонимная доставка" %}</small>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="card mb-3">
+                        <form id="individual-question-form"
+                              class="d-flex w-100 flex-column justify-content-start align-items-start text-start card-body"
+                              action="{% url 'catalogue:individual-question' %}"
+                              method="POST">
+                            <legend>{% translate 'Необходимо индивидуальное решение?' %}</legend>
+                            {% csrf_token %}
+                            <input type="hidden" name="item_slug" value="{{ product.slug }}">
+                            <div class="mb-3 w-100">
+                                <label for="contact-method-input" class="form-label">
+                                    {% translate 'Тел. номер в соц.сети или ссылка профиля' %}
+                                </label>
+                                <div class="d-flex">
+                                    {{ individual_question_form.contact_method }}
+                                </div>
+                                <div id="phoneNumberHelp" class="form-text">{% translate 'Предложим решение в течении 10 минут' %}</div>
+                            </div>
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input checkbox-dark" id="recallCheckbox" name="recall_me">
+                                <label class="form-check-label" for="recallCheckbox">
+                                  <small>
+                                    {% translate 'Разрешаю мне перезвонить' %}
+                                  </small>
+                                </label>
+                              </div>
+                            <button type="submit" class="btn btn-dark-green">{% translate 'Связаться' %}</button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div id="bottom-level-information" class="d-flex justify-content-between">
+                    <ul class="list-unstyled product-attributes-list">
+                        <ul class="p-0">{% translate 'Артикул' %}: {{ product.sku }}</ul>
+                        <ul class="text-success p-0">{% translate 'Есть в наличии' %}</ul>
+                    </ul>
+
+                    <div class="mb-3 d-flex flex-column align-items-end">
+                        {% if product.discount %}
+                            <h2 class="text-danger mb-0 me-2" style="font-size: x-large;">
                                 {{ product.discount_price }} {{ currency_symbol }}
                             </h2>
                             <h2 class="text-muted text-decoration-line-through mb-0" style="font-size: 1.25em;">
                                 {{ product.price }} {{ currency_symbol }}
                             </h2>
                         {% else %}
-                          <h2 class="mb-0">
+                            <h2 class="mb-0">
                             {{ product.price }} {{ currency_symbol }}
-                          </h2>
+                            </h2>
                         {% endif %}
-                      </div>
-    
-                    <ul class="list-unstyled product-attributes-list">
-                    </ul>
-                    {% block additional_attributes %}
-                    {% endblock %}
+                    </div>
                 </div>
-
-                <div class="d-flex mt-4">
+                <div class="d-flex mt-1">
                     <form
                         id="add-to-cart-form"
                         method="post"
@@ -138,4 +192,5 @@
 {% endblock %}
 
 {% block additional_scripts %}
+<script src="{% static 'products/scripts/individualQuestion.js' %}"></script>
 {% endblock %}
