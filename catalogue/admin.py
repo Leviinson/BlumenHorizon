@@ -8,6 +8,7 @@ from .models import (
     BouquetSubcategory,
     Color,
     Flower,
+    IndividualQuestion,
     Product,
     ProductCategory,
     ProductImage,
@@ -68,6 +69,7 @@ class ProductAdmin(TranslationAdmin):
                 "fields": (
                     "name",
                     "slug",
+                    "sku",
                     "price",
                     "discount",
                     "is_active",
@@ -185,6 +187,7 @@ class BouquetAdmin(TranslationAdmin):
                 "fields": (
                     "name",
                     "slug",
+                    "sku",
                     "price",
                     "discount",
                     "is_active",
@@ -232,3 +235,21 @@ class BouquetAdmin(TranslationAdmin):
     )
     filter_horizontal = ("colors", "flowers")
     ordering = ("name", "price", "discount")
+
+
+@admin.register(IndividualQuestion)
+class IndividualQuestionAdmin(admin.ModelAdmin):
+    fields = (
+        "user",
+        "contact_method",
+        "recall_me",
+        "product",
+        "bouquet",
+    )
+    list_display = (
+        "user",
+        "contact_method",
+        "recall_me",
+        "product",
+        "bouquet",
+    )
