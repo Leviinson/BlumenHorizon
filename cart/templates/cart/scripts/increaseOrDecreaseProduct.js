@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 quantityInput.value = data.quantity;
                 subtotalElement.textContent = data.subtotal;
                 grandTotalElement.textContent = data.grand_total;
-                countElement.textContent = data.count;
+                countElement.textContent = interpolate(gettext('%s эл.'), [data.count]);
                 document.getElementById('products-total-price').textContent = data.grand_total;
             } else {
                 showToast(data.message, "danger");
