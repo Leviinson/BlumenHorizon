@@ -1,15 +1,12 @@
-
-
 .card-title {
-    min-height: 3rem;
+  min-height: 3rem;
 }
 
 #mainpage-slider .carousel-item {
-    max-width: 900px;
-  }
+  max-width: 1000px;
+}
 
 #mainpage-slider .carousel-img {
-width: 100%;
-aspect-ratio: 900 / 450;
+aspect-ratio: 1000 / 450;
 object-fit: cover;
 }
