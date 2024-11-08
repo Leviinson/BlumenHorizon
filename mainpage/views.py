@@ -13,7 +13,7 @@ from catalogue.models import Bouquet, BouquetImage, Product, ProductImage
 from core.services.mixins.views import CommonContextMixin
 
 from .forms import IndividualOrderForm
-from .models import MainPageSliderImages
+from .models import MainPageSliderImages, SeoBlock
 from .services.dataclasses.related_model import RelatedModel
 
 
@@ -39,14 +39,20 @@ class MainPageView(CommonContextMixin, TemplateView):
             image_model=BouquetImage,
             related_models=related_models,
             image_filter_field="bouquet",
-            order_fields=["amount_of_orders", "amount_of_savings"],
+            order_fields=[
+                "-amount_of_orders",
+                "-amount_of_savings",
+            ],
         )
         products = self.get_recommended_items_with_first_image(
             model=Product,
             image_model=ProductImage,
             related_models=related_models,
             image_filter_field="product",
-            order_fields=["amount_of_orders", "amount_of_savings"],
+            order_fields=[
+                "-amount_of_orders",
+                "-amount_of_savings",
+            ],
         )
 
         context["recommended_bouquets"] = bouquets
@@ -58,6 +64,7 @@ class MainPageView(CommonContextMixin, TemplateView):
             session=self.request.session, session_key="bouquets_cart"
         )
         context["individual_order_form"] = IndividualOrderForm()
+        context["seo_block"] = SeoBlock.objects.first()
         return context
 
     def get_recommended_items_with_first_image(
@@ -99,8 +106,7 @@ class MainPageView(CommonContextMixin, TemplateView):
                 *select_related_fields,
             )
             .annotate(first_image_uri=Subquery(first_image_subquery))
-            .order_by(*order_fields)
-            .all()
+            .order_by(*order_fields)[:12]
         )
 
 
@@ -109,7 +115,7 @@ class IndividualOrderView(CreateView):
     http_method_names = ["post"]
 
     def form_valid(self, form: IndividualOrderForm):
-        form.save(user=self.request.user)
+        form.save(commit=True, user=self.request.user)
         return JsonResponse(
             {
                 "message": _("Мы скоро с Вами свяжемся, а пока выпейте чаю 😊"),
@@ -122,7 +128,7 @@ class IndividualOrderView(CreateView):
         return JsonResponse(
             {
                 "message": _("Вы неправильно заполнили форму:"),
-                "errors": form.errors,
+                "errors": form.errors.as_json(),
                 "status": 400,
             },
             status=400,
@@ -130,6 +136,9 @@ class IndividualOrderView(CreateView):
 
     def http_method_not_allowed(self, request, *args, **kwargs) -> JsonResponse:
         return JsonResponse(
-            message=_("Метод не разрешен. Используйте POST."),
+            {
+                "message": _("Метод не разрешен. Используйте POST."),
+                "status": 405,
+            },
             status=405,
         )
