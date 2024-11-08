@@ -12,6 +12,9 @@ class MainPageSliderImages(models.Model):
         verbose_name = "Фото слайдера главной страницы"
         verbose_name_plural = "Фотографии слайдера главной страницы"
 
+    def __str__(self):
+        return f"{self.image} - {"Активно" if self.is_active else "Неактивно"}"
+
 
 class IndividualOrder(models.Model):
     user = models.ForeignKey(
@@ -22,11 +25,32 @@ class IndividualOrder(models.Model):
         null=True,
         blank=False,
     )
-    first_name = models.CharField(max_length=40)
-    phonenumber = PhoneNumberField(
-        max_length=15,
-        verbose_name=_("Номер телефона"),
-        null=True,
-        blank=True,
-        unique=True,
+    first_name = models.CharField(max_length=40, verbose_name="Имя")
+    contact_method = models.TextField(
+        max_length=100,
+        verbose_name=_("Способ связи с клиентом"),
     )
+    recall_me = models.BooleanField(verbose_name="Разрешил ли клиент звонить ему", default=False)
+    
+    class Meta:
+        verbose_name = "Индивидуальный заказ"
+        verbose_name_plural = "Индивидуальные заказы"
+
+    def __str__(self):
+        return f"{self.first_name} {self.phonenumber}"
+
+
+class SeoBlock(models.Model):
+    image = models.ImageField(
+        verbose_name=_("Картинка"),
+        upload_to="seoblock/",
+        default="defaults/no-image.webp",
+    )
+    alt = models.CharField(max_length=40, verbose_name="Описание картинки")
+
+    class Meta:
+        verbose_name = "СЕО Блок"
+        verbose_name_plural = "СЕО Блоки"
+
+    def __str__(self):
+        return f"{self.image} ...... {self.alt}"
