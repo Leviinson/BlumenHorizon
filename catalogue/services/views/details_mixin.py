@@ -4,6 +4,8 @@ from django.http import Http404
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
+from catalogue.forms import IndividualQuestionForm
+
 
 class DetailViewMixin:
     category_url_name = None
@@ -38,6 +40,7 @@ class DetailViewMixin:
             },
             {"name": self.object.name, "url": None},
         ]
+        context["individual_question_form"] = IndividualQuestionForm()
         return context
 
     def get_queryset(self):
