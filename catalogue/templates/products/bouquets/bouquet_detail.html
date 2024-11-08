@@ -10,7 +10,7 @@
         <strong>{% translate 'Состав' %}:</strong>
         <ul class="list-inline">
             {% for flower in product.flowers.all %}
-            <li class="list-inline-item badge bg-soft-turquoise p-2">{{ flower.name }}</li>
+            <li class="list-inline-item badge bg-soft-turquoise p-2 mb-0 text-light">{{ flower.name }}</li>
             {% endfor %}
         </ul>
     </li>
@@ -24,6 +24,14 @@
             </li>
             {% endfor %}
         </ul>
+    </li>
+    <li>
+        <strong>{% translate 'Размеры:' %}</strong>
+        <div class="container mb-0 mt-2 p-0 d-flex justify-content-between">
+            <button class="btn bg-soft-turquoise text-light" data-bs-target="#carouselProductImage" data-bs-slide-to="0">30cm</button>
+            <button class="btn bg-soft-turquoise text-light" data-bs-target="#carouselProductImage" data-bs-slide-to="1">40cm</button>
+            <button class="btn bg-soft-turquoise text-light" data-bs-target="#carouselProductImage" data-bs-slide-to="2">50cm</button>
+        </div>
     </li>
 </ul>
 {% endblock %}
