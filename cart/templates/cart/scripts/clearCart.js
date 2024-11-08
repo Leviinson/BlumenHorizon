@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 const productContainers = productsListContainer.querySelectorAll(".product-container")
                 const hrElements = productsListContainer.querySelectorAll("hr");
                 if (productsListContainer && grandTotalElement && countElement) {
-                    countElement.textContent = data.count;
+                    countElement.textContent = interpolate(gettext('%s эл.'), [data.count]);
                     grandTotalElement.textContent = data.grand_total;
                     productsTotalPrice.textContent = data.grand_total;
                     productContainers.forEach(container => container.remove());
