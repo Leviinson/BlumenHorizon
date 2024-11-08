@@ -1,5 +1,7 @@
 from django.urls import path
 
+from catalogue.views.catalogue import IndividualQuestionView
+
 from .views import (
     BouquetListView,
     BouquetView,
@@ -14,6 +16,9 @@ from .views import (
 app_name = "catalogue"
 
 urlpatterns = [
+    path("individual-question/",
+         IndividualQuestionView.as_view(),
+         name="individual-question"),
     path(
         "products/",
         ProductListView.as_view(),
