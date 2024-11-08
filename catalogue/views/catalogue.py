@@ -1,8 +1,11 @@
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
+from django.views.generic.edit import CreateView
 
 from cart.cart import BouquetCart, ProductCart
+from catalogue.forms import IndividualQuestionForm
 
 from ..models import (
     BouquetCategory,
@@ -139,3 +142,37 @@ class CategoryBouquetListView(BouquetCategoryListViewMixin, BouquetListView):
 
 class SubcategoryBouquetListView(BouquetSubcategoryListViewMixin, BouquetListView):
     category_url_name = "bouquets-category"
+
+
+class IndividualQuestionView(CreateView):
+    form_class = IndividualQuestionForm
+    http_method_names = ["post"]
+
+    def form_valid(self, form: IndividualQuestionForm):
+        form.save(commit=True, user=self.request.user)
+        return JsonResponse(
+            {
+                "message": _("Мы скоро с Вами свяжемся, а пока выпейте чаю 😊"),
+                "status": "success",
+            },
+            status=201,
+        )
+
+    def form_invalid(self, form):
+        return JsonResponse(
+            {
+                "message": _("Вы неправильно заполнили форму:"),
+                "errors": form.errors.as_json(),
+                "status": 400,
+            },
+            status=400,
+        )
+
+    def http_method_not_allowed(self, request, *args, **kwargs) -> JsonResponse:
+        return JsonResponse(
+            {
+                "message": _("Метод не разрешен. Используйте POST."),
+                "status": 405,
+            },
+            status=405,
+        )
