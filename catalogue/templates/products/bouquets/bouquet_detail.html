@@ -2,36 +2,42 @@
 {% load i18n %}
 
 {% block additional_attributes %}
-<ul class="list-unstyled product-attributes-list">
-    <li>
-        <strong>{% translate 'Количество цветов' %}:</strong> {{ product.amount_of_flowers }}
-    </li>
-    <li>
-        <strong>{% translate 'Состав' %}:</strong>
-        <ul class="list-inline">
-            {% for flower in product.flowers.all %}
-            <li class="list-inline-item badge bg-soft-turquoise p-2 mb-0 text-light">{{ flower.name }}</li>
-            {% endfor %}
-        </ul>
-    </li>
-    <li>
-        <strong>{% translate 'Цветовая гамма' %}:</strong>
-        <ul class="list-inline d-flex">
-            {% for color in product.colors.all %}
-            <li class="list-inline-item d-flex justify-content-center align-items-center">
-                <span class="badge-color" style="background-color: {{ color.hex_code }};"></span>
-                {{ color.name }}
-            </li>
-            {% endfor %}
-        </ul>
-    </li>
-    <li>
-        <strong>{% translate 'Размеры:' %}</strong>
-        <div class="container mb-0 mt-2 p-0 d-flex justify-content-between">
-            <button class="btn bg-soft-turquoise text-light" data-bs-target="#carouselProductImage" data-bs-slide-to="0">30cm</button>
-            <button class="btn bg-soft-turquoise text-light" data-bs-target="#carouselProductImage" data-bs-slide-to="1">40cm</button>
-            <button class="btn bg-soft-turquoise text-light" data-bs-target="#carouselProductImage" data-bs-slide-to="2">50cm</button>
+<div class="d-flex align-items-center">
+    <div class="w-100">
+        <strong class="mb-4">{% translate 'Количество цветов' %}: {{ product.amount_of_flowers }}</strong>
+        <div id="colors-flowers-container" class="d-flex w-100 mt-3">
+            <div id="flowers-container" style="width: 70%;">
+                <strong>{% translate 'Состав' %}:</strong>
+                <div class="d-flex flex-wrap mt-2">
+                    {% for flower in product.flowers.all %}
+                    <span class="badge bg-soft-turquoise p-2 ms-0 mb-2 me-2 text-light">{{ flower.name }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            <div id="colors-container" style="width: 40%;">
+                <strong>{% translate 'Гамма' %}:</strong>
+                <div class="d-flex flex-wrap mt-2">
+                    {% for color in product.colors.all %}
+                    <div class="d-flex align-items-center me-2 mb-2">
+                        <span class="badge-color" style="background-color: {{ color.hex_code }};"></span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            
         </div>
-    </li>
-</ul>
+        <div class="w-100">
+            <strong>{% translate 'Размеры:' %}</strong>
+            <div class="container mb-0 mt-1 p-0 d-flex justify-content-between">
+                <button class="btn bg-dark-green text-light" data-bs-target="#carouselProductImage"
+                    data-bs-slide-to="0">30cm</button>
+                <button class="btn bg-dark-green text-light" data-bs-target="#carouselProductImage"
+                    data-bs-slide-to="1">40cm</button>
+                <button class="btn bg-dark-green text-light" data-bs-target="#carouselProductImage"
+                    data-bs-slide-to="2">50cm</button>
+            </div>
+        </div>
+        </ul>
+    </div>
+</div>
 {% endblock %}
