@@ -52,6 +52,8 @@ class CartMixin:
             "is_active",
             "subcategory__is_active",
             "subcategory__category__is_active",
+            "subcategory__slug",
+            "subcategory__category__slug",
         )
         return optimized_queryset
 
