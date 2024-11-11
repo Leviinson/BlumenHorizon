@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const data = await response.json();
 
             if (data.status === "success") {
-                showToast(data.message, "success");
+                showToast(data.detail, "success");
                 disableForm(form);
             } else {
                 let errors = JSON.parse(data.errors);
@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     })
                     .join('\n');
 
-                showToast(`${data.message}\n${errorsText}`, "danger");
+                showToast(`${data.detail}\n${errorsText}`, "danger");
             }
         } catch (error) {
             console.log(error);

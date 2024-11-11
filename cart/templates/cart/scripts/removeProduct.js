@@ -26,9 +26,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     grandTotalElement.textContent = data.grand_total;
                     emptyCartHandler();
                 }
-                showToast(data.message, "danger");
+                showToast(data.detail, "danger");
             } else {
-                showToast(data.message, "danger");
+                showToast(data.detail, "danger");
             }
         } catch (error) {
             console.log(error);

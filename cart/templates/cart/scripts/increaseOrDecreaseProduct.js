@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 countElement.textContent = interpolate(gettext('%s эл.'), [data.count]);
                 document.getElementById('products-total-price').textContent = data.grand_total;
             } else {
-                showToast(data.message, "danger");
+                showToast(data.detail, "danger");
             }
         } catch (error) {
             showToast(gettext("Произошла ошибка. Повторите попытку позже."), "danger");

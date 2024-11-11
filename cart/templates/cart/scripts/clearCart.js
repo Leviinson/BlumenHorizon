@@ -25,9 +25,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     hrElements.forEach(hr => hr.remove());
                     emptyCartHandler();
                 }
-                showToast(data.message, "danger");
+                showToast(data.detail, "danger");
             } else {
-                showToast(data.message, "danger");
+                showToast(data.detail, "danger");
             }
         } catch (error) {
             console.log(error);

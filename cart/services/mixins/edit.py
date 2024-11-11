@@ -68,7 +68,7 @@ class CartEditAbstractMixin(ABC):
                 )
 
         return self._action_response(
-            message=self.get_success_message(product),
+            detail=self.get_success_message(product),
             status=201,
             grand_total=cart.total + remaining_cart.total,
             quantity=cart.get_quantity(product),
@@ -78,20 +78,20 @@ class CartEditAbstractMixin(ABC):
 
     def form_invalid(self, form) -> JsonResponse:
         return self._error_response(
-            message=self.get_error_message(),
+            detail=self.get_error_message(),
             errors=form.errors,
             status=400,
         )
 
     def http_method_not_allowed(self, request, *args, **kwargs) -> JsonResponse:
         return self._error_response(
-            message=_("Метод не разрешен. Используйте POST."),
+            detail=_("Метод не разрешен. Используйте POST."),
             status=405,
         )
 
     def _action_response(
         self,
-        message: str,
+        detail: str,
         status: int,
         grand_total: float,
         subtotal: float,
@@ -100,7 +100,7 @@ class CartEditAbstractMixin(ABC):
     ) -> JsonResponse:
         return JsonResponse(
             {
-                "message": message,
+                "detail": detail,
                 "status": "success",
                 "grand_total": grand_total,
                 "subtotal": subtotal,
@@ -111,10 +111,10 @@ class CartEditAbstractMixin(ABC):
         )
 
     def _error_response(
-        self, message: str, errors=None, status: int = 400
+        self, detail: str, errors=None, status: int = 400
     ) -> JsonResponse:
         response_data = {
-            "message": message,
+            "detail": detail,
             "status": "error",
         }
         if errors:

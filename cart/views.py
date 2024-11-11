@@ -121,7 +121,7 @@ def cart_clear(request: HttpRequest) -> Type[JsonResponse]:
             cart.clear()
         return JsonResponse(
             {
-                "message": _("Корзина очищена"),
+                "detail": _("Корзина очищена"),
                 "status": "success",
                 "grand_total": product_cart.total + bouquet_cart.total,
                 "count": product_cart.count + bouquet_cart.count,
@@ -130,7 +130,7 @@ def cart_clear(request: HttpRequest) -> Type[JsonResponse]:
         )
     return JsonResponse(
         {
-            "message": _("Метод не разрешен. Используйте POST."),
+            "detail": _("Метод не разрешен. Используйте POST."),
             "status": "error",
         },
         status=405,

@@ -32,9 +32,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if (data.status === "success") {
                 updateButtonState(form, !isInCart);
-                showToast(data.message, isInCart ? "danger" : "success");
+                showToast(data.detail, isInCart ? "danger" : "success");
             } else {
-                showToast(data.message, "danger");
+                showToast(data.detail, "danger");
             }
         } catch (error) {
             console.error(error);
