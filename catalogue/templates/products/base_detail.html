@@ -157,13 +157,16 @@
                     >
                         {% csrf_token %}
                         <input type="hidden" name="product_slug" value="{{ product.slug }}">
-                        {% if product.is_bouquet %}
-                        <input type="hidden" name="size" value="{{ selected_bouquet_size.pk }}">
-                        {% endif %}
                         {% include 'templates/cartButton.html' %}
                     </form>
-                    <form action="" method="post" class="w-100">
+                    <form action="{% url 'catalogue:buy-item' %}" method="post" class="w-100">
                         {% csrf_token %}
+                        <input type="hidden" name="category_slug" value="{{ request.resolver_match.kwargs.category_slug }}">
+                        <input type="hidden" name="subcategory_slug" value="{{ request.resolver_match.kwargs.subcategory_slug }}">
+                        <input type="hidden" name="item_slug" value="{% if product.is_bouquet %}{{ request.resolver_match.kwargs.bouquet_slug }}{% else %}{{ request.resolver_match.kwargs.product_slug }}{% endif %}">
+                        {% if product.is_bouquet %}
+                        <input type="hidden" name="is_bouquet" value="true">
+                        {% endif %}
                         <button type="submit" class="btn btn-success w-100 px-0 py-1">
                             <i class="fas fa-money-bill-wave me-3 my-2"></i>{% translate 'Купить' %}
                         </button>

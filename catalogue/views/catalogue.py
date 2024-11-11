@@ -1,21 +1,98 @@
-from django.http import JsonResponse
-from django.shortcuts import get_object_or_404
+from django.http import Http404, JsonResponse
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, FormView
 
 from cart.cart import BouquetCart, ProductCart
 from catalogue.forms import IndividualQuestionForm
 
+from ..forms import BuyItemForm
 from ..models import (
+    Bouquet,
     BouquetCategory,
     BouquetSubcategory,
+    Product,
     ProductCategory,
     ProductSubcategory,
 )
 from ..services.views import ListViewMixin
 from .bouquets import BouquetListView
 from .products import ProductListView
+
+
+def build_filter(
+    category_slug: str, subcategory_slug: str, item_slug: str
+) -> dict[str, str | bool]:
+    return {
+        "slug": item_slug,
+        "is_active": True,
+        "subcategory__slug": subcategory_slug,
+        "subcategory__is_active": True,
+        "subcategory__category__slug": category_slug,
+        "subcategory__category__is_active": True,
+    }
+
+
+def get_bouquet(category_slug, subcategory_slug, bouquet_slug):
+    filters = build_filter(category_slug, subcategory_slug, bouquet_slug)
+    try:
+        return Bouquet.objects.only("price", "discount").get(**filters)
+    except Bouquet.DoesNotExist:
+        raise Http404(
+            _("Данный букет был недавно удалён из каталога нашими администраторами")
+        )
+
+
+def get_product(category_slug, subcategory_slug, product_slug):
+    filters = build_filter(category_slug, subcategory_slug, product_slug)
+    try:
+        return Product.objects.only("price", "discount").get(**filters)
+    except Product.DoesNotExist:
+        raise Http404(
+            _("Данный продукт был недавно удалён из каталога нашими администраторами")
+        )
+
+
+class BuyItemView(FormView):
+    form_class = BuyItemForm
+
+    def form_valid(self, form):
+        category_slug = form.cleaned_data["category_slug"]
+        subcategory_slug = form.cleaned_data["subcategory_slug"]
+        item_slug = form.cleaned_data["item_slug"]
+        is_bouquet = form.cleaned_data["is_bouquet"]
+
+        if is_bouquet:
+            model_class = Bouquet
+            cart_class = BouquetCart
+            cart_session_key = "bouquets_cart"
+        else:
+            model_class = Product
+            cart_class = ProductCart
+            cart_session_key = "products_cart"
+
+        try:
+            item = model_class.objects.get(
+                slug=item_slug,
+                is_active=True,
+                subcategory__slug=subcategory_slug,
+                subcategory__category__slug=category_slug,
+            )
+            cart = cart_class(session=self.request.session, session_key=cart_session_key)
+            if item not in cart.products:
+                cart.add(item, item.discount_price)
+        except model_class.DoesNotExist:
+            raise Http404(
+                _(
+                    "Данный продукт был недавно удалён из каталога нашими администраторами"
+                )
+            )
+
+        return redirect("cart:show")
+
+    def form_invalid(self, form):
+        return redirect("mainpage:offers")
 
 
 class CategoryListViewMixin(ListViewMixin):
@@ -152,7 +229,7 @@ class IndividualQuestionView(CreateView):
         form.save(commit=True, user=self.request.user)
         return JsonResponse(
             {
-                "message": _("Мы скоро с Вами свяжемся, а пока выпейте чаю 😊"),
+                "detail": _("Мы скоро с Вами свяжемся, а пока выпейте чаю 😊"),
                 "status": "success",
             },
             status=201,
@@ -161,7 +238,7 @@ class IndividualQuestionView(CreateView):
     def form_invalid(self, form):
         return JsonResponse(
             {
-                "message": _("Вы неправильно заполнили форму:"),
+                "detail": _("Вы неправильно заполнили форму:"),
                 "errors": form.errors.as_json(),
                 "status": 400,
             },
@@ -171,7 +248,7 @@ class IndividualQuestionView(CreateView):
     def http_method_not_allowed(self, request, *args, **kwargs) -> JsonResponse:
         return JsonResponse(
             {
-                "message": _("Метод не разрешен. Используйте POST."),
+                "detail": _("Метод не разрешен. Используйте POST."),
                 "status": 405,
             },
             status=405,

@@ -5,6 +5,7 @@ from catalogue.views.catalogue import IndividualQuestionView
 from .views import (
     BouquetListView,
     BouquetView,
+    BuyItemView,
     CategoryBouquetListView,
     CategoryProductsListView,
     GetBouquetSizes,
@@ -67,4 +68,5 @@ urlpatterns = [
         GetBouquetSizes.as_view(),
         name="get-bouquet-sizes",
     ),
+    path("buy/", BuyItemView.as_view(), name="buy-item"),
 ]
