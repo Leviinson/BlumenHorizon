@@ -4,16 +4,14 @@
 {% block additional_attributes %}
 <div class="d-flex align-items-center">
     <div class="w-100">
-        {% with selected_bouquet_size|default:product as item %}
-            <div class="d-flex flex-column justify-content-start">
-                <strong class="mb-2">
-                    {% translate 'Количество цветов' %}: {{ item.amount_of_flowers }}
-                </strong>
-                <strong class="mb-2">
-                    {% translate 'Диаметр' %}: {{ item.diameter }}{% translate 'см' %}
-                </strong>
-            </div>
-        {% endwith %}
+        <div class="d-flex flex-column justify-content-start">
+            <strong class="mb-2">
+                {% translate 'Количество цветов' %}: {{ product.amount_of_flowers }}
+            </strong>
+            <strong class="mb-2">
+                {% translate 'Диаметр' %}: {{ product.diameter }}{% translate 'см' %}
+            </strong>
+        </div>
         <div id="colors-flowers-container" class="d-flex w-100">
             <div id="flowers-container" style="width: 70%;">
                 <strong>{% translate 'Состав' %}:</strong>
@@ -39,15 +37,20 @@
             
         </div>
         <div class="w-100">
-            <strong>{% translate 'Размеры:' %}</strong>
-            <div class="container mb-0 mt-1 p-0 d-flex justify-content-between">
-                <button class="btn bg-dark-green text-light" data-bs-target="#carouselProductImage"
-                    data-bs-slide-to="0">30cm</button>
-                <button class="btn bg-dark-green text-light" data-bs-target="#carouselProductImage"
-                    data-bs-slide-to="1">40cm</button>
-                <button class="btn bg-dark-green text-light" data-bs-target="#carouselProductImage"
-                    data-bs-slide-to="2">50cm</button>
-            </div>
+            {% with bouquet_sizes=product.sizes.all %}
+                {% if bouquet_sizes %}
+                <strong>{% translate 'Размеры:' %}</strong>
+                <div class="container mb-0 mt-1 p-0 d-flex justify-content-between">
+                    {% for size in bouquet_sizes %}
+                    <a class="btn bg-dark-green text-light"
+                       data-bs-target="#carouselProductImage"
+                       data-bs-slide-to="0">
+                        {{ size.amount_of_flowers }} {% translate "шт." %}
+                    </a>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            {% endwith %}
         </div>
         </ul>
     </div>
