@@ -3,7 +3,7 @@ from django.db.models import OuterRef, Subquery
 from django.db.models.query import QuerySet
 
 from carton.cart import Cart
-from catalogue.models import Bouquet, BouquetImage, BouquetsSizes, Product, ProductImage
+from catalogue.models import Bouquet, BouquetImage, Product, ProductImage
 
 
 class CartMixin:
