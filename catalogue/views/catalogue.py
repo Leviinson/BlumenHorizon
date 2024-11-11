@@ -73,7 +73,7 @@ class BuyItemView(FormView):
             cart_session_key = "products_cart"
 
         try:
-            item = model_class.objects.get(
+            item = model_class.objects.only("price", "discount").get(
                 slug=item_slug,
                 is_active=True,
                 subcategory__slug=subcategory_slug,

@@ -32,12 +32,12 @@ class IndividualQuestionForm(forms.ModelForm):
     def clean_item_slug(self):
         item_slug = self.cleaned_data.get("item_slug")
         try:
-            product = Product.objects.get(slug=item_slug, is_active=True)
+            product = Product.objects.only("pk").get(slug=item_slug, is_active=True)
             self.cleaned_data["related_object"] = product
             self.cleaned_data["related_field"] = "product"
         except Product.DoesNotExist:
             try:
-                bouquet = Bouquet.objects.get(slug=item_slug, is_active=True)
+                bouquet = Bouquet.objects.only("pk").get(slug=item_slug, is_active=True)
                 self.cleaned_data["related_object"] = bouquet
                 self.cleaned_data["related_field"] = "bouquet"
             except Bouquet.DoesNotExist:
