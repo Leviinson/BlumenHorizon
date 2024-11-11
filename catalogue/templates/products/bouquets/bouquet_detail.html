@@ -4,13 +4,24 @@
 {% block additional_attributes %}
 <div class="d-flex align-items-center">
     <div class="w-100">
-        <strong class="mb-4">{% translate 'Количество цветов' %}: {{ product.amount_of_flowers }}</strong>
-        <div id="colors-flowers-container" class="d-flex w-100 mt-3">
+        {% with selected_bouquet_size|default:product as item %}
+            <div class="d-flex flex-column justify-content-start">
+                <strong class="mb-2">
+                    {% translate 'Количество цветов' %}: {{ item.amount_of_flowers }}
+                </strong>
+                <strong class="mb-2">
+                    {% translate 'Диаметр' %}: {{ item.diameter }}{% translate 'см' %}
+                </strong>
+            </div>
+        {% endwith %}
+        <div id="colors-flowers-container" class="d-flex w-100">
             <div id="flowers-container" style="width: 70%;">
                 <strong>{% translate 'Состав' %}:</strong>
                 <div class="d-flex flex-wrap mt-2">
                     {% for flower in product.flowers.all %}
-                    <span class="badge bg-soft-turquoise p-2 ms-0 mb-2 me-2 text-light">{{ flower.name }}</span>
+                        <span class="badge bg-soft-turquoise p-2 ms-0 mb-2 me-2 text-light">
+                            {{ flower.name }}
+                        </span>
                     {% endfor %}
                 </div>
             </div>
@@ -19,7 +30,8 @@
                 <div class="d-flex flex-wrap mt-2">
                     {% for color in product.colors.all %}
                     <div class="d-flex align-items-center me-2 mb-2">
-                        <span class="badge-color" style="background-color: {{ color.hex_code }};"></span>
+                        <span class="badge-color" style="background-color: {{ color.hex_code }};">
+                        </span>
                     </div>
                     {% endfor %}
                 </div>
