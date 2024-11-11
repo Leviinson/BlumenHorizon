@@ -11,7 +11,6 @@ from cart.cart import BouquetCart, ProductCart
 from cart.forms import CartForm
 from cart.services.dataclasses import CartAction
 from catalogue.models import Bouquet, Product
-from catalogue.views.bouquets import NonExistentSizeSelected
 
 
 class CartEditAbstractMixin(ABC):
