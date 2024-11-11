@@ -86,7 +86,7 @@
                                         {% include 'cart/decreaseItemInCart.html' %}
                                         <div class="form-outline text-center">
                                             <input id="{{ item.product.slug }}QuantityInput" min="1" name="quantity" value="{{ item.quantity }}" type="number"
-                                                class="form-control"/>
+                                                class="form-control" disabled />
                                             <label class="form-label m-0" for="{{ item.product.slug }}QuantityInput">{% translate 'Количество' %}</label>
                                         </div>
                                         {% include 'cart/increaseItemInCart.html' %}
