@@ -132,18 +132,20 @@
                     </ul>
 
                     <div class="mb-3 d-flex flex-column align-items-end">
-                        {% if product.discount %}
-                            <h2 class="text-danger mb-0 me-2" style="font-size: x-large;">
-                                {{ product.discount_price }} {{ currency_symbol }}
-                            </h2>
-                            <h2 class="text-muted text-decoration-line-through mb-0" style="font-size: 1.25em;">
-                                {{ product.price }} {{ currency_symbol }}
-                            </h2>
-                        {% else %}
-                            <h2 class="mb-0">
-                            {{ product.price }} {{ currency_symbol }}
-                            </h2>
-                        {% endif %}
+                        {% with selected_bouquet_size|default:product as item %}
+                            {% if item.discount %}
+                                <h2 class="text-danger mb-0 me-2" style="font-size: x-large;">
+                                    {{ item.discount_price }} {{ currency_symbol }}
+                                </h2>
+                                <h2 class="text-muted text-decoration-line-through mb-0" style="font-size: 1.25em;">
+                                    {{ item.price }} {{ currency_symbol }}
+                                </h2>
+                            {% else %}
+                                <h2 class="mb-0">
+                                    {{ item.price }} {{ currency_symbol }}
+                                </h2>
+                            {% endif %}
+                        {% endwith %}
                     </div>
                 </div>
                 <div class="d-flex mt-1">
@@ -153,10 +155,13 @@
                         class="w-100 me-2"
                         data-add-url="{% if product.is_bouquet %}{% url 'cart:bouquet-add' %}{% else %}{% url 'cart:product-add' %}{% endif %}"
                         data-remove-url="{% if product.is_bouquet %}{% url 'cart:bouquet-remove' %}{% else %}{% url 'cart:product-remove' %}{% endif %}"
-                        data-is-in-cart="{% if product in products_cart or product in bouquets_cart %}true{% else %}false{% endif %}"
+                        data-is-in-cart="{% if product in products_cart or product in bouquets_cart  %}true{% else %}false{% endif %}"
                     >
                         {% csrf_token %}
                         <input type="hidden" name="product_slug" value="{{ product.slug }}">
+                        {% if product.is_bouquet %}
+                        <input type="hidden" name="size" value="{{ selected_bouquet_size.pk }}">
+                        {% endif %}
                         {% include 'templates/cartButton.html' %}
                     </form>
                     <form action="" method="post" class="w-100">
