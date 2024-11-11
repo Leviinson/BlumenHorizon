@@ -5,6 +5,8 @@ from .models import (
     Bouquet,
     BouquetCategory,
     BouquetImage,
+    BouquetSize,
+    BouquetSizeImage,
     BouquetSubcategory,
     Color,
     Flower,
@@ -139,6 +141,24 @@ class BouquetImagesInLine(admin.TabularInline):
     extra = 1
     max_num = 3
 
+class BouquetSizeImagesInLine(admin.TabularInline):
+    model = BouquetSizeImage
+    extra = 1
+    max_num = 3
+
+@admin.register(BouquetSize)
+class BouquetSizeAdmin(admin.ModelAdmin):
+    fields = ("bouquet", "amount_of_flowers", "discount", "price", "diameter")
+    list_display = ("bouquet", "amount_of_flowers", "discount", "price", "diameter")
+    inlines = [BouquetSizeImagesInLine,]
+
+
+class BouquetSizesInLine(admin.TabularInline):
+    model = BouquetSize
+    extra = 1
+    max_num = 3
+    show_change_link = True
+
 
 @admin.register(BouquetCategory)
 class BouquetCategoryAdmin(TranslationAdmin):
@@ -179,6 +199,7 @@ class BouquetSubcategoryAdmin(TranslationAdmin):
 class BouquetAdmin(TranslationAdmin):
     inlines = [
         BouquetImagesInLine,
+        BouquetSizesInLine,
     ]
     fieldsets = (
         (

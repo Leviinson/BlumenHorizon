@@ -251,51 +251,12 @@ class BouquetSubcategory(MetaDataAbstractModel):
             self.is_active = False
 
 
-class BouquetsSizes(models.Model):
-    amount_of_flowers = models.IntegerField(
-        verbose_name=_("Количество цветов в букете")
-    )
-    diameter = models.IntegerField(verbose_name=_("Диаметр букета"))
-    price = models.DecimalField(
-        max_digits=10,
-        decimal_places=2,
-        verbose_name=_("Цена размера"),
-        help_text=_(
-            "Цена размера до 10ти значений, два из которых плавающая запятая. Т.е. до 99999999.99"
-        ),
-    )
-    discount = models.IntegerField(
-        validators=(
-            MinValueValidator(0),
-            MaxValueValidator(100),
-        ),
-        verbose_name=_("Скидка"),
-        null=True,
-        default=0,
-    )
-
-    @property
-    def discount_price(self) -> float:
-        discount = Decimal(self.discount)
-        result = self.price * (1 - discount / 100) if discount else self.price
-        return result.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
-
-    class Meta:
-        verbose_name = "Размер букета"
-        verbose_name_plural = "Размеры букетов"
-
-
 class Bouquet(ProductAbstract):
     subcategory = models.ForeignKey(
         BouquetSubcategory,
         on_delete=models.PROTECT,
         verbose_name=_("Подкатегория"),
         related_name="bouquets",
-    )
-    sizes = models.ManyToManyField(
-        BouquetsSizes,
-        verbose_name=_("Размеры букета"),
-        related_name="bouquet",
     )
     amount_of_flowers = models.IntegerField(
         verbose_name=_("Количество цветов в букете")
@@ -337,6 +298,46 @@ class Bouquet(ProductAbstract):
         return True
 
 
+class BouquetSize(models.Model):
+    bouquet = models.ForeignKey(
+        Bouquet, related_name="sizes", verbose_name=_("Букет"), on_delete=models.CASCADE
+    )
+    amount_of_flowers = models.IntegerField(
+        verbose_name=_("Количество цветов в букете")
+    )
+    diameter = models.IntegerField(verbose_name=_("Диаметр букета"))
+    price = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        verbose_name=_("Цена размера"),
+        help_text=_(
+            "Цена размера до 10ти значений, два из которых плавающая запятая. Т.е. до 99999999.99"
+        ),
+    )
+    discount = models.IntegerField(
+        validators=(
+            MinValueValidator(0),
+            MaxValueValidator(100),
+        ),
+        verbose_name=_("Скидка"),
+        null=True,
+        default=0,
+    )
+
+    @property
+    def discount_price(self) -> float:
+        discount = Decimal(self.discount)
+        result = self.price * (1 - discount / 100) if discount else self.price
+        return result.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+
+    class Meta:
+        verbose_name = "Размер букета"
+        verbose_name_plural = "Размеры букетов"
+
+    def __str__(self):
+        return f"{self.diameter}cm, {self.price}у.е."
+
+
 class BouquetImage(models.Model):
     bouquet = models.ForeignKey(
         Bouquet,
@@ -355,6 +356,23 @@ class BouquetImage(models.Model):
 
     def __str__(self):
         return f"{self.bouquet.name} - Image"
+
+
+class BouquetSizeImage(models.Model):
+    bouquet_size = models.ForeignKey(
+        BouquetSize,
+        related_name="images",
+        on_delete=models.CASCADE,
+        verbose_name="Размер букета",
+    )
+    image = models.ImageField(
+        upload_to="products/sizes/bouquets/%Y-%m-%d/",
+        verbose_name="Изображение размера букета",
+    )
+
+    class Meta:
+        verbose_name = "Изображение размера букета"
+        verbose_name_plural = "Изображения размеров букетов"
 
 
 class IndividualQuestion(models.Model):
