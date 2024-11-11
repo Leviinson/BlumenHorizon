@@ -1,12 +1,12 @@
 from django.utils.translation import gettext_lazy as _
 from django_filters import CharFilter, NumberFilter
 
-from ..models import Bouquet, Color, Flower
+from ..models import Bouquet
 from .base_filter import BaseFilter
 
 
 class BouquetFilter(BaseFilter):
-    aggregate_fields = ["price", "size", "amount_of_flowers"]
+    aggregate_fields = ["price", "diameter", "amount_of_flowers"]
 
     colors = CharFilter(
         method="filter_by_colors",
@@ -16,13 +16,13 @@ class BouquetFilter(BaseFilter):
         method="filter_by_flowers",
         label=_("Состав"),
     )
-    min_size = NumberFilter(
-        field_name="size",
+    min_diameter = NumberFilter(
+        field_name="diameter",
         lookup_expr="gte",
         label=_("Минимальный диаметр букета"),
     )
-    max_size = NumberFilter(
-        field_name="size",
+    max_diameter = NumberFilter(
+        field_name="diameter",
         lookup_expr="lte",
         label=_("Максимальный диаметр букета"),
     )
@@ -46,22 +46,22 @@ class BouquetFilter(BaseFilter):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.form.fields["max_size"].widget.attrs.update(
+        self.form.fields["max_diameter"].widget.attrs.update(
             {
                 "class": "form-control",
-                "id": "max_size_input",
+                "id": "max_diameter_input",
                 "min": 0,
-                "max": self._aggregate_limits["max_size"],
-                "value": self._aggregate_limits["max_size"],
+                "max": self._aggregate_limits["max_diameter"],
+                "value": self._aggregate_limits["max_diameter"],
             }
         )
-        self.form.fields["min_size"].widget.attrs.update(
+        self.form.fields["min_diameter"].widget.attrs.update(
             {
                 "class": "form-control",
-                "id": "min_size_input",
+                "id": "min_diameter_input",
                 "min": 0,
-                "max": self._aggregate_limits["max_size"],
-                "value": self._aggregate_limits["min_size"],
+                "max": self._aggregate_limits["max_diameter"],
+                "value": self._aggregate_limits["min_diameter"],
             }
         )
 
@@ -89,7 +89,7 @@ class BouquetFilter(BaseFilter):
         fields = BaseFilter.Meta.fields + [
             "colors",
             "flowers",
-            "size",
+            "diameter",
             "amount_of_flowers",
         ]
 
