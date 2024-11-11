@@ -1,5 +1,7 @@
 from collections import defaultdict
+import hashlib
 
+from django.core.cache import cache
 from django.http import HttpRequest, JsonResponse
 
 from catalogue.models import Bouquet, Product
@@ -8,37 +10,30 @@ from catalogue.models import Bouquet, Product
 def live_search(request: HttpRequest) -> JsonResponse:
     data = {"results": {"products": defaultdict(list), "bouquets": defaultdict(list)}}
 
-    if query := request.GET.get("q", ""):
-        # Получение результатов продуктов и группировка по категориям
-        product_results = (
-            Product.objects.select_related("subcategory__category")
-            .only("name", "subcategory__category__name")
-            .filter(name__icontains=query)[:10]
-        )
+    query = request.GET.get("q", "")
+    query_hash = hashlib.md5(query.encode("utf-8")).hexdigest()
+    cache_key = f"search_results_{query_hash}"
+    if query:
+        cached_data = cache.get(cache_key)
+        if cached_data:
+            return JsonResponse(cached_data)
 
-        # Группируем продукты по категориям
-        for product in product_results:
-            category_name = product.subcategory.category.name  # Получаем имя категории
-            data["results"]["products"][category_name].append(
-                {"name": product.name, "url": product.get_detail_url()}
+        for model, key in [(Product, "products"), (Bouquet, "bouquets")]:
+            results = (
+                model.objects.select_related("subcategory__category", "subcategory")
+                .only(
+                    "name",
+                    "subcategory__category__name",
+                    "subcategory__slug",
+                    "subcategory__category__slug",
+                    "slug",
+                )
+                .filter(name__icontains=query)[:10]
             )
-
-        # Получение результатов букетов и группировка по категориям
-        bouquet_results = (
-            Bouquet.objects.select_related("subcategory__category")
-            .only("name", "subcategory__category__name")
-            .filter(name__icontains=query)[:10]
-        )
-
-        # Группируем букеты по категориям
-        for bouquet in bouquet_results:
-            category_name = bouquet.subcategory.category.name  # Получаем имя категории
-            data["results"]["bouquets"][category_name].append(
-                {"name": bouquet.name, "url": bouquet.get_detail_url()}
-            )
-
-    # Преобразуем defaultdict в обычный dict перед возвратом ответа
-    data["results"]["products"] = dict(data["results"]["products"])
-    data["results"]["bouquets"] = dict(data["results"]["bouquets"])
-
+            for item in results:
+                category_name = item.subcategory.category.name
+                data["results"][key][category_name].append(
+                    {"name": item.name, "url": item.get_detail_url()}
+                )
+        cache.set(cache_key, data, timeout=60 * 60)
     return JsonResponse(data)
