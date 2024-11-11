@@ -3,15 +3,15 @@
 {% load i18n %}
 
 {% block additional_filters %}
-<label for="{{ filter.form.min_size.id_for_label }}" class="form-label my-3">{% translate 'Диаметр букета' %}</label>
+<label for="{{ filter.form.min_diameter.id_for_label }}" class="form-label my-3">{% translate 'Диаметр букета' %}</label>
 <div class="d-flex flex-column">
     <div id="sizeSlider" class="form-range px-3"></div>
     <div class="d-flex mt-4">
         <div class="me-2">
-            {{ filter.form.min_size }}
+            {{ filter.form.min_diameter }}
         </div>
         <div class="ms-2">
-            {{ filter.form.max_size }}
+            {{ filter.form.max_diameter }}
         </div>
     </div>
 </div>
@@ -31,32 +31,53 @@
     </div>
 </div>
 
-<label for="colors-input" class="form-check-label mt-3">{% translate 'Цветовая гамма' %}</label>
-<input style="display: none;" name="colors" id="colors-input" value="{{ request.GET.colors|default:'' }}">
-<ul class="list-group my-1">
-    {% for color in colors %}
-    <li class="list-group-item d-flex justify-content-start align-items-center">
-        <input type="checkbox" class="form-check-input color-checkbox" value="{{ color.name }}" id="{{ color.name }}" {% if color.name in request.GET.colors %}checked{% endif %}>
-        <label class="form-check-label d-flex justify-content-center align-items-center ms-3" for="{{ color.name }}">
-            <span class="badge-color" style="background-color: {{ color.hex_code }};"></span>
-            {{ color.name }}
-        </label>
-    </li>
-    {% endfor %}
-</ul>
-
-<label for="flowers-input" class="form-check-label mt-3">{% translate 'Состав' %}</label>
-<input style="display: none;" name="flowers" id="flowers-input" value="{{ request.GET.flowers|default:'' }}">
-<ul class="list-group my-1">
-    {% for flower in flowers %}
-    <li class="list-group-item d-flex justify-content-start align-items-center">
-        <input type="checkbox" class="form-check-input flower-checkbox" value="{{ flower.name }}" id="{{ flower.name }}" {% if flower.name in request.GET.flowers %}checked{% endif %}>
-        <label class="form-check-label d-flex justify-content-center align-items-center ms-3" for="{{ flower.name }}">
-            {{ flower.name }}
-        </label>
-    </li>
-    {% endfor %}
-</ul>
+<div class="accordion my-3" id="accordionExample">
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            <label for="colors-input" class="form-check-label">{% translate 'Цветовая гамма' %}</label>
+        </button>
+      </h2>
+      <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+        <div class="accordion-body p-0">
+            <ul class="list-group my-1">
+                <input style="display: none;" name="colors" id="colors-input" value="{{ request.GET.colors|default:'' }}">
+                {% for color in colors %}
+                <li class="list-group-item d-flex justify-content-start align-items-center">
+                    <input type="checkbox" class="form-check-input color-checkbox" value="{{ color.name }}" id="{{ color.name }}" {% if color.name in request.GET.colors %}checked{% endif %}>
+                    <label class="form-check-label d-flex justify-content-center align-items-center ms-3" for="{{ color.name }}">
+                        <span class="badge-color" style="background-color: {{ color.hex_code }};"></span>
+                        {{ color.name }}
+                    </label>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            <label for="flowers-input" class="form-check-label">{% translate 'Состав' %}</label>
+        </button>
+      </h2>
+      <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+        <div class="accordion-body p-0">
+            <input style="display: none;" name="flowers" id="flowers-input" value="{{ request.GET.flowers|default:'' }}">
+            <ul class="list-group my-1">
+                {% for flower in flowers %}
+                <li class="list-group-item d-flex justify-content-start align-items-center">
+                    <input type="checkbox" class="form-check-input flower-checkbox" value="{{ flower.name }}" id="{{ flower.name }}" {% if flower.name in request.GET.flowers %}checked{% endif %}>
+                    <label class="form-check-label d-flex justify-content-center align-items-center ms-3" for="{{ flower.name }}">
+                        {{ flower.name }}
+                    </label>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+      </div>
+    </div>
+  </div>
 
 <script>
 document.querySelectorAll('.color-checkbox').forEach(checkbox => {

@@ -33,7 +33,7 @@ function createSlider(sliderId, minInputId, maxInputId, step = 10) {
 
 const sliders = [
     { sliderId: 'priceSlider', minInputId: 'min_price_input', maxInputId: 'max_price_input' },
-    { sliderId: 'sizeSlider', minInputId: 'min_size_input', maxInputId: 'max_size_input' },
+    { sliderId: 'sizeSlider', minInputId: 'min_diameter_input', maxInputId: 'max_diameter_input' },
     { sliderId: 'amountOfFlowersSlider', minInputId: 'min_amount_of_flowers_input', maxInputId: 'max_amount_of_flowers_input' },
 ];
 
