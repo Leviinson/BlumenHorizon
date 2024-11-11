@@ -16,9 +16,11 @@ from .views import (
 app_name = "catalogue"
 
 urlpatterns = [
-    path("individual-question/",
-         IndividualQuestionView.as_view(),
-         name="individual-question"),
+    path(
+        "individual-question/",
+        IndividualQuestionView.as_view(),
+        name="individual-question",
+    ),
     path(
         "products/",
         ProductListView.as_view(),
