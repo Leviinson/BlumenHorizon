@@ -1,9 +1,9 @@
-from carton.cart import Cart
 from django.contrib.sessions.backends.base import SessionBase
 from django.db.models import OuterRef, Subquery
 from django.db.models.query import QuerySet
 
-from catalogue.models import Bouquet, BouquetImage, Product, ProductImage
+from carton.cart import Cart
+from catalogue.models import Bouquet, BouquetImage, BouquetsSizes, Product, ProductImage
 
 
 class CartMixin:

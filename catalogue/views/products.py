@@ -15,8 +15,6 @@ class ProductView(
     DetailViewMixin,
     CommonContextMixin,
     DetailView,
-    TemplateResponseMixin,
-    ContextMixin,
 ):
     model = Product
     queryset = (

@@ -58,7 +58,6 @@ DJANGO_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sites",
-    "carton",
 ]
 
 LOCAL_APPS = [

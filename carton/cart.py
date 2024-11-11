@@ -10,19 +10,20 @@ class CartItem(object):
     """
     A cart item, with the associated product, its quantity and its price.
     """
+
     def __init__(self, product, quantity, price):
         self.product = product
         self.quantity = int(quantity)
         self.price = Decimal(str(price))
 
     def __repr__(self):
-        return u'CartItem Object (%s)' % self.product
+        return "CartItem Object (%s)" % self.product
 
     def to_dict(self):
         return {
-            'product_pk': self.product.pk,
-            'quantity': self.quantity,
-            'price': str(self.price),
+            "product_pk": self.product.pk,
+            "quantity": self.quantity,
+            "price": str(self.price),
         }
 
     @property
@@ -34,15 +35,15 @@ class CartItem(object):
 
 
 class Cart(object):
-
     """
     A cart that lives in the session.
     """
+
     def __init__(self, session, session_key=None):
         self._items_dict = {}
         self.session = session
         self.session_key = session_key or carton_settings.CART_SESSION_KEY
-            # If a cart representation was previously stored in session, then we
+        # If a cart representation was previously stored in session, then we
         if self.session_key in self.session:
             # rebuild the cart object from that serialized representation.
             self.cart_representation = self.session[self.session_key]
@@ -50,7 +51,7 @@ class Cart(object):
             for product in products_queryset:
                 item = self.cart_representation[str(product.pk)]
                 self._items_dict[product.pk] = CartItem(
-                    product, item['quantity'], Decimal(item['price'])
+                    product, item["quantity"], Decimal(item["price"])
                 )
 
     def __contains__(self, product):
@@ -66,7 +67,7 @@ class Cart(object):
         """
         Applies lookup parameters defined in settings.
         """
-        lookup_parameters = getattr(settings, 'CART_PRODUCT_LOOKUP', None)
+        lookup_parameters = getattr(settings, "CART_PRODUCT_LOOKUP", None)
         if lookup_parameters:
             queryset = queryset.filter(**lookup_parameters)
         ids_in_cart = self.cart_representation.keys()
@@ -92,12 +93,13 @@ class Cart(object):
         """
         quantity = int(quantity)
         if quantity < 1:
-            raise ValueError('Quantity must be at least 1 when adding to cart')
+            raise ValueError("Quantity must be at least 1 when adding to cart")
+
         if product in self.products:
             self._items_dict[product.pk].quantity += quantity
         else:
             if price == None:
-                raise ValueError('Missing price when adding to cart')
+                raise ValueError("Missing price when adding to cart")
             self._items_dict[product.pk] = CartItem(product, quantity, price)
         self.update_session()
 
@@ -134,7 +136,7 @@ class Cart(object):
         """
         quantity = int(quantity)
         if quantity < 0:
-            raise ValueError('Quantity must be positive when updating cart')
+            raise ValueError("Quantity must be positive when updating cart")
         if product in self.products:
             self._items_dict[product.pk].quantity = quantity
             if self._items_dict[product.pk].quantity < 1:
@@ -165,7 +167,6 @@ class Cart(object):
             product_id = str(item.product.pk)
             cart_representation[product_id] = item.to_dict()
         return cart_representation
-
 
     @property
     def items_serializable(self):

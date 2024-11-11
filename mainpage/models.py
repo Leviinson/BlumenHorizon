@@ -30,8 +30,10 @@ class IndividualOrder(models.Model):
         max_length=100,
         verbose_name=_("Способ связи с клиентом"),
     )
-    recall_me = models.BooleanField(verbose_name="Разрешил ли клиент звонить ему", default=False)
-    
+    recall_me = models.BooleanField(
+        verbose_name="Разрешил ли клиент звонить ему", default=False
+    )
+
     class Meta:
         verbose_name = "Индивидуальный заказ"
         verbose_name_plural = "Индивидуальные заказы"
