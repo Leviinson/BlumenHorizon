@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const quantityInput = document.getElementById(form.dataset.productQuantityInputId);
             if (parseInt(quantityInput.value) <= 1) {
                 e.preventDefault();
-                showToast(gettext("В корзине всего один продукт. Вместо этого удалите его."), "danger");
+                showToast(gettext("В корзине всего один продукт. Вместо уменьшения количества - удалите его."), "danger");
             } else {
                 e.preventDefault();
                 sendAjax(form);
