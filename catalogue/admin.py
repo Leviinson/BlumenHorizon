@@ -141,16 +141,20 @@ class BouquetImagesInLine(admin.TabularInline):
     extra = 1
     max_num = 3
 
+
 class BouquetSizeImagesInLine(admin.TabularInline):
     model = BouquetSizeImage
     extra = 1
     max_num = 3
 
+
 @admin.register(BouquetSize)
 class BouquetSizeAdmin(admin.ModelAdmin):
     fields = ("bouquet", "amount_of_flowers", "discount", "price", "diameter")
     list_display = ("bouquet", "amount_of_flowers", "discount", "price", "diameter")
-    inlines = [BouquetSizeImagesInLine,]
+    inlines = [
+        BouquetSizeImagesInLine,
+    ]
 
 
 class BouquetSizesInLine(admin.TabularInline):

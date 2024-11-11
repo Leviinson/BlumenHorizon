@@ -6,10 +6,10 @@ from ..models import BouquetSize, BouquetSizeImage
 class BouquetSizeImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = BouquetSizeImage
-        fields = ('image',)
+        fields = ("image",)
 
     def to_representation(self, instance):
-        return self.context['request'].build_absolute_uri(instance.image.url)
+        return self.context["request"].build_absolute_uri(instance.image.url)
 
 
 class BouquetSizeSerializer(serializers.ModelSerializer):
@@ -18,6 +18,11 @@ class BouquetSizeSerializer(serializers.ModelSerializer):
     class Meta:
         model = BouquetSize
         fields = (
-            'id', 'price', 'discount_price', 'discount', 'diameter', 
-            'amount_of_flowers', 'images'
+            "id",
+            "price",
+            "discount_price",
+            "discount",
+            "diameter",
+            "amount_of_flowers",
+            "images",
         )
