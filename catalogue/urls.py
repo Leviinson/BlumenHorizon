@@ -7,6 +7,7 @@ from .views import (
     BouquetView,
     CategoryBouquetListView,
     CategoryProductsListView,
+    GetBouquetSizes,
     ProductListView,
     ProductView,
     SubcategoryBouquetListView,
@@ -60,5 +61,10 @@ urlpatterns = [
         "bouquets/<slug:category_slug>/<slug:subcategory_slug>/<slug:bouquet_slug>/",
         BouquetView.as_view(),
         name="bouquet-details",
+    ),
+    path(
+        "bouquets/<slug:category_slug>/<slug:subcategory_slug>/<slug:bouquet_slug>/sizes/",
+        GetBouquetSizes.as_view(),
+        name="get-bouquet-sizes",
     ),
 ]

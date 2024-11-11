@@ -1,19 +1,49 @@
-from django.http import HttpRequest
+from django.shortcuts import get_object_or_404
 from django.utils.translation import gettext_lazy as _
 from django.views.generic.base import ContextMixin, TemplateResponseMixin
 from django.views.generic.detail import DetailView
 from django_filters.views import FilterView
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from cart.cart import BouquetCart
 from core.services.mixins.views import CommonContextMixin
 
 from ..filters import BouquetFilter
-from ..models import Bouquet, BouquetImage, BouquetsSizes, Color, Flower
+from ..models import Bouquet, BouquetImage, BouquetSize, Color, Flower
 from ..services.views import DetailViewMixin, ListViewMixin
+from .serializers import BouquetSizeSerializer
 
 
-class NonExistentSizeSelected(Exception):
-    pass
+class GetBouquetSizes(APIView):
+    def get(self, request, category_slug, subcategory_slug, bouquet_slug):
+        bouquet = get_object_or_404(
+            Bouquet.objects.select_related("subcategory__category").only(
+                "id",
+                "subcategory__category__slug",
+                "subcategory__slug",
+                "slug",
+            ),
+            slug=bouquet_slug,
+            is_active=True,
+            subcategory__slug=subcategory_slug,
+            subcategory__is_active=True,
+            subcategory__category__slug=category_slug,
+            subcategory__category__is_active=True,
+        )
+
+        bouquet_sizes = (
+            BouquetSize.objects.filter(bouquet=bouquet)
+            .only("id", "price", "discount", "diameter", "amount_of_flowers")
+            .prefetch_related("images")
+        )
+
+        serializer = BouquetSizeSerializer(
+            bouquet_sizes, many=True, context={"request": request}
+        )
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class BouquetView(
@@ -23,8 +53,7 @@ class BouquetView(
 ):
     model = Bouquet
     queryset = (
-        Bouquet.objects.filter(is_active=True)
-        .prefetch_related(
+        Bouquet.objects.prefetch_related(
             "images",
             "colors",
             "flowers",
@@ -59,51 +88,12 @@ class BouquetView(
     category_url_name = "bouquets-category"
     subcategory_url_name = "bouquets-subcategory"
 
-    def get(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        try:
-            context = self.get_context_data(object=self.object)
-        except NonExistentSizeSelected:
-            pass
-        return self.render_to_response(context)
-
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context["bouquets_cart"] = BouquetCart(
             session=self.request.session, session_key="bouquets_cart"
         )
-        context["selected_bouquet_size"] = self.__get_bouquet_size(
-            self.request, self.object
-        )
         return context
-
-    @staticmethod
-    def __get_bouquet_size(
-        request: HttpRequest, bouquet_obj: Bouquet
-    ) -> None | BouquetsSizes | NonExistentSizeSelected:
-        """
-        Determines the bouquet size selected by the user and returns
-        the size object if it exists.
-
-        :param request: The HttpRequest object containing GET parameters,
-        where the selected bouquet size may be specified.
-        :param object: The Bouquet object containing associated sizes.
-        :return:
-            - `BouquetsSizes` object if the selected size exists for this bouquet.
-
-            - `None` if no size is specified in the request.
-
-        :raises NonExistentSizeSelected: If the requested size
-        does not exist for the bouquet.
-        """
-        if bouquet_size := request.GET.get("size"):
-            if bouquet_size_obj := bouquet_obj.sizes.filter(
-                diameter=bouquet_size
-            ).first():
-                return bouquet_size_obj
-            raise NonExistentSizeSelected()
-        else:
-            return None
 
 
 class BouquetListView(

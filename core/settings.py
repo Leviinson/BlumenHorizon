@@ -74,6 +74,7 @@ THIRDPARTY_APPS = [
     "rosetta",
     "django_filters",
     "colorfield",
+    "rest_framework",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRDPARTY_APPS + LOCAL_APPS
@@ -389,8 +390,26 @@ SITE_ID = 1
 SITE_NAME = os.getenv("SITE_NAME")  # for tests
 SITE_DOMAIN = os.getenv("SITE_DOMAIN")  # for tests
 
+# CARTON
 CART_PRODUCT_LOOKUP = {
     "is_active": True,
     "subcategory__is_active": True,
     "subcategory__category__is_active": True,
+}
+
+# REST_FRAMEWORK
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [],
+    'DEFAULT_PERMISSION_CLASSES': [],
+
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+    ],
+
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser',
+    ],
+
+    'DEFAULT_THROTTLE_CLASSES': [],
+    'DEFAULT_THROTTLE_RATES': {},
 }
