@@ -251,6 +251,40 @@ class BouquetSubcategory(MetaDataAbstractModel):
             self.is_active = False
 
 
+class BouquetsSizes(models.Model):
+    amount_of_flowers = models.IntegerField(
+        verbose_name=_("Количество цветов в букете")
+    )
+    diameter = models.IntegerField(verbose_name=_("Диаметр букета"))
+    price = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        verbose_name=_("Цена размера"),
+        help_text=_(
+            "Цена размера до 10ти значений, два из которых плавающая запятая. Т.е. до 99999999.99"
+        ),
+    )
+    discount = models.IntegerField(
+        validators=(
+            MinValueValidator(0),
+            MaxValueValidator(100),
+        ),
+        verbose_name=_("Скидка"),
+        null=True,
+        default=0,
+    )
+
+    @property
+    def discount_price(self) -> float:
+        discount = Decimal(self.discount)
+        result = self.price * (1 - discount / 100) if discount else self.price
+        return result.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+
+    class Meta:
+        verbose_name = "Размер букета"
+        verbose_name_plural = "Размеры букетов"
+
+
 class Bouquet(ProductAbstract):
     subcategory = models.ForeignKey(
         BouquetSubcategory,
@@ -258,15 +292,18 @@ class Bouquet(ProductAbstract):
         verbose_name=_("Подкатегория"),
         related_name="bouquets",
     )
-    size = models.IntegerField(
-        verbose_name=_("Диаметр букета"),
+    sizes = models.ManyToManyField(
+        BouquetsSizes,
+        verbose_name=_("Размеры букета"),
+        related_name="bouquet",
     )
     amount_of_flowers = models.IntegerField(
         verbose_name=_("Количество цветов в букете")
     )
+    diameter = models.IntegerField(verbose_name=_("Диаметр букета"))
     colors = models.ManyToManyField(
         Color,
-        related_name="bouquets",
+        related_name="bouquet",
         verbose_name=_("Цвета"),
         help_text=_("Выберите какого цвета букет."),
     )
@@ -283,7 +320,7 @@ class Bouquet(ProductAbstract):
         verbose_name_plural = _("Букеты")
 
     def __str__(self):
-        return f"{self.name} ({self.size} см, {self.amount_of_flowers} цветов)"
+        return f"{self.name} ({self.diameter} см, {self.amount_of_flowers} цветов)"
 
     def get_detail_url(self):
         return reverse_lazy(
@@ -333,14 +370,16 @@ class IndividualQuestion(models.Model):
         max_length=100,
         verbose_name=_("Способ связи с клиентом"),
     )
-    recall_me = models.BooleanField(verbose_name="Разрешил ли клиент звонить ему", default=False)
+    recall_me = models.BooleanField(
+        verbose_name="Разрешил ли клиент звонить ему", default=False
+    )
     product = models.ForeignKey(
         Product,
         on_delete=models.SET_NULL,
         related_name="individual_question",
         verbose_name="Связанный продукт",
         null=True,
-        blank=True
+        blank=True,
     )
     bouquet = models.ForeignKey(
         Bouquet,
@@ -348,7 +387,7 @@ class IndividualQuestion(models.Model):
         related_name="individual_question",
         verbose_name="Связанный букет",
         null=True,
-        blank=True
+        blank=True,
     )
 
     class Meta:
