@@ -1,4 +1,4 @@
-from .bouquets import BouquetListView, BouquetView
+from .bouquets import BouquetListView, BouquetView, GetBouquetSizes
 from .catalogue import (
     CategoryBouquetListView,
     CategoryProductsListView,
