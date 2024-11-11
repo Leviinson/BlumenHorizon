@@ -79,7 +79,9 @@ class BuyItemView(FormView):
                 subcategory__slug=subcategory_slug,
                 subcategory__category__slug=category_slug,
             )
-            cart = cart_class(session=self.request.session, session_key=cart_session_key)
+            cart = cart_class(
+                session=self.request.session, session_key=cart_session_key
+            )
             if item not in cart.products:
                 cart.add(item, item.discount_price)
         except model_class.DoesNotExist:
