@@ -4,6 +4,7 @@ from django.views.generic.base import ContextMixin, TemplateResponseMixin
 from django.views.generic.detail import DetailView
 from django_filters.views import FilterView
 from rest_framework import status
+from rest_framework.exceptions import NotFound
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -38,6 +39,9 @@ class GetBouquetSizes(APIView):
             .only("id", "price", "discount", "diameter", "amount_of_flowers")
             .prefetch_related("images")
         )
+
+        if not bouquet_sizes.exists():
+            raise NotFound("No bouquet sizes found for this bouquet.", 200)
 
         serializer = BouquetSizeSerializer(
             bouquet_sizes, many=True, context={"request": request}
