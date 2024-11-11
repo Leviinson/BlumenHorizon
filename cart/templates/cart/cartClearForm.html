@@ -1,0 +1,11 @@
+{% load i18n %}
+
+<form id="cart-clear-form"
+      action="{% url 'cart:clear' %}"
+      method="post">
+    {% csrf_token %}
+    <button id="cart-clear-button" type="submit" class="btn btn-danger btn-sm py-2"
+        title="{% translate 'Очистить корзину' %}">
+        <i class="fas fa-trash"></i>
+    </button>
+</form>

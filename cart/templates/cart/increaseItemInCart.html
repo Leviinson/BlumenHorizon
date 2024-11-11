@@ -1,0 +1,18 @@
+{% load i18n %}
+
+<form class="product-increase-form"
+      {% if item.product.is_bouquet %}
+      action="{% url 'cart:bouquet-add' %}"
+      {% else %}
+      action="{% url 'cart:product-add' %}"
+      {% endif %}
+      method="post"
+      data-subtotal-id="{{ item.product.slug }}Subtotal"
+      data-product-quantity-input-id="{{ item.product.slug }}QuantityInput">
+    {% csrf_token %}
+    <input type="hidden" name="product_slug" value="{{ item.product.slug }}">
+    <button type="submit" class="btn btn-dark-green px-3 ms-2"
+        title="{% translate 'Уменьшить количество продукта в корзине' %}">
+        <i class="fas fa-plus"></i>
+    </button>
+</form>

@@ -21,15 +21,7 @@
                                 {% endblocktranslate %}
                             </span>
                         </h5>
-
-                        <form id="cart-clear-form"
-                              action="{% url 'cart:clear' %}"
-                              method="post">
-                            {% csrf_token %}
-                            <button id="cart-clear-button" type="submit" class="btn btn-danger btn-sm py-2" title="{% translate 'Очистить корзину' %}">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </form>
+                        {% include 'cart/cartClearForm.html' %}
                     </div>
                     <div id="products-list-container" class="card-body" style="min-height: 423px;">
                         <!-- Single item -->
@@ -48,49 +40,17 @@
                                 </div>
                                 <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
                                     <a href="{{ item.product.get_detail_url }}" class="text-decoration-none text-dark product-name">{{ item.product.name }}</a>
-                                    <form class="product-remove-form"
-                                        action="{% url 'cart:bouquet-remove' %}"
-                                        method="post"
-                                        data-product-element-id="{{ item.product.slug }}"
-                                        data-hr-Id="{{ item.product.slug }}Hr">
-                                        {% csrf_token %}
-                                        <input type="hidden" name="product_slug" value="{{ item.product.slug }}">
-                                        <button type="submit" class="btn btn-danger btn-sm me-1 mb-2" title="{% translate 'Удалить продукт' %}">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </form>
+                                    {% include 'cart/removeItemFromCart.html' %}
                                 </div>
                                 <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
                                     <div class="d-flex mb-4 mx-l-auto mx-auto" style="max-width: 300px">
-                                        <form action="{% url 'cart:bouquet-remove-single' %}"
-                                            method="post"
-                                            data-subtotal-id="{{ item.product.slug }}Subtotal"
-                                            data-product-quantity-input-id="{{ item.product.slug }}QuantityInput"
-                                            class="product-decrease-form">
-                                            {% csrf_token %}
-                                            <input type="hidden" name="product_slug" value="{{ item.product.slug }}">
-                                            <button type="submit" class="btn btn-dark-green px-3 me-2" title="{% translate 'Уменьшить количество продукта в корзине' %}">
-                                                <i class="fas fa-minus"></i>
-                                            </button>
-                                        </form>
-
+                                        {% include 'cart/decreaseItemInCart.html' %}
                                         <div class="form-outline text-center">
                                             <input id="{{ item.product.slug }}QuantityInput" min="1" name="quantity" value="{{ item.quantity }}" type="number"
-                                                class="form-control"/>
+                                                class="form-control"/ disabled>
                                             <label class="form-label m-0" for="{{ item.product.slug }}QuantityInput">{% translate 'Количество' %}</label>
                                         </div>
-
-                                        <form action="{% url 'cart:bouquet-add' %}"
-                                            method="post"
-                                            data-subtotal-id="{{ item.product.slug }}Subtotal"
-                                            data-product-quantity-input-id="{{ item.product.slug }}QuantityInput"
-                                            class="product-increase-form">
-                                            {% csrf_token %}
-                                            <input type="hidden" name="product_slug" value="{{ item.product.slug }}">
-                                            <button type="submit" class="btn btn-dark-green px-3 ms-2" title="{% translate 'Уменьшить количество продукта в корзине' %}">
-                                                <i class="fas fa-plus"></i>
-                                            </button>
-                                        </form>
+                                        {% include 'cart/increaseItemInCart.html' %}
                                     </div>
 
                                     <p class="text-center text-md-center">
@@ -119,50 +79,17 @@
                                 </div>
                                 <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
                                     <a href="{{ item.product.get_detail_url }}" class="text-decoration-none text-dark product-name">{{ item.product.name }}</a>
-                                    
-                                    <form class="product-remove-form"
-                                          action="{% url 'cart:product-remove' %}"
-                                          method="post"
-                                          data-product-element-id="{{ item.product.slug }}"
-                                          data-hr-Id="{{ item.product.slug }}Hr">
-                                        {% csrf_token %}
-                                        <input type="hidden" name="product_slug" value="{{ item.product.slug }}">
-                                        <button type="submit" class="btn btn-danger btn-sm me-1 mb-2" title="Remove item">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </form>
+                                    {% include 'cart/removeItemFromCart.html' %}
                                 </div>
                                 <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
                                     <div class="d-flex mb-4 mx-l-auto mx-auto">
-                                        <form action="{% url 'cart:product-remove-single' %}"
-                                            method="post"
-                                            data-subtotal-id="{{ item.product.slug }}Subtotal"
-                                            data-product-quantity-input-id="{{ item.product.slug }}QuantityInput"
-                                            class="product-decrease-form">
-                                            {% csrf_token %}
-                                            <input type="hidden" name="product_slug" value="{{ item.product.slug }}">
-                                            <button type="submit" class="btn btn-dark-green px-3 me-2">
-                                                <i class="fas fa-minus"></i>
-                                            </button>
-                                        </form>
-
+                                        {% include 'cart/decreaseItemInCart.html' %}
                                         <div class="form-outline text-center">
                                             <input id="{{ item.product.slug }}QuantityInput" min="1" name="quantity" value="{{ item.quantity }}" type="number"
                                                 class="form-control"/>
                                             <label class="form-label m-0" for="{{ item.product.slug }}QuantityInput">{% translate 'Количество' %}</label>
                                         </div>
-
-                                        <form action="{% url 'cart:product-add' %}"
-                                            method="post"
-                                            data-subtotal-id="{{ item.product.slug }}Subtotal"
-                                            data-product-quantity-input-id="{{ item.product.slug }}QuantityInput"
-                                            class="product-increase-form">
-                                            {% csrf_token %}
-                                            <input type="hidden" name="product_slug" value="{{ item.product.slug }}">
-                                            <button type="submit" class="btn btn-dark-green px-3 ms-2">
-                                                <i class="fas fa-plus"></i>
-                                            </button>
-                                        </form>
+                                        {% include 'cart/increaseItemInCart.html' %}
                                     </div>
 
                                     <p class="text-center text-md-center">

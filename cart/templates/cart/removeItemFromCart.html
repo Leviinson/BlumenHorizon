@@ -1,0 +1,17 @@
+{% load i18n %}
+
+<form class="product-remove-form"
+      {% if item.product.is_bouquet %}
+      action="{% url 'cart:bouquet-remove' %}"
+      {% else %}
+      action="{% url 'cart:product-remove' %}"
+      {% endif %}
+      method="post"
+      data-product-element-id="{{ item.product.slug }}"
+      data-hr-Id="{{ item.product.slug }}Hr">
+    {% csrf_token %}
+    <input type="hidden" name="product_slug" value="{{ item.product.slug }}">
+    <button type="submit" class="btn btn-danger btn-sm me-1 mb-2" title="{% translate 'Удалить продукт из корзины' %}">
+        <i class="fas fa-trash"></i>
+    </button>
+</form>
