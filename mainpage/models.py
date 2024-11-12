@@ -1,11 +1,15 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from phonenumber_field.modelfields import PhoneNumberField
+
+from core.base_models import TimeStampAdbstractModel
 
 
 class MainPageSliderImages(models.Model):
-    image = models.ImageField(verbose_name="Фото на главном слайде")
+    image = models.ImageField(
+        upload_to="mainpage-slider/",
+        verbose_name="Фото на главном слайде",
+    )
     is_active = models.BooleanField(default=False, verbose_name="Активное?")
 
     class Meta:
@@ -42,11 +46,10 @@ class IndividualOrder(models.Model):
         return f"{self.first_name} {self.phonenumber}"
 
 
-class SeoBlock(models.Model):
+class SeoBlock(TimeStampAdbstractModel, models.Model):
     image = models.ImageField(
         verbose_name=_("Картинка"),
         upload_to="seoblock/",
-        default="defaults/no-image.webp",
     )
     alt = models.CharField(max_length=40, verbose_name="Описание картинки")
 
