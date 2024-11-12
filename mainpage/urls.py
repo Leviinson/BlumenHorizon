@@ -1,9 +1,6 @@
 from django.urls import path
 
-from .views import (  # AboutUsView,; DeliveryInstructionsView,; PaymentInstructionsView,; PublicAgreementView,; PrivacyAndPolicyView,
-    IndividualOrderView,
-    MainPageView,
-)
+from .views import IndividualOrderView, MainPageView
 
 app_name = "mainpage"
 

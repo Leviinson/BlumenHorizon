@@ -20,7 +20,14 @@ from .models import (
 
 @admin.register(ProductCategory)
 class ProductCategoryAdmin(TranslationAdmin):
-    fieldsets = ((None, {"fields": ("name", "slug", "is_active", "image")}),)
+    fieldsets = (
+        (
+            None,
+            {
+                "fields": ("name", "slug", "is_active", "image"),
+            },
+        ),
+    )
     list_filter = ("is_active",)
     search_fields = (
         "name",
@@ -37,7 +44,18 @@ class ProductCategoryAdmin(TranslationAdmin):
 @admin.register(ProductSubcategory)
 class ProductSubcategoryAdmin(TranslationAdmin):
     fieldsets = (
-        (None, {"fields": ("name", "slug", "category", "is_active", "image")}),
+        (
+            None,
+            {
+                "fields": (
+                    "name",
+                    "slug",
+                    "category",
+                    "is_active",
+                    "image",
+                ),
+            },
+        ),
     )
     list_filter = ("is_active",)
     search_fields = (
@@ -114,7 +132,14 @@ class ProductAdmin(TranslationAdmin):
 
 @admin.register(Color)
 class ColorAdmin(TranslationAdmin):
-    fieldsets = ((None, {"fields": ("name", "hex_code")}),)
+    fieldsets = (
+        (
+            None,
+            {
+                "fields": ("name", "hex_code"),
+            },
+        ),
+    )
     list_filter = ("name",)
     search_fields = (
         "name",
@@ -129,7 +154,14 @@ class ColorAdmin(TranslationAdmin):
 
 @admin.register(Flower)
 class FlowerAdmin(TranslationAdmin):
-    fieldsets = ((None, {"fields": ("name",)}),)
+    fieldsets = (
+        (
+            None,
+            {
+                "fields": ("name",),
+            },
+        ),
+    )
     list_filter = ("name",)
     search_fields = ("name",)
     list_display = ("name",)
@@ -166,7 +198,19 @@ class BouquetSizesInLine(admin.TabularInline):
 
 @admin.register(BouquetCategory)
 class BouquetCategoryAdmin(TranslationAdmin):
-    fieldsets = ((None, {"fields": ("name", "slug", "is_active", "image")}),)
+    fieldsets = (
+        (
+            None,
+            {
+                "fields": (
+                    "name",
+                    "slug",
+                    "is_active",
+                    "image",
+                ),
+            },
+        ),
+    )
     list_filter = ("is_active",)
     search_fields = (
         "name",
@@ -183,7 +227,18 @@ class BouquetCategoryAdmin(TranslationAdmin):
 @admin.register(BouquetSubcategory)
 class BouquetSubcategoryAdmin(TranslationAdmin):
     fieldsets = (
-        (None, {"fields": ("name", "slug", "category", "is_active", "image")}),
+        (
+            None,
+            {
+                "fields": (
+                    "name",
+                    "slug",
+                    "category",
+                    "is_active",
+                    "image",
+                ),
+            },
+        ),
     )
     list_filter = ("is_active",)
     search_fields = (
