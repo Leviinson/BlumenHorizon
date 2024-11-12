@@ -15,13 +15,16 @@
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="text-end d-flex justify-content-end list-unstyled gap-3 align-items-center m-0">
           <li class="nav-item">
-            <a class="nav-link active text-light" aria-current="page" href="#">Home</a>
+            <a class="nav-link active text-light" aria-current="page" href="{% url 'mainpage:offers' %}">{% translate 'Главная страница' %}</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-light" href="#">Features</a>
+            <a class="nav-link text-light" href="#">{% translate 'О нас' %}</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-light" href="#">Pricing</a>
+            <a class="nav-link text-light" href="#">{% translate 'Доставка' %}</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-light" href="#">{% translate 'Оплата' %}</a>
           </li>
       </div>
       <div id="header-right-panel" class="d-flex justify-content-center">
