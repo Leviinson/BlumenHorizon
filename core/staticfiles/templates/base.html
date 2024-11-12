@@ -36,9 +36,10 @@
         <div class="social-list d-none" id="socialList">
             {% for social in socials_right_bottom %}
             <a href="{{ social.absolute_url }}"
-               class="btn btn-outline-primary social-link me-2"
+               class="btn btn-outline-primary social-link"
                style=
                "
+               margin-right: .55rem;
                --bs-btn-color: {{ social.icon_hex_code }};
                --bs-btn-bg: {{ social.background_hex_code }};
                --bs-btn-border-color: {{ social.outline_hex_code }};
