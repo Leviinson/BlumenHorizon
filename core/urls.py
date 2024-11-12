@@ -27,6 +27,8 @@ service_urlpatterns = [
     path("i18n/", include("django.conf.urls.i18n")),
     path("admin/", admin.site.urls),
     path("logout/", LogoutView.as_view(), name="logout"),
+    path("", include("wysiwyg.urls")),
+    path("", include("seo.urls")),
 ]
 
 i18n_urlpatterns = i18n_patterns(
