@@ -38,6 +38,53 @@ ALLOWED_HOSTS = [
     "*",
 ]
 
+# DJANGO-TINYMCE
+TINYMCE_DEFAULT_CONFIG = {
+    "height": 500,
+    "width": "100%",
+    "plugins": "preview importcss searchreplace autolink autosave save code \
+                visualblocks visualchars fullscreen image link media \
+                template codesample table charmap pagebreak nonbreaking anchor \
+                insertdatetime advlist lists wordcount help charmap emoticons quickbars",
+    "toolbar": "fullscreen preview | undo redo | bold italic forecolor backcolor | formatselect | image link | ",
+    "images_upload_url": "/tinymce-image-upload/",
+    "automatic_uploads": True,
+    "file_picker_types": "image"
+    "alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | fontsizeselect emoticons | ",
+    "custom_undo_redo_levels": 50,
+    "quickbars_insert_toolbar": True,
+    "file_picker_callback": """function (cb, value, meta) {
+        var input = document.createElement("input");
+        input.setAttribute("type", "file");
+        if (meta.filetype == "image") {
+            input.setAttribute("accept", "image/*");
+        }
+        if (meta.filetype == "media") {
+            input.setAttribute("accept", "video/*");
+        }
+
+        input.onchange = function () {
+            var file = this.files[0];
+            var reader = new FileReader();
+            reader.onload = function () {
+                var id = "blobid" + (new Date()).getTime();
+                var blobCache = tinymce.activeEditor.editorUpload.blobCache;
+                var base64 = reader.result.split(",")[1];
+                var blobInfo = blobCache.create(id, file, base64);
+                blobCache.add(blobInfo);
+                cb(blobInfo.blobUri(), { title: file.name });
+            };
+            reader.readAsDataURL(file);
+        };
+        input.click();
+    }""",
+    "content_style": "body { font-family:Roboto,Helvetica,Arial,sans-serif; font-size:14px }",
+}
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = (
+    10485760 // 2
+)  # 10MB : 2 = 5MB (for comfort changing in the future)
+
 INTERNAL_IPS = [
     "0.0.0.0",
     "127.0.0.1",
@@ -58,6 +105,7 @@ DJANGO_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sites",
+    "django.contrib.sitemaps",
 ]
 
 LOCAL_APPS = [
@@ -66,7 +114,9 @@ LOCAL_APPS = [
     "extended_contrib_models.apps.ExtendedContribModelsConfig",
     "cart.apps.CartConfig",
     "mainpage.apps.MainpageConfig",
-    "livesearch",
+    "livesearch.apps.LivesearchConfig",
+    "wysiwyg.apps.WysiwygConfig",
+    "seo.apps.SeoConfig",
 ]
 
 THIRDPARTY_APPS = [
