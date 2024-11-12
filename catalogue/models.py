@@ -28,16 +28,21 @@ class MetaDataAbstractModel(models.Model):
         verbose_name=_("Активный?"),
         default=True,
     )
+    amount_of_orders = models.IntegerField(
+        verbose_name="Количество заказов", editable=False
+    )
+    amount_of_savings = models.IntegerField(
+        verbose_name="Количество добавлений в корзину", editable=False
+    )
 
     class Meta:
         abstract = True
 
 
-class ProductCategory(MetaDataAbstractModel):
+class ProductCategory(TimeStampAdbstractModel, MetaDataAbstractModel):
     image = models.ImageField(
         verbose_name=_("Картинка"),
         upload_to="categories/%Y-%m-%d",
-        default="defaults/no-image.webp",
     )
 
     class Meta:
@@ -47,12 +52,19 @@ class ProductCategory(MetaDataAbstractModel):
     def __str__(self):
         return self.name
 
+    def get_detail_url(self):
+        return reverse_lazy(
+            "catalogue:products-category",
+            kwargs={
+                "category_slug": self.slug,
+            },
+        )
 
-class ProductSubcategory(MetaDataAbstractModel):
+
+class ProductSubcategory(TimeStampAdbstractModel, MetaDataAbstractModel):
     image = models.ImageField(
         verbose_name=_("Картинка"),
         upload_to="subcategories/%Y-%m-%d",
-        default="defaults/no-image.webp",
     )
     category = models.ForeignKey(
         ProductCategory,
@@ -67,6 +79,12 @@ class ProductSubcategory(MetaDataAbstractModel):
 
     def __str__(self):
         return self.name
+
+    def get_detail_url(self):
+        return reverse_lazy(
+            "catalogue:products-subcategory",
+            kwargs={"category_slug": self.category.slug, "subcategory_slug": self.slug},
+        )
 
     def clean_category(self):
         if self.category is None:
@@ -101,12 +119,6 @@ class ProductAbstract(TimeStampAdbstractModel, MetaDataAbstractModel):
     )
     specs = HTMLField(
         verbose_name=_("Характеристики"),
-    )
-    amount_of_orders = models.IntegerField(
-        verbose_name="Количество заказов", editable=False
-    )
-    amount_of_savings = models.IntegerField(
-        verbose_name="Количество добавлений в корзину", editable=False
     )
 
     class Meta:
@@ -162,8 +174,7 @@ class ProductImage(models.Model):
         verbose_name=_("Продукт"),
     )
     image = models.ImageField(
-        upload_to="products_media/%Y-%m-%d/",
-        verbose_name=_("Изображение"),
+        upload_to="products/%Y-%m-%d/",
     )
 
     class Meta:
@@ -211,11 +222,10 @@ class Flower(models.Model):
         return self.name
 
 
-class BouquetCategory(MetaDataAbstractModel):
+class BouquetCategory(TimeStampAdbstractModel, MetaDataAbstractModel):
     image = models.ImageField(
         verbose_name=_("Картинка"),
         upload_to="categories/%Y-%m-%d",
-        default="defaults/no-image.webp",
     )
 
     class Meta:
@@ -225,12 +235,19 @@ class BouquetCategory(MetaDataAbstractModel):
     def __str__(self):
         return self.name
 
+    def get_detail_url(self):
+        return reverse_lazy(
+            "catalogue:bouquets-category",
+            kwargs={
+                "category_slug": self.slug,
+            },
+        )
 
-class BouquetSubcategory(MetaDataAbstractModel):
+
+class BouquetSubcategory(TimeStampAdbstractModel, MetaDataAbstractModel):
     image = models.ImageField(
         verbose_name=_("Картинка"),
         upload_to="subcategories/%Y-%m-%d",
-        default="defaults/no-image.webp",
     )
     category = models.ForeignKey(
         BouquetCategory,
@@ -245,6 +262,15 @@ class BouquetSubcategory(MetaDataAbstractModel):
 
     def __str__(self):
         return self.name
+
+    def get_detail_url(self):
+        return reverse_lazy(
+            "catalogue:bouquets-subcategory",
+            kwargs={
+                "category_slug": self.category.slug,
+                "subcategory_slug": self.slug,
+            },
+        )
 
     def clean_category(self):
         if self.category is None:
@@ -346,7 +372,7 @@ class BouquetImage(models.Model):
         verbose_name=_("Букет"),
     )
     image = models.ImageField(
-        upload_to="products/%Y-%m-%d/",
+        upload_to="bouquets/%Y-%m-%d/",
         verbose_name=_("Изображение"),
     )
 
@@ -366,7 +392,7 @@ class BouquetSizeImage(models.Model):
         verbose_name="Размер букета",
     )
     image = models.ImageField(
-        upload_to="products/sizes/bouquets/%Y-%m-%d/",
+        upload_to="bouquets/sizes/%Y-%m-%d/",
         verbose_name="Изображение размера букета",
     )
 
@@ -375,7 +401,7 @@ class BouquetSizeImage(models.Model):
         verbose_name_plural = "Изображения размеров букетов"
 
 
-class IndividualQuestion(models.Model):
+class IndividualQuestion(TimeStampAdbstractModel, models.Model):
     user = models.ForeignKey(
         get_user_model(),
         on_delete=models.CASCADE,
