@@ -1,3 +1,4 @@
+from django.db import transaction
 from django.http import Http404, JsonResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
@@ -73,17 +74,36 @@ class BuyItemView(FormView):
             cart_session_key = "products_cart"
 
         try:
-            item = model_class.objects.only("price", "discount").get(
-                slug=item_slug,
-                is_active=True,
-                subcategory__slug=subcategory_slug,
-                subcategory__category__slug=category_slug,
+            item = (
+                model_class.objects.select_related(
+                    "subcategory", "subcategory__category"
+                )
+                .only(
+                    "price",
+                    "discount",
+                    "amount_of_savings",
+                    "subcategory__amount_of_savings",
+                    "subcategory__category__amount_of_savings",
+                )
+                .get(
+                    slug=item_slug,
+                    is_active=True,
+                    subcategory__slug=subcategory_slug,
+                    subcategory__category__slug=category_slug,
+                )
             )
             cart = cart_class(
                 session=self.request.session, session_key=cart_session_key
             )
             if item not in cart.products:
-                cart.add(item, item.discount_price)
+                with transaction.atomic():
+                    cart.add(item, item.discount_price)
+                    item.amount_of_savings += 1
+                    item.subcategory.amount_of_savings += 1
+                    item.subcategory.save(update_fields=["amount_of_savings"])
+                    item.subcategory.category.amount_of_savings += 1
+                    item.subcategory.category.save(update_fields=["amount_of_savings"])
+                    item.save(update_fields=["amount_of_savings"])
         except model_class.DoesNotExist:
             raise Http404(
                 _(
