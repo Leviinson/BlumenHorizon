@@ -39,7 +39,7 @@ class CartEditAbstractMixin(ABC):
     @abstractmethod
     def get_error_message(self) -> str:
         pass
-
+    
     def form_valid(self, form: CartForm) -> JsonResponse:
         cart = self.get_cart()
         remaining_cart = self.get_remaining_cart()
@@ -53,6 +53,12 @@ class CartEditAbstractMixin(ABC):
                         price=product.discount_price,
                     )
                     product.amount_of_savings += 1
+                    product.subcategory.amount_of_savings += 1
+                    product.subcategory.save(update_fields=["amount_of_savings"])
+                    product.subcategory.category.amount_of_savings += 1
+                    product.subcategory.category.save(
+                        update_fields=["amount_of_savings"]
+                    )
                     product.save(update_fields=["amount_of_savings"])
             case "remove":
                 cart.remove(product)
@@ -137,7 +143,15 @@ class CartItemRemoveSingleMixin:
 class CartBouquetEditMixin:
     def get_product(self, form):
         return get_object_or_404(
-            Bouquet.objects.only("slug", "price", "name"),
+            Bouquet.objects.select_related("subcategory", "subcategory__category").only(
+                "slug",
+                "price",
+                "discount",
+                "name",
+                "amount_of_savings",
+                "subcategory__amount_of_savings",
+                "subcategory__category__amount_of_savings",
+            ),
             slug=form.cleaned_data["product_slug"],
         )
 
@@ -151,7 +165,15 @@ class CartBouquetEditMixin:
 class CartProductEditMixin:
     def get_product(self, form):
         return get_object_or_404(
-            Product.objects.only("slug", "price", "name"),
+            Product.objects.select_related("subcategory", "subcategory__category").only(
+                "slug",
+                "price",
+                "discount",
+                "name",
+                "amount_of_savings",
+                "subcategory__amount_of_savings",
+                "subcategory__category__amount_of_savings",
+            ),
             slug=form.cleaned_data["product_slug"],
         )
 
