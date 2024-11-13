@@ -39,7 +39,7 @@ class CartEditAbstractMixin(ABC):
     @abstractmethod
     def get_error_message(self) -> str:
         pass
-    
+
     def form_valid(self, form: CartForm) -> JsonResponse:
         cart = self.get_cart()
         remaining_cart = self.get_remaining_cart()
