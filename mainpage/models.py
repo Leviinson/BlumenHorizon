@@ -11,6 +11,7 @@ class MainPageSliderImages(models.Model):
         verbose_name="Фото на главном слайде",
     )
     is_active = models.BooleanField(default=False, verbose_name="Активное?")
+    image_alt = models.CharField(verbose_name="Описание картинки", max_length=100)
 
     class Meta:
         verbose_name = "Фото слайдера главной страницы"
@@ -51,7 +52,7 @@ class SeoBlock(TimeStampAdbstractModel, models.Model):
         verbose_name=_("Картинка"),
         upload_to="seoblock/",
     )
-    alt = models.CharField(max_length=40, verbose_name="Описание картинки")
+    image_alt = models.CharField(max_length=100, verbose_name="Описание картинки")
 
     class Meta:
         verbose_name = "СЕО Блок"

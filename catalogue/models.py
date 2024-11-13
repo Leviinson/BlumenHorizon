@@ -44,6 +44,7 @@ class ProductCategory(TimeStampAdbstractModel, MetaDataAbstractModel):
         verbose_name=_("Картинка"),
         upload_to="categories/%Y-%m-%d",
     )
+    image_alt = models.CharField(verbose_name="Описание картинки", max_length=100)
 
     class Meta:
         verbose_name = _("Категория продукта")
@@ -72,6 +73,7 @@ class ProductSubcategory(TimeStampAdbstractModel, MetaDataAbstractModel):
         verbose_name=_("Категория"),
         related_name="subcategories",
     )
+    image_alt = models.CharField(verbose_name="Описание картинки", max_length=100)
 
     class Meta:
         verbose_name = _("Подкатегория продукта")
@@ -176,6 +178,7 @@ class ProductImage(models.Model):
     image = models.ImageField(
         upload_to="products/%Y-%m-%d/",
     )
+    image_alt = models.CharField(verbose_name="Описание картинки", max_length=100)
 
     class Meta:
         verbose_name = _("Изображение продукта")
@@ -227,6 +230,7 @@ class BouquetCategory(TimeStampAdbstractModel, MetaDataAbstractModel):
         verbose_name=_("Картинка"),
         upload_to="categories/%Y-%m-%d",
     )
+    image_alt = models.CharField(verbose_name="Описание картинки", max_length=100)
 
     class Meta:
         verbose_name = _("Категория букета")
@@ -249,6 +253,7 @@ class BouquetSubcategory(TimeStampAdbstractModel, MetaDataAbstractModel):
         verbose_name=_("Картинка"),
         upload_to="subcategories/%Y-%m-%d",
     )
+    image_alt = models.CharField(verbose_name="Описание картинки", max_length=100)
     category = models.ForeignKey(
         BouquetCategory,
         on_delete=models.PROTECT,
@@ -375,6 +380,7 @@ class BouquetImage(models.Model):
         upload_to="bouquets/%Y-%m-%d/",
         verbose_name=_("Изображение"),
     )
+    image_alt = models.CharField(verbose_name="Описание картинки", max_length=100)
 
     class Meta:
         verbose_name = _("Изображение букета")
@@ -395,6 +401,7 @@ class BouquetSizeImage(models.Model):
         upload_to="bouquets/sizes/%Y-%m-%d/",
         verbose_name="Изображение размера букета",
     )
+    image_alt = models.CharField(verbose_name="Описание картинки", max_length=100)
 
     class Meta:
         verbose_name = "Изображение размера букета"

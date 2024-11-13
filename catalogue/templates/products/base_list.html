@@ -94,7 +94,7 @@
                             <div class="image-wrapper">
                                 {% if product.first_image_uri %}
                                 <img src="{{ MEDIA_URL }}{{ product.first_image_uri }}"
-                                    class="card-img-top square-image" alt="{{ product.name }}" loading="lazy">
+                                    class="card-img-top square-image" alt="{{ product.first_image_alt }}" loading="lazy">
                                 {% else %}
                                 <img src="{% static 'defaults/no-image.webp' %}" class="card-img-top square-image"
                                     alt="{% translate 'Изображение продукта временно отсутствует.' %}" loading="lazy">

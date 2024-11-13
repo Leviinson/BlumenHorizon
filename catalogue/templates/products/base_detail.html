@@ -34,7 +34,7 @@
                     <div class="carousel-item {% if forloop.first %}active{% endif %}">
                         <div class="image-wrapper">
                             <img src="{{ image.image.url }}" class="square-image rounded img-thumbnail"
-                                 alt="{{ product.name }} image {{ forloop.counter }}">
+                                 alt="{{ image.image_alt }}">
                         </div>
                     </div>
                     {% empty %}

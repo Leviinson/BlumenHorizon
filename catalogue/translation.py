@@ -3,45 +3,36 @@ from modeltranslation.translator import TranslationOptions, register
 from .models import (
     Bouquet,
     BouquetCategory,
+    BouquetImage,
+    BouquetSizeImage,
     BouquetSubcategory,
     Color,
     Flower,
     Product,
     ProductCategory,
+    ProductImage,
     ProductSubcategory,
 )
 
 
 @register(ProductCategory)
 class ProductCategoryTranslationOptions(TranslationOptions):
-    fields = (
-        "name",
-        "slug",
-    )
+    fields = ("name", "slug", "image_alt")
 
 
 @register(ProductSubcategory)
 class ProductSubcategoryTranslationOptions(TranslationOptions):
-    fields = (
-        "name",
-        "slug",
-    )
+    fields = ("name", "slug", "image_alt")
 
 
 @register(BouquetCategory)
 class BouquetCategoryTranslationOptions(TranslationOptions):
-    fields = (
-        "name",
-        "slug",
-    )
+    fields = ("name", "slug", "image_alt")
 
 
 @register(BouquetSubcategory)
 class BouquetSubcategoryTranslationOptions(TranslationOptions):
-    fields = (
-        "name",
-        "slug",
-    )
+    fields = ("name", "slug", "image_alt")
 
 
 @register(Product)
@@ -72,3 +63,18 @@ class BouquetTranslationOptions(TranslationOptions):
         "description",
         "specs",
     )
+
+
+@register(BouquetImage)
+class BouquetImageTranslationOptions(TranslationOptions):
+    fields = ("image_alt",)
+
+
+@register(ProductImage)
+class ProductImageTranslationOptions(TranslationOptions):
+    fields = ("image_alt",)
+
+
+@register(BouquetSizeImage)
+class BouquetSizeImageTranslationOptions(TranslationOptions):
+    fields = ("image_alt",)

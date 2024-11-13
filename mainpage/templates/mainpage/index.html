@@ -26,7 +26,7 @@
       {% for image in slider_images %}
       <div data-bs-interval="5000" class="carousel-item {% if forloop.first %}active{% endif %} w-100"
         style="overflow: hidden;">
-        <img src="{{ image.image.url }}" class="d-block w-100 carousel-img" alt="{{ image.alt }}">
+        <img src="{{ image.image.url }}" class="d-block w-100 carousel-img" alt="{{ image.image_alt }}">
       </div>
       {% endfor %}
     </div>
@@ -95,7 +95,7 @@
   </div>
 
   <div id="seo-block" style="max-width: 1000px; width: 100%; background-color: beige; aspect-ratio: 1000 / 450; overflow: hidden; display: flex; align-items: center; justify-content: center;">
-    <img src="{% if seo_block.image %}{{ seo_block.image.url }}{% else %}{% static 'defaults/no-image.webp' %}{% endif %}" alt="{{ seo_block.alt }}" style="width: 100%; height: 100%; object-fit: cover;">
+    <img src="{% if seo_block.image %}{{ seo_block.image.url }}{% else %}{% static 'defaults/no-image.webp' %}{% endif %}" alt="{{ seo_block.image_alt }}" style="width: 100%; height: 100%; object-fit: cover;">
   </div>
 
 
