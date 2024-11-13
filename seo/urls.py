@@ -2,13 +2,12 @@ from django.contrib import sitemaps
 from django.contrib.sitemaps.views import sitemap
 from django.urls import path
 
-
 from .sitemaps import (
-    MainpageSitemap,
     BouquetCategorySitemap,
     BouquetDetailSitemap,
     BouquetListSitemap,
     BouquetSubcategorySitemap,
+    MainpageSitemap,
     ProductCategorySitemap,
     ProductDetailSitemap,
     ProductListSitemap,
