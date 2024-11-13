@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import IndividualOrderView, MainPageView, CatalogView
+from .views import CatalogView, IndividualOrderView, MainPageView
 
 app_name = "mainpage"
 
