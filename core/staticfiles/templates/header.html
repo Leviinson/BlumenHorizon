@@ -27,7 +27,7 @@
             <a class="nav-link text-light text-start" href="#">{% translate 'Оплата' %}</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-light text-start me-3" href="#">{% translate 'Каталог' %}</a>
+            <a class="nav-link text-light text-start me-3" href="{% url 'mainpage:catalog' %}">{% translate 'Каталог' %}</a>
           </li>
       </div>
       <div id="header-right-panel" class="d-flex justify-content-center">
@@ -55,16 +55,5 @@
         </div>
       </div>
     </div>
-  </nav>
-  <nav class="nav nav-pills nav-fill mx-2 mt-2 d-flex flex-wrap justify-content-start gap-2">
-    {% for category in products_categories %}
-    <a class="text-light text-center nav-item nav-link bg-soft-turquoise d-flex justify-content-center align-items-center"
-      style="flex: 1 1 calc(25% - 10px);" href="{% url 'catalogue:products-category' category.slug %}">{{ category.name }}</a>
-    {% endfor %}
-    {% for category in bouquets_categories %}
-    <a class="text-light text-center nav-item nav-link bg-soft-turquoise d-flex justify-content-center align-items-center"
-      style="flex: 1 1 calc(25% - 10px);" href="{% url 'catalogue:bouquets-category' category.slug %}">{{ category.name }}</a>
-    {% endfor %}
-
   </nav>
 </div>

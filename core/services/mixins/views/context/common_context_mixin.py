@@ -9,18 +9,6 @@ class CommonContextMixin:
     def get_context_data(self, *args, **kwargs):
         "Must be implemented and inherited by every view"
         context = super().get_context_data(*args, **kwargs)
-        context["products_categories"] = ProductCategory.objects.filter(
-            is_active=True
-        ).only(
-            "name",
-            "slug",
-        )
-        context["bouquets_categories"] = BouquetCategory.objects.filter(
-            is_active=True
-        ).only(
-            "name",
-            "slug",
-        )
         current_site: Site = get_current_site(self.request)
         if not context.get("site_name"):
             context["site_name"] = current_site.name
