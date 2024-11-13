@@ -24,9 +24,20 @@ class ProductCategoryAdmin(TranslationAdmin):
         (
             None,
             {
-                "fields": ("name", "slug", "is_active", "image"),
+                "fields": (
+                    "name",
+                    "slug",
+                    "is_active",
+                    "image",
+                    "amount_of_orders",
+                    "amount_of_savings",
+                ),
             },
         ),
+    )
+    readonly_fields = (
+        "amount_of_orders",
+        "amount_of_savings",
     )
     list_filter = ("is_active",)
     search_fields = (
@@ -53,9 +64,15 @@ class ProductSubcategoryAdmin(TranslationAdmin):
                     "category",
                     "is_active",
                     "image",
+                    "amount_of_orders",
+                    "amount_of_savings",
                 ),
             },
         ),
+    )
+    readonly_fields = (
+        "amount_of_orders",
+        "amount_of_savings",
     )
     list_filter = ("is_active",)
     search_fields = (
@@ -207,9 +224,15 @@ class BouquetCategoryAdmin(TranslationAdmin):
                     "slug",
                     "is_active",
                     "image",
+                    "amount_of_orders",
+                    "amount_of_savings",
                 ),
             },
         ),
+    )
+    readonly_fields = (
+        "amount_of_orders",
+        "amount_of_savings",
     )
     list_filter = ("is_active",)
     search_fields = (
@@ -236,9 +259,15 @@ class BouquetSubcategoryAdmin(TranslationAdmin):
                     "category",
                     "is_active",
                     "image",
+                    "amount_of_orders",
+                    "amount_of_savings",
                 ),
             },
         ),
+    )
+    readonly_fields = (
+        "amount_of_orders",
+        "amount_of_savings",
     )
     list_filter = ("is_active",)
     search_fields = (
