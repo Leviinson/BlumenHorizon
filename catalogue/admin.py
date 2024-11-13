@@ -71,7 +71,7 @@ class ProductSubcategoryAdmin(TranslationAdmin):
     ordering = ("category",)
 
 
-class ProductImagesInLine(admin.TabularInline):
+class ProductImagesInLine(admin.StackedInline):
     model = ProductImage
     extra = 1
     max_num = 3
@@ -168,7 +168,7 @@ class FlowerAdmin(TranslationAdmin):
     ordering = ("name",)
 
 
-class BouquetImagesInLine(admin.TabularInline):
+class BouquetImagesInLine(admin.StackedInline):
     model = BouquetImage
     extra = 1
     max_num = 3
@@ -189,7 +189,7 @@ class BouquetSizeAdmin(admin.ModelAdmin):
     ]
 
 
-class BouquetSizesInLine(admin.TabularInline):
+class BouquetSizesInLine(admin.StackedInline):
     model = BouquetSize
     extra = 1
     max_num = 3
