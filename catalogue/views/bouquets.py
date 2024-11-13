@@ -13,7 +13,7 @@ from core.services.mixins.views import CommonContextMixin
 
 from ..filters import BouquetFilter
 from ..models import Bouquet, BouquetImage, BouquetSize, Color, Flower
-from ..services.views import DetailViewMixin, ListViewMixin
+from ..services.views import BouquetListViewMixin, DetailViewMixin, ListViewMixin
 from .serializers import BouquetSizeSerializer
 
 
@@ -72,6 +72,8 @@ class BouquetView(
             "slug",
             "price",
             "amount_of_flowers",
+            "diameter",
+            "sku",
             "description",
             "specs",
             "images",
@@ -102,6 +104,7 @@ class BouquetView(
 
 class BouquetListView(
     ListViewMixin,
+    BouquetListViewMixin,
     CommonContextMixin,
     FilterView,
     TemplateResponseMixin,
@@ -133,7 +136,4 @@ class BouquetListView(
         context = super().get_context_data(*args, **kwargs)
         context["colors"] = Color.objects.only("name", "hex_code").all()
         context["flowers"] = Flower.objects.only("name").all()
-        context["bouquets_cart"] = BouquetCart(
-            session=self.request.session, session_key="bouquets_cart"
-        )
         return context

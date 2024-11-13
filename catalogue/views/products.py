@@ -8,7 +8,7 @@ from core.services.mixins.views import CommonContextMixin
 
 from ..filters import ProductFilter
 from ..models import Product, ProductImage
-from ..services.views import DetailViewMixin, ListViewMixin
+from ..services.views import DetailViewMixin, ListViewMixin, ProductListViewMixin
 
 
 class ProductView(
@@ -26,6 +26,7 @@ class ProductView(
         )
         .only(
             "name",
+            "sku",
             "slug",
             "price",
             "description",
@@ -55,6 +56,7 @@ class ProductView(
 
 class ProductListView(
     ListViewMixin,
+    ProductListViewMixin,
     CommonContextMixin,
     FilterView,
     TemplateResponseMixin,
@@ -83,10 +85,3 @@ class ProductListView(
     extra_context = {"title": _("Каталог продуктов")}
     image_model = ProductImage
     image_model_related_name = "product"
-
-    def get_context_data(self, *args, **kwargs):
-        context = super().get_context_data(*args, **kwargs)
-        context["products_cart"] = ProductCart(
-            session=self.request.session, session_key="products_cart"
-        )
-        return context
