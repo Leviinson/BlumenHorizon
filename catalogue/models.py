@@ -29,10 +29,14 @@ class MetaDataAbstractModel(models.Model):
         default=True,
     )
     amount_of_orders = models.IntegerField(
-        verbose_name="Количество заказов", editable=False
+        verbose_name="Количество заказов",
+        editable=False,
+        default=0,
     )
     amount_of_savings = models.IntegerField(
-        verbose_name="Количество добавлений в корзину", editable=False
+        verbose_name="Количество добавлений в корзину",
+        editable=False,
+        default=0,
     )
 
     class Meta:
@@ -43,6 +47,7 @@ class ProductCategory(TimeStampAdbstractModel, MetaDataAbstractModel):
     image = models.ImageField(
         verbose_name=_("Картинка"),
         upload_to="categories/%Y-%m-%d",
+        default="defaults/no-image.webp",
     )
     image_alt = models.CharField(verbose_name="Описание картинки", max_length=100)
 
@@ -66,6 +71,7 @@ class ProductSubcategory(TimeStampAdbstractModel, MetaDataAbstractModel):
     image = models.ImageField(
         verbose_name=_("Картинка"),
         upload_to="subcategories/%Y-%m-%d",
+        default="defaults/no-image.webp",
     )
     category = models.ForeignKey(
         ProductCategory,
@@ -177,6 +183,8 @@ class ProductImage(models.Model):
     )
     image = models.ImageField(
         upload_to="products/%Y-%m-%d/",
+        default="defaults/no-image.webp",
+        verbose_name="Изображение продукта",
     )
     image_alt = models.CharField(verbose_name="Описание картинки", max_length=100)
 
@@ -229,6 +237,7 @@ class BouquetCategory(TimeStampAdbstractModel, MetaDataAbstractModel):
     image = models.ImageField(
         verbose_name=_("Картинка"),
         upload_to="categories/%Y-%m-%d",
+        default="defaults/no-image.webp",
     )
     image_alt = models.CharField(verbose_name="Описание картинки", max_length=100)
 
@@ -252,6 +261,7 @@ class BouquetSubcategory(TimeStampAdbstractModel, MetaDataAbstractModel):
     image = models.ImageField(
         verbose_name=_("Картинка"),
         upload_to="subcategories/%Y-%m-%d",
+        default="defaults/no-image.webp",
     )
     image_alt = models.CharField(verbose_name="Описание картинки", max_length=100)
     category = models.ForeignKey(
@@ -378,7 +388,8 @@ class BouquetImage(models.Model):
     )
     image = models.ImageField(
         upload_to="bouquets/%Y-%m-%d/",
-        verbose_name=_("Изображение"),
+        verbose_name=_("Изображение букета"),
+        default="defaults/no-image.webp",
     )
     image_alt = models.CharField(verbose_name="Описание картинки", max_length=100)
 
@@ -400,6 +411,7 @@ class BouquetSizeImage(models.Model):
     image = models.ImageField(
         upload_to="bouquets/sizes/%Y-%m-%d/",
         verbose_name="Изображение размера букета",
+        default="defaults/no-image.webp",
     )
     image_alt = models.CharField(verbose_name="Описание картинки", max_length=100)
 
