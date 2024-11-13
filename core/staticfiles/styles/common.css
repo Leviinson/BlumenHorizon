@@ -153,6 +153,10 @@ body {
     #navbarNavDropdown {
         margin-bottom: 10px !important;
     }
+
+    #fillers-links {
+        justify-content: center !important;
+    }
 }
 
 .carousel-control-prev-icon, .carousel-control-next-icon {
