@@ -9,7 +9,14 @@ from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView
 
 from cart.cart import BouquetCart, ProductCart
-from catalogue.models import Bouquet, BouquetImage, Product, ProductImage
+from catalogue.models import (
+    Bouquet,
+    BouquetCategory,
+    BouquetImage,
+    Product,
+    ProductCategory,
+    ProductImage,
+)
 from core.services.mixins.views import CommonContextMixin
 
 from .forms import IndividualOrderForm
@@ -142,3 +149,36 @@ class IndividualOrderView(CreateView):
             },
             status=405,
         )
+
+
+class CatalogView(CommonContextMixin, TemplateView):
+    template_name = "mainpage/catalog.html"
+    http_method_names = ["get"]
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context["bouquets_categories"] = BouquetCategory.objects.prefetch_related(
+            "subcategories"
+        ).only(
+            "name",
+            "slug",
+            "image",
+            "image_alt",
+            "subcategories__name",
+            "subcategories__slug",
+            "subcategories__image",
+            "subcategories__image_alt",
+        )
+        context["products_categories"] = ProductCategory.objects.prefetch_related(
+            "subcategories"
+        ).only(
+            "name",
+            "slug",
+            "image",
+            "image_alt",
+            "subcategories__name",
+            "subcategories__slug",
+            "subcategories__image",
+            "subcategories__image_alt",
+        )
+        return context

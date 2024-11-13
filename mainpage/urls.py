@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import IndividualOrderView, MainPageView
+from .views import IndividualOrderView, MainPageView, CatalogView
 
 app_name = "mainpage"
 
@@ -11,6 +11,7 @@ urlpatterns = [
         IndividualOrderView.as_view(),
         name="individual-order-negotiate",
     ),
+    path("catalog/", CatalogView.as_view(), name="catalog"),
     # path("about/", AboutUsView.as_view(), name="about"),
     # path("delivery/", DeliveryInstructionsView.as_view(), name="delivery"),
     # path("payment/", PaymentInstructionsView.as_view(), name="payment"),
