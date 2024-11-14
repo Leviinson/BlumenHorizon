@@ -1,0 +1,82 @@
+{% extends "templates/base.html" %}
+{% load static %}
+{% load i18n %}
+{% load chunk_filters %}
+
+{% block additional_head_styles %}
+{% endblock %}
+
+{% block body %}
+<div class="container px-4 text-center">
+    <a href="{{ category.get_detail_url }}" class="text-decoration-none text-dark">
+        <img style="width: 200px;" class="rounded img-thumbnail" src="{{ category.image.url }}" alt="{{ category.image_alt }}">
+        <h1 class="mb-4">{{ category.name }}</h1>
+    </a>
+    <div class="subcategories-container row gap-3 justify-content-center">
+        {% for subcategory in category.subcategories.all %}
+            <div class="subcategory-container card
+                        col-lg-3 col-md-5 col-12">
+                <div class="subcategory-content card-body text-start">
+                    <a href="{{ subcategory.get_detail_url }}"
+                       class="text-decoration-none text-dark">
+                        <div class="subcategory-container
+                                    d-flex align-items-center">
+                            <img style="width: 70px;" class="img-thumbnail rounded me-2" src="{{ subcategory.image.url }}" alt="{{ subcategory.image_alt }}">
+                            <h2 class="fs-6 fw-light mb-0">{{ subcategory.name }}</h2>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+        {% for subcategory in category.subcategories.all %}
+            <div class="subcategory-container card
+                        col-lg-3 col-md-5 col-12">
+                <div class="subcategory-content card-body text-start">
+                    <a href="{{ subcategory.get_detail_url }}"
+                       class="text-decoration-none text-dark">
+                        <div class="subcategory-container
+                                    d-flex align-items-center">
+                            <img style="width: 70px;" class="img-thumbnail rounded me-2" src="{{ subcategory.image.url }}" alt="{{ subcategory.image_alt }}">
+                            <h2 class="fs-6 fw-light mb-0">{{ subcategory.name }}</h2>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+        {% for subcategory in category.subcategories.all %}
+            <div class="subcategory-container card
+                        col-lg-3 col-md-5 col-12">
+                <div class="subcategory-content card-body text-start">
+                    <a href="{{ subcategory.get_detail_url }}"
+                       class="text-decoration-none text-dark">
+                        <div class="subcategory-container
+                                    d-flex align-items-center">
+                            <img style="width: 70px;" class="img-thumbnail rounded me-2" src="{{ subcategory.image.url }}" alt="{{ subcategory.image_alt }}">
+                            <h2 class="fs-6 fw-light mb-0">{{ subcategory.name }}</h2>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+        {% for subcategory in category.subcategories.all %}
+            <div class="subcategory-container card
+                        col-lg-3 col-md-5 col-12">
+                <div class="subcategory-content card-body text-start">
+                    <a href="{{ subcategory.get_detail_url }}"
+                       class="text-decoration-none text-dark">
+                        <div class="subcategory-container
+                                    d-flex align-items-center">
+                            <img style="width: 70px;" class="img-thumbnail rounded me-2" src="{{ subcategory.image.url }}" alt="{{ subcategory.image_alt }}">
+                            <h2 class="fs-6 fw-light mb-0">{{ subcategory.name }}</h2>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    
+</div>
+{% endblock %}
+
+{% block additional_scripts %}
+{% endblock %}
