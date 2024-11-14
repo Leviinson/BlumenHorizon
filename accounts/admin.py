@@ -14,7 +14,6 @@ class UserAdmin(admin.ModelAdmin):
         "first_name",
         "last_name",
         "is_active",
-        "is_staff",
         "date_joined",
     )
     list_filter = ("is_active", "is_staff", "date_joined")
@@ -31,6 +30,8 @@ class UserAdmin(admin.ModelAdmin):
                     "phonenumber",
                     "email",
                     "is_active",
+                    "is_staff",
+                    "is_superuser",
                 ),
                 "classes": [
                     "wide",
@@ -50,7 +51,6 @@ class UserAdmin(admin.ModelAdmin):
             },
         ),
     )
-
     search_help_text = (
         "Поиск по адресу электронной почты, номеру телефона, имени или фамилии."
     )
