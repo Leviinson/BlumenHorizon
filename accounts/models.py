@@ -42,8 +42,7 @@ class User(TimeStampAdbstractModel, AbstractUser, PermissionsMixin):
     is_staff = models.BooleanField(
         "Администратор?",
         default=False,
-        help_text="Определяет может ли пользователь попасть в админ-панель",
-        editable=False,
+        help_text="Определяет может ли пользователь попасть в админ-панель.",
     )
     is_active = models.BooleanField(
         "Активный?",
@@ -54,7 +53,6 @@ class User(TimeStampAdbstractModel, AbstractUser, PermissionsMixin):
     is_superuser = models.BooleanField(
         "Суперпользователь?",
         default=False,
-        editable=False,
         help_text=f"Определяет имеет ли пользователь доступ ко всему "
         f"без предварительного разрешения.",
     )
