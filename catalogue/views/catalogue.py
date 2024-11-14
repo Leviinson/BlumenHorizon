@@ -2,13 +2,15 @@ from django.db import transaction
 from django.http import Http404, JsonResponse
 from django.shortcuts import redirect
 from django.utils.translation import gettext_lazy as _
+from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, FormView
 
 from cart.cart import BouquetCart, ProductCart
 from catalogue.forms import IndividualQuestionForm
+from core.services.mixins.views import CommonContextMixin
 
 from ..forms import BuyItemForm
-from ..models import Bouquet, Product
+from ..models import Bouquet, BouquetCategory, Product, ProductCategory
 from ..services.views import (
     BouquetCategoryListViewMixin,
     BouquetSubcategoryListViewMixin,
@@ -17,6 +19,70 @@ from ..services.views import (
 )
 from .bouquets import BouquetListView
 from .products import ProductListView
+
+
+class CatalogView(CommonContextMixin, TemplateView):
+    template_name = "products/catalog.html"
+    http_method_names = ["get"]
+    extra_context = {"title": _("Каталог букетов")}
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context["bouquets_categories"] = BouquetCategory.objects.prefetch_related(
+            "subcategories"
+        ).only(
+            "name",
+            "slug",
+            "image",
+            "image_alt",
+            "subcategories__name",
+            "subcategories__slug",
+            "subcategories__image",
+            "subcategories__image_alt",
+        )
+        context["products_categories"] = ProductCategory.objects.prefetch_related(
+            "subcategories"
+        ).only(
+            "name",
+            "slug",
+            "image",
+            "image_alt",
+            "subcategories__name",
+            "subcategories__slug",
+            "subcategories__image",
+            "subcategories__image_alt",
+        )
+        return context
+
+
+class CategoryView(CommonContextMixin, TemplateView):
+    template_name = "products/category.html"
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        models = BouquetCategory, ProductCategory
+        for model in models:
+            try:
+                context["category"] = (
+                    model.objects.prefetch_related("subcategories")
+                    .only(
+                        "name",
+                        "slug",
+                        "image",
+                        "image_alt",
+                        "subcategories__name",
+                        "subcategories__slug",
+                        "subcategories__image",
+                        "subcategories__image_alt",
+                    )
+                    .get(slug=self.kwargs["category_slug"])
+                )
+                break
+            except model.DoesNotExist:
+                continue
+        else:
+            raise Http404()
+        return context
 
 
 class BuyItemView(FormView):
@@ -81,7 +147,7 @@ class BuyItemView(FormView):
         return redirect("mainpage:offers")
 
 
-class CategoryProductsListView(ProductListView):
+class CategoryProductsListView(ProductCategoryListViewMixin, ProductListView):
     pass
 
 

@@ -6,8 +6,10 @@ from .views import (
     BouquetListView,
     BouquetView,
     BuyItemView,
+    CatalogView,
     CategoryBouquetListView,
     CategoryProductsListView,
+    CategoryView,
     GetBouquetSizes,
     ProductListView,
     ProductView,
@@ -18,6 +20,16 @@ from .views import (
 app_name = "catalogue"
 
 urlpatterns = [
+    path(
+        "",
+        CatalogView.as_view(),
+        name="catalog",
+    ),
+    path(
+        "category/<slug:category_slug>/",
+        CategoryView.as_view(),
+        name="category",
+    ),
     path(
         "individual-question/",
         IndividualQuestionView.as_view(),
