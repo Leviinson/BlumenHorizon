@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const cardsContainer = document.getElementById("cards-container");
+    const cardsContainers = document.querySelectorAll(".cards-container");
 
     const updateButtonState = function (form, isInCart) {
         const button = form.querySelector("button");
@@ -42,18 +42,21 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     };
 
-    // Initialize buttons on catalog page
-    if (cardsContainer) {
-        cardsContainer.querySelectorAll(".add-to-cart-form").forEach(form => {
-            updateButtonState(form, form.dataset.isInCart === "true");
-        });
-
-        cardsContainer.addEventListener("submit", function (event) {
-            if (event.target.matches(".add-to-cart-form")) {
-                event.preventDefault();
-                handleCartFormSubmit(event.target);
-            }
-        });
+    // Initialize buttons on mainpage
+    if (cardsContainers) {
+        cardsContainers.forEach(cardsContainer => {
+            cardsContainer.querySelectorAll(".add-to-cart-form").forEach(form => {
+                updateButtonState(form, form.dataset.isInCart === "true");
+            });
+    
+            cardsContainer.addEventListener("submit", function (event) {
+                if (event.target.matches(".add-to-cart-form")) {
+                    event.preventDefault();
+                    handleCartFormSubmit(event.target);
+                }
+            });
+        })
+        
     }
 
     // Initialize button on product page
