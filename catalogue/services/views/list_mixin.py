@@ -116,7 +116,7 @@ class BouquetListViewMixin:
         return context
 
 
-class ProductCategoryListViewMixin(ProductListViewMixin, CategoryListViewMixin):
+class ProductCategoryListViewMixin(CategoryListViewMixin):
     def get_queryset(self):
         qs = super().get_queryset()
         self.category = get_object_or_404(
