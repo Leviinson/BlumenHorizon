@@ -82,6 +82,6 @@ class ProductListView(
     context_object_name = "products"
     template_name = "products/base_list.html"
     filterset_class = ProductFilter
-    extra_context = {"title": _("Каталог продуктов")}
+    extra_context = {"title": _("Все подарки")}
     image_model = ProductImage
     image_model_related_name = "product"

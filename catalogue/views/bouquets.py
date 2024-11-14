@@ -128,7 +128,7 @@ class BouquetListView(
     context_object_name = "products"
     template_name = "products/bouquets/bouquet_list.html"
     filterset_class = BouquetFilter
-    extra_context = {"title": _("Каталог букетов")}
+    extra_context = {"title": _("Все букеты")}
     image_model = BouquetImage
     image_model_related_name = "bouquet"
 
