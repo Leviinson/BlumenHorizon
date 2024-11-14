@@ -72,6 +72,19 @@ class MainPageView(CommonContextMixin, TemplateView):
         )
         context["individual_order_form"] = IndividualOrderForm()
         context["seo_block"] = SeoBlock.objects.first()
+        context["products_categories"] = ProductCategory.objects.filter(
+            is_active=True
+        ).only(
+            "name",
+            "slug",
+        )
+        context["bouquets_categories"] = BouquetCategory.objects.filter(
+            is_active=True
+        ).only(
+            "name",
+            "slug",
+        )
+
         return context
 
     def get_recommended_items_with_first_image(
@@ -149,36 +162,3 @@ class IndividualOrderView(CreateView):
             },
             status=405,
         )
-
-
-class CatalogView(CommonContextMixin, TemplateView):
-    template_name = "mainpage/catalog.html"
-    http_method_names = ["get"]
-
-    def get_context_data(self, *args, **kwargs):
-        context = super().get_context_data(*args, **kwargs)
-        context["bouquets_categories"] = BouquetCategory.objects.prefetch_related(
-            "subcategories"
-        ).only(
-            "name",
-            "slug",
-            "image",
-            "image_alt",
-            "subcategories__name",
-            "subcategories__slug",
-            "subcategories__image",
-            "subcategories__image_alt",
-        )
-        context["products_categories"] = ProductCategory.objects.prefetch_related(
-            "subcategories"
-        ).only(
-            "name",
-            "slug",
-            "image",
-            "image_alt",
-            "subcategories__name",
-            "subcategories__slug",
-            "subcategories__image",
-            "subcategories__image_alt",
-        )
-        return context
