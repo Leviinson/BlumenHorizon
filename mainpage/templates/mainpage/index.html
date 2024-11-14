@@ -9,6 +9,17 @@
 
 {% block body %}
 <div class="container mx-auto text-center d-flex flex-column align-items-center">
+  <nav class="nav nav-pills nav-fill mx-2 mb-5 d-flex flex-wrap justify-content-start gap-2 w-100">
+    {% for category in products_categories %}
+    <a class="text-light text-center nav-item nav-link bg-soft-turquoise d-flex justify-content-center align-items-center"
+      style="flex: 1 1 calc(25% - 10px);" href="{% url 'catalogue:category' category.slug %}">{{ category.name }}</a>
+    {% endfor %}
+    {% for category in bouquets_categories %}
+    <a class="text-light text-center nav-item nav-link bg-soft-turquoise d-flex justify-content-center align-items-center"
+      style="flex: 1 1 calc(25% - 10px);" href="{% url 'catalogue:category' category.slug %}">{{ category.name }}</a>
+    {% endfor %}
+  </nav>
+
   <h1>
     {% blocktranslate %}
     Цветочный интернет-магазин {{ city }}
@@ -65,7 +76,9 @@
           method="POST">
       <fieldset class="w-100">
         <legend class="text-center">
-          {% translate 'Индивидуальный букет за 5 минут' %}
+          <h2 class="fs-4 fw-normal">
+            {% translate 'Индивидуальный букет за 5 минут' %}
+          </h2>
         </legend>
         {% csrf_token %}
         <div class="mb-3 w-100">
@@ -101,7 +114,7 @@
 
   <h2 class="text-center my-4">{% translate 'Рекомендуемые букеты к покупке' %}</h2>
   <div id="bouquetCarousel" class="carousel slide w-100" data-bs-ride="carousel">
-    <div class="carousel-inner" id="cards-container">
+    <div class="carousel-inner cards-container">
       {% for recommended_bouquets_chunk in recommended_bouquets|chunked:4 %}
       <div data-bs-interval="5000" class="carousel-item {% if forloop.first %}active{% endif %} w-100">
         <div class="row m-0 w-100">
@@ -122,9 +135,10 @@
                   <h5 class="card-title">{{ recommended_bouquet.name }}</h5>
                   <div class="d-flex flex-column justify-content-center mt-auto">
                     <p class="card-text">{{ recommended_bouquet.price }} {{ currency_symbol }}</p>
-                    <form method="post" action="{% url 'cart:bouquet-add' %}" class="add-to-cart-form w-100 me-2"
-                      data-add-url="{% url 'cart:bouquet-add' %}" data-remove-url="{% url 'cart:bouquet-remove' %}"
-                      data-is-in-cart="{% if recommended_bouquet in bouquets_cart %}true{% else %}false{% endif %}">
+                    <form method="post" class="add-to-cart-form w-100 me-2"
+                          data-add-url="{% url 'cart:bouquet-add' %}"
+                          data-remove-url="{% url 'cart:bouquet-remove' %}"
+                          data-is-in-cart="{% if recommended_bouquet in bouquets_cart %}true{% else %}false{% endif %}">
                       {% csrf_token %}
                       <input type="hidden" name="product_slug" value="{{ recommended_bouquet.slug }}">
                       {% include 'templates/cartButton.html' %}
@@ -154,7 +168,7 @@
 
   <h2 class="text-center my-4">{% translate 'Рекомендуемые подарки к букетам' %}</h2>
   <div id="productCarousel" class="carousel slide w-100" data-bs-ride="carousel">
-    <div class="carousel-inner" id="cards-container">
+    <div class="carousel-inner cards-container">
       {% for recommended_products_chunk in recommended_products|chunked:4 %}
       <div data-bs-interval="5000" class="carousel-item {% if forloop.first %}active{% endif %} w-100">
         <div class="row m-0 w-100">
@@ -175,8 +189,10 @@
                   <h5 class="card-title">{{ recommended_product.name }}</h5>
                   <div class="d-flex flex-column justify-content-center mt-auto">
                     <p class="card-text">{{ recommended_product.price }} {{ currency_symbol }}</p>
-                    <form method="post" action="{% url 'cart:product-add' %}" class="add-to-cart-form w-100 me-2"
-                      data-add-url="{% url 'cart:product-add' %}" data-remove-url="{% url 'cart:product-remove' %}"
+                    <form method="post"
+                          class="add-to-cart-form w-100 me-2"
+                          data-add-url="{% url 'cart:product-add' %}"
+                          data-remove-url="{% url 'cart:product-remove' %}"
                       data-is-in-cart="{% if recommended_product in products_cart %}true{% else %}false{% endif %}">
                       {% csrf_token %}
                       <input type="hidden" name="product_slug" value="{{ recommended_product.slug }}">
