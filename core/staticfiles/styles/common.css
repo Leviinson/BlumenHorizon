@@ -157,6 +157,14 @@ body {
     #fillers-links {
         justify-content: center !important;
     }
+
+    #fillers-links li:last-child a {
+        margin-right: 0 !important;
+    }
+
+    .navbar-brand {
+        margin-right: 0;
+    }
 }
 
 .carousel-control-prev-icon, .carousel-control-next-icon {
