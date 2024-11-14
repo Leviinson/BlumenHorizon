@@ -211,8 +211,8 @@ class Color(models.Model):
     )
 
     class Meta:
-        verbose_name = _("Цвет")
-        verbose_name_plural = _("Цвета")
+        verbose_name = _("Цвет букета")
+        verbose_name_plural = _("Цветовые гаммы букетов")
 
     def __str__(self):
         return f"{self.name} ({self.hex_code})"
@@ -227,7 +227,7 @@ class Flower(models.Model):
 
     class Meta:
         verbose_name = _("Цветок")
-        verbose_name_plural = _("Цветы")
+        verbose_name_plural = _("Состав букетов")
 
     def __str__(self):
         return self.name
@@ -306,13 +306,13 @@ class Bouquet(ProductAbstract):
     colors = models.ManyToManyField(
         Color,
         related_name="bouquet",
-        verbose_name=_("Цвета"),
+        verbose_name=_("Цветовые гаммы букетов"),
         help_text=_("Выберите какого цвета букет."),
     )
     flowers = models.ManyToManyField(
         Flower,
         related_name="bouquets",
-        verbose_name=_("Цветы"),
+        verbose_name=_("Состав букетов"),
         help_text=_("Выберите какие цветы в букете."),
     )
     sku = models.CharField(max_length=6, unique=True, default=generate_sku, null=True)
