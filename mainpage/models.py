@@ -44,7 +44,7 @@ class IndividualOrder(models.Model):
         verbose_name_plural = "Индивидуальные заказы"
 
     def __str__(self):
-        return f"{self.first_name} {self.phonenumber}"
+        return f"{self.first_name}"
 
 
 class SeoBlock(TimeStampAdbstractModel, models.Model):
