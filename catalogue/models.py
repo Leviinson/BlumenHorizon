@@ -37,17 +37,74 @@ class MetaDataAbstractModel(models.Model):
         editable=False,
         default=0,
     )
-    meta_tags = HTMLField(verbose_name="Мета-теги")
+    meta_tags = models.TextField(
+        verbose_name="Мета-теги",
+        max_length=1000,
+        default="<title>BlumenHorizon | </title>",
+    )
 
     class Meta:
         abstract = True
 
 
 class CatalogPageModel(models.Model):
-    meta_tags = HTMLField(verbose_name="Мета-теги")
+    meta_tags = models.TextField(
+        verbose_name="Мета-теги",
+        max_length=1000,
+        default="<title>BlumenHorizon | </title>",
+    )
+
+    class Meta:
+        verbose_name = "Мета-тег каталога категорий и подкатегорий"
+        verbose_name_plural = "Мета-теги каталога категорий и подкатегорий"
+
+    def __str__(self):
+        return "Мета-теги каталога категорий и подкатегорий"
+
 
 class CategoryPageModel(models.Model):
-    meta_tags = HTMLField(verbose_name="Мета-теги")
+    meta_tags = models.TextField(
+        verbose_name="Мета-теги",
+        max_length=1000,
+        default="<title>BlumenHorizon | </title>",
+    )
+
+    class Meta:
+        verbose_name = "Мета-тег каталога подкатегорий категории"
+        verbose_name_plural = "Мета-теги каталога подкатегорий категории"
+
+    def __str__(self):
+        return "Мета-теги каталога подкатегорий категории"
+
+
+class ProductsListPageModel(models.Model):
+    meta_tags = models.TextField(
+        verbose_name="Мета-теги",
+        max_length=1000,
+        default="<title>BlumenHorizon | </title>",
+    )
+
+    class Meta:
+        verbose_name = "Мета-тег списка всех продуктов"
+        verbose_name_plural = "Мета-теги списка всех продуктов"
+
+    def __str__(self):
+        return "Мета-теги списка всех продуктов"
+
+
+class BouquetsListPageModel(models.Model):
+    meta_tags = models.TextField(
+        verbose_name="Мета-теги",
+        max_length=1000,
+        default="<title>BlumenHorizon | </title>",
+    )
+
+    class Meta:
+        verbose_name = "Мета-тег списка всех букетов"
+        verbose_name_plural = "Мета-теги списка всех букетов"
+
+    def __str__(self):
+        return "Мета-теги списка всех букетов"
 
 
 class ProductCategory(TimeStampAdbstractModel, MetaDataAbstractModel):
@@ -72,6 +129,7 @@ class ProductCategory(TimeStampAdbstractModel, MetaDataAbstractModel):
                 "category_slug": self.slug,
             },
         )
+
 
 class ProductSubcategory(TimeStampAdbstractModel, MetaDataAbstractModel):
     image = models.ImageField(
