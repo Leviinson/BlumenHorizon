@@ -8,7 +8,6 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
-from phonenumber_field.modelfields import PhoneNumberField
 from tinymce.models import HTMLField
 
 from core.base_models import TimeStampAdbstractModel
@@ -38,9 +37,17 @@ class MetaDataAbstractModel(models.Model):
         editable=False,
         default=0,
     )
+    meta_tags = HTMLField(verbose_name="Мета-теги")
 
     class Meta:
         abstract = True
+
+
+class CatalogPageModel(models.Model):
+    meta_tags = HTMLField(verbose_name="Мета-теги")
+
+class CategoryPageModel(models.Model):
+    meta_tags = HTMLField(verbose_name="Мета-теги")
 
 
 class ProductCategory(TimeStampAdbstractModel, MetaDataAbstractModel):
@@ -65,7 +72,6 @@ class ProductCategory(TimeStampAdbstractModel, MetaDataAbstractModel):
                 "category_slug": self.slug,
             },
         )
-
 
 class ProductSubcategory(TimeStampAdbstractModel, MetaDataAbstractModel):
     image = models.ImageField(

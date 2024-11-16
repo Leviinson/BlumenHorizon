@@ -31,6 +31,7 @@ class ProductView(
             "price",
             "description",
             "specs",
+            "meta_tags",
             "images",
             "discount",
             "subcategory__slug",

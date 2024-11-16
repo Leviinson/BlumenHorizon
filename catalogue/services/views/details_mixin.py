@@ -17,7 +17,7 @@ class DetailViewMixin:
                 "Category url and subcategory url name from urls.py must be specified."
             )
         context = super().get_context_data(*args, **kwargs)
-        context["title"] = self.object.name
+        context["meta_tags"] = self.object.meta_tags
         context["breadcrumbs"] = [
             {
                 "name": self.object.subcategory.category.name,

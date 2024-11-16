@@ -69,7 +69,7 @@ class CategoryListViewMixin(ListViewMixin):
                 "url": None,
             },
         )
-        context["title"] = self.category.name
+        context["meta_tags"] = self.category.meta_tags
         return context
 
 
@@ -94,7 +94,7 @@ class SubcategoryListViewMixin(ListViewMixin):
             },
             {"name": self.subcategory.name, "url": None},
         )
-        context["title"] = self.subcategory.name
+        context["meta_tags"] = self.subcategory.meta_tags
         return context
 
 
@@ -103,7 +103,7 @@ class ProductListViewMixin:
         context = super().get_context_data(*args, **kwargs)
         context["products_cart"] = ProductCart(
             session=self.request.session, session_key="products_cart"
-        )
+        )        
         return context
 
 
@@ -120,7 +120,7 @@ class ProductCategoryListViewMixin(CategoryListViewMixin):
     def get_queryset(self):
         qs = super().get_queryset()
         self.category = get_object_or_404(
-            ProductCategory.objects.only("name"), slug=self.kwargs["category_slug"]
+            ProductCategory.objects.only("name", "meta_tags"), slug=self.kwargs["category_slug"]
         )
         return qs.filter(
             subcategory__category=self.category,
@@ -133,7 +133,7 @@ class ProductSubcategoryListViewMixin(SubcategoryListViewMixin):
         qs = super().get_queryset()
         self.subcategory = get_object_or_404(
             ProductSubcategory.objects.select_related("category").only(
-                "name", "category__name", "category__slug"
+                "name", "meta_tags", "category__name", "category__slug"
             ),
             slug=self.kwargs["subcategory_slug"],
             category__slug=self.kwargs["category_slug"],
@@ -147,7 +147,7 @@ class BouquetCategoryListViewMixin(CategoryListViewMixin):
     def get_queryset(self):
         qs = super().get_queryset()
         self.category = get_object_or_404(
-            BouquetCategory, slug=self.kwargs["category_slug"]
+            BouquetCategory.objects.only("name", "meta_tags"), slug=self.kwargs["category_slug"]
         )
         return qs.filter(
             subcategory__category=self.category,
@@ -160,7 +160,7 @@ class BouquetSubcategoryListViewMixin(SubcategoryListViewMixin):
         qs = super().get_queryset()
         self.subcategory = get_object_or_404(
             BouquetSubcategory.objects.select_related("category").only(
-                "name", "category__name", "category__slug"
+                "name", "meta_tags", "category__name", "category__slug"
             ),
             slug=self.kwargs["subcategory_slug"],
             category__slug=self.kwargs["category_slug"],

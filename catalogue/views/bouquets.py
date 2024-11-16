@@ -76,6 +76,7 @@ class BouquetView(
             "sku",
             "description",
             "specs",
+            "meta_tags"
             "images",
             "discount",
             "subcategory__slug",

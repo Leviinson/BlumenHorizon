@@ -24,7 +24,6 @@ from .products import ProductListView
 class CatalogView(CommonContextMixin, TemplateView):
     template_name = "products/catalog.html"
     http_method_names = ["get"]
-    extra_context = {"title": _("Каталог букетов")}
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
