@@ -12,7 +12,14 @@ from cart.cart import BouquetCart
 from core.services.mixins.views import CommonContextMixin
 
 from ..filters import BouquetFilter
-from ..models import Bouquet, BouquetImage, BouquetSize, Color, Flower
+from ..models import (
+    Bouquet,
+    BouquetImage,
+    BouquetSize,
+    BouquetsListPageModel,
+    Color,
+    Flower,
+)
 from ..services.views import BouquetListViewMixin, DetailViewMixin, ListViewMixin
 from .serializers import BouquetSizeSerializer
 
@@ -76,7 +83,7 @@ class BouquetView(
             "sku",
             "description",
             "specs",
-            "meta_tags"
+            "meta_tags",
             "images",
             "discount",
             "subcategory__slug",
@@ -129,7 +136,6 @@ class BouquetListView(
     context_object_name = "products"
     template_name = "products/bouquets/bouquet_list.html"
     filterset_class = BouquetFilter
-    extra_context = {"title": _("Все букеты")}
     image_model = BouquetImage
     image_model_related_name = "bouquet"
 
@@ -137,4 +143,5 @@ class BouquetListView(
         context = super().get_context_data(*args, **kwargs)
         context["colors"] = Color.objects.only("name", "hex_code").all()
         context["flowers"] = Flower.objects.only("name").all()
+        context["meta_tags"] = BouquetsListPageModel.objects.first().meta_tags
         return context
