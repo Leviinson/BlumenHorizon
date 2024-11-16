@@ -7,13 +7,17 @@ from .models import (
     BouquetImage,
     BouquetSize,
     BouquetSizeImage,
+    BouquetsListPageModel,
     BouquetSubcategory,
+    CatalogPageModel,
+    CategoryPageModel,
     Color,
     Flower,
     IndividualQuestion,
     Product,
     ProductCategory,
     ProductImage,
+    ProductsListPageModel,
     ProductSubcategory,
 )
 
@@ -28,6 +32,7 @@ class ProductCategoryAdmin(TranslationAdmin):
                     "name",
                     "slug",
                     "is_active",
+                    "meta_tags",
                     "image",
                     "amount_of_orders",
                     "amount_of_savings",
@@ -63,6 +68,7 @@ class ProductSubcategoryAdmin(TranslationAdmin):
                     "slug",
                     "category",
                     "is_active",
+                    "meta_tags",
                     "image",
                     "amount_of_orders",
                     "amount_of_savings",
@@ -111,10 +117,11 @@ class ProductAdmin(TranslationAdmin):
                     "discount",
                     "is_active",
                     "subcategory",
-                    "description",
                     "amount_of_orders",
                     "amount_of_savings",
+                    "description",
                     "specs",
+                    "meta_tags",
                 )
             },
         ),
@@ -223,6 +230,7 @@ class BouquetCategoryAdmin(TranslationAdmin):
                     "name",
                     "slug",
                     "is_active",
+                    "meta_tags",
                     "image",
                     "amount_of_orders",
                     "amount_of_savings",
@@ -258,6 +266,7 @@ class BouquetSubcategoryAdmin(TranslationAdmin):
                     "slug",
                     "category",
                     "is_active",
+                    "meta_tags",
                     "image",
                     "amount_of_orders",
                     "amount_of_savings",
@@ -299,16 +308,17 @@ class BouquetAdmin(TranslationAdmin):
                     "sku",
                     "price",
                     "discount",
-                    "is_active",
-                    "subcategory",
-                    "description",
-                    "specs",
                     "diameter",
-                    "amount_of_flowers",
-                    "amount_of_orders",
                     "amount_of_savings",
                     "colors",
                     "flowers",
+                    "is_active",
+                    "amount_of_flowers",
+                    "amount_of_orders",
+                    "subcategory",
+                    "description",
+                    "specs",
+                    "meta_tags",
                 )
             },
         ),
@@ -362,3 +372,27 @@ class IndividualQuestionAdmin(admin.ModelAdmin):
         "product",
         "bouquet",
     )
+
+
+@admin.register(CatalogPageModel)
+class CatalogPageAdmin(admin.ModelAdmin):
+    fields = ("meta_tags",)
+    list_display = ("id",)
+
+
+@admin.register(CategoryPageModel)
+class CategoryPageAdmin(admin.ModelAdmin):
+    fields = ("meta_tags",)
+    list_display = ("id",)
+
+
+@admin.register(ProductsListPageModel)
+class ProductsListPageAdmin(admin.ModelAdmin):
+    fields = ("meta_tags",)
+    list_display = ("id",)
+
+
+@admin.register(BouquetsListPageModel)
+class BouquetsListPageAdmin(admin.ModelAdmin):
+    fields = ("meta_tags",)
+    list_display = ("id",)
