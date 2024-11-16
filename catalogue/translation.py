@@ -5,34 +5,58 @@ from .models import (
     BouquetCategory,
     BouquetImage,
     BouquetSizeImage,
+    BouquetsListPageModel,
     BouquetSubcategory,
+    CatalogPageModel,
+    CategoryPageModel,
     Color,
     Flower,
     Product,
     ProductCategory,
     ProductImage,
+    ProductsListPageModel,
     ProductSubcategory,
 )
 
 
 @register(ProductCategory)
 class ProductCategoryTranslationOptions(TranslationOptions):
-    fields = ("name", "slug", "image_alt")
+    fields = (
+        "name",
+        "slug",
+        "image_alt",
+        "meta_tags",
+    )
 
 
 @register(ProductSubcategory)
 class ProductSubcategoryTranslationOptions(TranslationOptions):
-    fields = ("name", "slug", "image_alt")
+    fields = (
+        "name",
+        "slug",
+        "image_alt",
+        "meta_tags",
+    )
 
 
 @register(BouquetCategory)
 class BouquetCategoryTranslationOptions(TranslationOptions):
-    fields = ("name", "slug", "image_alt")
+    fields = (
+        "name",
+        "slug",
+        "image_alt",
+        "meta_tags",
+    )
 
 
 @register(BouquetSubcategory)
 class BouquetSubcategoryTranslationOptions(TranslationOptions):
-    fields = ("name", "slug", "image_alt")
+    fields = (
+        "name",
+        "slug",
+        "image_alt",
+        "meta_tags",
+    )
 
 
 @register(Product)
@@ -42,6 +66,7 @@ class ProductTranslationOptions(TranslationOptions):
         "slug",
         "description",
         "specs",
+        "meta_tags",
     )
 
 
@@ -62,6 +87,7 @@ class BouquetTranslationOptions(TranslationOptions):
         "slug",
         "description",
         "specs",
+        "meta_tags",
     )
 
 
@@ -78,3 +104,23 @@ class ProductImageTranslationOptions(TranslationOptions):
 @register(BouquetSizeImage)
 class BouquetSizeImageTranslationOptions(TranslationOptions):
     fields = ("image_alt",)
+
+
+@register(CatalogPageModel)
+class CatalogPageModelTranslationOptions(TranslationOptions):
+    fields = ("meta_tags",)
+
+
+@register(CategoryPageModel)
+class CategoryPageModelTranslationOptions(TranslationOptions):
+    fields = ("meta_tags",)
+
+
+@register(ProductsListPageModel)
+class ProductsListPageModelTranslationOptions(TranslationOptions):
+    fields = ("meta_tags",)
+
+
+@register(BouquetsListPageModel)
+class BouquetsListPageModelTranslationOptions(TranslationOptions):
+    fields = ("meta_tags",)
