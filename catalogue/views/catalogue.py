@@ -10,7 +10,14 @@ from catalogue.forms import IndividualQuestionForm
 from core.services.mixins.views import CommonContextMixin
 
 from ..forms import BuyItemForm
-from ..models import Bouquet, BouquetCategory, Product, ProductCategory
+from ..models import (
+    Bouquet,
+    BouquetCategory,
+    CatalogPageModel,
+    CategoryPageModel,
+    Product,
+    ProductCategory,
+)
 from ..services.views import (
     BouquetCategoryListViewMixin,
     BouquetSubcategoryListViewMixin,
@@ -51,6 +58,7 @@ class CatalogView(CommonContextMixin, TemplateView):
             "subcategories__image",
             "subcategories__image_alt",
         )
+        context["meta_tags"] = CatalogPageModel.objects.first().meta_tags
         return context
 
 
@@ -81,6 +89,7 @@ class CategoryView(CommonContextMixin, TemplateView):
                 continue
         else:
             raise Http404()
+        context["meta_tags"] = CategoryPageModel.objects.first().meta_tags
         return context
 
 

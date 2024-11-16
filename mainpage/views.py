@@ -20,7 +20,7 @@ from catalogue.models import (
 from core.services.mixins.views import CommonContextMixin
 
 from .forms import IndividualOrderForm
-from .models import MainPageSliderImages, SeoBlock
+from .models import MainPageMetaTags, MainPageSliderImages, SeoBlock
 from .services.dataclasses.related_model import RelatedModel
 
 
@@ -30,9 +30,6 @@ class MainPageView(CommonContextMixin, TemplateView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context["title"] = _(
-            f"Цветы {get_current_site(self.request).extended.city} с доставкой"
-        )
         context["slider_images"] = MainPageSliderImages.objects.filter(
             is_active=True
         ).all()
@@ -84,7 +81,7 @@ class MainPageView(CommonContextMixin, TemplateView):
             "name",
             "slug",
         )
-
+        context["meta_tags"] = MainPageMetaTags.objects.first().meta_tags
         return context
 
     def get_recommended_items_with_first_image(

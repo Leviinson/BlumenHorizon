@@ -21,7 +21,7 @@
     {% block additional_head_styles %}
     {% endblock %}
 
-    <title>{{ site_name }} | {{ title }}</title>
+    {{ meta_tags|safe }}
 </head>
 
 <body class="text-dark">

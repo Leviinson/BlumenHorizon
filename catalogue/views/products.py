@@ -7,7 +7,7 @@ from cart.cart import ProductCart
 from core.services.mixins.views import CommonContextMixin
 
 from ..filters import ProductFilter
-from ..models import Product, ProductImage
+from ..models import Product, ProductImage, ProductsListPageModel
 from ..services.views import DetailViewMixin, ListViewMixin, ProductListViewMixin
 
 
@@ -83,6 +83,10 @@ class ProductListView(
     context_object_name = "products"
     template_name = "products/base_list.html"
     filterset_class = ProductFilter
-    extra_context = {"title": _("Все подарки")}
     image_model = ProductImage
     image_model_related_name = "product"
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context["meta_tags"] = ProductsListPageModel.objects.first().meta_tags
+        return context
