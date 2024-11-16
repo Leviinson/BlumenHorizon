@@ -1,13 +1,23 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from tinymce.models import HTMLField
 
 from core.base_models import TimeStampAdbstractModel
 
 
 class MainPageMetaTags(models.Model):
-    meta_tags = HTMLField(verbose_name="Мета-теги")
+    meta_tags = models.TextField(
+        verbose_name="Мета-теги",
+        max_length=1000,
+        default="<title>BlumenHorizon | </title>",
+    )
+
+    class Meta:
+        verbose_name = "Мета-тег главной страницы"
+        verbose_name_plural = "Мета-теги главной страницы"
+
+    def __str__(self):
+        return "Мета-теги главной страницы"
 
 
 class MainPageSliderImages(models.Model):
