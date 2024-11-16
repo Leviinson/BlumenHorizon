@@ -30,6 +30,10 @@ Sitemap: https://www.blumenhorizon.com/sitemap.xml
     def __str__(self):
         return "Robots.txt Content"
 
+    class Meta:
+        verbose_name = "robots.txt"
+        verbose_name_plural = verbose_name
+
 
 class SitemapPage(models.Model):
     name = models.CharField(max_length=200)
@@ -40,3 +44,7 @@ class SitemapPage(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name = "sitemap.xml"
+        verbose_name_plural = verbose_name
