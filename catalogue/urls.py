@@ -35,11 +35,11 @@ urlpatterns = [
         IndividualQuestionView.as_view(),
         name="individual-question",
     ),
-    path(
-        "products/",
-        ProductListView.as_view(),
-        name="products-list",
-    ),
+    # path(
+    #     "products/",
+    #     ProductListView.as_view(),
+    #     name="products-list",
+    # ),
     path(
         "products/<slug:category_slug>/",
         CategoryProductsListView.as_view(),
@@ -55,11 +55,11 @@ urlpatterns = [
         ProductView.as_view(),
         name="product-details",
     ),
-    path(
-        "bouquets/",
-        BouquetListView.as_view(),
-        name="bouquets-list",
-    ),
+    # path(
+    #     "bouquets/",
+    #     BouquetListView.as_view(),
+    #     name="bouquets-list",
+    # ),
     path(
         "bouquets/<slug:category_slug>/",
         CategoryBouquetListView.as_view(),
