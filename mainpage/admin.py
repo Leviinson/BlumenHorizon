@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import IndividualOrder, MainPageSliderImages, SeoBlock
+from .models import IndividualOrder, MainPageMetaTags, MainPageSliderImages, SeoBlock
 
 
 @admin.register(MainPageSliderImages)
@@ -19,3 +19,9 @@ class SeoBlockAdmin(admin.ModelAdmin):
 class IndividualOrderAdmin(admin.ModelAdmin):
     fields = ["first_name", "contact_method", "recall_me", "user"]
     list_display = ["user", "first_name", "contact_method", "recall_me"]
+
+
+@admin.register(MainPageMetaTags)
+class MainPageMetaTagsAdmin(admin.ModelAdmin):
+    fields = ["meta_tags"]
+    list_display = ["id"]
