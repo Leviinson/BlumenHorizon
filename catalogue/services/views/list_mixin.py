@@ -103,7 +103,7 @@ class ProductListViewMixin:
         context = super().get_context_data(*args, **kwargs)
         context["products_cart"] = ProductCart(
             session=self.request.session, session_key="products_cart"
-        )        
+        )
         return context
 
 
@@ -120,7 +120,8 @@ class ProductCategoryListViewMixin(CategoryListViewMixin):
     def get_queryset(self):
         qs = super().get_queryset()
         self.category = get_object_or_404(
-            ProductCategory.objects.only("name", "meta_tags"), slug=self.kwargs["category_slug"]
+            ProductCategory.objects.only("name", "meta_tags"),
+            slug=self.kwargs["category_slug"],
         )
         return qs.filter(
             subcategory__category=self.category,
@@ -147,7 +148,8 @@ class BouquetCategoryListViewMixin(CategoryListViewMixin):
     def get_queryset(self):
         qs = super().get_queryset()
         self.category = get_object_or_404(
-            BouquetCategory.objects.only("name", "meta_tags"), slug=self.kwargs["category_slug"]
+            BouquetCategory.objects.only("name", "meta_tags"),
+            slug=self.kwargs["category_slug"],
         )
         return qs.filter(
             subcategory__category=self.category,
