@@ -68,7 +68,7 @@
             <div class="product-info-card h-100 d-flex flex-column justify-content-between">
                 <div id="content-container" class="d-flex flex-column h-100">
                     <div id="top-level-information" class="mb-3 d-flex justify-content-between align-items-center">
-                        {% if product.discount %}
+                        {% if product.has_discount %}
                         <h1 style="font-size: 1.5rem;" class="mb-0 pe-2">{{ product.name }}</h1>
                         <span class="badge bg-dark-green m-0 p-2 fs-5" style="height: fit-content;">-{{ product.discount }}%</span>
                         {% else %}
@@ -132,16 +132,16 @@
                     </ul>
 
                     <div class="mb-3 d-flex flex-column align-items-end">
-                        {% if product.discount %}
+                        {% if product.has_discount %}
                             <h2 class="text-danger mb-0 me-2" style="font-size: x-large;">
-                                {{ product.discount_price }} {{ currency_symbol }}
+                                {{ product.discount_price|floatformat:"2u" }} {{ currency_symbol }}
                             </h2>
                             <h2 class="text-muted text-decoration-line-through mb-0" style="font-size: 1.25em;">
-                                {{ product.price }} {{ currency_symbol }}
+                                {{ product.price|floatformat:"2u" }} {{ currency_symbol }}
                             </h2>
                         {% else %}
                             <h2 class="mb-0">
-                                {{ product.price }} {{ currency_symbol }}
+                                {{ product.price|floatformat:"2u" }} {{ currency_symbol }}
                             </h2>
                         {% endif %}
                     </div>
