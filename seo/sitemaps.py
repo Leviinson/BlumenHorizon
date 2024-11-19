@@ -1,6 +1,7 @@
 from django.contrib.sitemaps import Sitemap
-from django.db.models import Max, Prefetch
+from django.db.models import Max
 from django.urls import reverse_lazy
+from django.utils import translation
 
 from catalogue.models import (
     Bouquet,
@@ -13,7 +14,14 @@ from catalogue.models import (
 from mainpage.models import SeoBlock
 
 
-class MainpageSitemap(Sitemap):
+class SitemapMixin:
+    alternates = True
+    i18n = True
+    x_default = True
+
+
+
+class MainpageSitemap(SitemapMixin, Sitemap):
     priority = 1.0
     protocol = "https"
     changefreq = "weekly"
@@ -62,22 +70,22 @@ class MainpageSitemap(Sitemap):
         return max(seo_block_lastmod, product_lastmod, bouquet_lastmod)
 
 
-class ProductListSitemap(Sitemap):
-    priority = 0.5
-    protocol = "https"
-    changefreq = "weekly"
+# class ProductListSitemap(Sitemap):
+#     priority = 0.5
+#     protocol = "https"
+#     changefreq = "weekly"
 
-    def items(self):
-        return ["catalogue:products-list"]
+#     def items(self):
+#         return ["catalogue:products-list"]
 
-    def location(self, item):
-        return reverse_lazy(item)
+#     def location(self, item):
+#         return reverse_lazy(item)
 
-    def lastmod(self, item):
-        return Product.objects.only("updated_at").latest("updated_at").updated_at
+#     def lastmod(self, item):
+#         return Product.objects.only("updated_at").latest("updated_at").updated_at
 
 
-class ProductCategorySitemap(Sitemap):
+class ProductCategorySitemap(SitemapMixin, Sitemap):
     priority = 0.5
     protocol = "https"
     changefreq = "weekly"
@@ -90,7 +98,7 @@ class ProductCategorySitemap(Sitemap):
         ).order_by("-amount_of_orders", "-amount_of_savings")
 
     def location(self, item: ProductCategory):
-        return item.get_detail_url()
+        return item.get_relative_url()
 
     def lastmod(self, item: ProductCategory):
         return (
@@ -105,7 +113,7 @@ class ProductCategorySitemap(Sitemap):
         )
 
 
-class ProductSubcategorySitemap(Sitemap):
+class ProductSubcategorySitemap(SitemapMixin, Sitemap):
     priority = 0.5
     protocol = "https"
     changefreq = "weekly"
@@ -124,13 +132,13 @@ class ProductSubcategorySitemap(Sitemap):
         )
 
     def location(self, item: ProductSubcategory):
-        return item.get_detail_url()
+        return item.get_relative_url()
 
     def lastmod(self, item: ProductSubcategory):
         return item.lastmod
 
 
-class ProductDetailSitemap(Sitemap):
+class ProductDetailSitemap(SitemapMixin, Sitemap):
     priority = 0.5
     protocol = "https"
     changefreq = "weekly"
@@ -150,28 +158,28 @@ class ProductDetailSitemap(Sitemap):
         )
 
     def location(self, item: Product):
-        return item.get_detail_url()
+        return item.get_relative_url()
 
     def lastmod(self, item: Product):
         return item.updated_at
 
 
-class BouquetListSitemap(Sitemap):
-    priority = 0.5
-    protocol = "https"
-    changefreq = "weekly"
+# class BouquetListSitemap(SitemapMixin, Sitemap):
+#     priority = 0.5
+#     protocol = "https"
+#     changefreq = "weekly"
 
-    def items(self):
-        return ["catalogue:bouquets-list"]
+#     def items(self):
+#         return ["catalogue:bouquets-list"]
 
-    def location(self, item):
-        return reverse_lazy(item)
+#     def location(self, item):
+#         return reverse_lazy(item)
 
-    def lastmod(self, item):
-        return Bouquet.objects.only("updated_at").latest("updated_at").updated_at
+#     def lastmod(self, item):
+#         return Bouquet.objects.only("updated_at").latest("updated_at").updated_at
 
 
-class BouquetCategorySitemap(Sitemap):
+class BouquetCategorySitemap(SitemapMixin, Sitemap):
     priority = 0.5
     protocol = "https"
     changefreq = "weekly"
@@ -185,10 +193,10 @@ class BouquetCategorySitemap(Sitemap):
         ).order_by("-amount_of_orders", "-amount_of_savings")
 
     def location(self, item: BouquetCategory):
-        return item.get_detail_url()
+        return item.get_relative_url()
 
     def lastmod(self, item: BouquetCategory):
-        return (
+        qs = (
             Bouquet.objects.select_related(
                 "subcategory__category",
                 "subcategory",
@@ -201,12 +209,12 @@ class BouquetCategorySitemap(Sitemap):
                 "amount_of_savings",
             )
             .filter(subcategory__category=item)
-            .latest("updated_at")
-            .updated_at
         )
+        if qs.exists():
+            return qs.latest("updated_at").updated_at
 
 
-class BouquetSubcategorySitemap(Sitemap):
+class BouquetSubcategorySitemap(SitemapMixin, Sitemap):
     priority = 0.5
     protocol = "https"
     changefreq = "weekly"
@@ -226,13 +234,13 @@ class BouquetSubcategorySitemap(Sitemap):
         )
 
     def location(self, item: BouquetSubcategory):
-        return item.get_detail_url()
+        return item.get_relative_url()
 
     def lastmod(self, item: BouquetSubcategory):
         return item.lastmod
 
 
-class BouquetDetailSitemap(Sitemap):
+class BouquetDetailSitemap(SitemapMixin, Sitemap):
     priority = 0.5
     protocol = "https"
     changefreq = "weekly"
@@ -252,7 +260,7 @@ class BouquetDetailSitemap(Sitemap):
         )
 
     def location(self, item: Bouquet):
-        return item.get_detail_url()
+        return item.get_relative_url()
 
     def lastmod(self, item: Bouquet):
         return item.updated_at
