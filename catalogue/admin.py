@@ -33,6 +33,7 @@ class ProductCategoryAdmin(TranslationAdmin):
                     "slug",
                     "is_active",
                     "meta_tags",
+                    "json_ld",
                     "image",
                     "amount_of_orders",
                     "amount_of_savings",
@@ -47,6 +48,7 @@ class ProductCategoryAdmin(TranslationAdmin):
     list_filter = ("is_active",)
     search_fields = (
         "name",
+        "name_en",
         "slug",
     )
     list_display = (
@@ -69,6 +71,7 @@ class ProductSubcategoryAdmin(TranslationAdmin):
                     "category",
                     "is_active",
                     "meta_tags",
+                    "json_ld",
                     "image",
                     "amount_of_orders",
                     "amount_of_savings",
@@ -83,6 +86,7 @@ class ProductSubcategoryAdmin(TranslationAdmin):
     list_filter = ("is_active",)
     search_fields = (
         "name",
+        "name_en",
         "slug",
     )
     list_display = (
@@ -115,6 +119,7 @@ class ProductAdmin(TranslationAdmin):
                     "sku",
                     "price",
                     "discount",
+                    "discount_expiration_datetime",
                     "is_active",
                     "subcategory",
                     "amount_of_orders",
@@ -122,6 +127,7 @@ class ProductAdmin(TranslationAdmin):
                     "description",
                     "specs",
                     "meta_tags",
+                    "json_ld",
                 )
             },
         ),
@@ -141,6 +147,7 @@ class ProductAdmin(TranslationAdmin):
     )
     search_fields = (
         "name",
+        "name_en",
         "slug",
         "price",
     )
@@ -167,6 +174,7 @@ class ColorAdmin(TranslationAdmin):
     list_filter = ("name",)
     search_fields = (
         "name",
+        "name_en",
         "hex_code",
     )
     list_display = (
@@ -187,7 +195,10 @@ class FlowerAdmin(TranslationAdmin):
         ),
     )
     list_filter = ("name",)
-    search_fields = ("name",)
+    search_fields = (
+        "name",
+        "name_en",
+    )
     list_display = ("name",)
     ordering = ("name",)
 
@@ -206,8 +217,22 @@ class BouquetSizeImagesInLine(admin.TabularInline):
 
 @admin.register(BouquetSize)
 class BouquetSizeAdmin(admin.ModelAdmin):
-    fields = ("bouquet", "amount_of_flowers", "discount", "price", "diameter")
-    list_display = ("bouquet", "amount_of_flowers", "discount", "price", "diameter")
+    fields = (
+        "bouquet",
+        "amount_of_flowers",
+        "discount",
+        "discount_expiration_datetime",
+        "price",
+        "diameter",
+    )
+    list_display = (
+        "bouquet",
+        "amount_of_flowers",
+        "discount",
+        "discount_expiration_datetime",
+        "price",
+        "diameter",
+    )
     inlines = [
         BouquetSizeImagesInLine,
     ]
@@ -231,6 +256,7 @@ class BouquetCategoryAdmin(TranslationAdmin):
                     "slug",
                     "is_active",
                     "meta_tags",
+                    "json_ld",
                     "image",
                     "amount_of_orders",
                     "amount_of_savings",
@@ -245,6 +271,7 @@ class BouquetCategoryAdmin(TranslationAdmin):
     list_filter = ("is_active",)
     search_fields = (
         "name",
+        "name_en",
         "slug",
     )
     list_display = (
@@ -267,6 +294,7 @@ class BouquetSubcategoryAdmin(TranslationAdmin):
                     "category",
                     "is_active",
                     "meta_tags",
+                    "json_ld",
                     "image",
                     "amount_of_orders",
                     "amount_of_savings",
@@ -281,6 +309,7 @@ class BouquetSubcategoryAdmin(TranslationAdmin):
     list_filter = ("is_active",)
     search_fields = (
         "name",
+        "name_en",
         "slug",
     )
     list_display = (
@@ -308,6 +337,7 @@ class BouquetAdmin(TranslationAdmin):
                     "sku",
                     "price",
                     "discount",
+                    "discount_expiration_datetime",
                     "diameter",
                     "amount_of_savings",
                     "colors",
@@ -319,6 +349,7 @@ class BouquetAdmin(TranslationAdmin):
                     "description",
                     "specs",
                     "meta_tags",
+                    "json_ld",
                 )
             },
         ),
@@ -337,9 +368,11 @@ class BouquetAdmin(TranslationAdmin):
         "flowers",
         "price",
         "discount",
+        "discount_expiration_datetime",
     )
     search_fields = (
         "name",
+        "name_en",
         "slug",
         "price",
     )
@@ -353,7 +386,12 @@ class BouquetAdmin(TranslationAdmin):
         "is_active",
     )
     filter_horizontal = ("colors", "flowers")
-    ordering = ("name", "price", "discount")
+    ordering = (
+        "name",
+        "price",
+        "discount",
+        "discount_expiration_datetime",
+    )
 
 
 @admin.register(IndividualQuestion)
@@ -376,23 +414,35 @@ class IndividualQuestionAdmin(admin.ModelAdmin):
 
 @admin.register(CatalogPageModel)
 class CatalogPageAdmin(admin.ModelAdmin):
-    fields = ("meta_tags",)
+    fields = (
+        "meta_tags",
+        "json_ld",
+    )
     list_display = ("id",)
 
 
 @admin.register(CategoryPageModel)
 class CategoryPageAdmin(admin.ModelAdmin):
-    fields = ("meta_tags",)
+    fields = (
+        "meta_tags",
+        "json_ld",
+    )
     list_display = ("id",)
 
 
 @admin.register(ProductsListPageModel)
 class ProductsListPageAdmin(admin.ModelAdmin):
-    fields = ("meta_tags",)
+    fields = (
+        "meta_tags",
+        "json_ld",
+    )
     list_display = ("id",)
 
 
 @admin.register(BouquetsListPageModel)
 class BouquetsListPageAdmin(admin.ModelAdmin):
-    fields = ("meta_tags",)
+    fields = (
+        "meta_tags",
+        "json_ld",
+    )
     list_display = ("id",)
