@@ -33,7 +33,7 @@ def live_search(request: HttpRequest) -> JsonResponse:
             for item in results:
                 category_name = item.subcategory.category.name
                 data["results"][key][category_name].append(
-                    {"name": item.name, "url": item.get_detail_url()}
+                    {"name": item.name, "url": item.get_absolute_url()}
                 )
         cache.set(cache_key, data, timeout=60 * 60)
     return JsonResponse(data)
