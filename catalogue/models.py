@@ -4,9 +4,12 @@ from string import ascii_uppercase, digits
 
 from colorfield.fields import ColorField
 from django.contrib.auth import get_user_model
+from django.contrib.sites.models import Site
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.urls import reverse_lazy
+from django.utils import timezone
+from django.utils.translation import get_language
 from django.utils.translation import gettext_lazy as _
 from tinymce.models import HTMLField
 
@@ -42,6 +45,16 @@ class MetaDataAbstractModel(models.Model):
         max_length=1000,
         default="<title>BlumenHorizon | </title>",
     )
+    json_ld = models.TextField(
+        verbose_name="JSON-LD",
+        max_length=1000,
+        default="""<script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebPage"
+        }
+        </script>""",
+    )
 
     class Meta:
         abstract = True
@@ -52,6 +65,16 @@ class CatalogPageModel(models.Model):
         verbose_name="Мета-теги",
         max_length=1000,
         default="<title>BlumenHorizon | </title>",
+    )
+    json_ld = models.TextField(
+        verbose_name="JSON-LD",
+        max_length=1000,
+        default="""<script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebPage"
+        }
+        </script>""",
     )
 
     class Meta:
@@ -68,6 +91,16 @@ class CategoryPageModel(models.Model):
         max_length=1000,
         default="<title>BlumenHorizon | </title>",
     )
+    json_ld = models.TextField(
+        verbose_name="JSON-LD",
+        max_length=1000,
+        default="""<script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebPage"
+        }
+        </script>""",
+    )
 
     class Meta:
         verbose_name = "Мета-тег каталога подкатегорий категории"
@@ -83,6 +116,16 @@ class ProductsListPageModel(models.Model):
         max_length=1000,
         default="<title>BlumenHorizon | </title>",
     )
+    json_ld = models.TextField(
+        verbose_name="JSON-LD",
+        max_length=1000,
+        default="""<script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebPage"
+        }
+        </script>""",
+    )
 
     class Meta:
         verbose_name = "Мета-тег списка всех продуктов"
@@ -97,6 +140,16 @@ class BouquetsListPageModel(models.Model):
         verbose_name="Мета-теги",
         max_length=1000,
         default="<title>BlumenHorizon | </title>",
+    )
+    json_ld = models.TextField(
+        verbose_name="JSON-LD",
+        max_length=1000,
+        default="""<script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebPage"
+        }
+        </script>""",
     )
 
     class Meta:
@@ -122,12 +175,24 @@ class ProductCategory(TimeStampAdbstractModel, MetaDataAbstractModel):
     def __str__(self):
         return self.name
 
-    def get_detail_url(self):
+    def get_absolute_url(self):
+        site_domain = Site.objects.first().domain
+        relative_url = reverse_lazy(
+            "catalogue:products-category",
+            kwargs={
+                "category_slug": self.slug,
+            },
+        )
+        return f"https://www.{site_domain}{relative_url}"
+    
+    def get_relative_url(self):
+        language = get_language()
         return reverse_lazy(
             "catalogue:products-category",
             kwargs={
                 "category_slug": self.slug,
             },
+            current_app=language
         )
 
 
@@ -152,10 +217,20 @@ class ProductSubcategory(TimeStampAdbstractModel, MetaDataAbstractModel):
     def __str__(self):
         return self.name
 
-    def get_detail_url(self):
+    def get_absolute_url(self):
+        site_domain = Site.objects.first().domain
+        relative_url = reverse_lazy(
+            "catalogue:products-subcategory",
+            kwargs={"category_slug": self.category.slug, "subcategory_slug": self.slug},
+        )
+        return f"https://www.{site_domain}{relative_url}"
+    
+    def get_relative_url(self):
+        language = get_language()
         return reverse_lazy(
             "catalogue:products-subcategory",
             kwargs={"category_slug": self.category.slug, "subcategory_slug": self.slug},
+            current_app=language
         )
 
     def clean_category(self):
@@ -186,6 +261,9 @@ class ProductAbstract(TimeStampAdbstractModel, MetaDataAbstractModel):
         null=True,
         default=0,
     )
+    discount_expiration_datetime = models.DateTimeField(
+        verbose_name="Время истечения скидки", default=timezone.now
+    )
     description = HTMLField(
         verbose_name=_("Описание"),
     )
@@ -206,8 +284,12 @@ class ProductAbstract(TimeStampAdbstractModel, MetaDataAbstractModel):
     @property
     def discount_price(self) -> float:
         discount = Decimal(self.discount)
-        result = self.price * (1 - discount / 100) if discount else self.price
+        result = self.price * (1 - discount / 100) if self.has_discount else self.price
         return result.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+
+    @property
+    def has_discount(self) -> bool:
+        return self.discount and (timezone.now() < self.discount_expiration_datetime)
 
 
 class Product(ProductAbstract):
@@ -223,7 +305,20 @@ class Product(ProductAbstract):
         verbose_name = _("Продукт")
         verbose_name_plural = _("Продукты")
 
-    def get_detail_url(self):
+    def get_absolute_url(self):
+        site_domain = Site.objects.first().domain
+        relative_url = reverse_lazy(
+            "catalogue:product-details",
+            kwargs={
+                "category_slug": self.subcategory.category.slug,
+                "subcategory_slug": self.subcategory.slug,
+                "product_slug": self.slug,
+            },
+        )
+        return f"https://www.{site_domain}{relative_url}"
+    
+    def get_relative_url(self):
+        language = get_language()
         return reverse_lazy(
             "catalogue:product-details",
             kwargs={
@@ -231,6 +326,7 @@ class Product(ProductAbstract):
                 "subcategory_slug": self.subcategory.slug,
                 "product_slug": self.slug,
             },
+            current_app=language
         )
 
     @property
@@ -312,12 +408,25 @@ class BouquetCategory(TimeStampAdbstractModel, MetaDataAbstractModel):
     def __str__(self):
         return self.name
 
-    def get_detail_url(self):
+    def get_absolute_url(self):
+        site_domain = Site.objects.first().domain
+        relative_url = reverse_lazy(
+            "catalogue:bouquets-category",
+            kwargs={
+                "category_slug": self.slug,
+            },
+        )
+        return f"https://www.{site_domain}{relative_url}"
+    
+    def get_relative_url(self):
+        "For sitemaps"
+        language = get_language()
         return reverse_lazy(
             "catalogue:bouquets-category",
             kwargs={
                 "category_slug": self.slug,
             },
+            current_app=language
         )
 
 
@@ -342,13 +451,26 @@ class BouquetSubcategory(TimeStampAdbstractModel, MetaDataAbstractModel):
     def __str__(self):
         return self.name
 
-    def get_detail_url(self):
+    def get_absolute_url(self):
+        site_domain = Site.objects.first().domain
+        relative_url = reverse_lazy(
+            "catalogue:bouquets-subcategory",
+            kwargs={
+                "category_slug": self.category.slug,
+                "subcategory_slug": self.slug,
+            },
+        )
+        return f"https://www.{site_domain}{relative_url}"
+    
+    def get_relative_url(self):
+        language = get_language()
         return reverse_lazy(
             "catalogue:bouquets-subcategory",
             kwargs={
                 "category_slug": self.category.slug,
                 "subcategory_slug": self.slug,
             },
+            current_app=language
         )
 
     def clean_category(self):
@@ -388,7 +510,20 @@ class Bouquet(ProductAbstract):
     def __str__(self):
         return f"{self.name} ({self.diameter} см, {self.amount_of_flowers} цветов)"
 
-    def get_detail_url(self):
+    def get_absolute_url(self):
+        site_domain = Site.objects.first().domain
+        relative_url = reverse_lazy(
+            "catalogue:bouquet-details",
+            kwargs={
+                "category_slug": self.subcategory.category.slug,
+                "subcategory_slug": self.subcategory.slug,
+                "bouquet_slug": self.slug,
+            },
+        )
+        return f"https://www.{site_domain}{relative_url}"
+    
+    def get_relative_url(self):
+        language = get_language()
         return reverse_lazy(
             "catalogue:bouquet-details",
             kwargs={
@@ -396,6 +531,7 @@ class Bouquet(ProductAbstract):
                 "subcategory_slug": self.subcategory.slug,
                 "bouquet_slug": self.slug,
             },
+            current_app=language
         )
 
     @property
@@ -427,6 +563,9 @@ class BouquetSize(models.Model):
         verbose_name=_("Скидка"),
         null=True,
         default=0,
+    )
+    discount_expiration_datetime = models.DateTimeField(
+        verbose_name="Время истечения скидки", default=timezone.now
     )
 
     @property
