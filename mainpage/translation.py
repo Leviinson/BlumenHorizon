@@ -1,6 +1,6 @@
 from modeltranslation.translator import TranslationOptions, register
 
-from .models import MainPageMetaTags, MainPageSliderImages, SeoBlock
+from .models import MainPageModel, MainPageSliderImages, SeoBlock
 
 
 @register(SeoBlock)
@@ -13,6 +13,6 @@ class MainPageSliderImageTranslationOptions(TranslationOptions):
     fields = ("image_alt",)
 
 
-@register(MainPageMetaTags)
-class MainPageMetaTagsTranslationOptions(TranslationOptions):
+@register(MainPageModel)
+class MainPageModelTranslationOptions(TranslationOptions):
     fields = ("meta_tags",)
