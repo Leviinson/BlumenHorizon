@@ -2,8 +2,6 @@ from django.conf import settings
 from django.contrib.sites.models import Site
 from django.contrib.sites.shortcuts import get_current_site
 
-from catalogue.models import BouquetCategory, ProductCategory
-
 
 class CommonContextMixin:
     def get_context_data(self, *args, **kwargs):
@@ -13,8 +11,10 @@ class CommonContextMixin:
         if not context.get("site_name"):
             context["site_name"] = current_site.name
         context["currency_symbol"] = current_site.extended.currency_symbol
+        context["currency_code"] = current_site.extended.currency_code
         context["country"] = current_site.extended.country
         context["city"] = current_site.extended.city
         context["socials_right_bottom"] = current_site.extended.socials.all()
         context["MEDIA_URL"] = settings.MEDIA_URL
+        context["languages"]= settings.LANGUAGES
         return context
