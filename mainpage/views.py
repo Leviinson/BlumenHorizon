@@ -1,9 +1,9 @@
 from typing import Literal
 
-from django.contrib.sites.shortcuts import get_current_site
 from django.db.models import OuterRef, Subquery
 from django.db.models.manager import BaseManager
 from django.http import JsonResponse
+from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView
@@ -20,7 +20,7 @@ from catalogue.models import (
 from core.services.mixins.views import CommonContextMixin
 
 from .forms import IndividualOrderForm
-from .models import MainPageMetaTags, MainPageSliderImages, SeoBlock
+from .models import MainPageModel, MainPageSliderImages, SeoBlock
 from .services.dataclasses.related_model import RelatedModel
 
 
@@ -35,7 +35,7 @@ class MainPageView(CommonContextMixin, TemplateView):
         ).all()
 
         related_models = [
-            RelatedModel(model="subcategory", attributes=["slug"]),
+            RelatedModel(model="subcategory", attributes=["slug", "name"]),
             RelatedModel(model="subcategory__category", attributes=["slug"]),
         ]
         bouquets = self.get_recommended_items_with_first_image(
@@ -81,7 +81,19 @@ class MainPageView(CommonContextMixin, TemplateView):
             "name",
             "slug",
         )
-        context["meta_tags"] = MainPageMetaTags.objects.first().meta_tags
+        page_model = MainPageModel.objects.first()
+        context["meta_tags"] = page_model.meta_tags
+        context["json_ld"] = page_model.json_ld
+        context["request"] = self.request
+        context["contact_us_absolute_url"] = self.request.build_absolute_uri(
+            reverse_lazy("mainpage:contact")
+        )
+        context["delivery_absolute_url"] = self.request.build_absolute_uri(
+            reverse_lazy("mainpage:delivery")
+        )
+        context["individual_order_negotiate_url"] = self.request.build_absolute_uri(
+            reverse_lazy("mainpage:individual-order-negotiate")
+        )
         return context
 
     def get_recommended_items_with_first_image(
@@ -103,6 +115,8 @@ class MainPageView(CommonContextMixin, TemplateView):
         :param order_fields: A list of fields to order the result by.
         :return: A queryset with annotated objects.
         """
+        from django.utils.translation import get_language
+        language = get_language()
 
         first_image_subquery = (
             image_model.objects.filter(**{image_filter_field: OuterRef("pk")})
@@ -114,17 +128,29 @@ class MainPageView(CommonContextMixin, TemplateView):
             for attr in related_model.attributes:
                 select_related_fields.append(f"{related_model.model}__{attr}")
 
-        return (
+        queryset = (
             model.objects.select_related(*[rm.model for rm in related_models])
             .only(
                 "name",
                 "price",
                 "slug",
+                "sku",
+                "discount",
+                "description",
+                "discount_expiration_datetime",
                 *select_related_fields,
             )
-            .annotate(first_image_uri=Subquery(first_image_subquery))
+            .annotate(
+                first_image_uri=Subquery(
+                    first_image_subquery,
+                ),
+                first_image_alt=Subquery(
+                    first_image_subquery.values(f"image_alt_{language}")[:1],
+                ),
+            )
             .order_by(*order_fields)[:12]
         )
+        return queryset
 
 
 class IndividualOrderView(CreateView):
@@ -159,3 +185,24 @@ class IndividualOrderView(CreateView):
             },
             status=405,
         )
+
+
+class AboutUsView(CommonContextMixin, TemplateView):
+    template_name = "mainpage/about_us.html"
+    http_method_names = [
+        "get",
+    ]
+
+
+class AboutDeliveryView(CommonContextMixin, TemplateView):
+    template_name = "mainpage/delivery.html"
+    http_method_names = [
+        "get",
+    ]
+
+
+class ContactUsView(CommonContextMixin, TemplateView):
+    template_name = "mainpage/contact.html"
+    http_method_names = [
+        "get",
+    ]
