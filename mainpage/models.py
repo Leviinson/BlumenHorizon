@@ -5,16 +5,26 @@ from django.utils.translation import gettext_lazy as _
 from core.base_models import TimeStampAdbstractModel
 
 
-class MainPageMetaTags(models.Model):
+class MainPageModel(models.Model):
     meta_tags = models.TextField(
         verbose_name="Мета-теги",
         max_length=1000,
         default="<title>BlumenHorizon | </title>",
     )
+    json_ld = models.TextField(
+        verbose_name="JSON-LD",
+        max_length=1000,
+        default="""<script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebPage"
+        }
+        </script>"""
+    )
 
     class Meta:
-        verbose_name = "Мета-тег главной страницы"
-        verbose_name_plural = "Мета-теги главной страницы"
+        verbose_name = "Мета-тег и разметка главной страницы"
+        verbose_name_plural = "Мета-теги и разметка главной страницы"
 
     def __str__(self):
         return "Мета-теги главной страницы"
