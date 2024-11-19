@@ -1,7 +1,7 @@
 {% load static %}
 {% load i18n %}
 
-<div class="d-flex flex-column mb-5">
+<header class="d-flex flex-column mb-5">
   <nav class="navbar navbar-expand-lg bg-soft-turquoise text-light">
     <div class="container">
       <a href="{% url 'mainpage:offers' %}" class="navbar-brand fs-3 text-light">
@@ -21,30 +21,31 @@
             <a class="nav-link text-light text-start" href="{% url 'catalogue:catalog' %}">{% translate 'Каталог' %}</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-light text-start" href="#">{% translate 'О нас' %}</a>
+            <a class="nav-link text-light text-start" href="{% url 'mainpage:about' %}">{% translate 'О нас' %}</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-light text-start me-2" href="#">{% translate 'Доставка' %}</a>
+            <a class="nav-link text-light text-start" href="{% url 'mainpage:delivery' %}">{% translate 'Доставка' %}</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-light text-start me-2" href="{% url 'mainpage:contact' %}">{% translate 'Контакты' %}</a>
           </li>
       </div>
       <div id="header-right-panel" class="d-flex justify-content-center">
         <div id="header-right-panel-personal-profile" class="me-2">
           <a class="btn btn-dark-green" href="{% url 'accounts:me' %}">
             <i class="fa-solid fa-user fa-fade m-1" style="color: #ffffff; --fa-animation-duration: 2s; --fa-fade-opacity: 0.6;"></i>
-            <meta itemprop="name" content="{% translate 'Личный кабинет' %}">
           </a>
         </div>
         <div id="header-right-panel-cart" class="me-2">
           <a class="btn btn-dark-green" href="{% url 'cart:show' %}">
             <i class="fas fa-shopping-cart fa-fade m-1" style="color: #ffffff; --fa-animation-duration: 2s; --fa-fade-opacity: 0.6;"></i>
-            <meta itemprop="name" content="{% translate 'Посмотреть корзину' %}">
           </a>
         </div>
         <div class="d-flex position-relative" id="liveSearchForm" data-url="{% url 'live-search:search' %}">
           <input class="form-control me-2"
                  type="search"
                  placeholder="{% translate 'Поиск' %}"
-                 aria-label="Search"
+                 aria-label="{% translate 'Поиск' %}"
                  name="q"
                  id="searchInput"
                  autocomplete="off">
@@ -53,4 +54,4 @@
       </div>
     </div>
   </nav>
-</div>
+</header>
