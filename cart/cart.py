@@ -36,6 +36,8 @@ class CartMixin:
         optimized_queryset: QuerySet = qs.select_related(
             "subcategory", "subcategory__category"
         )
+        from django.utils.translation import get_language
+        language = get_language()
         if self.with_images:
             first_image_subquery = self.image_model.objects.filter(
                 **{
@@ -44,6 +46,7 @@ class CartMixin:
             ).order_by("id")[:1]
             optimized_queryset = optimized_queryset.annotate(
                 first_image_uri=Subquery(first_image_subquery.values("image")[:1]),
+                first_image_alt=Subquery(first_image_subquery.values(f"image_alt_{language}")[:1]),
             )
         optimized_queryset = optimized_queryset.only(
             "name",
