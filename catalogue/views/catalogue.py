@@ -58,7 +58,9 @@ class CatalogView(CommonContextMixin, TemplateView):
             "subcategories__image",
             "subcategories__image_alt",
         )
-        context["meta_tags"] = CatalogPageModel.objects.first().meta_tags
+        page_model = CatalogPageModel.objects.first()
+        context["meta_tags"] = page_model.meta_tags
+        context["json_ld"] = page_model.json_ld
         return context
 
 
@@ -89,7 +91,9 @@ class CategoryView(CommonContextMixin, TemplateView):
                 continue
         else:
             raise Http404()
-        context["meta_tags"] = CategoryPageModel.objects.first().meta_tags
+        page_model = CategoryPageModel.objects.first()
+        context["meta_tags"] = page_model.meta_tags
+        context["json_ld"] = page_model.json_ld
         return context
 
 
