@@ -11,52 +11,50 @@
     <h1>{{ title }}</h1>
     <div class="categories-container row gap-3 justify-content-center">
         {% for category in bouquets_categories %}
-            <div class="category-container card
+        <div class="category-container card
                         col-lg-3 col-md-5 col-12">
-                <div class="category-content card-body text-start">
-                    <h2 class="fs-5 fw-normal">
-                        <a href="{{ category.get_detail_url }}"
-                        class="text-decoration-none text-dark">
-                            {{ category.name }}
-                        </a>
-                    </h2>
-                    <hr>
-                    {% for subcategory in category.subcategories.all %}
-                        <a href="{{ subcategory.get_detail_url }}"
-                        class="text-decoration-none text-dark">
-                            <div class="subcategory-container
+            <div class="category-content card-body text-start">
+                <h2 class="fs-5 fw-normal">
+                    <a href="{{ category.get_absolute_url }}" class="text-decoration-none text-dark">
+                        {{ category.name }}
+                    </a>
+                </h2>
+                <hr>
+                {% for subcategory in category.subcategories.all %}
+                <a href="{{ subcategory.get_absolute_url }}" class="text-decoration-none text-dark">
+                    <div class="subcategory-contget_absolute_url
                                         d-flex align-items-center">
-                                <img style="width: 70px;" class="img-thumbnail rounded me-2" src="{{ subcategory.image.url }}" alt="{{ subcategory.image_alt }}">
-                                <h3 class="fs-6 fw-light mb-0">{{ subcategory.name }}</h3>
-                            </div>
-                        </a>
-                    {% endfor %}
-                </div>
+                        <img style="width: 70px;" class="img-thumbnail rounded me-2" src="{{ subcategory.image.url }}"
+                            alt="{{ subcategory.image_alt }}">
+                        <h3 class="fs-6 fw-light mb-0">{{ subcategory.name }}</h3>
+                    </div>
+                </a>
+                {% endfor %}
             </div>
+        </div>
         {% endfor %}
         {% for category in products_categories %}
-            <div class="category-container card
+        <div class="category-container card
                         col-lg-3 col-md-5 col-12">
-                <div class="category-content card-body text-start">
-                    <h2 class="fs-5 fw-normal">
-                        <a href="{{ category.get_detail_url }}"
-                        class="text-decoration-none text-dark">
-                            {{ category.name }}
-                        </a>
-                    </h2>
-                    <hr>
-                    {% for subcategory in category.subcategories.all %}
-                        <a href="{{ subcategory.get_detail_url }}"
-                        class="text-decoration-none text-dark">
-                            <div class="subcategory-container
+            <div class="category-content card-body text-start">
+                <h2 class="fs-5 fw-normal">
+                    <a href="{{ category.get_absolute_url }}" class="text-decoration-none text-dark">
+                        {{ category.name }}
+                    </a>
+                </h2>
+                <hr>
+                {% for subcategory in category.subcategories.all %}
+                <a href="{{ subcategory.get_absolute_url }}" class="text-decoration-none text-dark">
+                    <div class="subcategory-container
                                         d-flex align-items-center">
-                                <img style="width: 70px;" class="img-thumbnail rounded me-2" src="{{ subcategory.image.url }}" alt="{{ subcategory.image_alt }}">
-                                <h3 class="fs-6 fw-light">{{ subcategory.name }}</h3>
-                            </div>
-                        </a>
-                    {% endfor %}
-                </div>
+                        <img style="width: 70px;" class="img-thumbnail rounded me-2" src="{{ subcategory.image.url }}"
+                            alt="{{ subcategory.image_alt }}">
+                        <h3 class="fs-6 fw-light">{{ subcategory.name }}</h3>
+                    </div>
+                </a>
+                {% endfor %}
             </div>
+        </div>
         {% endfor %}
     </div>
 </div>
