@@ -84,6 +84,7 @@ class BouquetView(
             "description",
             "specs",
             "meta_tags",
+            "json_ld",
             "images",
             "discount",
             "subcategory__slug",
@@ -143,5 +144,7 @@ class BouquetListView(
         context = super().get_context_data(*args, **kwargs)
         context["colors"] = Color.objects.only("name", "hex_code").all()
         context["flowers"] = Flower.objects.only("name").all()
-        context["meta_tags"] = BouquetsListPageModel.objects.first().meta_tags
+        page_model = BouquetsListPageModel.objects.first()
+        context["meta_tags"] = page_model.meta_tags
+        context["json_ld"] = page_model.json_ld
         return context
