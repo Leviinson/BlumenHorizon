@@ -3,12 +3,170 @@
 {% load i18n %}
 {% load chunk_filters %}
 
+{% block json_ld %}
+<script type="application/ld+json">
+  {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "isFamilyFriendly": true,
+      "name": "{% blocktranslate with city=city %}{{ site_name }} | Цветочный магазин {{ city }}{% endblocktranslate %}",
+      "description": "{% blocktranslate with city=city %}Быстрая доставка цветов {{ city }} – от 2 часов! Свежие букеты для праздников, свадеб и особых случаев. Уникальные композиции, удобный заказ онлайн. Подарите радость уже сегодня!{% endblocktranslate %}",
+      "mainEntity": [
+        {
+          "@type": "ItemList",
+          "name": "{% translate 'Категории букетов' %}",
+          "itemListElement": [
+            {% for category in bouquets_categories %}
+            {
+              "@type": "ListItem",
+              "position": "{{ forloop.counter }}",
+              "name": "{{ category.name }}",
+              "@id": "{{ category.get_absolute_url }}"
+            }{% if not forloop.last%},{% elif forloop.last and products_categories %},{% endif %}
+            {% endfor %}
+            {% for category in products_categories %}
+            {
+              "@type": "ListItem",
+              "position": "{{ forloop.counter }}",
+              "name": "{{ category.name }}",
+              "@id": "{{ category.get_absolute_url }}"
+            }{% if not forloop.last%},{% endif %}{% endfor %}
+          ]
+        }
+        {
+          "@type": "ItemList",
+          "name": "{% translate 'Наши преимущества' %}",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "{% translate 'Состав букета можно менять' %}"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "{% translate 'Связь с клиентом на каждом этапе заказа' %}",
+              "@id": "{{ contact_us_absolute_url }}"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "{% translate 'Анонимная доставка' %}",
+              "@id": "{{ delivery_absolute_url }}"
+            }
+          ]
+        },
+        {
+          "@type": "ContactPoint",
+          "contactType": "sales",
+          "name": "{% translate 'Свяжитесь с нами' %}",
+          "description": "{% translate 'Заполните форму, чтобы заказать букет из индивидуального состава.'%}",
+          "availableLanguage": [
+            {% for lang in languages %}
+              {
+                "@type": "Language",
+                "name": "{{ lang.1 }}"
+              }{% if not forloop.last %},{% endif %}
+            {% endfor %}
+          ],
+          "@id": "{{ contact_us_absolute_url }}",
+          "areaServed": "{{ city }}",
+          "potentialAction": {
+            "@type": "InteractAction",
+            "actionStatus": "PotentialActionStatus",
+            "name": "{% translate 'Связаться' %}",
+            "target": {
+              "@type": "EntryPoint",
+              "urlTemplate": "{{ individual_order_negotiate_url }}",
+              "httpMethod": "POST"
+            }
+          }
+        },
+        {
+          "@type": "ItemList",
+          "name": "{% translate 'Рекомендуемые букеты к покупке' %}",
+          "itemListElement": [
+            {% for recommended_bouquet in recommended_bouquets %}
+            {
+              "@type": "Product",
+              "name": "{{ recommended_bouquet.name }}",
+              "description": "{{ recommended_bouquet.description|default:'Описание временно отсутствует.' }}",
+              "image": "{{ MEDIA_URL }}{{ recommended_bouquet.first_image_uri|default:'defaults/no-image.webp' }}",
+              "@id": "{{ recommended_bouquet.get_absolute_url }}",
+              "potentialAction": {
+                "@type": "ViewAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "{{ recommended_bouquet.get_absolute_url }}",
+                  "httpMethod": "GET"
+                }
+              },
+              "additionalType": "Bouquet",
+              "sku": "{{ recommended_bouquet.sku }}",
+              "category": "{{ recommended_bouquet.subcategory.name }}",
+              "offers": {
+                "@type": "Offer",
+                "price": "{{ recommended_bouquet.discount_price|floatformat:'2u' }}",
+                "priceCurrency": "{{ currency_code }}",
+                "availability": "https://schema.org/InStock"{% if recommended_bouquet.has_discount %},
+                "priceValidUntil": "{{ recommended_bouquet.discount_expiration_datetime }}"
+                {% endif %}
+              }
+            }{% if not forloop.last %},{% endif %}
+            {% endfor %}
+          ]
+        },
+        {
+          "@type": "ItemList",
+          "name": "{% translate 'Рекомендуемые подарки к букетам' %}",
+          "itemListElement": [
+            {% for recommended_product in recommended_products %}
+            {
+              "@type": "Product",
+              "name": "{{ recommended_product.name }}",
+              "description": "{{ recommended_product.description|default:'Описание временно отсутствует.' }}",
+              "image": "{{ MEDIA_URL }}{{ recommended_product.first_image_uri|default:'defaults/no-image.webp' }}",
+              "@id": "{{ recommended_product.get_absolute_url }}",
+              "potentialAction": {
+                "@type": "ViewAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "{{ recommended_product.get_absolute_url }}",
+                  "httpMethod": "GET"
+                }
+              },
+              "additionalType": "Bouquet",
+              "sku": "{{ recommended_product.sku }}",
+              "category": "{{ recommended_product.subcategory.name }}",
+              "offers": {
+                "@type": "Offer",
+                "price": "{{ recommended_product.discount_price|floatformat:'2u' }}",
+                "priceCurrency": "{{ currency_code }}",
+                "availability": "https://schema.org/InStock"{% if recommended_product.has_discount %},
+                "priceValidUntil": "{{ recommended_product.discount_expiration_datetime }}"
+                {% endif %}
+              }
+            }{% if not forloop.last %},{% endif %}
+            {% endfor %}
+          ]
+        }
+      ]
+    }         
+</script>
+{% endblock %}
+
 {% block additional_head_styles %}
 <link rel="stylesheet" href="{% static 'mainpage/styles/mainpage.css' %}">
 {% endblock %}
 
 {% block body %}
 <div class="container mx-auto text-center d-flex flex-column align-items-center">
+  <h1 class="mb-5">
+    {% blocktranslate %}
+    Цветочный интернет-магазин {{ city }}
+    {% endblocktranslate %}
+  </h1>
+  <h2>{% translate 'Категории букетов' %}</h2>
   <nav class="nav nav-pills nav-fill mx-2 mb-5 d-flex flex-wrap justify-content-start gap-2 w-100">
     {% for category in products_categories %}
     <a class="text-light text-center nav-item nav-link bg-soft-turquoise d-flex justify-content-center align-items-center"
@@ -19,12 +177,6 @@
       style="flex: 1 1 calc(25% - 10px);" href="{% url 'catalogue:category' category.slug %}">{{ category.name }}</a>
     {% endfor %}
   </nav>
-
-  <h1>
-    {% blocktranslate %}
-    Цветочный интернет-магазин {{ city }}
-    {% endblocktranslate %}
-  </h1>
   <div id="carouselIndicators" class="carousel slide w-100" style="max-width: 1000px;" data-bs-ride="carousel">
     <div class="carousel-indicators">
       {% for image in slider_images %}
@@ -51,40 +203,43 @@
     </button>
   </div>
 
-  <div id="our-advantages" class="d-flex justify-content-between flex-column align-items-center mt-5 w-100" style="max-width: 1000px;">
+  <div id="our-advantages" class="d-flex justify-content-between flex-column align-items-center mt-5 w-100"
+    style="max-width: 1000px;">
     <h2>{% translate 'Наши преимущества' %}</h2>
     <div id="advantages-container" class="d-flex justify-content-between w-100 mt-3">
       <div class="advantage-container text-center d-flex flex-column align-items-center" style="max-width: 140px;">
-        <i id="composition-advantage" class="fa-solid fa-handshake fa-fade" style="color: #2c494b; --fa-animation-duration: 2s; --fa-fade-opacity: 0.6;"></i>
-        <small>{% translate "Состав букета изменяем" %}</small>
+        <i id="composition-advantage" class="fa-solid fa-handshake fa-fade"
+          style="color: #2c494b; --fa-animation-duration: 2s; --fa-fade-opacity: 0.6;"></i>
+        <small>{% translate "Состав букета можно менять" %}</small>
       </div>
       <div class="advantage-container text-center d-flex flex-column align-items-center" style="max-width: 140px;">
-        <i id="connect-advantage" class="fa-solid fa-comments fa-fade" style="color: #2c494b; --fa-animation-duration: 2s; --fa-fade-opacity: 0.6;"></i>
-        <small>{% translate "Связь на каждом этапе" %}</small>
+        <i id="connect-advantage" class="fa-solid fa-comments fa-fade"
+          style="color: #2c494b; --fa-animation-duration: 2s; --fa-fade-opacity: 0.6;"></i>
+        <small>{% translate "Связь с клиентом на каждом этапе заказа" %}</small>
       </div>
       <div class="advantage-container text-center d-flex flex-column align-items-center" style="max-width: 140px;">
-        <i id="anonym-delivery-advantage" class="fa-duotone fa-solid fa-user-secret fa-fade" style="color: #2c494b; --fa-animation-duration: 2s; --fa-fade-opacity: 0.6;"></i>
+        <i id="anonym-delivery-advantage" class="fa-duotone fa-solid fa-user-secret fa-fade"
+          style="color: #2c494b; --fa-animation-duration: 2s; --fa-fade-opacity: 0.6;"></i>
         <small>{% translate "Анонимная доставка" %}</small>
       </div>
     </div>
   </div>
 
   <div class="card w-40 my-5">
-    <form id="individual-order-form"
-          action="{% url 'mainpage:individual-order-negotiate' %}"
-          class="d-flex w-100 flex-column justify-content-start align-items-start text-start card-body"
-          method="POST">
+    <form id="individual-order-form" action="{% url 'mainpage:individual-order-negotiate' %}"
+      class="d-flex w-100 flex-column justify-content-start align-items-start text-start card-body" method="POST">
       <fieldset class="w-100">
         <legend class="text-center">
           <h2 class="fs-4 fw-normal">
-            {% translate 'Индивидуальный букет за 5 минут' %}
+            {% translate 'Свяжитесь с нами' %}
           </h2>
         </legend>
+        <div class="form-text">{% translate 'Заполните форму, чтобы заказать букет из индивидуального состава.' %}</div>
         {% csrf_token %}
         <div class="mb-3 w-100">
           <label for="customerNameInput" class="form-label">{% translate 'Имя' %}</label>
-          <input class="form-control text-start" id="customerNameInput"
-            aria-describedby="nameHelp" name="first_name" required>
+          <input class="form-control text-start" id="customerNameInput" aria-describedby="nameHelp" name="first_name"
+            required>
         </div>
         <div class="mb-3">
           <label for="contact-method-input" class="form-label">
@@ -102,13 +257,16 @@
             </small>
           </label>
         </div>
-        <button type="submit" class="btn btn-dark-green">{% translate 'Назначить диалог' %}</button>
+        <button type="submit" class="btn btn-dark-green">{% translate 'Связаться' %}</button>
       </fieldset>
     </form>
   </div>
 
-  <div id="seo-block" style="max-width: 1000px; width: 100%; background-color: beige; aspect-ratio: 1000 / 450; overflow: hidden; display: flex; align-items: center; justify-content: center;">
-    <img src="{% if seo_block.image %}{{ seo_block.image.url }}{% else %}{% static 'defaults/no-image.webp' %}{% endif %}" alt="{{ seo_block.image_alt }}" style="width: 100%; height: 100%; object-fit: cover;">
+  <div id="seo-block"
+    style="max-width: 1000px; width: 100%; background-color: beige; aspect-ratio: 1000 / 450; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+    <img
+      src="{% if seo_block.image %}{{ seo_block.image.url }}{% else %}{% static 'defaults/no-image.webp' %}{% endif %}"
+      alt="{{ seo_block.image_alt }}" style="width: 100%; height: 100%; object-fit: cover;">
   </div>
 
 
@@ -120,12 +278,13 @@
         <div class="row m-0 w-100">
           {% for recommended_bouquet in recommended_bouquets_chunk %}
           <div class="col-6 col-md-3 col-lg-3 mb-4 d-flex product-card-in-slider">
-            <a href="{{ recommended_bouquet.get_detail_url }}" class="text-decoration-none text-dark w-100">
+            <a href="{{ recommended_bouquet.get_absolute_url }}" class="text-decoration-none text-dark w-100">
               <div class="card h-100 w-100" style="min-height: 404px;">
                 <div class="image-wrapper">
                   {% if recommended_bouquet.first_image_uri %}
                   <img src="{{ MEDIA_URL }}{{ recommended_bouquet.first_image_uri }}" class="card-img-top square-image"
-                    alt="{% translate 'Изображение продукта временно отсутствует.' %}" loading="lazy">
+                    alt="{% if recommended_bouquet.first_image_alt %}{{ recommended_bouquet.first_image_alt }}{% else %}{% translate 'Изображение продукта временно отсутствует.' %}{% endif %}"
+                    loading="lazy">
                   {% else %}
                   <img src="{% static 'defaults/no-image.webp' %}" class="card-img-top square-image"
                     alt="{% translate 'Изображение продукта временно отсутствует.' %}" loading="lazy">
@@ -134,11 +293,10 @@
                 <div class="card-body d-flex flex-column">
                   <h5 class="card-title">{{ recommended_bouquet.name }}</h5>
                   <div class="d-flex flex-column justify-content-center mt-auto">
-                    <p class="card-text">{{ recommended_bouquet.price }} {{ currency_symbol }}</p>
-                    <form method="post" class="add-to-cart-form w-100 me-2"
-                          data-add-url="{% url 'cart:bouquet-add' %}"
-                          data-remove-url="{% url 'cart:bouquet-remove' %}"
-                          data-is-in-cart="{% if recommended_bouquet in bouquets_cart %}true{% else %}false{% endif %}">
+                    <p class="card-text">{{ recommended_bouquet.price|floatformat:"2u" }} {{ currency_symbol }}</p>
+                    <form method="post" class="add-to-cart-form w-100 me-2" data-add-url="{% url 'cart:bouquet-add' %}"
+                      data-remove-url="{% url 'cart:bouquet-remove' %}"
+                      data-is-in-cart="{% if recommended_bouquet in bouquets_cart %}true{% else %}false{% endif %}">
                       {% csrf_token %}
                       <input type="hidden" name="product_slug" value="{{ recommended_bouquet.slug }}">
                       {% include 'templates/cartButton.html' %}
@@ -174,12 +332,13 @@
         <div class="row m-0 w-100">
           {% for recommended_product in recommended_products_chunk %}
           <div class="col-6 col-md-3 col-lg-3 mb-4 d-flex product-card-in-slider">
-            <a href="{{ recommended_product.get_detail_url }}" class="text-decoration-none text-dark w-100">
+            <a href="{{ recommended_product.get_absolute_url }}" class="text-decoration-none text-dark w-100">
               <div class="card h-100 w-100" style="min-height: 404px;">
                 <div class="image-wrapper">
                   {% if recommended_product.first_image_uri %}
                   <img src="{{ MEDIA_URL }}{{ recommended_product.first_image_uri }}" class="card-img-top square-image"
-                    alt="{% translate 'Изображение продукта временно отсутствует.' %}" loading="lazy">
+                    alt="{% if recommended_product.first_image_alt %}{{ recommended_product.first_image_alt }}{% else %}{% translate 'Изображение продукта временно отсутствует.' %}{% endif %}"
+                    loading="lazy">
                   {% else %}
                   <img src="{% static 'defaults/no-image.webp' %}" class="card-img-top square-image"
                     alt="{% translate 'Изображение продукта временно отсутствует.' %}" loading="lazy">
@@ -188,11 +347,9 @@
                 <div class="card-body d-flex flex-column">
                   <h5 class="card-title">{{ recommended_product.name }}</h5>
                   <div class="d-flex flex-column justify-content-center mt-auto">
-                    <p class="card-text">{{ recommended_product.price }} {{ currency_symbol }}</p>
-                    <form method="post"
-                          class="add-to-cart-form w-100 me-2"
-                          data-add-url="{% url 'cart:product-add' %}"
-                          data-remove-url="{% url 'cart:product-remove' %}"
+                    <p class="card-text">{{ recommended_product.price|floatformat:"2u" }} {{ currency_symbol }}</p>
+                    <form method="post" class="add-to-cart-form w-100 me-2" data-add-url="{% url 'cart:product-add' %}"
+                      data-remove-url="{% url 'cart:product-remove' %}"
                       data-is-in-cart="{% if recommended_product in products_cart %}true{% else %}false{% endif %}">
                       {% csrf_token %}
                       <input type="hidden" name="product_slug" value="{{ recommended_product.slug }}">
@@ -221,7 +378,6 @@
     </button>
   </div>
 </div>
-
 {% endblock %}
 
 {% block additional_scripts %}
