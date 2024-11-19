@@ -14,10 +14,10 @@
                 <div class="card mb-4">
                     <div class="card-header py-3 d-flex justify-content-between align-items-center">
                         <h5 class="mb-0">
-                            {% translate 'Корзина' %} - 
+                            {% translate 'Корзина' %} -
                             <span id="total-count">
                                 {% blocktranslate with total_amount=products_cart.count|add:bouquets_cart.count %}
-                                    {{ total_amount }} эл.
+                                {{ total_amount }} эл.
                                 {% endblocktranslate %}
                             </span>
                         </h5>
@@ -26,81 +26,90 @@
                     <div id="products-list-container" class="card-body" style="min-height: 423px;">
                         <!-- Single item -->
                         {% for item in bouquets_cart.items %}
-                            {% if not forloop.first %}
-                            <hr id="{{ item.product.slug }}Hr">
-                            {% endif %}
-                            <div class="row product-container" id="{{ item.product.slug }}">
-                                <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
-                                    <div class="bg-image hover-overlay hover-zoom ripple image-wrapper">
-                                        <a href="{{ item.product.get_detail_url }}" class="w-100">
-                                            <img src="{% if item.product.first_image_uri %}{{ MEDIA_URL }}{{ item.product.first_image_uri }}{% else %}{% static 'defaults/no-image.webp' %}{% endif %}"
-                                                class="square-image rounded img-thumbnail" alt="Blue Jeans Jacket" />
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
-                                    <a href="{{ item.product.get_detail_url }}" class="text-decoration-none text-dark product-name">{{ item.product.name }}</a>
-                                    {% include 'cart/removeItemFromCart.html' %}
-                                </div>
-                                <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
-                                    <div class="d-flex mb-4 mx-l-auto mx-auto" style="max-width: 300px">
-                                        {% include 'cart/decreaseItemInCart.html' %}
-                                        <div class="form-outline text-center">
-                                            <input id="{{ item.product.slug }}QuantityInput" min="1" name="quantity" value="{{ item.quantity }}" type="number"
-                                                class="form-control"/ disabled>
-                                            <label class="form-label m-0" for="{{ item.product.slug }}QuantityInput">{% translate 'Количество' %}</label>
-                                        </div>
-                                        {% include 'cart/increaseItemInCart.html' %}
-                                    </div>
-
-                                    <p class="text-center text-md-center">
-                                        <strong id="{{ item.product.slug }}Subtotal">{{ item.subtotal|floatformat:"2u" }}</strong>
-                                        {{ currency_symbol }}
-                                    </p>
+                        {% if not forloop.first %}
+                        <hr id="{{ item.product.slug }}Hr">
+                        {% endif %}
+                        <div class="row product-container" id="{{ item.product.slug }}">
+                            <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
+                                <div class="bg-image hover-overlay hover-zoom ripple image-wrapper">
+                                    <a href="{{ item.product.get_absolute_url }}" class="w-100">
+                                        <img src="{% if item.product.first_image_uri %}{{ MEDIA_URL }}{{ item.product.first_image_uri }}{% else %}{% static 'defaults/no-image.webp' %}{% endif %}"
+                                            class="square-image rounded img-thumbnail"
+                                            alt="{% if item.product.first_image_alt %}{{ item.product.first_image_alt }}{% else %}{% translate 'Изображение продукта временно отсутствует.' %}{% endif %}" />
+                                    </a>
                                 </div>
                             </div>
+                            <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                                <a href="{{ item.product.get_absolute_url }}"
+                                    class="text-decoration-none text-dark product-name">{{ item.product.name }}</a>
+                                {% include 'cart/removeItemFromCart.html' %}
+                            </div>
+                            <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                                <div class="d-flex mb-4 mx-l-auto mx-auto" style="max-width: 300px">
+                                    {% include 'cart/decreaseItemInCart.html' %}
+                                    <div class="form-outline text-center">
+                                        <input id="{{ item.product.slug }}QuantityInput" min="1" name="quantity"
+                                            value="{{ item.quantity }}" type="number" class="form-control" disabled />
+                                        <label class="form-label m-0" for="{{ item.product.slug }}QuantityInput">{%
+                                            translate 'Количество' %}</label>
+                                    </div>
+                                    {% include 'cart/increaseItemInCart.html' %}
+                                </div>
+
+                                <p class="text-center text-md-center">
+                                    <strong id="{{ item.product.slug }}Subtotal">{{ item.subtotal|floatformat:"2u"
+                                        }}</strong>
+                                    {{ currency_symbol }}
+                                </p>
+                            </div>
+                        </div>
                         {% endfor %}
                         <!-- Single item -->
                         {% for item in products_cart.items %}
-                            {% if bouquets_cart.items %}
-                            <hr id="{{ item.product.slug }}Hr">
-                            {% endif %}
-                            {% if not bouquets_cart.items and not forloop.first %}
-                            <hr id="{{ item.product.slug }}Hr">
-                            {% endif %}
-                            <div class="row product-container" id="{{ item.product.slug }}">
-                                <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
-                                    <div class="bg-image hover-overlay hover-zoom ripple image-wrapper">
-                                        <a href="{{ item.product.get_detail_url }}" class="w-100">
+                        {% if bouquets_cart.items %}
+                        <hr id="{{ item.product.slug }}Hr">
+                        {% endif %}
+                        {% if not bouquets_cart.items and not forloop.first %}
+                        <hr id="{{ item.product.slug }}Hr">
+                        {% endif %}
+                        <div class="row product-container" id="{{ item.product.slug }}">
+                            <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
+                                <div class="bg-image hover-overlay hover-zoom ripple image-wrapper">
+                                    <a href="{{ item.product.get_absolute_url }}" class="w-100">
                                         <img src="{% if item.product.first_image_uri %}{{ MEDIA_URL }}{{ item.product.first_image_uri }}{% else %}{% static 'defaults/no-image.webp' %}{% endif %}"
-                                            class="square-image rounded img-thumbnail" alt="Blue Jeans Jacket" />
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
-                                    <a href="{{ item.product.get_detail_url }}" class="text-decoration-none text-dark product-name">{{ item.product.name }}</a>
-                                    {% include 'cart/removeItemFromCart.html' %}
-                                </div>
-                                <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
-                                    <div class="d-flex mb-4 mx-l-auto mx-auto">
-                                        {% include 'cart/decreaseItemInCart.html' %}
-                                        <div class="form-outline text-center">
-                                            <input id="{{ item.product.slug }}QuantityInput" min="1" name="quantity" value="{{ item.quantity }}" type="number"
-                                                class="form-control" disabled />
-                                            <label class="form-label m-0" for="{{ item.product.slug }}QuantityInput">{% translate 'Количество' %}</label>
-                                        </div>
-                                        {% include 'cart/increaseItemInCart.html' %}
-                                    </div>
-
-                                    <p class="text-center text-md-center">
-                                        <strong id="{{ item.product.slug }}Subtotal">{{ item.subtotal|floatformat:"2u" }}</strong>
-                                        {{ currency_symbol }}
-                                    </p>
+                                            class="square-image rounded img-thumbnail"
+                                            alt="{% if item.product.first_image_alt %}{{ item.product.first_image_alt }}{% else %}{% translate 'Изображение продукта временно отсутствует.' %}{% endif %}" />
+                                    </a>
                                 </div>
                             </div>
+                            <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                                <a href="{{ item.product.get_absolute_url }}"
+                                    class="text-decoration-none text-dark product-name">{{ item.product.name }}</a>
+                                {% include 'cart/removeItemFromCart.html' %}
+                            </div>
+                            <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                                <div class="d-flex mb-4 mx-l-auto mx-auto">
+                                    {% include 'cart/decreaseItemInCart.html' %}
+                                    <div class="form-outline text-center">
+                                        <input id="{{ item.product.slug }}QuantityInput" min="1" name="quantity"
+                                            value="{{ item.quantity }}" type="number" class="form-control" disabled />
+                                        <label class="form-label m-0" for="{{ item.product.slug }}QuantityInput">{%
+                                            translate 'Количество' %}</label>
+                                    </div>
+                                    {% include 'cart/increaseItemInCart.html' %}
+                                </div>
+
+                                <p class="text-center text-md-center">
+                                    <strong id="{{ item.product.slug }}Subtotal">{{ item.subtotal|floatformat:"2u"
+                                        }}</strong>
+                                    {{ currency_symbol }}
+                                </p>
+                            </div>
+                        </div>
                         {% endfor %}
                         <!-- Single item -->
-                        <div id="no-image-container" class="d-none flex-column justify-content-center align-items-center mt-5">
+                        <div id="no-image-container"
+                            class="d-none flex-column justify-content-center align-items-center mt-5">
                             <div id="no-products-svg-container" class="mb-3">
                                 <svg width="314" height="287" viewBox="0 0 314 287" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -161,7 +170,7 @@
                                     <path
                                         d="M181.279 241.212C182.707 241.212 183.865 240.056 183.865 238.631C183.865 237.206 182.707 236.051 181.279 236.051C179.851 236.051 178.693 237.206 178.693 238.631C178.693 240.056 179.851 241.212 181.279 241.212Z"
                                         fill="#CFCFCF" />
-        
+
                                 </svg>
                             </div>
                             <p>{% translate 'К сожалению, корзина пуста.' %}</p>
@@ -177,14 +186,10 @@
                 <div class="card mb-4 mb-lg-0">
                     <div class="card-body">
                         <p><strong>{% translate 'Мы принимаем' %}</strong></p>
-                        <img class="me-2" width="45px"
-                            alt="Visa" />
-                        <img class="me-2" width="45px"
-                            alt="American Express" />
-                        <img class="me-2" width="45px"
-                            alt="Mastercard" />
-                        <img class="me-2" width="45px"
-                            alt="PayPal acceptance mark" />
+                        <img class="me-2" width="45px" alt="Visa" />
+                        <img class="me-2" width="45px" alt="American Express" />
+                        <img class="me-2" width="45px" alt="Mastercard" />
+                        <img class="me-2" width="45px" alt="PayPal acceptance mark" />
                     </div>
                 </div>
             </div>
@@ -199,7 +204,8 @@
                                 class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
                                 {% translate 'Продукты' %}
                                 <div class="d-flex">
-                                    <strong id="products-total-price" class="me-1">{{ grand_total|floatformat:"2u" }}</strong>
+                                    <strong id="products-total-price" class="me-1">{{ grand_total|floatformat:"2u"
+                                        }}</strong>
                                     {{ currency_symbol }}
                                 </div>
                             </li>
@@ -233,7 +239,8 @@
                         <form id="delivery-address-form">
                             <div class="mb-3 form-check">
                                 <input type="checkbox" class="form-check-input" id="confirm-address">
-                                <label class="form-check-label" for="confirm-address">{% translate 'Уточнить адрес у получателя?' %}</label>
+                                <label class="form-check-label" for="confirm-address">{% translate 'Уточнить адрес у
+                                    получателя?' %}</label>
                             </div>
                             <div class="mb-3" id="country-container">
                                 <label for="country" class="form-label">{% translate 'Страна' %}</label>
@@ -264,21 +271,25 @@
                                 <input type="text" class="form-control" id="recipient-name">
                             </div>
                             <div class="mb-3" id="recipient-phone-container">
-                                <label for="recipient-phone" class="form-label">{% translate 'Номер телефона получателя' %}</label>
+                                <label for="recipient-phone" class="form-label">{% translate 'Номер телефона получателя'
+                                    %}</label>
                                 <input type="text" class="form-control" id="recipient-phone">
                             </div>
                             <div class="mb-3 form-check">
                                 <input type="checkbox" class="form-check-input" id="recipient-is-customer">
-                                <label class="form-check-label" for="recipient-is-customer">{% translate 'Получатель - заказчик?' %}</label>
+                                <label class="form-check-label" for="recipient-is-customer">{% translate 'Получатель -
+                                    заказчик?' %}</label>
                             </div>
                             <div class="mb-3 form-check">
                                 <input type="checkbox" class="form-check-input" id="surprise-delivery">
                                 <label class="form-check-label" for="surprise-delivery">
-                                    <strong>{% translate 'Сюрприз до последнего!' %}</strong> {% translate 'Мы не раскроем тайну вашего подарка, чтобы сделать момент ещё более волшебным.'%}
+                                    <strong>{% translate 'Сюрприз до последнего!' %}</strong> {% translate 'Мы не
+                                    раскроем тайну вашего подарка, чтобы сделать момент ещё более волшебным.'%}
                                 </label>
                             </div>
-                            <button type="submit" class="btn btn-dark-green" id="btn-checkout">{% translate 'Оформить заказ' %}</button>
-                        </form>                      
+                            <button type="submit" class="btn btn-dark-green" id="btn-checkout">{% translate 'Оформить
+                                заказ' %}</button>
+                        </form>
                     </div>
                 </div>
             </div>
