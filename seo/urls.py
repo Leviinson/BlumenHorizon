@@ -5,23 +5,21 @@ from django.urls import path
 from .sitemaps import (
     BouquetCategorySitemap,
     BouquetDetailSitemap,
-    BouquetListSitemap,
     BouquetSubcategorySitemap,
     MainpageSitemap,
     ProductCategorySitemap,
     ProductDetailSitemap,
-    ProductListSitemap,
     ProductSubcategorySitemap,
 )
 from .views import robots_txt
 
 sitemaps = {
     "mainpage": MainpageSitemap,
-    "products-list": ProductListSitemap,
+    # "products-list": ProductListSitemap,
     "products-category": ProductCategorySitemap,
     "products-subcategory": ProductSubcategorySitemap,
     "product-details": ProductDetailSitemap,
-    "bouquets-list": BouquetListSitemap,
+    # "bouquets-list": BouquetListSitemap,
     "bouquets-category": BouquetCategorySitemap,
     "bouquets-subcategory": BouquetSubcategorySitemap,
     "bouquet-details": BouquetDetailSitemap,
