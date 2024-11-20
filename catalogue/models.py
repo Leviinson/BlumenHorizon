@@ -9,11 +9,15 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.urls import reverse_lazy
 from django.utils import timezone
-from django.utils.translation import get_language
 from django.utils.translation import gettext_lazy as _
 from tinymce.models import HTMLField
 
 from core.base_models import TimeStampAdbstractModel
+
+
+def generate_sku():
+    sku = "".join(choices(ascii_uppercase + digits, k=6))
+    return sku
 
 
 class MetaDataAbstractModel(models.Model):
@@ -43,7 +47,8 @@ class MetaDataAbstractModel(models.Model):
     meta_tags = models.TextField(
         verbose_name="Мета-теги",
         max_length=1000,
-        default="<title>BlumenHorizon | </title>",
+        default="""<title>BlumenHorizon | </title>
+<meta name="description" content="Описание">""",
     )
     json_ld = models.TextField(
         verbose_name="JSON-LD",
@@ -64,7 +69,8 @@ class CatalogPageModel(models.Model):
     meta_tags = models.TextField(
         verbose_name="Мета-теги",
         max_length=1000,
-        default="<title>BlumenHorizon | </title>",
+        default="""<title>BlumenHorizon | </title>
+<meta name="description" content="Описание">""",
     )
     json_ld = models.TextField(
         verbose_name="JSON-LD",
@@ -89,7 +95,8 @@ class CategoryPageModel(models.Model):
     meta_tags = models.TextField(
         verbose_name="Мета-теги",
         max_length=1000,
-        default="<title>BlumenHorizon | </title>",
+        default="""<title>BlumenHorizon | </title>
+<meta name="description" content="Описание">""",
     )
     json_ld = models.TextField(
         verbose_name="JSON-LD",
@@ -114,7 +121,8 @@ class ProductsListPageModel(models.Model):
     meta_tags = models.TextField(
         verbose_name="Мета-теги",
         max_length=1000,
-        default="<title>BlumenHorizon | </title>",
+        default="""<title>BlumenHorizon | </title>
+<meta name="description" content="Описание">""",
     )
     json_ld = models.TextField(
         verbose_name="JSON-LD",
@@ -139,7 +147,8 @@ class BouquetsListPageModel(models.Model):
     meta_tags = models.TextField(
         verbose_name="Мета-теги",
         max_length=1000,
-        default="<title>BlumenHorizon | </title>",
+        default="""<title>BlumenHorizon | </title>
+<meta name="description" content="Описание">""",
     )
     json_ld = models.TextField(
         verbose_name="JSON-LD",
@@ -161,6 +170,7 @@ class BouquetsListPageModel(models.Model):
 
 
 class ProductCategory(TimeStampAdbstractModel, MetaDataAbstractModel):
+    code_value = models.CharField(max_length=50, unique=True, default=generate_sku)
     image = models.ImageField(
         verbose_name=_("Картинка"),
         upload_to="categories/%Y-%m-%d",
@@ -184,19 +194,18 @@ class ProductCategory(TimeStampAdbstractModel, MetaDataAbstractModel):
             },
         )
         return f"https://www.{site_domain}{relative_url}"
-    
+
     def get_relative_url(self):
-        language = get_language()
         return reverse_lazy(
             "catalogue:products-category",
             kwargs={
                 "category_slug": self.slug,
             },
-            current_app=language
         )
 
 
 class ProductSubcategory(TimeStampAdbstractModel, MetaDataAbstractModel):
+    code_value = models.CharField(max_length=50, unique=True, default=generate_sku)
     image = models.ImageField(
         verbose_name=_("Картинка"),
         upload_to="subcategories/%Y-%m-%d",
@@ -224,23 +233,16 @@ class ProductSubcategory(TimeStampAdbstractModel, MetaDataAbstractModel):
             kwargs={"category_slug": self.category.slug, "subcategory_slug": self.slug},
         )
         return f"https://www.{site_domain}{relative_url}"
-    
+
     def get_relative_url(self):
-        language = get_language()
         return reverse_lazy(
             "catalogue:products-subcategory",
             kwargs={"category_slug": self.category.slug, "subcategory_slug": self.slug},
-            current_app=language
         )
 
     def clean_category(self):
         if self.category is None:
             self.is_active = False
-
-
-def generate_sku():
-    sku = "".join(choices(ascii_uppercase + digits, k=6))
-    return sku
 
 
 class ProductAbstract(TimeStampAdbstractModel, MetaDataAbstractModel):
@@ -316,9 +318,8 @@ class Product(ProductAbstract):
             },
         )
         return f"https://www.{site_domain}{relative_url}"
-    
+
     def get_relative_url(self):
-        language = get_language()
         return reverse_lazy(
             "catalogue:product-details",
             kwargs={
@@ -326,7 +327,6 @@ class Product(ProductAbstract):
                 "subcategory_slug": self.subcategory.slug,
                 "product_slug": self.slug,
             },
-            current_app=language
         )
 
     @property
@@ -394,6 +394,7 @@ class Flower(models.Model):
 
 
 class BouquetCategory(TimeStampAdbstractModel, MetaDataAbstractModel):
+    code_value = models.CharField(max_length=50, unique=True, default=generate_sku)
     image = models.ImageField(
         verbose_name=_("Картинка"),
         upload_to="categories/%Y-%m-%d",
@@ -417,20 +418,18 @@ class BouquetCategory(TimeStampAdbstractModel, MetaDataAbstractModel):
             },
         )
         return f"https://www.{site_domain}{relative_url}"
-    
+
     def get_relative_url(self):
-        "For sitemaps"
-        language = get_language()
         return reverse_lazy(
             "catalogue:bouquets-category",
             kwargs={
                 "category_slug": self.slug,
             },
-            current_app=language
         )
 
 
 class BouquetSubcategory(TimeStampAdbstractModel, MetaDataAbstractModel):
+    code_value = models.CharField(max_length=50, unique=True, default=generate_sku)
     image = models.ImageField(
         verbose_name=_("Картинка"),
         upload_to="subcategories/%Y-%m-%d",
@@ -461,16 +460,14 @@ class BouquetSubcategory(TimeStampAdbstractModel, MetaDataAbstractModel):
             },
         )
         return f"https://www.{site_domain}{relative_url}"
-    
+
     def get_relative_url(self):
-        language = get_language()
         return reverse_lazy(
             "catalogue:bouquets-subcategory",
             kwargs={
                 "category_slug": self.category.slug,
                 "subcategory_slug": self.slug,
             },
-            current_app=language
         )
 
     def clean_category(self):
@@ -521,9 +518,8 @@ class Bouquet(ProductAbstract):
             },
         )
         return f"https://www.{site_domain}{relative_url}"
-    
+
     def get_relative_url(self):
-        language = get_language()
         return reverse_lazy(
             "catalogue:bouquet-details",
             kwargs={
@@ -531,7 +527,6 @@ class Bouquet(ProductAbstract):
                 "subcategory_slug": self.subcategory.slug,
                 "bouquet_slug": self.slug,
             },
-            current_app=language
         )
 
     @property
