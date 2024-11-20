@@ -3,9 +3,13 @@ from django.contrib.sitemaps.views import sitemap
 from django.urls import path
 
 from .sitemaps import (
+    AboutUsSitemap,
     BouquetCategorySitemap,
     BouquetDetailSitemap,
     BouquetSubcategorySitemap,
+    ContactSitemap,
+    DeliverySitemap,
+    FAQSitemap,
     MainpageSitemap,
     ProductCategorySitemap,
     ProductDetailSitemap,
@@ -23,6 +27,10 @@ sitemaps = {
     "bouquets-category": BouquetCategorySitemap,
     "bouquets-subcategory": BouquetSubcategorySitemap,
     "bouquet-details": BouquetDetailSitemap,
+    "faq": FAQSitemap,
+    "delivery": DeliverySitemap,
+    "contacts": ContactSitemap,
+    "about-us": AboutUsSitemap,
 }
 
 urlpatterns = [
