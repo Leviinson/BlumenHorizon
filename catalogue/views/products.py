@@ -35,6 +35,7 @@ class ProductView(
             "json_ld",
             "images",
             "discount",
+            "discount_expiration_datetime",
             "subcategory__slug",
             "subcategory__name",
             "subcategory__category__slug",
@@ -76,6 +77,7 @@ class ProductListView(
             "price",
             "images",
             "discount",
+            "discount_expiration_datetime",
             "subcategory__slug",
             "subcategory__category__slug",
         )
