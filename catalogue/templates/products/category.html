@@ -8,10 +8,47 @@
 <script type="application/ld+json">
     {
         "@context": "https://schema.org",
-        "@type": "WebPage",
-        "isFamilyFriendly": true,
         "name": "{{ category.name }}",
-        "description"
+        "description": "{% blocktranslate with name=category.name %}Страница категории '{{ name }}', содержащая подкатегории с изображениями и ссылками на подкатегории.{% endblocktranslate %}",
+        "@id": "{{ category.get_absolute_url }}",
+        "primaryImageOfPage": {
+          "@type": "ImageObject",
+          "url": "https://{{ domain_name }}{{ category.image.url }}",
+          "caption": "{% if category.image_alt %}{{ category.image_alt }}{% else %}{% translate 'Изображение категории временно отсутствует.' %}{% endif %}"
+        },
+        "mainContentOfPage": {
+          "@type": "WebPageElement",
+          "name": "{{ category.name }}",
+          "description": "{% translate 'Изображение категории и её название со ссылкой на категорию.' %}",
+          "image": {
+            "@type": "ImageObject",
+            "url": "https://{{ domain_name }}{{ category.image.url }}",
+            "caption": "{% if category.image_alt %}{{ category.image_alt }}{% else %}{% translate 'Изображение категории временно отсутствует.' %}{% endif %}"
+          }
+        },
+        "significantLink": "{{ category.get_absolute_url }}",
+        "mainEntity": {
+          "@type": "ItemList",
+          "name": "{% translate 'Список подкатегорий.' %}",
+          "itemListElement": [
+            {% for subcategory in category.subcategories.all %}
+                {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "item": {
+                        "name": "{{ subcategory.name }}",
+                        "description": "{% translate 'Изображение и название подкатегории по ссылкой.' %}",
+                        "@id": "{{ subcategory.get_absolute_url }}",
+                        "image": {
+                            "@type": "ImageObject",
+                            "url": "https://{{ domain_name }}{{ subcategory.image.url }}",
+                            "caption": "{% if subcategory.image_alt %}{{ subcategory.image_alt }}{% else %}{% translate 'Изображение подкатегории временно отсутствует.' %}{% endif %}"
+                        }
+                    }
+                }{% if not forloop.last %},{% endif %}
+            {% endfor %}
+          ]
+        }
     }
 </script>
 {% endblock %}
@@ -33,51 +70,6 @@
             <div class="subcategory-content card-body text-start">
                 <a href="{{ subcategory.get_relative_url }}" class="text-decoration-none text-dark">
                     <div class="subcategory-container d-flex align-items-center">
-                        <img style="width: 70px;" class="img-thumbnail rounded me-2" src="{{ subcategory.image.url }}"
-                            alt="{{ subcategory.image_alt }}">
-                        <h2 class="fs-6 fw-light mb-0">{{ subcategory.name }}</h2>
-                    </div>
-                </a>
-            </div>
-        </div>
-        {% endfor %}
-        {% for subcategory in category.subcategories.all %}
-        <div class="subcategory-container card
-                        col-lg-3 col-md-5 col-12">
-            <div class="subcategory-content card-body text-start">
-                <a href="{{ subcategory.get_relative_url }}" class="text-decoration-none text-dark">
-                    <div class="subcategory-container
-                                    d-flex align-items-center">
-                        <img style="width: 70px;" class="img-thumbnail rounded me-2" src="{{ subcategory.image.url }}"
-                            alt="{{ subcategory.image_alt }}">
-                        <h2 class="fs-6 fw-light mb-0">{{ subcategory.name }}</h2>
-                    </div>
-                </a>
-            </div>
-        </div>
-        {% endfor %}
-        {% for subcategory in category.subcategories.all %}
-        <div class="subcategory-container card
-                        col-lg-3 col-md-5 col-12">
-            <div class="subcategory-content card-body text-start">
-                <a href="{{ subcategory.get_relative_url }}" class="text-decoration-none text-dark">
-                    <div class="subcategory-container
-                                    d-flex align-items-center">
-                        <img style="width: 70px;" class="img-thumbnail rounded me-2" src="{{ subcategory.image.url }}"
-                            alt="{{ subcategory.image_alt }}">
-                        <h2 class="fs-6 fw-light mb-0">{{ subcategory.name }}</h2>
-                    </div>
-                </a>
-            </div>
-        </div>
-        {% endfor %}
-        {% for subcategory in category.subcategories.all %}
-        <div class="subcategory-container card
-                        col-lg-3 col-md-5 col-12">
-            <div class="subcategory-content card-body text-start">
-                <a href="{{ subcategory.get_relative_url }}" class="text-decoration-none text-dark">
-                    <div class="subcategory-container
-                                    d-flex align-items-center">
                         <img style="width: 70px;" class="img-thumbnail rounded me-2" src="{{ subcategory.image.url }}"
                             alt="{{ subcategory.image_alt }}">
                         <h2 class="fs-6 fw-light mb-0">{{ subcategory.name }}</h2>

@@ -10,7 +10,6 @@ from .models import (
     BouquetsListPageModel,
     BouquetSubcategory,
     CatalogPageModel,
-    CategoryPageModel,
     Color,
     Flower,
     IndividualQuestion,
@@ -414,15 +413,6 @@ class IndividualQuestionAdmin(admin.ModelAdmin):
 
 @admin.register(CatalogPageModel)
 class CatalogPageAdmin(admin.ModelAdmin):
-    fields = (
-        "meta_tags",
-        "json_ld",
-    )
-    list_display = ("id",)
-
-
-@admin.register(CategoryPageModel)
-class CategoryPageAdmin(admin.ModelAdmin):
     fields = (
         "meta_tags",
         "json_ld",

@@ -8,7 +8,6 @@ from .models import (
     BouquetsListPageModel,
     BouquetSubcategory,
     CatalogPageModel,
-    CategoryPageModel,
     Color,
     Flower,
     Product,
@@ -108,11 +107,6 @@ class BouquetSizeImageTranslationOptions(TranslationOptions):
 
 @register(CatalogPageModel)
 class CatalogPageModelTranslationOptions(TranslationOptions):
-    fields = ("meta_tags",)
-
-
-@register(CategoryPageModel)
-class CategoryPageModelTranslationOptions(TranslationOptions):
     fields = ("meta_tags",)
 
 

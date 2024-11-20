@@ -121,6 +121,20 @@
               "description": "{{ recommended_bouquet.description|default:'Описание временно отсутствует.' }}",
               "image": "https://{{ domain_name }}{{ MEDIA_URL }}{{ recommended_bouquet.first_image_uri|default:'defaults/no-image.webp' }}",
               "@id": "{{ recommended_bouquet.get_absolute_url }}",
+              "audience": {
+                  "@type": "PeopleAudience",
+                  "requiredGender": "Male",
+                  "requiredMaxAge": 60,
+                  "requiredMinAge": 16,
+                  "suggestedAge": {
+                      "@type": "QuantitativeValue",
+                      "minValue": 18,
+                      "maxValue": 35,
+                      "unitCode": "ANN"
+                  },
+                  "audienceType": "general audience, event planners",
+              }
+              "color": "{% for color in recommended_bouquet.colors.all %}{{ color.name }}{% endfor %}",
               "potentialAction": {
                 "@type": "ViewAction",
                 "target": {
@@ -155,6 +169,19 @@
               "description": "{{ recommended_product.description|default:'Описание временно отсутствует.' }}",
               "image": "https://{{ domain_name }}{{ MEDIA_URL }}{{ recommended_product.first_image_uri|default:'defaults/no-image.webp' }}",
               "@id": "{{ recommended_product.get_absolute_url }}",
+              "audience": {
+                  "@type": "PeopleAudience",
+                  "requiredGender": "Male",
+                  "requiredMaxAge": 60,
+                  "requiredMinAge": 16,
+                  "suggestedAge": {
+                      "@type": "QuantitativeValue",
+                      "minValue": 18,
+                      "maxValue": 35,
+                      "unitCode": "ANN"
+                  },
+                  "audienceType": "general audience, event planners",
+              }
               "potentialAction": {
                 "@type": "ViewAction",
                 "target": {
@@ -194,7 +221,7 @@
     Цветочный интернет-магазин {{ city }}
     {% endblocktranslate %}
   </h1>
-  <h2>{% translate 'Категории букетов' %}</h2>
+  <h2 class="mb-3">{% translate 'Категории букетов' %}</h2>
   <nav class="nav nav-pills nav-fill mx-2 mb-5 d-flex flex-wrap justify-content-start gap-2 w-100">
     {% for category in products_categories %}
     <a class="text-light text-center nav-item nav-link bg-soft-turquoise d-flex justify-content-center align-items-center"

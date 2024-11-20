@@ -91,30 +91,11 @@ class CatalogPageModel(models.Model):
         return "Мета-теги каталога категорий и подкатегорий"
 
 
-class CategoryPageModel(models.Model):
-    meta_tags = models.TextField(
-        verbose_name="Мета-теги",
-        max_length=1000,
-        default="""<title>BlumenHorizon | </title>
-<meta name="description" content="Описание">""",
-    )
-    json_ld = models.TextField(
-        verbose_name="JSON-LD",
-        max_length=1000,
-        default="""<script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "WebPage"
-        }
-        </script>""",
-    )
+class CategoryAbstract(models.Model):
+    code_value = models.CharField(max_length=50, unique=True, default=generate_sku)
 
     class Meta:
-        verbose_name = "Мета-тег каталога подкатегорий категории"
-        verbose_name_plural = "Мета-теги каталога подкатегорий категории"
-
-    def __str__(self):
-        return "Мета-теги каталога подкатегорий категории"
+        abstract = True
 
 
 class ProductsListPageModel(models.Model):
@@ -169,8 +150,7 @@ class BouquetsListPageModel(models.Model):
         return "Мета-теги списка всех букетов"
 
 
-class ProductCategory(TimeStampAdbstractModel, MetaDataAbstractModel):
-    code_value = models.CharField(max_length=50, unique=True, default=generate_sku)
+class ProductCategory(CategoryAbstract, TimeStampAdbstractModel, MetaDataAbstractModel):
     image = models.ImageField(
         verbose_name=_("Картинка"),
         upload_to="categories/%Y-%m-%d",
@@ -186,14 +166,14 @@ class ProductCategory(TimeStampAdbstractModel, MetaDataAbstractModel):
         return self.name
 
     def get_absolute_url(self):
-        site_domain = Site.objects.first().domain
+        site = Site.objects.only("domain").first()
         relative_url = reverse_lazy(
             "catalogue:products-category",
             kwargs={
                 "category_slug": self.slug,
             },
         )
-        return f"https://www.{site_domain}{relative_url}"
+        return f"https://{site.domain}{relative_url}"
 
     def get_relative_url(self):
         return reverse_lazy(
@@ -204,8 +184,7 @@ class ProductCategory(TimeStampAdbstractModel, MetaDataAbstractModel):
         )
 
 
-class ProductSubcategory(TimeStampAdbstractModel, MetaDataAbstractModel):
-    code_value = models.CharField(max_length=50, unique=True, default=generate_sku)
+class ProductSubcategory(CategoryAbstract, TimeStampAdbstractModel, MetaDataAbstractModel):
     image = models.ImageField(
         verbose_name=_("Картинка"),
         upload_to="subcategories/%Y-%m-%d",
@@ -227,12 +206,12 @@ class ProductSubcategory(TimeStampAdbstractModel, MetaDataAbstractModel):
         return self.name
 
     def get_absolute_url(self):
-        site_domain = Site.objects.first().domain
+        site = Site.objects.only("domain").first()
         relative_url = reverse_lazy(
             "catalogue:products-subcategory",
             kwargs={"category_slug": self.category.slug, "subcategory_slug": self.slug},
         )
-        return f"https://www.{site_domain}{relative_url}"
+        return f"https://{site.domain}{relative_url}"
 
     def get_relative_url(self):
         return reverse_lazy(
@@ -308,7 +287,7 @@ class Product(ProductAbstract):
         verbose_name_plural = _("Продукты")
 
     def get_absolute_url(self):
-        site_domain = Site.objects.first().domain
+        site = Site.objects.only("domain").first()
         relative_url = reverse_lazy(
             "catalogue:product-details",
             kwargs={
@@ -317,7 +296,7 @@ class Product(ProductAbstract):
                 "product_slug": self.slug,
             },
         )
-        return f"https://www.{site_domain}{relative_url}"
+        return f"https://{site.domain}{relative_url}"
 
     def get_relative_url(self):
         return reverse_lazy(
@@ -393,8 +372,7 @@ class Flower(models.Model):
         return self.name
 
 
-class BouquetCategory(TimeStampAdbstractModel, MetaDataAbstractModel):
-    code_value = models.CharField(max_length=50, unique=True, default=generate_sku)
+class BouquetCategory(CategoryAbstract, TimeStampAdbstractModel, MetaDataAbstractModel):
     image = models.ImageField(
         verbose_name=_("Картинка"),
         upload_to="categories/%Y-%m-%d",
@@ -410,14 +388,14 @@ class BouquetCategory(TimeStampAdbstractModel, MetaDataAbstractModel):
         return self.name
 
     def get_absolute_url(self):
-        site_domain = Site.objects.first().domain
+        site = Site.objects.only("domain").first()
         relative_url = reverse_lazy(
             "catalogue:bouquets-category",
             kwargs={
                 "category_slug": self.slug,
             },
         )
-        return f"https://www.{site_domain}{relative_url}"
+        return f"https://{site.domain}{relative_url}"
 
     def get_relative_url(self):
         return reverse_lazy(
@@ -428,8 +406,7 @@ class BouquetCategory(TimeStampAdbstractModel, MetaDataAbstractModel):
         )
 
 
-class BouquetSubcategory(TimeStampAdbstractModel, MetaDataAbstractModel):
-    code_value = models.CharField(max_length=50, unique=True, default=generate_sku)
+class BouquetSubcategory(CategoryAbstract, TimeStampAdbstractModel, MetaDataAbstractModel):
     image = models.ImageField(
         verbose_name=_("Картинка"),
         upload_to="subcategories/%Y-%m-%d",
@@ -451,7 +428,7 @@ class BouquetSubcategory(TimeStampAdbstractModel, MetaDataAbstractModel):
         return self.name
 
     def get_absolute_url(self):
-        site_domain = Site.objects.first().domain
+        site = Site.objects.only("domain").first()
         relative_url = reverse_lazy(
             "catalogue:bouquets-subcategory",
             kwargs={
@@ -459,7 +436,7 @@ class BouquetSubcategory(TimeStampAdbstractModel, MetaDataAbstractModel):
                 "subcategory_slug": self.slug,
             },
         )
-        return f"https://www.{site_domain}{relative_url}"
+        return f"https://www.{site.domain}{relative_url}"
 
     def get_relative_url(self):
         return reverse_lazy(
@@ -508,7 +485,7 @@ class Bouquet(ProductAbstract):
         return f"{self.name} ({self.diameter} см, {self.amount_of_flowers} цветов)"
 
     def get_absolute_url(self):
-        site_domain = Site.objects.first().domain
+        site = Site.objects.only("domain").first()
         relative_url = reverse_lazy(
             "catalogue:bouquet-details",
             kwargs={
@@ -517,7 +494,7 @@ class Bouquet(ProductAbstract):
                 "bouquet_slug": self.slug,
             },
         )
-        return f"https://www.{site_domain}{relative_url}"
+        return f"https://{site.domain}{relative_url}"
 
     def get_relative_url(self):
         return reverse_lazy(

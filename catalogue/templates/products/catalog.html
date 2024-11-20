@@ -13,12 +13,12 @@
         "@context": "https://schema.org",
         "@type": "WebPage",
         "isFamilyFriendly": true,
-        "name": "{% translate 'Каталог категорий товаров' %}",
+        "name": "{{ meta_tags|extract_meta_tags:'title' }}",
         "description": "{{ meta_tags|extract_meta_tags:'description' }}",
         "mainEntity": [
             {
                 "@type": "ItemList",
-                "name": "{%  %}",
+                "name": "{% translate 'Каталог категорий товаров' %}",
                 "itemListElement": [
                 {% for category in bouquets_categories %}
                     {

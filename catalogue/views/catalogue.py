@@ -14,7 +14,6 @@ from ..models import (
     Bouquet,
     BouquetCategory,
     CatalogPageModel,
-    CategoryPageModel,
     Product,
     ProductCategory,
 )
@@ -83,6 +82,9 @@ class CategoryView(CommonContextMixin, TemplateView):
                         "subcategories__slug",
                         "subcategories__image",
                         "subcategories__image_alt",
+                        "code_value",
+                        "meta_tags",
+                        "json_ld",
                     )
                     .get(slug=self.kwargs["category_slug"])
                 )
@@ -91,9 +93,8 @@ class CategoryView(CommonContextMixin, TemplateView):
                 continue
         else:
             raise Http404()
-        page_model = CategoryPageModel.objects.first()
-        context["meta_tags"] = page_model.meta_tags
-        context["json_ld"] = page_model.json_ld
+        context["meta_tags"] = context["category"].meta_tags
+        context["json_ld"] = context["category"].json_ld
         return context
 
 
