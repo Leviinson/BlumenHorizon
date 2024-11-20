@@ -3,7 +3,15 @@
 {% load i18n %}
 
 {% block additional_head_styles %}
+
 <link rel="stylesheet" href="{% static 'cart/styles/cart.css' %}">
+{% endblock %}
+
+{% block meta_tags %}
+<meta name="robots" content="noindex, nofollow" />
+<title>{% translate 'Корзина' %} | {{ site_name }}</title>
+<meta name="description" content="{% translate 'Оформите заказ на букеты в интернет-магазине [Название магазина]. Ваша корзина готова к оформлению. Быстрая доставка.' %}">
+<meta name="keywords" content="{% translate 'корзина букетов, интернет-магазин букетов, доставка цветов, оформить заказ' %}" />
 {% endblock %}
 
 {% block body %}
