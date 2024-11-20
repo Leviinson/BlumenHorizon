@@ -77,7 +77,7 @@
     </div>
   </div>
 
-  <div id="mainpage-description" class="my-5">
+  <div id="mainpage-description" class="mt-5">
     {{ description|safe }}
   </div>
 
@@ -138,7 +138,7 @@
               <div class="card h-100 w-100" style="min-height: 404px;">
                 <div class="image-wrapper">
                   {% if recommended_bouquet.has_discount %}
-                  <span class="badge bg-dark-green m-1 p-2 fs-5 product-discount-badge">-{{ recommended_bouquet.discount }}%</span>
+                  <span class="badge bg-dark-green m-2 p-2 fs-5 product-discount-badge">-{{ recommended_bouquet.discount }}%</span>
                   {% endif %}
                   {% if recommended_bouquet.first_image_uri %}
                   <img src="{{ MEDIA_URL }}{{ recommended_bouquet.first_image_uri }}" class="card-img-top square-image"
@@ -154,10 +154,10 @@
                   <div class="d-flex flex-column justify-content-center mt-auto">
                     <p class="card-text">
                       {% if recommended_bouquet.has_discount %}
-                      <span class="text-danger mb-0 me-2">{{ recommended_bouquet.discount_price|floatformat:"2u" }} {{ currency_symbol }}</span>
-                      <span class="text-muted text-decoration-line-through mb-0">{{ recommended_bouquet.price|floatformat:"2u" }} {{ currency_symbol }}</span>
+                      <strong class="text-danger mb-0 me-2">{{ recommended_bouquet.discount_price|floatformat:"2u" }} {{ currency_symbol }}</strong>
+                      <strong class="text-muted text-decoration-line-through mb-0">{{ recommended_bouquet.price|floatformat:"2u" }} {{ currency_symbol }}</strong>
                       {% else %}
-                      <span>{{ recommended_bouquet.price|floatformat:"2u" }} {{ currency_symbol }}</span>
+                      <strong>{{ recommended_bouquet.price|floatformat:"2u" }} {{ currency_symbol }}</strong>
                       {% endif %}
                     </p>
                     <form method="post" class="add-to-cart-form w-100 me-2" data-add-url="{% url 'cart:bouquet-add' %}"
@@ -202,7 +202,7 @@
               <div class="card h-100 w-100" style="min-height: 404px;">
                 <div class="image-wrapper">
                   {% if recommended_product.has_discount %}
-                  <span class="badge bg-dark-green m-1 p-2 fs-5 product-discount-badge">-{{ recommended_product.discount }}%</span>
+                  <span class="badge bg-dark-green m-2 p-2 fs-5 product-discount-badge">-{{ recommended_product.discount }}%</span>
                   {% endif %}
                   {% if recommended_product.first_image_uri %}
                   <img src="{{ MEDIA_URL }}{{ recommended_product.first_image_uri }}" class="card-img-top square-image"
@@ -218,10 +218,16 @@
                   <div class="d-flex flex-column justify-content-center mt-auto">
                     <p class="card-text">
                       {% if recommended_product.has_discount %}
-                      <span class="text-danger mb-0 me-2">{{ recommended_product.discount_price|floatformat:"2u" }} {{ currency_symbol }}</span>
-                      <span class="text-muted text-decoration-line-through mb-0">{{ recommended_product.price|floatformat:"2u" }} {{ currency_symbol }}</span>
+                      <strong class="text-danger mb-0 me-2">
+                        {{ recommended_product.discount_price|floatformat:"2u" }} {{ currency_symbol }}
+                      </strong>
+                      <strong class="text-muted text-decoration-line-through mb-0">
+                        {{ recommended_product.price|floatformat:"2u" }} {{ currency_symbol }}
+                      </strong>
                       {% else %}
-                      <span>{{ recommended_product.price|floatformat:"2u" }} {{ currency_symbol }}</span>
+                      <strong>
+                        {{ recommended_product.price|floatformat:"2u" }} {{ currency_symbol }}
+                      </strong>
                       {% endif %}
                     </p>
                     <form method="post" class="add-to-cart-form w-100 me-2" data-add-url="{% url 'cart:product-add' %}"
