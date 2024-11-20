@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from tinymce.models import HTMLField
 
 from core.base_models import TimeStampAdbstractModel
 
@@ -19,7 +20,10 @@ class MainPageModel(models.Model):
             "@context": "https://schema.org",
             "@type": "WebPage"
         }
-        </script>"""
+        </script>""",
+    )
+    description = HTMLField(
+        verbose_name=_("Описание"),
     )
 
     class Meta:
@@ -72,7 +76,7 @@ class IndividualOrder(models.Model):
         return f"{self.first_name}"
 
 
-class SeoBlock(TimeStampAdbstractModel, models.Model):
+class MainPageSeoBlock(TimeStampAdbstractModel, models.Model):
     image = models.ImageField(
         verbose_name=_("Картинка"),
         upload_to="seoblock/",
@@ -85,3 +89,140 @@ class SeoBlock(TimeStampAdbstractModel, models.Model):
 
     def __str__(self):
         return f"{self.image} ...... {self.alt}"
+
+
+
+class FAQPageModel(TimeStampAdbstractModel):
+    image = models.ImageField(
+        verbose_name=_("Картинка"),
+        upload_to="seoblock/",
+        default="defaults/no-image.webp",
+    )
+    image_alt = models.CharField(max_length=100, verbose_name="Описание картинки")
+    description = HTMLField(
+        verbose_name=_("Описание"),
+    )
+    meta_tags = models.TextField(
+        verbose_name="Мета-теги",
+        max_length=1000,
+        default="<title>BlumenHorizon | </title>",
+    )
+    json_ld = models.TextField(
+        verbose_name="JSON-LD",
+        max_length=1000,
+        default="""<script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebPage"
+        }
+</script>""",
+    )
+
+    def __str__(self):
+        return f"{self.pk}"
+
+    class Meta:
+        verbose_name = "Частозадаваемые вопросы"
+        verbose_name_plural = verbose_name
+
+
+class AboutUsPageModel(TimeStampAdbstractModel):
+    image = models.ImageField(
+        verbose_name=_("Картинка"),
+        upload_to="seoblock/",
+        default="defaults/no-image.webp",
+    )
+    image_alt = models.CharField(max_length=100, verbose_name="Описание картинки")
+    description = HTMLField(
+        verbose_name=_("Описание"),
+    )
+    meta_tags = models.TextField(
+        verbose_name="Мета-теги",
+        max_length=1000,
+        default="<title>BlumenHorizon | </title>",
+    )
+    json_ld = models.TextField(
+        verbose_name="JSON-LD",
+        max_length=1000,
+        default="""<script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebPage"
+        }
+</script>""",
+    )
+
+    def __str__(self):
+        return f"{self.pk}"
+
+    class Meta:
+        verbose_name = "О нас"
+        verbose_name_plural = verbose_name
+
+
+class DeliveryPageModel(TimeStampAdbstractModel):
+    image = models.ImageField(
+        verbose_name=_("Картинка"),
+        upload_to="seoblock/",
+        default="defaults/no-image.webp",
+    )
+    image_alt = models.CharField(max_length=100, verbose_name="Описание картинки")
+    description = HTMLField(
+        verbose_name=_("Описание"),
+    )
+    meta_tags = models.TextField(
+        verbose_name="Мета-теги",
+        max_length=1000,
+        default="<title>BlumenHorizon | </title>",
+    )
+    json_ld = models.TextField(
+        verbose_name="JSON-LD",
+        max_length=1000,
+        default="""<script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebPage"
+        }
+</script>""",
+    )
+
+    def __str__(self):
+        return f"{self.pk}"
+
+    class Meta:
+        verbose_name = "Доставка"
+        verbose_name_plural = verbose_name
+
+
+class ContactsPageModel(TimeStampAdbstractModel):
+    image = models.ImageField(
+        verbose_name=_("Картинка"),
+        upload_to="seoblock/",
+        default="defaults/no-image.webp",
+    )
+    image_alt = models.CharField(max_length=100, verbose_name="Описание картинки")
+    description = HTMLField(
+        verbose_name=_("Описание"),
+    )
+    meta_tags = models.TextField(
+        verbose_name="Мета-теги",
+        max_length=1000,
+        default="<title>BlumenHorizon | </title>",
+    )
+    json_ld = models.TextField(
+        verbose_name="JSON-LD",
+        max_length=1000,
+        default="""<script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebPage"
+        }
+</script>""",
+    )
+
+    def __str__(self):
+        return f"{self.pk}"
+
+    class Meta:
+        verbose_name = "Контакты"
+        verbose_name_plural = verbose_name
