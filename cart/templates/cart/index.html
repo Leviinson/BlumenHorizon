@@ -32,7 +32,7 @@
                         <div class="row product-container" id="{{ item.product.slug }}">
                             <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
                                 <div class="bg-image hover-overlay hover-zoom ripple image-wrapper">
-                                    <a href="{{ item.product.get_absolute_url }}" class="w-100">
+                                    <a href="{{ item.product.get_relative_url }}" class="w-100">
                                         <img src="{% if item.product.first_image_uri %}{{ MEDIA_URL }}{{ item.product.first_image_uri }}{% else %}{% static 'defaults/no-image.webp' %}{% endif %}"
                                             class="square-image rounded img-thumbnail"
                                             alt="{% if item.product.first_image_alt %}{{ item.product.first_image_alt }}{% else %}{% translate 'Изображение продукта временно отсутствует.' %}{% endif %}" />
@@ -40,7 +40,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
-                                <a href="{{ item.product.get_absolute_url }}"
+                                <a href="{{ item.product.get_relative_url }}"
                                     class="text-decoration-none text-dark product-name">{{ item.product.name }}</a>
                                 {% include 'cart/removeItemFromCart.html' %}
                             </div>
@@ -75,7 +75,7 @@
                         <div class="row product-container" id="{{ item.product.slug }}">
                             <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
                                 <div class="bg-image hover-overlay hover-zoom ripple image-wrapper">
-                                    <a href="{{ item.product.get_absolute_url }}" class="w-100">
+                                    <a href="{{ item.product.get_relative_url }}" class="w-100">
                                         <img src="{% if item.product.first_image_uri %}{{ MEDIA_URL }}{{ item.product.first_image_uri }}{% else %}{% static 'defaults/no-image.webp' %}{% endif %}"
                                             class="square-image rounded img-thumbnail"
                                             alt="{% if item.product.first_image_alt %}{{ item.product.first_image_alt }}{% else %}{% translate 'Изображение продукта временно отсутствует.' %}{% endif %}" />
@@ -83,7 +83,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
-                                <a href="{{ item.product.get_absolute_url }}"
+                                <a href="{{ item.product.get_relative_url }}"
                                     class="text-decoration-none text-dark product-name">{{ item.product.name }}</a>
                                 {% include 'cart/removeItemFromCart.html' %}
                             </div>
