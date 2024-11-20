@@ -2,6 +2,8 @@
 {% load static %}
 {% load i18n %}
 {% load chunk_filters %}
+{% load extract_meta_tags %}
+
 
 {% block json_ld %}
 <script type="application/ld+json">
@@ -9,9 +11,27 @@
       "@context": "https://schema.org",
       "@type": "WebPage",
       "isFamilyFriendly": true,
-      "name": "{% blocktranslate with city=city %}{{ site_name }} | Цветочный магазин {{ city }}{% endblocktranslate %}",
-      "description": "{% blocktranslate with city=city %}Быстрая доставка цветов {{ city }} – от 2 часов! Свежие букеты для праздников, свадеб и особых случаев. Уникальные композиции, удобный заказ онлайн. Подарите радость уже сегодня!{% endblocktranslate %}",
+      "name": "{{ meta_tags|extract_meta_tags:'title' }}",
+      "description": "{{ meta_tags|extract_meta_tags:'description' }}",
       "mainEntity": [
+        {
+          "@type": "WPHeader",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://{{ domain_name }}{% static 'templates/favicon.png' %}",
+            "width": "72",
+            "height": "72",
+            "name": "{{ site_name }} logo"
+          },
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": {
+              "@type": "EntryPoint",
+              "urlTemplate": "https://{{ domain_name }}/search/?q={search_term_string}"
+            },
+            "query-input": "required name=search_term_string"
+          }
+        },
         {
           "@type": "ItemList",
           "name": "{% translate 'Категории букетов' %}",
@@ -20,16 +40,24 @@
             {
               "@type": "ListItem",
               "position": "{{ forloop.counter }}",
-              "name": "{{ category.name }}",
-              "@id": "{{ category.get_absolute_url }}"
+              "item": {
+                "@type": "CategoryCode",
+                "@id": "{{ category.get_absolute_url }}",
+                "name": "{{ category.name }}",
+                "codeValue": "{{ category.code_value }}"
+              }
             }{% if not forloop.last%},{% elif forloop.last and products_categories %},{% endif %}
             {% endfor %}
             {% for category in products_categories %}
             {
               "@type": "ListItem",
               "position": "{{ forloop.counter }}",
-              "name": "{{ category.name }}",
-              "@id": "{{ category.get_absolute_url }}"
+              "item": {
+                "@type": "CategoryCode",
+                "@id": "{{ category.get_absolute_url }}",
+                "name": "{{ category.name }}",
+                "codeValue": "{{ category.code_value }}"
+              }
             }{% if not forloop.last%},{% endif %}{% endfor %}
           ]
         }
@@ -46,13 +74,13 @@
               "@type": "ListItem",
               "position": 2,
               "name": "{% translate 'Связь с клиентом на каждом этапе заказа' %}",
-              "@id": "{{ contact_us_absolute_url }}"
+              "url": "{{ contact_us_absolute_url }}"
             },
             {
               "@type": "ListItem",
               "position": 3,
               "name": "{% translate 'Анонимная доставка' %}",
-              "@id": "{{ delivery_absolute_url }}"
+              "url": "{{ delivery_absolute_url }}"
             }
           ]
         },
@@ -91,7 +119,7 @@
               "@type": "Product",
               "name": "{{ recommended_bouquet.name }}",
               "description": "{{ recommended_bouquet.description|default:'Описание временно отсутствует.' }}",
-              "image": "{{ MEDIA_URL }}{{ recommended_bouquet.first_image_uri|default:'defaults/no-image.webp' }}",
+              "image": "https://{{ domain_name }}{{ MEDIA_URL }}{{ recommended_bouquet.first_image_uri|default:'defaults/no-image.webp' }}",
               "@id": "{{ recommended_bouquet.get_absolute_url }}",
               "potentialAction": {
                 "@type": "ViewAction",
@@ -109,7 +137,7 @@
                 "price": "{{ recommended_bouquet.discount_price|floatformat:'2u' }}",
                 "priceCurrency": "{{ currency_code }}",
                 "availability": "https://schema.org/InStock"{% if recommended_bouquet.has_discount %},
-                "priceValidUntil": "{{ recommended_bouquet.discount_expiration_datetime }}"
+                "priceValidUntil": "{{ recommended_bouquet.discount_expiration_datetime|date:'Y-m-d\TH:i:s\Z' }}"
                 {% endif %}
               }
             }{% if not forloop.last %},{% endif %}
@@ -125,7 +153,7 @@
               "@type": "Product",
               "name": "{{ recommended_product.name }}",
               "description": "{{ recommended_product.description|default:'Описание временно отсутствует.' }}",
-              "image": "{{ MEDIA_URL }}{{ recommended_product.first_image_uri|default:'defaults/no-image.webp' }}",
+              "image": "https://{{ domain_name }}{{ MEDIA_URL }}{{ recommended_product.first_image_uri|default:'defaults/no-image.webp' }}",
               "@id": "{{ recommended_product.get_absolute_url }}",
               "potentialAction": {
                 "@type": "ViewAction",
@@ -143,7 +171,7 @@
                 "price": "{{ recommended_product.discount_price|floatformat:'2u' }}",
                 "priceCurrency": "{{ currency_code }}",
                 "availability": "https://schema.org/InStock"{% if recommended_product.has_discount %},
-                "priceValidUntil": "{{ recommended_product.discount_expiration_datetime }}"
+                "priceValidUntil": "{{ recommended_product.discount_expiration_datetime|date:'Y-m-d\TH:i:s\Z' }}"
                 {% endif %}
               }
             }{% if not forloop.last %},{% endif %}
@@ -278,7 +306,7 @@
         <div class="row m-0 w-100">
           {% for recommended_bouquet in recommended_bouquets_chunk %}
           <div class="col-6 col-md-3 col-lg-3 mb-4 d-flex product-card-in-slider">
-            <a href="{{ recommended_bouquet.get_absolute_url }}" class="text-decoration-none text-dark w-100">
+            <a href="{{ recommended_bouquet.get_relative_url }}" class="text-decoration-none text-dark w-100">
               <div class="card h-100 w-100" style="min-height: 404px;">
                 <div class="image-wrapper">
                   {% if recommended_bouquet.first_image_uri %}
@@ -332,7 +360,7 @@
         <div class="row m-0 w-100">
           {% for recommended_product in recommended_products_chunk %}
           <div class="col-6 col-md-3 col-lg-3 mb-4 d-flex product-card-in-slider">
-            <a href="{{ recommended_product.get_absolute_url }}" class="text-decoration-none text-dark w-100">
+            <a href="{{ recommended_product.get_relative_url }}" class="text-decoration-none text-dark w-100">
               <div class="card h-100 w-100" style="min-height: 404px;">
                 <div class="image-wrapper">
                   {% if recommended_product.first_image_uri %}
