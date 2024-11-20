@@ -42,11 +42,11 @@ ALLOWED_HOSTS = [
 TINYMCE_DEFAULT_CONFIG = {
     "height": 500,
     "width": "100%",
-    "plugins": "preview code importcss searchreplace autolink autosave save code \
+    "plugins": "preview importcss searchreplace autolink autosave save code \
                 visualblocks visualchars fullscreen image link media \
-                template codesample table charmap pagebreak nonbreaking anchor \
+                codesample table pagebreak nonbreaking anchor \
                 insertdatetime advlist lists wordcount help charmap emoticons quickbars",
-    "toolbar": "fullscreen preview | undo redo | bold italic forecolor backcolor | formatselect | image link | code | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | fontsizeselect emoticons ",
+    "toolbar": "fullscreen preview | undo redo | bold italic forecolor backcolor | image link | code | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | emoticons ",
     "images_upload_url": "/tinymce-image-upload/",
     "automatic_uploads": True,
     "file_picker_types": "image",
@@ -78,13 +78,7 @@ TINYMCE_DEFAULT_CONFIG = {
         input.click();
     }""",
     "content_style": "body { font-family:Roboto,Helvetica,Arial,sans-serif; font-size:14px }",
-    "forced_root_block": "",  # Отключить оборачивание в <p>
-    "forced_root_block_attrs": {},  # Отключить автоматические атрибуты корневых блоков
-    "inline_styles": False,  # Отключить добавление inline-стилей
-    "verify_html": False,  # Отключить проверку HTML
-    "valid_elements": "*[*]",  # Разрешить все теги и атрибуты
     "valid_children": "+body[title|meta|style|link]",
-    "extended_valid_elements": "*[*]",  # Расширенные разрешения для всех тегов и атрибутов
     "entity_encoding": "raw",
 }
 
