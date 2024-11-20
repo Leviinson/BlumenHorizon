@@ -20,7 +20,15 @@ from catalogue.models import (
 from core.services.mixins.views import CommonContextMixin
 
 from .forms import IndividualOrderForm
-from .models import MainPageModel, MainPageSliderImages, SeoBlock
+from .models import (
+    AboutUsPageModel,
+    ContactsPageModel,
+    DeliveryPageModel,
+    FAQPageModel,
+    MainPageModel,
+    MainPageSliderImages,
+    MainPageSeoBlock,
+)
 from .services.dataclasses.related_model import RelatedModel
 
 
@@ -68,7 +76,7 @@ class MainPageView(CommonContextMixin, TemplateView):
             session=self.request.session, session_key="bouquets_cart"
         )
         context["individual_order_form"] = IndividualOrderForm()
-        context["seo_block"] = SeoBlock.objects.first()
+        context["seo_block"] = MainPageSeoBlock.objects.first()
         context["products_categories"] = ProductCategory.objects.filter(
             is_active=True
         ).only(
@@ -84,6 +92,7 @@ class MainPageView(CommonContextMixin, TemplateView):
         page_model = MainPageModel.objects.first()
         context["meta_tags"] = page_model.meta_tags
         context["json_ld"] = page_model.json_ld
+        context["description"] = page_model.description
         context["request"] = self.request
         context["contact_us_absolute_url"] = self.request.build_absolute_uri(
             reverse_lazy("mainpage:contact")
@@ -116,6 +125,7 @@ class MainPageView(CommonContextMixin, TemplateView):
         :return: A queryset with annotated objects.
         """
         from django.utils.translation import get_language
+
         language = get_language()
 
         first_image_subquery = (
@@ -188,21 +198,56 @@ class IndividualOrderView(CreateView):
 
 
 class AboutUsView(CommonContextMixin, TemplateView):
-    template_name = "mainpage/about_us.html"
+    template_name = "mainpage/filler.html"
     http_method_names = [
         "get",
     ]
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        page = AboutUsPageModel.objects.first()
+        context["page"] = page
+        context["meta_tags"] = page.meta_tags
+        return context
 
 
 class AboutDeliveryView(CommonContextMixin, TemplateView):
-    template_name = "mainpage/delivery.html"
+    template_name = "mainpage/filler.html"
     http_method_names = [
         "get",
     ]
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        page = DeliveryPageModel.objects.first()
+        context["page"] = page
+        context["meta_tags"] = page.meta_tags
+        return context
 
 
 class ContactUsView(CommonContextMixin, TemplateView):
-    template_name = "mainpage/contact.html"
+    template_name = "mainpage/filler.html"
     http_method_names = [
         "get",
     ]
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        page = ContactsPageModel.objects.first()
+        context["page"] = page
+        context["meta_tags"] = page.meta_tags
+        return context
+
+
+class FAQView(CommonContextMixin, TemplateView):
+    template_name = "mainpage/filler.html"
+    http_method_names = [
+        "get",
+    ]
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        page = FAQPageModel.objects.first()
+        context["page"] = page
+        context["meta_tags"] = page.meta_tags
+        return context
