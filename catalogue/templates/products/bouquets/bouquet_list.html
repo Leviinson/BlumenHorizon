@@ -41,7 +41,7 @@
       <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
         <div class="accordion-body p-0">
             <ul class="list-group my-1">
-                <input style="display: none;" name="colors" id="colors-input" value="{{ request.GET.colors|default:'' }}">
+                <input style="display: none;" name="colors" id="colors-input" value="{{ view.request.GET.colors|default:'' }}">
                 {% for color in colors %}
                 <li class="list-group-item d-flex justify-content-start align-items-center">
                     <input type="checkbox" class="form-check-input color-checkbox" value="{{ color.name }}" id="{{ color.name }}" {% if color.name in request.GET.colors %}checked{% endif %}>
@@ -63,7 +63,7 @@
       </h2>
       <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
         <div class="accordion-body p-0">
-            <input style="display: none;" name="flowers" id="flowers-input" value="{{ request.GET.flowers|default:'' }}">
+            <input style="display: none;" name="flowers" id="flowers-input" value="{{ view.request.GET.flowers|default:'' }}">
             <ul class="list-group my-1">
                 {% for flower in flowers %}
                 <li class="list-group-item d-flex justify-content-start align-items-center">

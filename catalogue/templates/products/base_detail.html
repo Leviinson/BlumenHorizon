@@ -166,9 +166,9 @@
                     </form>
                     <form action="{% url 'catalogue:buy-item' %}" method="post" class="w-100">
                         {% csrf_token %}
-                        <input type="hidden" name="category_slug" value="{{ request.resolver_match.kwargs.category_slug }}">
-                        <input type="hidden" name="subcategory_slug" value="{{ request.resolver_match.kwargs.subcategory_slug }}">
-                        <input type="hidden" name="item_slug" value="{% if product.is_bouquet %}{{ request.resolver_match.kwargs.bouquet_slug }}{% else %}{{ request.resolver_match.kwargs.product_slug }}{% endif %}">
+                        <input type="hidden" name="category_slug" value="{{ view.kwargs.category_slug }}">
+                        <input type="hidden" name="subcategory_slug" value="{{ view.kwargs.subcategory_slug }}">
+                        <input type="hidden" name="item_slug" value="{% if product.is_bouquet %}{{ view.kwargs.bouquet_slug }}{% else %}{{ view.kwargs.product_slug }}{% endif %}">
                         {% if product.is_bouquet %}
                         <input type="hidden" name="is_bouquet" value="true">
                         {% endif %}

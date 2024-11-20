@@ -17,5 +17,4 @@ class CommonContextMixin:
         context["city"] = current_site.extended.city
         context["socials_right_bottom"] = current_site.extended.socials.all()
         context["MEDIA_URL"] = settings.MEDIA_URL
-        context["languages"]= settings.LANGUAGES
         return context
