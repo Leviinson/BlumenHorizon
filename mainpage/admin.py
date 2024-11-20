@@ -35,7 +35,6 @@ class MainPageModelAdmin(admin.ModelAdmin):
     fields = [
         "meta_tags",
         "json_ld",
-        "description",
         "description_ru",
         "description_en",
     ]
@@ -46,14 +45,11 @@ class MainPageModelAdmin(admin.ModelAdmin):
 class FAQPageModelAdmin(admin.ModelAdmin):
     fields = [
         "image",
-        "image_alt",
         "image_alt_ru",
         "image_alt_en",
-        "meta_tags",
         "meta_tags_ru",
         "meta_tags_en",
         "json_ld",
-        "description",
         "description_ru",
         "description_en",
     ]
@@ -64,14 +60,11 @@ class FAQPageModelAdmin(admin.ModelAdmin):
 class ContactsPageModelAdmin(admin.ModelAdmin):
     fields = [
         "image",
-        "image_alt",
         "image_alt_ru",
         "image_alt_en",
-        "meta_tags",
         "meta_tags_ru",
         "meta_tags_en",
         "json_ld",
-        "description",
         "description_ru",
         "description_en",
     ]
@@ -82,14 +75,11 @@ class ContactsPageModelAdmin(admin.ModelAdmin):
 class DeliveryPageModelAdmin(admin.ModelAdmin):
     fields = [
         "image",
-        "image_alt",
         "image_alt_ru",
         "image_alt_en",
-        "meta_tags",
         "meta_tags_ru",
         "meta_tags_en",
         "json_ld",
-        "description",
         "description_ru",
         "description_en",
     ]
@@ -100,14 +90,11 @@ class DeliveryPageModelAdmin(admin.ModelAdmin):
 class AboutUsPageModelAdmin(admin.ModelAdmin):
     fields = [
         "image",
-        "image_alt",
         "image_alt_ru",
         "image_alt_en",
-        "meta_tags",
         "meta_tags_ru",
         "meta_tags_en",
         "json_ld",
-        "description",
         "description_ru",
         "description_en",
     ]
