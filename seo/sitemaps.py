@@ -12,7 +12,7 @@ from catalogue.models import (
     ProductCategory,
     ProductSubcategory,
 )
-from mainpage.models import SeoBlock
+from mainpage.models import AboutUsPageModel, ContactsPageModel, DeliveryPageModel, FAQPageModel, MainPageSeoBlock
 
 
 class FixedSitemapMixin(Sitemap):
@@ -25,9 +25,11 @@ class FixedSitemapMixin(Sitemap):
             obj, lang_code = item
             # Activate language from item-tuple or forced one before calling location.
             with translation.override(force_lang_code or lang_code):
-                return str(self._get("location", item)) # It was wrapped in str(), since it fixes bug
-                                                        # when it generates alternates without
-                                                        # language code specifying
+                return str(
+                    self._get("location", item)
+                )  # It was wrapped in str(), since it fixes bug
+                # when it generates alternates without
+                # language code specifying
         return self._get("location", item)
 
 
@@ -44,7 +46,7 @@ class MainpageSitemap(FixedSitemapMixin):
 
     def lastmod(self, item):
         seo_block_lastmod = (
-            SeoBlock.objects.only("updated_at").latest("updated_at").updated_at
+            MainPageSeoBlock.objects.only("updated_at").latest("updated_at").updated_at
         )
 
         product_lastmod = (
@@ -271,6 +273,66 @@ class BouquetDetailSitemap(FixedSitemapMixin):
 
     def location(self, item: Bouquet):
         return item.get_relative_url()
+
+    def lastmod(self, item: Bouquet):
+        return item.updated_at
+
+
+class FAQSitemap(FixedSitemapMixin):
+    priority = 0.5
+    protocol = "https"
+    changefreq = "monthly"
+
+    def items(self):
+        return FAQPageModel.objects.only("updated_at").first()
+
+    def location(self, item: Bouquet):
+        return reverse_lazy("mainpage:faq")
+
+    def lastmod(self, item: Bouquet):
+        return item.updated_at
+
+
+class AboutUsSitemap(FixedSitemapMixin):
+    priority = 0.5
+    protocol = "https"
+    changefreq = "monthly"
+
+    def items(self):
+        return AboutUsPageModel.objects.only("updated_at").first()
+
+    def location(self, item: Bouquet):
+        return reverse_lazy("mainpage:about")
+
+    def lastmod(self, item: Bouquet):
+        return item.updated_at
+
+
+class DeliverySitemap(FixedSitemapMixin):
+    priority = 0.5
+    protocol = "https"
+    changefreq = "monthly"
+
+    def items(self):
+        return DeliveryPageModel.objects.only("updated_at").first()
+
+    def location(self, item: Bouquet):
+        return reverse_lazy("mainpage:delivery")
+
+    def lastmod(self, item: Bouquet):
+        return item.updated_at
+
+
+class ContactSitemap(FixedSitemapMixin):
+    priority = 0.5
+    protocol = "https"
+    changefreq = "monthly"
+
+    def items(self):
+        return ContactsPageModel.objects.only("updated_at").first()
+
+    def location(self, item: Bouquet):
+        return reverse_lazy("mainpage:contact")
 
     def lastmod(self, item: Bouquet):
         return item.updated_at
