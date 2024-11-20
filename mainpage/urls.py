@@ -4,6 +4,7 @@ from .views import (
     AboutDeliveryView,
     AboutUsView,
     ContactUsView,
+    FAQView,
     IndividualOrderView,
     MainPageView,
 )
@@ -20,6 +21,7 @@ urlpatterns = [
     path("about/", AboutUsView.as_view(), name="about"),
     path("delivery/", AboutDeliveryView.as_view(), name="delivery"),
     path("contact/", ContactUsView.as_view(), name="contact"),
+    path("faq/", FAQView.as_view(), name="faq")
     # path("payment/", PaymentInstructionsView.as_view(), name="payment"),
     # path("public-agreement/", PublicAgreementView.as_view(), name="public-agreement"),
     # path("privacy-and-policy/", PrivacyAndPolicyView.as_view(), name="privacy"),
