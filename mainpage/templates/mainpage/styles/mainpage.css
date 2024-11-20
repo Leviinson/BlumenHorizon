@@ -7,6 +7,6 @@
 }
 
 #mainpage-slider .carousel-img {
-aspect-ratio: 1000 / 450;
-object-fit: cover;
+  aspect-ratio: 1000 / 450;
+  object-fit: cover;
 }
