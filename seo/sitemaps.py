@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.sitemaps import Sitemap
 from django.db.models import Max
 from django.urls import reverse_lazy
@@ -14,14 +15,23 @@ from catalogue.models import (
 from mainpage.models import SeoBlock
 
 
-class SitemapMixin:
+class FixedSitemapMixin(Sitemap):
     alternates = True
     i18n = True
     x_default = True
 
+    def _location(self, item, force_lang_code=None):
+        if self.i18n:
+            obj, lang_code = item
+            # Activate language from item-tuple or forced one before calling location.
+            with translation.override(force_lang_code or lang_code):
+                return str(self._get("location", item)) # It was wrapped in str(), since it fixes bug
+                                                        # when it generates alternates without
+                                                        # language code specifying
+        return self._get("location", item)
 
 
-class MainpageSitemap(SitemapMixin, Sitemap):
+class MainpageSitemap(FixedSitemapMixin):
     priority = 1.0
     protocol = "https"
     changefreq = "weekly"
@@ -70,7 +80,7 @@ class MainpageSitemap(SitemapMixin, Sitemap):
         return max(seo_block_lastmod, product_lastmod, bouquet_lastmod)
 
 
-# class ProductListSitemap(Sitemap):
+# class ProductListSitemap(FixedSitemapMixin):
 #     priority = 0.5
 #     protocol = "https"
 #     changefreq = "weekly"
@@ -85,7 +95,7 @@ class MainpageSitemap(SitemapMixin, Sitemap):
 #         return Product.objects.only("updated_at").latest("updated_at").updated_at
 
 
-class ProductCategorySitemap(SitemapMixin, Sitemap):
+class ProductCategorySitemap(FixedSitemapMixin):
     priority = 0.5
     protocol = "https"
     changefreq = "weekly"
@@ -113,7 +123,7 @@ class ProductCategorySitemap(SitemapMixin, Sitemap):
         )
 
 
-class ProductSubcategorySitemap(SitemapMixin, Sitemap):
+class ProductSubcategorySitemap(FixedSitemapMixin):
     priority = 0.5
     protocol = "https"
     changefreq = "weekly"
@@ -138,7 +148,7 @@ class ProductSubcategorySitemap(SitemapMixin, Sitemap):
         return item.lastmod
 
 
-class ProductDetailSitemap(SitemapMixin, Sitemap):
+class ProductDetailSitemap(FixedSitemapMixin):
     priority = 0.5
     protocol = "https"
     changefreq = "weekly"
@@ -164,7 +174,7 @@ class ProductDetailSitemap(SitemapMixin, Sitemap):
         return item.updated_at
 
 
-# class BouquetListSitemap(SitemapMixin, Sitemap):
+# class BouquetListSitemap(FixedSitemapMixin):
 #     priority = 0.5
 #     protocol = "https"
 #     changefreq = "weekly"
@@ -179,7 +189,7 @@ class ProductDetailSitemap(SitemapMixin, Sitemap):
 #         return Bouquet.objects.only("updated_at").latest("updated_at").updated_at
 
 
-class BouquetCategorySitemap(SitemapMixin, Sitemap):
+class BouquetCategorySitemap(FixedSitemapMixin):
     priority = 0.5
     protocol = "https"
     changefreq = "weekly"
@@ -214,7 +224,7 @@ class BouquetCategorySitemap(SitemapMixin, Sitemap):
             return qs.latest("updated_at").updated_at
 
 
-class BouquetSubcategorySitemap(SitemapMixin, Sitemap):
+class BouquetSubcategorySitemap(FixedSitemapMixin):
     priority = 0.5
     protocol = "https"
     changefreq = "weekly"
@@ -240,7 +250,7 @@ class BouquetSubcategorySitemap(SitemapMixin, Sitemap):
         return item.lastmod
 
 
-class BouquetDetailSitemap(SitemapMixin, Sitemap):
+class BouquetDetailSitemap(FixedSitemapMixin):
     priority = 0.5
     protocol = "https"
     changefreq = "weekly"
