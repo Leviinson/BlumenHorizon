@@ -284,7 +284,7 @@ class FAQSitemap(FixedSitemapMixin):
     changefreq = "monthly"
 
     def items(self):
-        return FAQPageModel.objects.only("updated_at").first()
+        return FAQPageModel.objects.only("updated_at")
 
     def location(self, item: Bouquet):
         return reverse_lazy("mainpage:faq")
@@ -299,7 +299,7 @@ class AboutUsSitemap(FixedSitemapMixin):
     changefreq = "monthly"
 
     def items(self):
-        return AboutUsPageModel.objects.only("updated_at").first()
+        return AboutUsPageModel.objects.only("updated_at")
 
     def location(self, item: Bouquet):
         return reverse_lazy("mainpage:about")
@@ -314,7 +314,7 @@ class DeliverySitemap(FixedSitemapMixin):
     changefreq = "monthly"
 
     def items(self):
-        return DeliveryPageModel.objects.only("updated_at").first()
+        return DeliveryPageModel.objects.only("updated_at")
 
     def location(self, item: Bouquet):
         return reverse_lazy("mainpage:delivery")
@@ -329,7 +329,7 @@ class ContactSitemap(FixedSitemapMixin):
     changefreq = "monthly"
 
     def items(self):
-        return ContactsPageModel.objects.only("updated_at").first()
+        return ContactsPageModel.objects.only("updated_at")
 
     def location(self, item: Bouquet):
         return reverse_lazy("mainpage:contact")
