@@ -4,7 +4,6 @@
 {% load chunk_filters %}
 {% load extract_meta_tags %}
 
-
 {% block json_ld %}
 {% endblock %}
 
@@ -78,6 +77,10 @@
     </div>
   </div>
 
+  <div id="mainpage-description" class="my-5">
+    {{ description|safe }}
+  </div>
+
   <div class="card w-40 my-5">
     <form id="individual-order-form" action="{% url 'mainpage:individual-order-negotiate' %}"
       class="d-flex w-100 flex-column justify-content-start align-items-start text-start card-body" method="POST">
@@ -134,6 +137,9 @@
             <a href="{{ recommended_bouquet.get_relative_url }}" class="text-decoration-none text-dark w-100">
               <div class="card h-100 w-100" style="min-height: 404px;">
                 <div class="image-wrapper">
+                  {% if recommended_bouquet.has_discount %}
+                  <span class="badge bg-dark-green m-1 p-2 fs-5 product-discount-badge">-{{ recommended_bouquet.discount }}%</span>
+                  {% endif %}
                   {% if recommended_bouquet.first_image_uri %}
                   <img src="{{ MEDIA_URL }}{{ recommended_bouquet.first_image_uri }}" class="card-img-top square-image"
                     alt="{% if recommended_bouquet.first_image_alt %}{{ recommended_bouquet.first_image_alt }}{% else %}{% translate 'Изображение продукта временно отсутствует.' %}{% endif %}"
@@ -146,7 +152,14 @@
                 <div class="card-body d-flex flex-column">
                   <h5 class="card-title">{{ recommended_bouquet.name }}</h5>
                   <div class="d-flex flex-column justify-content-center mt-auto">
-                    <p class="card-text">{{ recommended_bouquet.price|floatformat:"2u" }} {{ currency_symbol }}</p>
+                    <p class="card-text">
+                      {% if recommended_bouquet.has_discount %}
+                      <span class="text-danger mb-0 me-2">{{ recommended_bouquet.discount_price|floatformat:"2u" }} {{ currency_symbol }}</span>
+                      <span class="text-muted text-decoration-line-through mb-0">{{ recommended_bouquet.price|floatformat:"2u" }} {{ currency_symbol }}</span>
+                      {% else %}
+                      <span>{{ recommended_bouquet.price|floatformat:"2u" }} {{ currency_symbol }}</span>
+                      {% endif %}
+                    </p>
                     <form method="post" class="add-to-cart-form w-100 me-2" data-add-url="{% url 'cart:bouquet-add' %}"
                       data-remove-url="{% url 'cart:bouquet-remove' %}"
                       data-is-in-cart="{% if recommended_bouquet in bouquets_cart %}true{% else %}false{% endif %}">
@@ -188,6 +201,9 @@
             <a href="{{ recommended_product.get_relative_url }}" class="text-decoration-none text-dark w-100">
               <div class="card h-100 w-100" style="min-height: 404px;">
                 <div class="image-wrapper">
+                  {% if recommended_product.has_discount %}
+                  <span class="badge bg-dark-green m-1 p-2 fs-5 product-discount-badge">-{{ recommended_product.discount }}%</span>
+                  {% endif %}
                   {% if recommended_product.first_image_uri %}
                   <img src="{{ MEDIA_URL }}{{ recommended_product.first_image_uri }}" class="card-img-top square-image"
                     alt="{% if recommended_product.first_image_alt %}{{ recommended_product.first_image_alt }}{% else %}{% translate 'Изображение продукта временно отсутствует.' %}{% endif %}"
@@ -200,7 +216,14 @@
                 <div class="card-body d-flex flex-column">
                   <h5 class="card-title">{{ recommended_product.name }}</h5>
                   <div class="d-flex flex-column justify-content-center mt-auto">
-                    <p class="card-text">{{ recommended_product.price|floatformat:"2u" }} {{ currency_symbol }}</p>
+                    <p class="card-text">
+                      {% if recommended_product.has_discount %}
+                      <span class="text-danger mb-0 me-2">{{ recommended_product.discount_price|floatformat:"2u" }} {{ currency_symbol }}</span>
+                      <span class="text-muted text-decoration-line-through mb-0">{{ recommended_product.price|floatformat:"2u" }} {{ currency_symbol }}</span>
+                      {% else %}
+                      <span>{{ recommended_product.price|floatformat:"2u" }} {{ currency_symbol }}</span>
+                      {% endif %}
+                    </p>
                     <form method="post" class="add-to-cart-form w-100 me-2" data-add-url="{% url 'cart:product-add' %}"
                       data-remove-url="{% url 'cart:product-remove' %}"
                       data-is-in-cart="{% if recommended_product in products_cart %}true{% else %}false{% endif %}">
