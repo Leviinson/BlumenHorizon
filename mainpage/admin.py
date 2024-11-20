@@ -1,6 +1,15 @@
 from django.contrib import admin
 
-from .models import IndividualOrder, MainPageModel, MainPageSliderImages, SeoBlock
+from .models import (
+    AboutUsPageModel,
+    ContactsPageModel,
+    DeliveryPageModel,
+    FAQPageModel,
+    IndividualOrder,
+    MainPageModel,
+    MainPageSliderImages,
+    MainPageSeoBlock,
+)
 
 
 @admin.register(MainPageSliderImages)
@@ -9,7 +18,7 @@ class MainPageSliderAdmin(admin.ModelAdmin):
     list_display = ["image", "image_alt", "is_active"]
 
 
-@admin.register(SeoBlock)
+@admin.register(MainPageSeoBlock)
 class SeoBlockAdmin(admin.ModelAdmin):
     fields = ["image", "image_alt"]
     list_display = ["image", "image_alt"]
@@ -26,5 +35,80 @@ class MainPageModelAdmin(admin.ModelAdmin):
     fields = [
         "meta_tags",
         "json_ld",
+        "description",
+        "description_ru",
+        "description_en",
+    ]
+    list_display = ["id"]
+
+
+@admin.register(FAQPageModel)
+class FAQPageModelAdmin(admin.ModelAdmin):
+    fields = [
+        "image",
+        "image_alt",
+        "image_alt_ru",
+        "image_alt_en",
+        "meta_tags",
+        "meta_tags_ru",
+        "meta_tags_en",
+        "json_ld",
+        "description",
+        "description_ru",
+        "description_en",
+    ]
+    list_display = ["id"]
+
+
+@admin.register(ContactsPageModel)
+class ContactsPageModelAdmin(admin.ModelAdmin):
+    fields = [
+        "image",
+        "image_alt",
+        "image_alt_ru",
+        "image_alt_en",
+        "meta_tags",
+        "meta_tags_ru",
+        "meta_tags_en",
+        "json_ld",
+        "description",
+        "description_ru",
+        "description_en",
+    ]
+    list_display = ["id"]
+
+
+@admin.register(DeliveryPageModel)
+class DeliveryPageModelAdmin(admin.ModelAdmin):
+    fields = [
+        "image",
+        "image_alt",
+        "image_alt_ru",
+        "image_alt_en",
+        "meta_tags",
+        "meta_tags_ru",
+        "meta_tags_en",
+        "json_ld",
+        "description",
+        "description_ru",
+        "description_en",
+    ]
+    list_display = ["id"]
+
+
+@admin.register(AboutUsPageModel)
+class AboutUsPageModelAdmin(admin.ModelAdmin):
+    fields = [
+        "image",
+        "image_alt",
+        "image_alt_ru",
+        "image_alt_en",
+        "meta_tags",
+        "meta_tags_ru",
+        "meta_tags_en",
+        "json_ld",
+        "description",
+        "description_ru",
+        "description_en",
     ]
     list_display = ["id"]
