@@ -10,6 +10,7 @@ class CommonContextMixin:
         current_site: Site = get_current_site(self.request)
         if not context.get("site_name"):
             context["site_name"] = current_site.name
+            context["domain_name"] = current_site.domain
         context["currency_symbol"] = current_site.extended.currency_symbol
         context["currency_code"] = current_site.extended.currency_code
         context["country"] = current_site.extended.country
