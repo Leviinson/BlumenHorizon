@@ -1,6 +1,6 @@
+from datetime import datetime
 from decimal import ROUND_HALF_UP, Decimal
-from random import choices
-from string import ascii_uppercase, digits
+from random import randint
 
 from colorfield.fields import ColorField
 from django.contrib.auth import get_user_model
@@ -16,8 +16,9 @@ from core.base_models import TimeStampAdbstractModel
 
 
 def generate_sku():
-    sku = "".join(choices(ascii_uppercase + digits, k=6))
-    return sku
+    timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+    random_part = randint(1000, 9999)
+    return f"SKU-{timestamp}-{random_part}"
 
 
 class MetaDataAbstractModel(models.Model):
@@ -184,7 +185,9 @@ class ProductCategory(CategoryAbstract, TimeStampAdbstractModel, MetaDataAbstrac
         )
 
 
-class ProductSubcategory(CategoryAbstract, TimeStampAdbstractModel, MetaDataAbstractModel):
+class ProductSubcategory(
+    CategoryAbstract, TimeStampAdbstractModel, MetaDataAbstractModel
+):
     image = models.ImageField(
         verbose_name=_("Картинка"),
         upload_to="subcategories/%Y-%m-%d",
@@ -406,7 +409,9 @@ class BouquetCategory(CategoryAbstract, TimeStampAdbstractModel, MetaDataAbstrac
         )
 
 
-class BouquetSubcategory(CategoryAbstract, TimeStampAdbstractModel, MetaDataAbstractModel):
+class BouquetSubcategory(
+    CategoryAbstract, TimeStampAdbstractModel, MetaDataAbstractModel
+):
     image = models.ImageField(
         verbose_name=_("Картинка"),
         upload_to="subcategories/%Y-%m-%d",
