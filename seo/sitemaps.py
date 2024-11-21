@@ -12,7 +12,13 @@ from catalogue.models import (
     ProductCategory,
     ProductSubcategory,
 )
-from mainpage.models import AboutUsPageModel, ContactsPageModel, DeliveryPageModel, FAQPageModel, MainPageSeoBlock
+from mainpage.models import (
+    AboutUsPageModel,
+    ContactsPageModel,
+    DeliveryPageModel,
+    FAQPageModel,
+    MainPageSeoBlock,
+)
 
 
 class FixedSitemapMixin(Sitemap):

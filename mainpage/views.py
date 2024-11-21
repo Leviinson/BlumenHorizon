@@ -26,8 +26,8 @@ from .models import (
     DeliveryPageModel,
     FAQPageModel,
     MainPageModel,
-    MainPageSliderImages,
     MainPageSeoBlock,
+    MainPageSliderImages,
 )
 from .services.dataclasses.related_model import RelatedModel
 

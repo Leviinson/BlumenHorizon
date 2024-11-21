@@ -91,7 +91,6 @@ class MainPageSeoBlock(TimeStampAdbstractModel, models.Model):
         return f"{self.image} ...... {self.alt}"
 
 
-
 class FAQPageModel(TimeStampAdbstractModel):
     image = models.ImageField(
         verbose_name=_("Картинка"),

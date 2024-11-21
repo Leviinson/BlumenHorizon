@@ -21,15 +21,13 @@ from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
 from django.contrib.auth.views import LogoutView
 from django.urls import include, path, re_path
-from django.views.i18n import JavaScriptCatalog
-from django.views.i18n import set_language
-
+from django.views.i18n import JavaScriptCatalog, set_language
 
 service_urlpatterns = [
     path("i18n/", include("django.conf.urls.i18n")),
     path("admin/", admin.site.urls),
     path("logout/", LogoutView.as_view(), name="logout"),
-    path('i18n/setlang/', set_language, name='set_language'),
+    path("i18n/setlang/", set_language, name="set_language"),
     path("", include("wysiwyg.urls")),
     path("", include("seo.urls")),
 ]

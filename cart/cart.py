@@ -16,7 +16,7 @@ class CartMixin:
         session: SessionBase = None,
         session_key: str = None,
         *args,
-        **kwargs
+        **kwargs,
     ):
         self.with_images = with_images
         return super().__init__(session, session_key, *args, **kwargs)
@@ -37,6 +37,7 @@ class CartMixin:
             "subcategory", "subcategory__category"
         )
         from django.utils.translation import get_language
+
         language = get_language()
         if self.with_images:
             first_image_subquery = self.image_model.objects.filter(
@@ -46,7 +47,9 @@ class CartMixin:
             ).order_by("id")[:1]
             optimized_queryset = optimized_queryset.annotate(
                 first_image_uri=Subquery(first_image_subquery.values("image")[:1]),
-                first_image_alt=Subquery(first_image_subquery.values(f"image_alt_{language}")[:1]),
+                first_image_alt=Subquery(
+                    first_image_subquery.values(f"image_alt_{language}")[:1]
+                ),
             )
         optimized_queryset = optimized_queryset.only(
             "name",

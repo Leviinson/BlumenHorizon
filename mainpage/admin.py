@@ -7,8 +7,8 @@ from .models import (
     FAQPageModel,
     IndividualOrder,
     MainPageModel,
-    MainPageSliderImages,
     MainPageSeoBlock,
+    MainPageSliderImages,
 )
 
 
