@@ -1,13 +1,15 @@
 from typing import Type
 
 from django.http import HttpRequest, JsonResponse
+from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
-from django.views.generic.edit import BaseFormView
+from django.views.generic.edit import BaseFormView, FormView
 
 from core.services.mixins.views import CommonContextMixin
 
 from .cart import BouquetCart, ProductCart
+from .forms import OrderForm
 from .services.mixins import (
     CartBouquetEditMixin,
     CartEditAbstractMixin,
@@ -18,9 +20,32 @@ from .services.mixins import (
 )
 
 
-class CartView(CommonContextMixin, TemplateView):
+class CartView(CommonContextMixin, FormView):
     template_name = "cart/index.html"
-    extra_context = {"title": _("Корзина товаров")}
+    form_class = OrderForm
+
+    def form_valid(self, form: OrderForm):
+        product_cart = ProductCart(
+            session=self.request.session, session_key="products_cart"
+        )
+        bouquet_cart = BouquetCart(
+            session=self.request.session, session_key="bouquets_cart"
+        )
+        order = form.save(
+            products=product_cart.products,
+            bouquets=bouquet_cart.products,
+            commit=True,
+            user=self.request.user,
+        )
+        product_cart.clear()
+        bouquet_cart.clear()
+
+        if "orders" in self.request.session:
+            self.request.session["orders"].append(order.code)
+        else:
+            self.request.session["orders"] = [order.code,]
+        self.success_url = reverse_lazy("cart:success-order", kwargs={"order_code": order.code})
+        return super().form_valid(form)
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
@@ -135,3 +160,7 @@ def cart_clear(request: HttpRequest) -> Type[JsonResponse]:
         },
         status=405,
     )
+
+
+class SuccessOrderView(CommonContextMixin, TemplateView):
+    template_name = "cart/success_order.html"
