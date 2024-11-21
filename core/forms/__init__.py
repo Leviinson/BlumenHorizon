@@ -1,1 +1,1 @@
-from .phone_number import BootstrapSplitPhoneNumberField
+from .phonenumber import BootstrapSplitPhoneNumberField
