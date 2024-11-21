@@ -3,6 +3,10 @@
 {% load i18n %}
 {% load static %}
 
+{% block meta_tags %}
+<title>{{ title }} | {{ site_name }}</title>
+{% endblock %}
+
 {% block additional_head_styles %}
 <link rel="stylesheet" href="{% static 'accounts/styles/forms.css' %}">
 {% endblock %}
