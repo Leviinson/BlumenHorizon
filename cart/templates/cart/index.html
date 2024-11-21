@@ -3,7 +3,6 @@
 {% load i18n %}
 
 {% block additional_head_styles %}
-
 <link rel="stylesheet" href="{% static 'cart/styles/cart.css' %}">
 {% endblock %}
 
@@ -198,10 +197,7 @@
                 <div class="card mb-4 mb-lg-0">
                     <div class="card-body">
                         <p><strong>{% translate 'Мы принимаем' %}</strong></p>
-                        <img class="me-2" width="45px" alt="Visa" />
-                        <img class="me-2" width="45px" alt="American Express" />
-                        <img class="me-2" width="45px" alt="Mastercard" />
-                        <img class="me-2" width="45px" alt="PayPal acceptance mark" />
+                        <img class="me-2" width="90px" alt="Visa" src="{% static 'defaults/iban.png' %}"/>
                     </div>
                 </div>
             </div>
@@ -249,59 +245,148 @@
                         <h5>{% translate 'Адрес доставки' %}</h2>
                     </div>
                     <div class="card-body">
-                        <form id="delivery-address-form">
+                        <form id="order-form" method="POST">
+                            {% csrf_token %}
                             <div class="mb-3 form-check">
-                                <input type="checkbox" class="form-check-input" id="confirm-address">
+                                <input name="clarify_address" type="checkbox" class="form-check-input" id="confirm-address">
                                 <label class="form-check-label" for="confirm-address">
                                     {% translate 'Уточнить адрес у получателя?' %}
                                 </label>
+                                {% if form.errors.clarify_address %}
+                                {% for error in form.errors.clarify_address %}
+                                <div class="form-text text-danger">
+                                    {{ error|striptags }}
+                                </div>
+                                {% endfor %}
+                                {% endif %}
                             </div>
                             <div class="mb-3" id="country-container">
                                 <label for="country" class="form-label">{% translate 'Страна' %}</label>
-                                <input type="text" class="form-control" id="country" value="{{ country }}" disabled>
+                                <input name="country" type="text" class="form-control" id="country" value="{{ country }}">
+                                {% if form.errors.country %}
+                                {% for error in form.errors.country %}
+                                <div class="form-text text-danger">
+                                    {{ error|striptags }}
+                                </div>
+                                {% endfor %}
+                                {% endif %}
                             </div>
                             <div class="mb-3" id="city-container">
                                 <label for="city" class="form-label">{% translate 'Город' %}</label>
-                                <input type="text" class="form-control" id="city" value="{{ city }}" disabled>
+                                <input name="city" type="text" class="form-control disabled" id="city" value="{{ city }}">
+                                {% if form.errors.city %}
+                                {% for error in form.errors.city %}
+                                <div class="form-text text-danger">
+                                    {{ error|striptags }}
+                                </div>
+                                {% endfor %}
+                                {% endif %}
+                            </div>
+                            <div class="mb-3" id="city-container">
+                                <label for="city" class="form-label">{% translate 'Email' %}</label>
+                                <input name="email" type="email" class="form-control" id="email">
+                                {% if form.errors.email %}
+                                {% for error in form.errors.email %}
+                                <div class="form-text text-danger">
+                                    {{ error|striptags }}
+                                </div>
+                                {% endfor %}
+                                {% endif %}
                             </div>
                             <div class="mb-3" id="postal-code-container">
                                 <label for="postal-code" class="form-label">{% translate 'Почтовый индекс' %}</label>
-                                <input type="text" class="form-control" id="postal-code">
+                                <input name="postal_code" type="text" class="form-control" id="postal-code">
+                                {% if form.errors.postal_code %}
+                                {% for error in form.errors.postal_code %}
+                                <div class="form-text text-danger">
+                                    {{ error|striptags }}
+                                </div>
+                                {% endfor %}
+                                {% endif %}
                             </div>
                             <div class="mb-3" id="street-container">
                                 <label for="street" class="form-label">{% translate 'Улица' %}</label>
-                                <input type="text" class="form-control" id="street">
+                                <input name="street" type="text" class="form-control" id="street">
+                                {% if form.errors.street %}
+                                {% for error in form.errors.street %}
+                                <div class="form-text text-danger">
+                                    {{ error|striptags }}
+                                </div>
+                                {% endfor %}
+                                {% endif %}
                             </div>
                             <div class="mb-3" id="building-number-container">
                                 <label for="building-number" class="form-label">{% translate 'Номер здания' %}</label>
-                                <input type="text" class="form-control" id="building-number">
+                                <input name="building" type="text" class="form-control" id="building-number">
+                                {% if form.errors.building %}
+                                {% for error in form.errors.building %}
+                                <div class="form-text text-danger">
+                                    {{ error|striptags }}
+                                </div>
+                                {% endfor %}
+                                {% endif %}
                             </div>
                             <div class="mb-3" id="apartment-container">
-                                <label for="apartment" class="form-label">{% translate 'Номер квартиры/офиса' %}</label>
-                                <input type="text" class="form-control" id="apartment">
+                                <label for="appartment" class="form-label">{% translate 'Номер квартиры/офиса' %}</label>
+                                <input name="flat" type="text" class="form-control" id="apartment">
+                                {% if form.errors.flat %}
+                                {% for error in form.errors.flat %}
+                                <div class="form-text text-danger">
+                                    {{ error|striptags }}
+                                </div>
+                                {% endfor %}
+                                {% endif %}
                             </div>
                             <div class="mb-3" id="recipient-name-container">
                                 <label for="recipient-name" class="form-label">{% translate 'Имя получателя' %}</label>
-                                <input type="text" class="form-control" id="recipient-name">
+                                <input name="recipient_name" type="text" class="form-control" id="recipient-name">
+                                {% if form.errors.recipient_name %}
+                                {% for error in form.errors.recipient_name %}
+                                <div class="form-text text-danger">
+                                    {{ error|striptags }}
+                                </div>
+                                {% endfor %}
+                                {% endif %}
                             </div>
                             <div class="mb-3" id="recipient-phone-container">
-                                <label for="recipient-phone" class="form-label">
+                                <label for="recipient-phonenumber" class="form-label">
                                     {% translate 'Номер телефона получателя'%}
                                 </label>
-                                <input type="text" class="form-control" id="recipient-phone">
+                                <input name="recipient_phonenumber" type="text" class="form-control" id="recipient-phonenumber">
+                                {% if form.errors.recipient_phonenumber %}
+                                {% for error in form.errors.recipient_phonenumber %}
+                                <div class="form-text text-danger">
+                                    {{ error|striptags }}
+                                </div>
+                                {% endfor %}
+                                {% endif %}
                             </div>
                             <div class="mb-3 form-check">
-                                <input type="checkbox" class="form-check-input" id="recipient-is-customer">
+                                <input name="is_recipient" type="checkbox" class="form-check-input" id="recipient-is-customer">
                                 <label class="form-check-label" for="recipient-is-customer">
                                     {% translate 'Получатель - заказчик?' %}
                                 </label>
+                                {% if form.errors.is_recipient %}
+                                {% for error in form.errors.is_recipient %}
+                                <div class="form-text text-danger">
+                                    {{ error|striptags }}
+                                </div>
+                                {% endfor %}
+                                {% endif %}
                             </div>
                             <div class="mb-3 form-check">
-                                <input type="checkbox" class="form-check-input" id="surprise-delivery">
+                                <input name="is_surprise" type="checkbox" class="form-check-input" id="surprise-delivery">
                                 <label class="form-check-label" for="surprise-delivery">
                                     <strong>{% translate 'Сюрприз до последнего!' %}</strong>
                                     {% translate 'Мы не раскроем тайну вашего подарка, чтобы сделать момент ещё более волшебным.'%}
                                 </label>
+                                {% if form.errors.is_surprise %}
+                                {% for error in form.errors.is_surprise %}
+                                <div class="form-text text-danger">
+                                    {{ error|striptags }}
+                                </div>
+                                {% endfor %}
+                                {% endif %}
                             </div>
                             <button type="submit" class="btn btn-dark-green" id="btn-checkout">
                                 {% translate 'Оформить заказ' %}
