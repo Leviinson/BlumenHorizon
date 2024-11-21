@@ -67,7 +67,7 @@ class UserCreationTest(TestCase):
             "User wasn't activated after email confirmation by link",
         )
 
-    def test_user_creation_with_duplicated_phone_number(self):
+    def test_user_creation_with_duplicated_phonenumber(self):
         signup_data_1 = UserSignUpCredentials(
             email="melnykov.vitalii197@gmail.com",
             password1="fhjeuio**^321",
