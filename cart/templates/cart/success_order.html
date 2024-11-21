@@ -1,0 +1,16 @@
+{% extends "templates/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block additional_head_styles %}
+{% endblock %}
+
+{% block meta_tags %}
+{% endblock %}
+
+{% block body %}
+{{ view.request.session.orders }}
+{% endblock %}
+
+{% block additional_scripts %}
+{% endblock %}
