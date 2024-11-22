@@ -37,8 +37,7 @@ class MainPageModelAdmin(TranslationAdmin):
     fields = [
         "meta_tags",
         "json_ld",
-        "description_ru",
-        "description_en",
+        "description",
     ]
     list_display = ["id"]
 
