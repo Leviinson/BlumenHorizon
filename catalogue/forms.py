@@ -12,7 +12,7 @@ class BuyItemForm(forms.Form):
 
 
 class IndividualQuestionForm(forms.ModelForm):
-    item_slug = forms.SlugField(label=_("Идентификатор элемента"))
+    item_slug = forms.SlugField(label="Идентификатор элемента")
 
     class Meta:
         model = IndividualQuestion

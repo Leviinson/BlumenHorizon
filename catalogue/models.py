@@ -23,16 +23,16 @@ def generate_sku():
 
 class MetaDataAbstractModel(models.Model):
     name = models.CharField(
-        verbose_name=_("Название"),
+        verbose_name="Название",
         max_length=40,
         unique=True,
     )
     slug = models.SlugField(
-        verbose_name=_("Название в ссылке"),
+        verbose_name="Название в ссылке",
         unique=True,
     )
     is_active = models.BooleanField(
-        verbose_name=_("Активный?"),
+        verbose_name="Активный?",
         default=True,
     )
     amount_of_orders = models.IntegerField(
@@ -153,7 +153,7 @@ class BouquetsListPageModel(models.Model):
 
 class ProductCategory(CategoryAbstract, TimeStampAdbstractModel, MetaDataAbstractModel):
     image = models.ImageField(
-        verbose_name=_("Картинка"),
+        verbose_name="Картинка",
         upload_to="categories/%Y-%m-%d",
         default="defaults/no-image.webp",
     )
@@ -189,14 +189,14 @@ class ProductSubcategory(
     CategoryAbstract, TimeStampAdbstractModel, MetaDataAbstractModel
 ):
     image = models.ImageField(
-        verbose_name=_("Картинка"),
+        verbose_name="Картинка",
         upload_to="subcategories/%Y-%m-%d",
         default="defaults/no-image.webp",
     )
     category = models.ForeignKey(
         ProductCategory,
         on_delete=models.PROTECT,
-        verbose_name=_("Категория"),
+        verbose_name="Категория",
         related_name="subcategories",
     )
     image_alt = models.CharField(verbose_name="Описание картинки", max_length=100)
@@ -231,7 +231,7 @@ class ProductAbstract(TimeStampAdbstractModel, MetaDataAbstractModel):
     price = models.DecimalField(
         max_digits=10,
         decimal_places=2,
-        verbose_name=_("Цена"),
+        verbose_name="Цена",
         help_text=_(
             "Цена продукта до 10ти значений, два из которых плавающая запятая. Т.е. до 99999999.99"
         ),
@@ -241,7 +241,7 @@ class ProductAbstract(TimeStampAdbstractModel, MetaDataAbstractModel):
             MinValueValidator(0),
             MaxValueValidator(100),
         ),
-        verbose_name=_("Скидка"),
+        verbose_name="Скидка",
         null=True,
         default=0,
     )
@@ -249,10 +249,10 @@ class ProductAbstract(TimeStampAdbstractModel, MetaDataAbstractModel):
         verbose_name="Время истечения скидки", default=timezone.now
     )
     description = HTMLField(
-        verbose_name=_("Описание"),
+        verbose_name="Описание",
     )
     specs = HTMLField(
-        verbose_name=_("Характеристики"),
+        verbose_name="Характеристики",
     )
 
     class Meta:
@@ -280,7 +280,7 @@ class Product(ProductAbstract):
     subcategory = models.ForeignKey(
         ProductSubcategory,
         on_delete=models.PROTECT,
-        verbose_name=_("Подкатегория"),
+        verbose_name="Подкатегория",
         related_name="products",
     )
     sku = models.CharField(max_length=25, unique=True, default=generate_sku, null=True)
@@ -321,7 +321,7 @@ class ProductImage(models.Model):
         Product,
         related_name="images",
         on_delete=models.CASCADE,
-        verbose_name=_("Продукт"),
+        verbose_name="Продукт",
     )
     image = models.ImageField(
         upload_to="products/%Y-%m-%d/",
@@ -341,11 +341,11 @@ class ProductImage(models.Model):
 class Color(models.Model):
     name = models.CharField(
         max_length=15,
-        verbose_name=_("Название"),
+        verbose_name="Название",
         unique=True,
     )
     hex_code = ColorField(
-        verbose_name=_("HEX код цвета (#f4678a к примеру)"),
+        verbose_name="HEX код цвета (#f4678a к примеру)",
         help_text=_(
             "Введите HEX-код цвета, например: #FFFFFF (белый) или #FFF (сокращённый формат)."
         ),
@@ -363,7 +363,7 @@ class Color(models.Model):
 class Flower(models.Model):
     name = models.CharField(
         max_length=30,
-        verbose_name=_("Название"),
+        verbose_name="Название",
         unique=True,
     )
 
@@ -377,7 +377,7 @@ class Flower(models.Model):
 
 class BouquetCategory(CategoryAbstract, TimeStampAdbstractModel, MetaDataAbstractModel):
     image = models.ImageField(
-        verbose_name=_("Картинка"),
+        verbose_name="Картинка",
         upload_to="categories/%Y-%m-%d",
         default="defaults/no-image.webp",
     )
@@ -413,7 +413,7 @@ class BouquetSubcategory(
     CategoryAbstract, TimeStampAdbstractModel, MetaDataAbstractModel
 ):
     image = models.ImageField(
-        verbose_name=_("Картинка"),
+        verbose_name="Картинка",
         upload_to="subcategories/%Y-%m-%d",
         default="defaults/no-image.webp",
     )
@@ -421,7 +421,7 @@ class BouquetSubcategory(
     category = models.ForeignKey(
         BouquetCategory,
         on_delete=models.PROTECT,
-        verbose_name=_("Категория"),
+        verbose_name="Категория",
         related_name="subcategories",
     )
 
@@ -461,30 +461,30 @@ class Bouquet(ProductAbstract):
     subcategory = models.ForeignKey(
         BouquetSubcategory,
         on_delete=models.PROTECT,
-        verbose_name=_("Подкатегория"),
+        verbose_name="Подкатегория",
         related_name="bouquets",
     )
     amount_of_flowers = models.IntegerField(
-        verbose_name=_("Количество цветов в букете")
+        verbose_name="Количество цветов в букете"
     )
-    diameter = models.IntegerField(verbose_name=_("Диаметр букета"))
+    diameter = models.IntegerField(verbose_name="Диаметр букета")
     colors = models.ManyToManyField(
         Color,
         related_name="bouquet",
-        verbose_name=_("Цветовые гаммы букетов"),
-        help_text=_("Выберите какого цвета букет."),
+        verbose_name="Цветовые гаммы букетов",
+        help_text="Выберите какого цвета букет.",
     )
     flowers = models.ManyToManyField(
         Flower,
         related_name="bouquets",
-        verbose_name=_("Состав букетов"),
+        verbose_name="Состав букетов",
         help_text=_("Выберите какие цветы в букете."),
     )
     sku = models.CharField(max_length=25, unique=True, default=generate_sku, null=True)
 
     class Meta:
-        verbose_name = _("Букет")
-        verbose_name_plural = _("Букеты")
+        verbose_name = "Букет"
+        verbose_name_plural = "Букеты"
 
     def __str__(self):
         return f"{self.name} ({self.diameter} см, {self.amount_of_flowers} цветов)"
@@ -518,16 +518,16 @@ class Bouquet(ProductAbstract):
 
 class BouquetSize(models.Model):
     bouquet = models.ForeignKey(
-        Bouquet, related_name="sizes", verbose_name=_("Букет"), on_delete=models.CASCADE
+        Bouquet, related_name="sizes", verbose_name="Букет", on_delete=models.CASCADE
     )
     amount_of_flowers = models.IntegerField(
-        verbose_name=_("Количество цветов в букете")
+        verbose_name="Количество цветов в букете"
     )
-    diameter = models.IntegerField(verbose_name=_("Диаметр букета"))
+    diameter = models.IntegerField(verbose_name="Диаметр букета")
     price = models.DecimalField(
         max_digits=10,
         decimal_places=2,
-        verbose_name=_("Цена размера"),
+        verbose_name="Цена размера",
         help_text=_(
             "Цена размера до 10ти значений, два из которых плавающая запятая. Т.е. до 99999999.99"
         ),
@@ -537,7 +537,7 @@ class BouquetSize(models.Model):
             MinValueValidator(0),
             MaxValueValidator(100),
         ),
-        verbose_name=_("Скидка"),
+        verbose_name="Скидка",
         null=True,
         default=0,
     )
@@ -564,11 +564,11 @@ class BouquetImage(models.Model):
         Bouquet,
         related_name="images",
         on_delete=models.CASCADE,
-        verbose_name=_("Букет"),
+        verbose_name="Букет",
     )
     image = models.ImageField(
         upload_to="bouquets/%Y-%m-%d/",
-        verbose_name=_("Изображение букета"),
+        verbose_name="Изображение букета",
         default="defaults/no-image.webp",
     )
     image_alt = models.CharField(verbose_name="Описание картинки", max_length=100)
@@ -611,7 +611,7 @@ class IndividualQuestion(TimeStampAdbstractModel, models.Model):
     )
     contact_method = models.TextField(
         max_length=100,
-        verbose_name=_("Способ связи с клиентом"),
+        verbose_name="Способ связи с клиентом",
     )
     recall_me = models.BooleanField(
         verbose_name="Разрешил ли клиент звонить ему", default=False
