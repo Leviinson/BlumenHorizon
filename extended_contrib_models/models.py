@@ -4,6 +4,7 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils.translation import gettext_lazy as _
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 class ExtendedSite(models.Model):
@@ -14,6 +15,17 @@ class ExtendedSite(models.Model):
     currency_symbol = models.CharField(max_length=5, verbose_name="Знак валюты")
     country = models.CharField(max_length=40, verbose_name="Название страны")
     city = models.CharField(max_length=40, verbose_name="Название города")
+    tax_percent = models.IntegerField(
+        validators=(
+            MinValueValidator(0),
+            MaxValueValidator(100),
+        ),
+        verbose_name=_("НДС"),
+        null=True,
+        default=0,
+    )
+    iban = models.CharField(verbose_name="IBAN для оплаты", max_length=50)
+    account_name = models.CharField(verbose_name="Название счёта", max_length=40)
 
     def __str__(self):
         return f"{self.site.name} | {self.site.domain}"
