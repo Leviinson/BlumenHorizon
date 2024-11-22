@@ -38,6 +38,7 @@ class MainPageSliderImages(models.Model):
     image = models.ImageField(
         upload_to="mainpage-slider/",
         verbose_name="Фото на главном слайде",
+        help_text="1000px/450px",
     )
     is_active = models.BooleanField(default=False, verbose_name="Активное?")
     image_alt = models.CharField(verbose_name="Описание картинки", max_length=100)
@@ -80,6 +81,7 @@ class MainPageSeoBlock(TimeStampAdbstractModel, models.Model):
     image = models.ImageField(
         verbose_name=_("Картинка"),
         upload_to="seoblock/",
+        help_text="1000px/450px",
     )
     image_alt = models.CharField(max_length=100, verbose_name="Описание картинки")
 
@@ -96,6 +98,7 @@ class FAQPageModel(TimeStampAdbstractModel):
         verbose_name=_("Картинка"),
         upload_to="seoblock/",
         default="defaults/no-image.webp",
+        help_text="1000px/450px",
     )
     image_alt = models.CharField(max_length=100, verbose_name="Описание картинки")
     description = HTMLField(
@@ -130,6 +133,7 @@ class AboutUsPageModel(TimeStampAdbstractModel):
         verbose_name=_("Картинка"),
         upload_to="seoblock/",
         default="defaults/no-image.webp",
+        help_text="1000px/450px",
     )
     image_alt = models.CharField(max_length=100, verbose_name="Описание картинки")
     description = HTMLField(
@@ -164,6 +168,7 @@ class DeliveryPageModel(TimeStampAdbstractModel):
         verbose_name=_("Картинка"),
         upload_to="seoblock/",
         default="defaults/no-image.webp",
+        help_text="1000px/450px",
     )
     image_alt = models.CharField(max_length=100, verbose_name="Описание картинки")
     description = HTMLField(
@@ -198,6 +203,7 @@ class ContactsPageModel(TimeStampAdbstractModel):
         verbose_name=_("Картинка"),
         upload_to="seoblock/",
         default="defaults/no-image.webp",
+        help_text="1000px/450px",
     )
     image_alt = models.CharField(max_length=100, verbose_name="Описание картинки")
     description = HTMLField(
