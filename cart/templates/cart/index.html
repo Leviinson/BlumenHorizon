@@ -9,7 +9,7 @@
 {% block meta_tags %}
 <meta name="robots" content="noindex, nofollow" />
 <title>{% translate 'Корзина' %} | {{ site_name }}</title>
-<meta name="description" content="{% translate 'Оформите заказ на букеты в интернет-магазине [Название магазина]. Ваша корзина готова к оформлению. Быстрая доставка.' %}">
+<meta name="description" content="{% blocktranslate with site_name=site_name %}Оформите заказ на букеты в интернет-магазине {{ site_name }}. Ваша корзина готова к оформлению. Быстрая доставка. {% blocktranslate %}">
 <meta name="keywords" content="{% translate 'корзина букетов, интернет-магазин букетов, доставка цветов, оформить заказ' %}" />
 {% endblock %}
 

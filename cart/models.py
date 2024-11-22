@@ -73,14 +73,14 @@ class Order(TimeStampAdbstractModel, models.Model):
         max_digits=10,
         decimal_places=2,
         verbose_name=_("Чистая стоимость"),
-        help_text=_("Без налога"),
+        help_text="Без налога",
         null=True,
     )
     tax = models.DecimalField(
         max_digits=10,
         decimal_places=2,
         verbose_name=_("Налоговая стоимость"),
-        help_text=_("Стоимость налога"),
+        help_text="Стоимость налога",
         null=True,
     )
     tax_percent = models.IntegerField(
@@ -97,7 +97,7 @@ class Order(TimeStampAdbstractModel, models.Model):
         max_digits=10,
         decimal_places=2,
         verbose_name=_("Итоговая стоимость"),
-        help_text=_("С налогом"),
+        help_text="С налогом",
         null=True,
     )
 
