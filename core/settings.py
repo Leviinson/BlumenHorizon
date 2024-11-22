@@ -33,6 +33,7 @@ DEBUG = bool(int(os.getenv("DEBUG")))
 
 ALLOWED_HOSTS = [
     os.getenv("PUBLIC_IP"),
+    os.getenv("DOMAIN"),
 ]
 
 # DJANGO-TINYMCE
