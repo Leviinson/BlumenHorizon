@@ -84,9 +84,7 @@ DATA_UPLOAD_MAX_MEMORY_SIZE = (
 )  # 10MB : 2 = 5MB (for comfort changing in the future)
 
 INTERNAL_IPS = [
-    "0.0.0.0",
-    "127.0.0.1",
-    "localhost",
+    os.getenv("PUBLIC_IP"),
 ]
 
 SECURE_CROSS_ORIGIN_OPENER_POLICY = None
