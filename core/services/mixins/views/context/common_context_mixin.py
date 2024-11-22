@@ -7,7 +7,7 @@ class CommonContextMixin:
     def get_context_data(self, *args, **kwargs):
         "Must be implemented and inherited by every view"
         context = super().get_context_data(*args, **kwargs)
-        current_site: Site = get_current_site(self.request)
+        current_site = self.current_site = get_current_site(self.request)
         if not context.get("site_name"):
             context["site_name"] = current_site.name
             context["domain_name"] = current_site.domain
