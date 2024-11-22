@@ -63,7 +63,7 @@ class IndividualOrder(models.Model):
     first_name = models.CharField(max_length=40, verbose_name="Имя")
     contact_method = models.TextField(
         max_length=100,
-        verbose_name=_("Способ связи с клиентом"),
+        verbose_name="Способ связи с клиентом",
     )
     recall_me = models.BooleanField(
         verbose_name="Разрешил ли клиент звонить ему", default=False
@@ -79,7 +79,7 @@ class IndividualOrder(models.Model):
 
 class MainPageSeoBlock(TimeStampAdbstractModel, models.Model):
     image = models.ImageField(
-        verbose_name=_("Картинка"),
+        verbose_name="Картинка",
         upload_to="seoblock/",
         help_text="1000px/450px",
     )
@@ -95,7 +95,7 @@ class MainPageSeoBlock(TimeStampAdbstractModel, models.Model):
 
 class FAQPageModel(TimeStampAdbstractModel):
     image = models.ImageField(
-        verbose_name=_("Картинка"),
+        verbose_name="Картинка",
         upload_to="seoblock/",
         default="defaults/no-image.webp",
         help_text="1000px/450px",
@@ -130,7 +130,7 @@ class FAQPageModel(TimeStampAdbstractModel):
 
 class AboutUsPageModel(TimeStampAdbstractModel):
     image = models.ImageField(
-        verbose_name=_("Картинка"),
+        verbose_name="Картинка",
         upload_to="seoblock/",
         default="defaults/no-image.webp",
         help_text="1000px/450px",
@@ -165,7 +165,7 @@ class AboutUsPageModel(TimeStampAdbstractModel):
 
 class DeliveryPageModel(TimeStampAdbstractModel):
     image = models.ImageField(
-        verbose_name=_("Картинка"),
+        verbose_name="Картинка",
         upload_to="seoblock/",
         default="defaults/no-image.webp",
         help_text="1000px/450px",
@@ -200,7 +200,7 @@ class DeliveryPageModel(TimeStampAdbstractModel):
 
 class ContactsPageModel(TimeStampAdbstractModel):
     image = models.ImageField(
-        verbose_name=_("Картинка"),
+        verbose_name="Картинка",
         upload_to="seoblock/",
         default="defaults/no-image.webp",
         help_text="1000px/450px",
