@@ -5,3 +5,5 @@
 logs/**/**
 media/**
 static/**
+
+.env
