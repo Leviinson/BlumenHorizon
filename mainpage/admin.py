@@ -23,7 +23,7 @@ class MainPageSliderAdmin(TranslationAdmin):
 @admin.register(MainPageSeoBlock)
 class SeoBlockAdmin(TranslationAdmin):
     fields = ["image", "image_alt"]
-    list_display = ["image", "image_alt"]
+    list_display = ["pk", "image", "image_alt"]
 
 
 @admin.register(IndividualOrder)
