@@ -37,6 +37,10 @@ urlpatterns = (
         name="product-remove-single",
     ),
     path("clear/", cart_clear, name="clear"),
-    path("success-order/<slug:order_code>/", SuccessOrderView.as_view(), name="success-order"),
+    path(
+        "success-order/<slug:order_code>/",
+        SuccessOrderView.as_view(),
+        name="success-order",
+    ),
     path("", CartView.as_view(), name="show"),
 )
