@@ -6,10 +6,48 @@
 {% endblock %}
 
 {% block meta_tags %}
+<title>{% translate 'Заказ оформлен' %} | {{ site_name }} </title>
 {% endblock %}
 
 {% block body %}
-{{ view.request.session.orders }}
+<div class="container px-4 py-5">
+    <div id="content">
+        <div id="header">
+            <h1 class="text-center fs-3">
+                {% blocktranslate with order_code=order.code %}
+                Благодарим Вас за оформление заказа <br>{{ order_code }}
+                {% endblocktranslate %}
+            </h1>
+        </div>
+        <div id="body">
+            <span>
+                {% blocktranslate with order_date=order.created_at|date:"Y-m-d H:i:s" %}
+                Дата оформления заказа: {{ order_date }}
+                {% endblocktranslate %}
+            </span>
+            <p>
+                {% blocktranslate with email=order.email %}
+                <strong>В скором времени мы свяжемся с Вами</strong> по поводу Вашего заказа по указанной электронной почте <strong>({{ email }})</strong>.
+                {% endblocktranslate %}
+            </p>
+            <p>
+                {% blocktranslate with grand_total=order.grand_total|floatformat:"2u" currency_code=currency_code %}
+                На данный момент Вам необходимо оплатить сумму <strong>{{ grand_total }}{{ currency_symbol }}</strong>
+                по данным реквизитам:
+                {% endblocktranslate %}
+            </p>
+            <p class="d-flex flex-column">
+                <strong class="text-muted">
+                    IBAN: {{ iban}}
+                </strong>
+                <strong class="text-muted">
+                    Account: {{ account_name }}
+                </strong>
+            </p>
+        </div>
+    </div>
+    <a href="{% url 'mainpage:offers' %}#contact-us" class="btn btn-dark-green">{% translate 'Задать вопрос' %}</a>
+</div>
 {% endblock %}
 
 {% block additional_scripts %}
