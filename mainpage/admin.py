@@ -1,4 +1,6 @@
 from django.contrib import admin
+from modeltranslation.admin import TranslationAdmin
+
 
 from .models import (
     AboutUsPageModel,
@@ -13,13 +15,13 @@ from .models import (
 
 
 @admin.register(MainPageSliderImages)
-class MainPageSliderAdmin(admin.ModelAdmin):
+class MainPageSliderAdmin(TranslationAdmin):
     fields = ["image", "image_alt", "is_active"]
     list_display = ["image", "image_alt", "is_active"]
 
 
 @admin.register(MainPageSeoBlock)
-class SeoBlockAdmin(admin.ModelAdmin):
+class SeoBlockAdmin(TranslationAdmin):
     fields = ["image", "image_alt"]
     list_display = ["image", "image_alt"]
 
@@ -31,7 +33,7 @@ class IndividualOrderAdmin(admin.ModelAdmin):
 
 
 @admin.register(MainPageModel)
-class MainPageModelAdmin(admin.ModelAdmin):
+class MainPageModelAdmin(TranslationAdmin):
     fields = [
         "meta_tags",
         "json_ld",
@@ -42,31 +44,25 @@ class MainPageModelAdmin(admin.ModelAdmin):
 
 
 @admin.register(FAQPageModel)
-class FAQPageModelAdmin(admin.ModelAdmin):
+class FAQPageModelAdmin(TranslationAdmin):
     fields = [
         "image",
-        "image_alt_ru",
-        "image_alt_en",
-        "meta_tags_ru",
-        "meta_tags_en",
+        "image_alt",
+        "meta_tags",
         "json_ld",
-        "description_ru",
-        "description_en",
+        "description",
     ]
     list_display = ["id"]
 
 
 @admin.register(ContactsPageModel)
-class ContactsPageModelAdmin(admin.ModelAdmin):
+class ContactsPageModelAdmin(TranslationAdmin):
     fields = [
         "image",
-        "image_alt_ru",
-        "image_alt_en",
-        "meta_tags_ru",
-        "meta_tags_en",
+        "image_alt",
+        "meta_tags",
         "json_ld",
-        "description_ru",
-        "description_en",
+        "description",
     ]
     list_display = ["id"]
 
@@ -75,13 +71,10 @@ class ContactsPageModelAdmin(admin.ModelAdmin):
 class DeliveryPageModelAdmin(admin.ModelAdmin):
     fields = [
         "image",
-        "image_alt_ru",
-        "image_alt_en",
-        "meta_tags_ru",
-        "meta_tags_en",
+        "image_alt",
+        "meta_tags",
         "json_ld",
-        "description_ru",
-        "description_en",
+        "description",
     ]
     list_display = ["id"]
 
@@ -90,12 +83,9 @@ class DeliveryPageModelAdmin(admin.ModelAdmin):
 class AboutUsPageModelAdmin(admin.ModelAdmin):
     fields = [
         "image",
-        "image_alt_ru",
-        "image_alt_en",
-        "meta_tags_ru",
-        "meta_tags_en",
+        "image_alt",
+        "meta_tags",
         "json_ld",
-        "description_ru",
-        "description_en",
+        "description",
     ]
     list_display = ["id"]
