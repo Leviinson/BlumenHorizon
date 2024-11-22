@@ -160,8 +160,8 @@ class ProductCategory(CategoryAbstract, TimeStampAdbstractModel, MetaDataAbstrac
     image_alt = models.CharField(verbose_name="Описание картинки", max_length=100)
 
     class Meta:
-        verbose_name = _("Категория продукта")
-        verbose_name_plural = _("Категории продуктов")
+        verbose_name = "Категория продукта"
+        verbose_name_plural = "Категории продуктов"
 
     def __str__(self):
         return self.name
@@ -202,8 +202,8 @@ class ProductSubcategory(
     image_alt = models.CharField(verbose_name="Описание картинки", max_length=100)
 
     class Meta:
-        verbose_name = _("Подкатегория продукта")
-        verbose_name_plural = _("Подкатегории продуктов")
+        verbose_name = "Подкатегория продукта"
+        verbose_name_plural = "Подкатегории продуктов"
 
     def __str__(self):
         return self.name
@@ -286,8 +286,8 @@ class Product(ProductAbstract):
     sku = models.CharField(max_length=25, unique=True, default=generate_sku, null=True)
 
     class Meta:
-        verbose_name = _("Продукт")
-        verbose_name_plural = _("Продукты")
+        verbose_name = "Продукт"
+        verbose_name_plural = "Продукты"
 
     def get_absolute_url(self):
         site = Site.objects.only("domain").first()
@@ -331,8 +331,8 @@ class ProductImage(models.Model):
     image_alt = models.CharField(verbose_name="Описание картинки", max_length=100)
 
     class Meta:
-        verbose_name = _("Изображение продукта")
-        verbose_name_plural = _("Изображения продуктов")
+        verbose_name = "Изображение продукта"
+        verbose_name_plural = "Изображения продуктов"
 
     def __str__(self):
         return f"{self.product.name} - Image"
@@ -353,8 +353,8 @@ class Color(models.Model):
     )
 
     class Meta:
-        verbose_name = _("Цвет букета")
-        verbose_name_plural = _("Цветовые гаммы букетов")
+        verbose_name = "Цвет букета"
+        verbose_name_plural = "Цветовые гаммы букетов"
 
     def __str__(self):
         return f"{self.name} ({self.hex_code})"
@@ -368,8 +368,8 @@ class Flower(models.Model):
     )
 
     class Meta:
-        verbose_name = _("Цветок")
-        verbose_name_plural = _("Состав букетов")
+        verbose_name = "Цветок"
+        verbose_name_plural = "Состав букетов"
 
     def __str__(self):
         return self.name
@@ -384,8 +384,8 @@ class BouquetCategory(CategoryAbstract, TimeStampAdbstractModel, MetaDataAbstrac
     image_alt = models.CharField(verbose_name="Описание картинки", max_length=100)
 
     class Meta:
-        verbose_name = _("Категория букета")
-        verbose_name_plural = _("Категории букетов")
+        verbose_name = "Категория букета"
+        verbose_name_plural = "Категории букетов"
 
     def __str__(self):
         return self.name
@@ -426,8 +426,8 @@ class BouquetSubcategory(
     )
 
     class Meta:
-        verbose_name = _("Подкатегория букета")
-        verbose_name_plural = _("Подкатегории букетов")
+        verbose_name = "Подкатегория букета"
+        verbose_name_plural = "Подкатегории букетов"
 
     def __str__(self):
         return self.name
@@ -464,9 +464,7 @@ class Bouquet(ProductAbstract):
         verbose_name="Подкатегория",
         related_name="bouquets",
     )
-    amount_of_flowers = models.IntegerField(
-        verbose_name="Количество цветов в букете"
-    )
+    amount_of_flowers = models.IntegerField(verbose_name="Количество цветов в букете")
     diameter = models.IntegerField(verbose_name="Диаметр букета")
     colors = models.ManyToManyField(
         Color,
@@ -520,9 +518,7 @@ class BouquetSize(models.Model):
     bouquet = models.ForeignKey(
         Bouquet, related_name="sizes", verbose_name="Букет", on_delete=models.CASCADE
     )
-    amount_of_flowers = models.IntegerField(
-        verbose_name="Количество цветов в букете"
-    )
+    amount_of_flowers = models.IntegerField(verbose_name="Количество цветов в букете")
     diameter = models.IntegerField(verbose_name="Диаметр букета")
     price = models.DecimalField(
         max_digits=10,
@@ -574,8 +570,8 @@ class BouquetImage(models.Model):
     image_alt = models.CharField(verbose_name="Описание картинки", max_length=100)
 
     class Meta:
-        verbose_name = _("Изображение букета")
-        verbose_name_plural = _("Изображения букетов")
+        verbose_name = "Изображение букета"
+        verbose_name_plural = "Изображения букетов"
 
     def __str__(self):
         return f"{self.bouquet.name} - Image"
