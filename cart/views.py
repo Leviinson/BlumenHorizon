@@ -178,7 +178,7 @@ class CartBouquetAddView(
     BaseFormView,
 ):
     def get_success_message(self, product):
-        return _(f"Букет {product.name} успешно добавлен в корзину.")
+        return _("Букет {product_name} успешно добавлен в корзину.".format(product_name=product.name))
 
     def get_error_message(self):
         return _("Неизвестная ошибка добавления букета в корзину.")
@@ -191,7 +191,7 @@ class CartProductAddView(
     BaseFormView,
 ):
     def get_success_message(self, product):
-        return _(f"Продукт {product.name} успешно добавлен в корзину.")
+        return _("Продукт {product_name} успешно добавлен в корзину.".format(product_name=product.name))
 
     def get_error_message(self):
         return _("Ошибка добавления продукта в корзину.")
@@ -204,7 +204,7 @@ class CartBouquetRemoveView(
     BaseFormView,
 ):
     def get_success_message(self, product):
-        return _(f"Букет {product.name} успешно убран из корзины.")
+        return _("Букет {product_name} успешно убран из корзины.")
 
     def get_error_message(self):
         return _("Ошибка уменьшения количества букета в корзине.")
@@ -217,7 +217,7 @@ class CartProductRemoveView(
     BaseFormView,
 ):
     def get_success_message(self, product):
-        return _(f"Продукт {product.name} успешно убран из корзины.")
+        return _("Продукт {product_name} успешно убран из корзины.".format(product_name=product.name))
 
     def get_error_message(self):
         return _("Ошибка уменьшения количества продукта в корзине.")
@@ -230,7 +230,7 @@ class CartBouquetRemoveSingleView(
     BaseFormView,
 ):
     def get_success_message(self, product):
-        return _(f"Букет {product.name} успешно удалён из корзины.")
+        return _("Букет {product_name} успешно удалён из корзины.".format(product_name=product.name))
 
     def get_error_message(self):
         return _("Ошибка удаления букета из корзины.")
@@ -243,7 +243,7 @@ class CartProductRemoveSingleView(
     BaseFormView,
 ):
     def get_success_message(self, product):
-        return _(f"Продукт {product.name} успешно удалён из корзины.")
+        return _("Продукт {product_name} успешно удалён из корзины.".format(product_name=product.name))
 
     def get_error_message(self):
         return _("Ошибка удаления продукта из корзины.")
