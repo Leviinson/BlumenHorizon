@@ -63,7 +63,7 @@ class DetailViewMixin:
             )
         except queryset.model.DoesNotExist:
             raise Http404(
-                _("No %(verbose_name)s found matching the query")
+                _("Не найдено ни одного %(verbose_name)s совпадающего по запросу")
                 % {"verbose_name": queryset.model._meta.verbose_name}
             )
         return obj
