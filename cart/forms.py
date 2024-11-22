@@ -4,8 +4,6 @@ from django import forms
 from django.db import transaction
 
 from accounts.models import User
-from catalogue.models import Bouquet, Product
-from core.services.decorators.db.db_queries import inspect_db_queries
 
 from .cart import BouquetCart, ProductCart
 from .models import Order, OrderBouquets, OrderProducts
