@@ -68,7 +68,7 @@ class ContactsPageModelAdmin(TranslationAdmin):
 
 
 @admin.register(DeliveryPageModel)
-class DeliveryPageModelAdmin(admin.ModelAdmin):
+class DeliveryPageModelAdmin(TranslationAdmin):
     fields = [
         "image",
         "image_alt",
@@ -80,7 +80,7 @@ class DeliveryPageModelAdmin(admin.ModelAdmin):
 
 
 @admin.register(AboutUsPageModel)
-class AboutUsPageModelAdmin(admin.ModelAdmin):
+class AboutUsPageModelAdmin(TranslationAdmin):
     fields = [
         "image",
         "image_alt",
