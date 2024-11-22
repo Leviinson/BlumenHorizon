@@ -4,7 +4,7 @@
 
 logs/celery/**
 logs/django/**
-logs/gunicorn/**
+logs/gunicorn/
 logs/mysql/**
 logs/redis/**
 logs/nginx/**
