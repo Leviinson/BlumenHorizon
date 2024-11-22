@@ -39,7 +39,7 @@
         <div class="w-100">
             {% with bouquet_sizes=product.sizes.all %}
                 {% if bouquet_sizes %}
-                <strong>{% translate 'Размеры:' %}</strong>
+                <strong>{% translate 'Размеры' %}:</strong>
                 <div class="container mb-0 mt-1 p-0 d-flex justify-content-between">
                     {% for size in bouquet_sizes %}
                     <a class="btn bg-dark-green text-light"
