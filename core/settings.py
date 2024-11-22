@@ -32,10 +32,7 @@ SECRET_KEY = "django-insecure-#mvxx*v8tn1h23&6w^i2q%kzz*ki@$rpox$a^%jy1r0bhuufnq
 DEBUG = bool(int(os.getenv("DEBUG")))
 
 ALLOWED_HOSTS = [
-    "127.0.0.1",
-    "0.0.0.0",
-    "localhost",
-    "*",
+    os.getenv("PUBLIC_IP"),
 ]
 
 # DJANGO-TINYMCE
@@ -394,6 +391,7 @@ DEFAULT_LANGUAGE = "ru"
 LANGUAGES = [
     ("ru", "Russian"),
     ("en", "English"),
+    ("de", "German")
 ]
 TIME_ZONE = "Europe/Berlin"
 USE_I18N = True
