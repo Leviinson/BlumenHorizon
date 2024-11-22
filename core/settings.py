@@ -127,7 +127,7 @@ THIRDPARTY_APPS = [
 
 INSTALLED_APPS = DJANGO_APPS + THIRDPARTY_APPS + LOCAL_APPS
 
-ADMINS = [("Vitalii Melnykov", "melnykov.vitalii197@gmail.com")]
+ADMINS = [("Admin", os.getenv("ADMIN_EMAIL"))]
 
 # Mailing
 EMAIL_HOST = os.getenv("MAIL_SERVER")
