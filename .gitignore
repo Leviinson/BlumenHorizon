@@ -7,6 +7,8 @@ logs/django/**
 logs/gunicorn/**
 logs/mysql/**
 logs/redis/**
+logs/nginx/**
+
 media/**
 static/**
 
