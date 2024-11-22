@@ -412,7 +412,7 @@ class IndividualQuestionAdmin(admin.ModelAdmin):
 
 
 @admin.register(CatalogPageModel)
-class CatalogPageAdmin(admin.ModelAdmin):
+class CatalogPageAdmin(TranslationAdmin):
     fields = (
         "meta_tags",
         "json_ld",
@@ -421,7 +421,7 @@ class CatalogPageAdmin(admin.ModelAdmin):
 
 
 @admin.register(ProductsListPageModel)
-class ProductsListPageAdmin(admin.ModelAdmin):
+class ProductsListPageAdmin(TranslationAdmin):
     fields = (
         "meta_tags",
         "json_ld",
@@ -430,7 +430,7 @@ class ProductsListPageAdmin(admin.ModelAdmin):
 
 
 @admin.register(BouquetsListPageModel)
-class BouquetsListPageAdmin(admin.ModelAdmin):
+class BouquetsListPageAdmin(TranslationAdmin):
     fields = (
         "meta_tags",
         "json_ld",
