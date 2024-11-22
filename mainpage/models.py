@@ -90,7 +90,7 @@ class MainPageSeoBlock(TimeStampAdbstractModel, models.Model):
         verbose_name_plural = "СЕО Блоки"
 
     def __str__(self):
-        return f"{self.image} ...... {self.alt}"
+        return f"{self.image} ...... {self.image_alt}"
 
 
 class FAQPageModel(TimeStampAdbstractModel):
