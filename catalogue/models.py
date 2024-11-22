@@ -520,8 +520,7 @@ class BouquetSize(models.Model):
         max_digits=10,
         decimal_places=2,
         verbose_name="Цена размера",
-        help_text="Цена размера до 10ти значений, два из которых плавающая запятая. Т.е. до 99999999.99"
-        ),
+        help_text="Цена размера до 10ти значений, два из которых плавающая запятая. Т.е. до 99999999.99",
     )
     discount = models.IntegerField(
         validators=(
