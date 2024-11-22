@@ -2,7 +2,11 @@
 **/__pycache__
 **/**/.DS_Store
 
-logs/**/**
+logs/celery/**
+logs/django/**
+logs/gunicorn/**
+logs/mysql/**
+logs/redis/**
 media/**
 static/**
 
