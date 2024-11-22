@@ -4,6 +4,8 @@ from django.utils.translation import gettext_lazy as _
 
 from catalogue.models import Bouquet, Product, generate_sku
 from core.base_models import TimeStampAdbstractModel
+from django.core.validators import MaxValueValidator, MinValueValidator
+
 
 
 class Order(TimeStampAdbstractModel, models.Model):
@@ -13,6 +15,10 @@ class Order(TimeStampAdbstractModel, models.Model):
         ("awaiting_payment", _("Ожидание оплаты")),
         ("shipping", _("В доставке")),
         ("delivered", _("Доставлен")),
+    ]
+    ADDRESS_FORM_CHOICES = [
+        ("Mr.", _("Уважаемый")),
+        ("Mrs.", _("Уважаемая")),
     ]
     user = models.ForeignKey(
         get_user_model(),
@@ -26,12 +32,25 @@ class Order(TimeStampAdbstractModel, models.Model):
     country = models.CharField(verbose_name="Страна", max_length=40, null=True)
     city = models.CharField(verbose_name="Город", max_length=40, null=True)
     email = models.EmailField(verbose_name="Почта")
+    address_form = models.CharField(
+        max_length=20,
+        choices=ADDRESS_FORM_CHOICES,
+        default="Mr.",
+        verbose_name="Форма обращения к заказчику",
+    )
+    name = models.CharField(verbose_name="Имя заказчика", max_length=80)
     postal_code = models.CharField(
         verbose_name="Почтовый индекс", max_length=40, null=True
     )
     street = models.CharField(verbose_name="Улица", max_length=255, null=True)
     building = models.CharField(verbose_name="Здание", max_length=40, null=True)
     flat = models.CharField(verbose_name="Квартира/офис", max_length=40, null=True)
+    recipient_address_form = models.CharField(
+        max_length=20,
+        choices=ADDRESS_FORM_CHOICES,
+        default="Mr.",
+        verbose_name="Форма обращения к получателю",
+    )
     recipient_name = models.CharField(verbose_name="Имя получателя", max_length=80)
     recipient_phonenumber = models.CharField(
         verbose_name="Номер телефона получателя", max_length=30
@@ -51,6 +70,43 @@ class Order(TimeStampAdbstractModel, models.Model):
         default="awaiting_payment",
         verbose_name="Статус заказа",
     )
+    sub_total = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        verbose_name=_("Чистая стоимость"),
+        help_text=_(
+            "Без налога"
+        ),
+        null=True
+    )
+    tax = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        verbose_name=_("Налоговая стоимость"),
+        help_text=_(
+            "Стоимость налога"
+        ),
+        null=True
+    )
+    tax_percent = models.IntegerField(
+        validators=(
+            MinValueValidator(0),
+            MaxValueValidator(100),
+        ),
+        verbose_name=_("НДС"),
+        help_text="%",
+        null=True,
+        default=0,
+    )
+    grand_total = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        verbose_name=_("Итоговая стоимость"),
+        help_text=_(
+            "С налогом"
+        ),
+        null=True
+    )
 
     class Meta:
         verbose_name = "Заказ"
@@ -67,6 +123,7 @@ class OrderProducts(TimeStampAdbstractModel, models.Model):
     product = models.ForeignKey(
         Product, related_name="orders", verbose_name="Продукт", on_delete=models.PROTECT
     )
+    quantity = models.IntegerField(verbose_name="Количество продукта")
 
     class Meta:
         verbose_name = "Продукт в заказе"
@@ -83,6 +140,7 @@ class OrderBouquets(TimeStampAdbstractModel, models.Model):
     product = models.ForeignKey(
         Bouquet, related_name="orders", verbose_name="Букет", on_delete=models.PROTECT
     )
+    quantity = models.IntegerField(verbose_name="Количество продукта")
 
     class Meta:
         verbose_name = "Букет в заказе"
