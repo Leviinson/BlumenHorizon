@@ -283,7 +283,7 @@ class Product(ProductAbstract):
         verbose_name=_("Подкатегория"),
         related_name="products",
     )
-    sku = models.CharField(max_length=6, unique=True, default=generate_sku, null=True)
+    sku = models.CharField(max_length=25, unique=True, default=generate_sku, null=True)
 
     class Meta:
         verbose_name = _("Продукт")
@@ -480,7 +480,7 @@ class Bouquet(ProductAbstract):
         verbose_name=_("Состав букетов"),
         help_text=_("Выберите какие цветы в букете."),
     )
-    sku = models.CharField(max_length=6, unique=True, default=generate_sku, null=True)
+    sku = models.CharField(max_length=25, unique=True, default=generate_sku, null=True)
 
     class Meta:
         verbose_name = _("Букет")
