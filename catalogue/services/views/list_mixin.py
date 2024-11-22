@@ -26,6 +26,9 @@ class ListViewMixin:
     ]
 
     def get_queryset(self):
+        from django.utils.translation import get_language
+
+        language = get_language()
         qs = super().get_queryset()
 
         sort_option = self.request.GET.get("sort", "pd")
@@ -51,7 +54,7 @@ class ListViewMixin:
             subcategory__category__is_active=True,
         ).annotate(
             first_image_uri=Subquery(first_image_subquery.values("image")[:1]),
-            first_image_alt=Subquery(first_image_subquery.values("image_alt")[:1]),
+            first_image_alt=Subquery(first_image_subquery.values(f"image_alt_{language}")[:1]),
         )
 
     def get_context_data(self, *args, **kwargs):
