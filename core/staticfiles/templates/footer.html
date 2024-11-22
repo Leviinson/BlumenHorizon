@@ -1,10 +1,10 @@
 {% load i18n %}
 
 <div class="container-fluid bg-soft-turquoise d-flex justify-content-center align-items-center mt-5">
-    <footer class="py-5 text-light">
+    <footer class="py-5 text-light" style="font-size: .75rem;">
         <div id="footer-sections" class="d-flex justify-content-center align-items-start gap-5">
             <div class="mb-3">
-                <h5>{% translate 'Клиентам' %}</h5>
+                <h5 class="fw-bold">{% translate 'Клиентам' %}</h5>
                 <ul class="nav flex-column">
                     <li class="nav-item mb-2">
                         <a href="#" class="nav-link p-0 text-white">{% translate 'Юридическая информация' %}</a>
@@ -28,12 +28,12 @@
             </div>
 
             <div class="mb-3">
-                <h5>{% translate 'Компания' %}</h5>
+                <h5 class="fw-bold text-light">{% translate 'Компания' %}</h5>
                 <ul class="nav flex-column">
-                    <li class="nav-item mb-2"><a href="{% url 'mainpage:about' %}" class="nav-link p-0 text-white">{% translate 'О нас' %}</a></li>
-                    <li class="nav-item mb-2"><a href="{% url 'mainpage:delivery' %}" class="nav-link p-0 text-white">{% translate 'Доставка' %}</a></li>
-                    <li class="nav-item mb-2"><a href="{% url 'mainpage:contact' %}" class="nav-link p-0 text-white">{% translate 'Контакты' %}</a></li>
-                    <li class="nav-item mb-2"><a href="{% url 'mainpage:faq' %}" class="nav-link p-0 text-white">{% translate 'Частозадаваемые вопросы' %}</a></li>
+                    <li class="nav-item mb-2"><a href="{% url 'mainpage:about' %}" class="nav-link p-0 text-light">{% translate 'О нас' %}</a></li>
+                    <li class="nav-item mb-2"><a href="{% url 'mainpage:delivery' %}" class="nav-link p-0 text-light">{% translate 'Доставка' %}</a></li>
+                    <li class="nav-item mb-2"><a href="{% url 'mainpage:contact' %}" class="nav-link p-0 text-light">{% translate 'Контакты' %}</a></li>
+                    <li class="nav-item mb-2"><a href="{% url 'mainpage:faq' %}" class="nav-link p-0 text-light">{% translate 'Частозадаваемые вопросы' %}</a></li>
                 </ul>
             </div>
 
@@ -50,7 +50,7 @@
             </div> -->
         </div>
 
-        <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">
+        <div class="d-flex flex-column flex-sm-row justify-content-between pt-4 mt-4 border-top">
             <p>© 2024 {{ site_name }}. {% translate 'Все права защищены' %}.</p>
             <ul class="list-unstyled d-flex">
                 {% for social in socials_right_bottom %}
