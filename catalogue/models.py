@@ -232,9 +232,7 @@ class ProductAbstract(TimeStampAdbstractModel, MetaDataAbstractModel):
         max_digits=10,
         decimal_places=2,
         verbose_name="Цена",
-        help_text=_(
-            "Цена продукта до 10ти значений, два из которых плавающая запятая. Т.е. до 99999999.99"
-        ),
+        help_text="Цена продукта до 10ти значений, два из которых плавающая запятая. Т.е. до 99999999.99",
     )
     discount = models.IntegerField(
         validators=(
@@ -346,9 +344,7 @@ class Color(models.Model):
     )
     hex_code = ColorField(
         verbose_name="HEX код цвета (#f4678a к примеру)",
-        help_text=_(
-            "Введите HEX-код цвета, например: #FFFFFF (белый) или #FFF (сокращённый формат)."
-        ),
+        help_text="Введите HEX-код цвета, например: #FFFFFF (белый) или #FFF (сокращённый формат).",
         unique=True,
     )
 
@@ -476,7 +472,7 @@ class Bouquet(ProductAbstract):
         Flower,
         related_name="bouquets",
         verbose_name="Состав букетов",
-        help_text=_("Выберите какие цветы в букете."),
+        help_text="Выберите какие цветы в букете.",
     )
     sku = models.CharField(max_length=25, unique=True, default=generate_sku, null=True)
 
@@ -524,8 +520,7 @@ class BouquetSize(models.Model):
         max_digits=10,
         decimal_places=2,
         verbose_name="Цена размера",
-        help_text=_(
-            "Цена размера до 10ти значений, два из которых плавающая запятая. Т.е. до 99999999.99"
+        help_text="Цена размера до 10ти значений, два из которых плавающая запятая. Т.е. до 99999999.99"
         ),
     )
     discount = models.IntegerField(

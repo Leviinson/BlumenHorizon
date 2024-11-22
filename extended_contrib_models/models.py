@@ -38,22 +38,16 @@ class ExtendedSite(models.Model):
 class Social(models.Model):
     absolute_url = models.URLField(verbose_name="Ссылка на соц. сеть", unique=True)
     outline_hex_code = ColorField(
-        verbose_name=_("HEX код цвета обводки (#f4678a к примеру)"),
-        help_text=_(
-            "Введите HEX-код цвета, например: #FFFFFF (белый) или #FFF (сокращённый формат)."
-        ),
+        verbose_name="HEX код цвета обводки (#f4678a к примеру)",
+        help_text="Введите HEX-код цвета, например: #FFFFFF (белый) или #FFF (сокращённый формат).",
     )
     background_hex_code = ColorField(
-        verbose_name=_("HEX код цвета фона (#f4678a к примеру)"),
-        help_text=_(
-            "Введите HEX-код цвета, например: #FFFFFF (белый) или #FFF (сокращённый формат)."
-        ),
+        verbose_name="HEX код цвета фона (#f4678a к примеру)",
+        help_text="Введите HEX-код цвета, например: #FFFFFF (белый) или #FFF (сокращённый формат).",
     )
     icon_hex_code = ColorField(
-        verbose_name=_("HEX код цвета иконки (#f4678a к примеру)"),
-        help_text=_(
-            "Введите HEX-код цвета, например: #FFFFFF (белый) или #FFF (сокращённый формат)."
-        ),
+        verbose_name="HEX код цвета иконки (#f4678a к примеру)",
+        help_text="Введите HEX-код цвета, например: #FFFFFF (белый) или #FFF (сокращённый формат).",
     )
     bootstrap_icon = models.CharField(
         max_length=40,
