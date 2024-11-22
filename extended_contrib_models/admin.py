@@ -24,7 +24,16 @@ class SocialInline(admin.TabularInline):
 
 @admin.register(ExtendedSite)
 class ExtendedSiteAdmin(admin.ModelAdmin):
-    list_display = ("site", "currency_code", "currency_symbol", "country", "city")
+    list_display = (
+        "site",
+        "currency_code",
+        "tax_percent",
+        "currency_symbol",
+        "country",
+        "city",
+        "iban",
+        "account_name"
+    )
     search_fields = (
         "site__domain",
         "currency_code",
