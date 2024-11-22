@@ -17,7 +17,7 @@ from .models import (
 @admin.register(MainPageSliderImages)
 class MainPageSliderAdmin(TranslationAdmin):
     fields = ["image", "image_alt", "is_active"]
-    list_display = ["image", "image_alt", "is_active"]
+    list_display = ["pk", "image", "image_alt", "is_active"]
 
 
 @admin.register(MainPageSeoBlock)
