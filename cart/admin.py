@@ -2,30 +2,37 @@ from django.contrib import admin
 
 from .models import Order, OrderBouquets, OrderProducts
 
+
 class OrderProductsTabularInline(admin.TabularInline):
     model = OrderProducts
     extra = 1
+
 
 class OrderBouquetsTabularInline(admin.TabularInline):
     model = OrderBouquets
     extra = 1
 
+
 @admin.register(Order)
 class OrderAdminModel(admin.ModelAdmin):
-    inlines = (
-        OrderProductsTabularInline,
-        OrderBouquetsTabularInline
-    )
+    inlines = (OrderProductsTabularInline, OrderBouquetsTabularInline)
     fields = (
         "user",
+        "sub_total",
+        "tax",
+        "tax_percent",
+        "grand_total",
         "clarify_address",
         "country",
         "city",
         "email",
+        "address_form",
+        "name",
         "postal_code",
         "street",
         "building",
         "flat",
+        "recipient_address_form",
         "recipient_name",
         "recipient_phonenumber",
         "is_recipient",
@@ -41,6 +48,7 @@ class OrderAdminModel(admin.ModelAdmin):
     )
     list_display = (
         "code",
+        "grand_total",
         "user",
         "street",
         "recipient_name",
