@@ -32,7 +32,7 @@ class ExtendedSiteAdmin(admin.ModelAdmin):
         "country",
         "city",
         "iban",
-        "account_name"
+        "account_name",
     )
     search_fields = (
         "site__domain",

@@ -1,23 +1,22 @@
 from decimal import Decimal
 from typing import Type
 
+from django.conf import settings
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMultiAlternatives
-from django.conf import settings
-from django.http import HttpRequest, JsonResponse
+from django.http import HttpRequest, HttpResponseForbidden, JsonResponse
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.utils.html import strip_tags
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 from django.views.generic.edit import BaseFormView, FormView
-from django.http import HttpResponseForbidden
 
-from .models import Order
 from core.services.mixins.views import CommonContextMixin
 
 from .cart import BouquetCart, ProductCart
 from .forms import OrderForm
+from .models import Order
 from .services.mixins import (
     CartBouquetEditMixin,
     CartEditAbstractMixin,
@@ -35,11 +34,11 @@ class CartView(CommonContextMixin, FormView):
     def form_valid(self, form: OrderForm):
         site = get_current_site(self.request)
         products_cart = ProductCart(
-                session=self.request.session, session_key="products_cart"
-            )
+            session=self.request.session, session_key="products_cart"
+        )
         bouquets_cart = BouquetCart(
-                session=self.request.session, session_key="bouquets_cart"
-            )
+            session=self.request.session, session_key="bouquets_cart"
+        )
         order = form.save(
             products_cart=products_cart,
             bouquets_cart=bouquets_cart,
@@ -132,7 +131,7 @@ class CartView(CommonContextMixin, FormView):
                 "sub_total": order.sub_total,
                 "grand_total": order.grand_total,
                 "currency": currency_symbol,
-                "postal_code": order.postal_code
+                "postal_code": order.postal_code,
             },
         )
         plain_message = strip_tags(html_message)

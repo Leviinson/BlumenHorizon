@@ -55,21 +55,29 @@ class OrderForm(forms.ModelForm):
         with transaction.atomic():
             sub_total = products_cart.total + bouquets_cart.total
             order.tax_percent = tax_percent
-            order.tax = tax = sub_total * Decimal(tax_percent/100)
+            order.tax = tax = sub_total * Decimal(tax_percent / 100)
             order.sub_total = sub_total
             order.grand_total = sub_total + tax
             order.save()
             if products := products_cart.products:
                 OrderProducts.objects.bulk_create(
                     [
-                        OrderProducts(order=order, product=product, quantity=products_cart.get_quantity(product))
+                        OrderProducts(
+                            order=order,
+                            product=product,
+                            quantity=products_cart.get_quantity(product),
+                        )
                         for product in products
                     ]
                 )
             if bouquets := bouquets_cart.products:
                 OrderBouquets.objects.bulk_create(
                     [
-                        OrderBouquets(order=order, product=bouquet, quantity=bouquets_cart.get_quantity(bouquet))
+                        OrderBouquets(
+                            order=order,
+                            product=bouquet,
+                            quantity=bouquets_cart.get_quantity(bouquet),
+                        )
                         for bouquet in bouquets
                     ]
                 )

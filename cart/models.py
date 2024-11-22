@@ -1,11 +1,10 @@
 from django.contrib.auth import get_user_model
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from catalogue.models import Bouquet, Product, generate_sku
 from core.base_models import TimeStampAdbstractModel
-from django.core.validators import MaxValueValidator, MinValueValidator
-
 
 
 class Order(TimeStampAdbstractModel, models.Model):
@@ -74,19 +73,15 @@ class Order(TimeStampAdbstractModel, models.Model):
         max_digits=10,
         decimal_places=2,
         verbose_name=_("Чистая стоимость"),
-        help_text=_(
-            "Без налога"
-        ),
-        null=True
+        help_text=_("Без налога"),
+        null=True,
     )
     tax = models.DecimalField(
         max_digits=10,
         decimal_places=2,
         verbose_name=_("Налоговая стоимость"),
-        help_text=_(
-            "Стоимость налога"
-        ),
-        null=True
+        help_text=_("Стоимость налога"),
+        null=True,
     )
     tax_percent = models.IntegerField(
         validators=(
@@ -102,10 +97,8 @@ class Order(TimeStampAdbstractModel, models.Model):
         max_digits=10,
         decimal_places=2,
         verbose_name=_("Итоговая стоимость"),
-        help_text=_(
-            "С налогом"
-        ),
-        null=True
+        help_text=_("С налогом"),
+        null=True,
     )
 
     class Meta:
