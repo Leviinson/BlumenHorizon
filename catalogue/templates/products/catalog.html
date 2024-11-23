@@ -25,7 +25,7 @@
                     </a>
                 </h2>
                 <hr>
-                <div class="d-flex flex-column gap-2"></div>
+                <div class="d-flex flex-column gap-2">
                     {% for subcategory in category.subcategories.all %}
                     <a href="{{ subcategory.get_relative_url }}" class="text-decoration-none text-dark">
                         <div class="subcategory-container d-flex align-items-center">
@@ -52,7 +52,7 @@
                 </h2>
                 <hr>
 
-                <div class="d-flex flex-column gap-2"></div>
+                <div class="d-flex flex-column gap-2">
                     {% for subcategory in category.subcategories.all %}
                     <a href="{{ subcategory.get_relative_url }}" class="text-decoration-none text-dark">
                         <div class="subcategory-container
