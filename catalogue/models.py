@@ -24,7 +24,7 @@ def generate_sku():
 class MetaDataAbstractModel(models.Model):
     name = models.CharField(
         verbose_name="Название",
-        max_length=40,
+        max_length=200,
         unique=True,
     )
     slug = models.SlugField(
@@ -47,13 +47,13 @@ class MetaDataAbstractModel(models.Model):
     )
     meta_tags = models.TextField(
         verbose_name="Мета-теги",
-        max_length=1000,
+        max_length=4000,
         default="""<title>BlumenHorizon | </title>
 <meta name="description" content="Описание">""",
     )
     json_ld = models.TextField(
         verbose_name="JSON-LD",
-        max_length=1000,
+        max_length=4000,
         default="""<script type="application/ld+json">
         {
             "@context": "https://schema.org",
