@@ -389,9 +389,8 @@ LOGOUT_REDIRECT_URL = "accounts:signin"
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = "en"
-DEFAULT_LANGUAGE = "en"
-LANGUAGES = [("en", "English"), ("ru", "Russian"), ("de", "German")]
+LANGUAGE_CODE = "ru"
+LANGUAGES = [("en", "🇺🇸"), ("de", "🇩🇪"), ("ru", "🇷🇺"),]
 TIME_ZONE = "Europe/Berlin"
 USE_I18N = True
 USE_TZ = True
