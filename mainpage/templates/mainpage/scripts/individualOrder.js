@@ -1,10 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
         const individualOrderForm = document.getElementById('individual-order-form');
-        const action = individualOrderForm.dataset.action;
 
         async function sendAjax(form) {
             try {
-                const response = await fetch(action, {
+                const response = await fetch(form.action, {
                     method: 'POST',
                     body: new FormData(form)
                 });
