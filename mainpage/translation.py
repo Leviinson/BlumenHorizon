@@ -13,12 +13,18 @@ from .models import (
 
 @register(MainPageSeoBlock)
 class SeoBlockTranslationOptions(TranslationOptions):
-    fields = ("image_alt",)
+    fields = (
+        "image_alt",
+        "image",
+    )
 
 
 @register(MainPageSliderImages)
 class MainPageSliderImageTranslationOptions(TranslationOptions):
-    fields = ("image_alt",)
+    fields = (
+        "image_alt",
+        "image",
+    )
 
 
 @register(MainPageModel)
@@ -31,19 +37,39 @@ class MainPageModelTranslationOptions(TranslationOptions):
 
 @register(FAQPageModel)
 class FAQPageModelTranslationOptions(TranslationOptions):
-    fields = ("image_alt", "meta_tags", "description")
+    fields = (
+        "image_alt",
+        "image",
+        "meta_tags",
+        "description",
+    )
 
 
 @register(ContactsPageModel)
 class ContactsPageModelTranslationOptions(TranslationOptions):
-    fields = ("image_alt", "meta_tags", "description")
+    fields = (
+        "image_alt",
+        "image",
+        "meta_tags",
+        "description",
+    )
 
 
 @register(DeliveryPageModel)
 class DeliveryPageModelTranslationOptions(TranslationOptions):
-    fields = ("image_alt", "meta_tags", "description")
+    fields = (
+        "image_alt",
+        "image",
+        "meta_tags",
+        "description",
+    )
 
 
 @register(AboutUsPageModel)
 class AboutUsPageModelTranslationOptions(TranslationOptions):
-    fields = ("image_alt", "meta_tags", "description")
+    fields = (
+        "image_alt",
+        "image",
+        "meta_tags",
+        "description",
+    )
