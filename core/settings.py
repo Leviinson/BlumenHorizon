@@ -35,6 +35,7 @@ ALLOWED_HOSTS = [
     "127.0.0.1",
     os.getenv("PUBLIC_IP"),
     os.getenv("DOMAIN"),
+    f"www.{os.getenv("DOMAIN")}",
 ]
 
 # DJANGO-TINYMCE
