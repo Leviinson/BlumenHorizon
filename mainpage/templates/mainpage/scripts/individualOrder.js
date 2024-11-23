@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         async function sendAjax(form) {
             try {
-                const response = await fetch(form.action, {
+                const response = await fetch(action, {
                     method: 'POST',
                     body: new FormData(form)
                 });
