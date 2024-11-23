@@ -30,6 +30,7 @@ class MetaDataAbstractModel(models.Model):
     slug = models.SlugField(
         verbose_name="Название в ссылке",
         unique=True,
+        max_length=80,
     )
     is_active = models.BooleanField(
         verbose_name="Активный?",
