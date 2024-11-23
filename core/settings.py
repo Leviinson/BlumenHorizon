@@ -154,7 +154,9 @@ ROOT_URLCONF = "core.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": ["core/staticfiles/",],
+        "DIRS": [
+            "core/staticfiles/",
+        ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -388,11 +390,7 @@ LOGOUT_REDIRECT_URL = "accounts:signin"
 
 LANGUAGE_CODE = "ru"
 DEFAULT_LANGUAGE = "ru"
-LANGUAGES = [
-    ("ru", "Russian"),
-    ("en", "English"),
-    ("de", "German")
-]
+LANGUAGES = [("ru", "Russian"), ("en", "English"), ("de", "German")]
 TIME_ZONE = "Europe/Berlin"
 USE_I18N = True
 USE_TZ = True
