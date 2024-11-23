@@ -41,7 +41,7 @@ class MainPageSliderImages(models.Model):
         help_text="1000px/450px",
     )
     is_active = models.BooleanField(default=False, verbose_name="Активное?")
-    image_alt = models.CharField(verbose_name="Описание картинки", max_length=100)
+    image_alt = models.CharField(verbose_name="Описание картинки", max_length=200)
 
     class Meta:
         verbose_name = "Фото слайдера главной страницы"
@@ -83,7 +83,7 @@ class MainPageSeoBlock(TimeStampAdbstractModel, models.Model):
         upload_to="seoblock/",
         help_text="1000px/450px",
     )
-    image_alt = models.CharField(max_length=100, verbose_name="Описание картинки")
+    image_alt = models.CharField(max_length=200, verbose_name="Описание картинки")
 
     class Meta:
         verbose_name = "СЕО Блок"
@@ -100,7 +100,7 @@ class FAQPageModel(TimeStampAdbstractModel):
         default="defaults/no-image.webp",
         help_text="1000px/450px",
     )
-    image_alt = models.CharField(max_length=100, verbose_name="Описание картинки")
+    image_alt = models.CharField(max_length=200, verbose_name="Описание картинки")
     description = HTMLField(
         verbose_name=_("Описание"),
     )
@@ -135,7 +135,7 @@ class AboutUsPageModel(TimeStampAdbstractModel):
         default="defaults/no-image.webp",
         help_text="1000px/450px",
     )
-    image_alt = models.CharField(max_length=100, verbose_name="Описание картинки")
+    image_alt = models.CharField(max_length=200, verbose_name="Описание картинки")
     description = HTMLField(
         verbose_name=_("Описание"),
     )
@@ -170,7 +170,7 @@ class DeliveryPageModel(TimeStampAdbstractModel):
         default="defaults/no-image.webp",
         help_text="1000px/450px",
     )
-    image_alt = models.CharField(max_length=100, verbose_name="Описание картинки")
+    image_alt = models.CharField(max_length=200, verbose_name="Описание картинки")
     description = HTMLField(
         verbose_name=_("Описание"),
     )
@@ -205,7 +205,7 @@ class ContactsPageModel(TimeStampAdbstractModel):
         default="defaults/no-image.webp",
         help_text="1000px/450px",
     )
-    image_alt = models.CharField(max_length=100, verbose_name="Описание картинки")
+    image_alt = models.CharField(max_length=200, verbose_name="Описание картинки")
     description = HTMLField(
         verbose_name=_("Описание"),
     )

@@ -158,7 +158,7 @@ class ProductCategory(CategoryAbstract, TimeStampAdbstractModel, MetaDataAbstrac
         upload_to="categories/%Y-%m-%d",
         default="defaults/no-image.webp",
     )
-    image_alt = models.CharField(verbose_name="Описание картинки", max_length=100)
+    image_alt = models.CharField(verbose_name="Описание картинки", max_length=200)
 
     class Meta:
         verbose_name = "Категория продукта"
@@ -200,7 +200,7 @@ class ProductSubcategory(
         verbose_name="Категория",
         related_name="subcategories",
     )
-    image_alt = models.CharField(verbose_name="Описание картинки", max_length=100)
+    image_alt = models.CharField(verbose_name="Описание картинки", max_length=200)
 
     class Meta:
         verbose_name = "Подкатегория продукта"
@@ -327,7 +327,7 @@ class ProductImage(models.Model):
         default="defaults/no-image.webp",
         verbose_name="Изображение продукта",
     )
-    image_alt = models.CharField(verbose_name="Описание картинки", max_length=100)
+    image_alt = models.CharField(verbose_name="Описание картинки", max_length=200)
 
     class Meta:
         verbose_name = "Изображение продукта"
@@ -378,7 +378,7 @@ class BouquetCategory(CategoryAbstract, TimeStampAdbstractModel, MetaDataAbstrac
         upload_to="categories/%Y-%m-%d",
         default="defaults/no-image.webp",
     )
-    image_alt = models.CharField(verbose_name="Описание картинки", max_length=100)
+    image_alt = models.CharField(verbose_name="Описание картинки", max_length=200)
 
     class Meta:
         verbose_name = "Категория букета"
@@ -414,7 +414,7 @@ class BouquetSubcategory(
         upload_to="subcategories/%Y-%m-%d",
         default="defaults/no-image.webp",
     )
-    image_alt = models.CharField(verbose_name="Описание картинки", max_length=100)
+    image_alt = models.CharField(verbose_name="Описание картинки", max_length=200)
     category = models.ForeignKey(
         BouquetCategory,
         on_delete=models.PROTECT,
@@ -562,7 +562,7 @@ class BouquetImage(models.Model):
         verbose_name="Изображение букета",
         default="defaults/no-image.webp",
     )
-    image_alt = models.CharField(verbose_name="Описание картинки", max_length=100)
+    image_alt = models.CharField(verbose_name="Описание картинки", max_length=200)
 
     class Meta:
         verbose_name = "Изображение букета"
@@ -584,7 +584,7 @@ class BouquetSizeImage(models.Model):
         verbose_name="Изображение размера букета",
         default="defaults/no-image.webp",
     )
-    image_alt = models.CharField(verbose_name="Описание картинки", max_length=100)
+    image_alt = models.CharField(verbose_name="Описание картинки", max_length=200)
 
     class Meta:
         verbose_name = "Изображение размера букета"
