@@ -46,7 +46,9 @@
                 <li class="list-group-item d-flex justify-content-start align-items-center">
                     <input type="checkbox" class="form-check-input color-checkbox" value="{{ color.name }}" id="{{ color.name }}" {% if color.name in request.GET.colors %}checked{% endif %}>
                     <label class="form-check-label d-flex justify-content-center align-items-center ms-3" for="{{ color.name }}">
-                        <span class="badge-color" style="background-color: {{ color.hex_code }};"></span>
+                        <span class="badge-color" style="background-color: {{ color.hex_code }};
+                                                         border-color: var(--dark-green-color);
+                                                         border: double"></span>
                         {{ color.name }}
                     </label>
                 </li>

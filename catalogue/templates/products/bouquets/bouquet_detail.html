@@ -28,7 +28,9 @@
                 <div class="d-flex flex-wrap mt-2">
                     {% for color in product.colors.all %}
                     <div class="d-flex align-items-center me-2 mb-2">
-                        <span class="badge-color" style="background-color: {{ color.hex_code }};">
+                        <span class="badge-color" style="background-color: {{ color.hex_code }};
+                                                         border-color: var(--dark-green-color);
+                                                         border: double">
                         </span>
                     </div>
                     {% endfor %}
