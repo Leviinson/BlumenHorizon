@@ -210,40 +210,40 @@ class BouquetImagesInLine(admin.StackedInline):
     max_num = 3
 
 
-class BouquetSizeImagesInLine(admin.TabularInline):
-    model = BouquetSizeImage
-    extra = 1
-    max_num = 3
+# class BouquetSizeImagesInLine(admin.TabularInline):
+#     model = BouquetSizeImage
+#     extra = 1
+#     max_num = 3
 
 
-@admin.register(BouquetSize)
-class BouquetSizeAdmin(admin.ModelAdmin):
-    fields = (
-        "bouquet",
-        "amount_of_flowers",
-        "discount",
-        "discount_expiration_datetime",
-        "price",
-        "diameter",
-    )
-    list_display = (
-        "bouquet",
-        "amount_of_flowers",
-        "discount",
-        "discount_expiration_datetime",
-        "price",
-        "diameter",
-    )
-    inlines = [
-        BouquetSizeImagesInLine,
-    ]
+# @admin.register(BouquetSize)
+# class BouquetSizeAdmin(admin.ModelAdmin):
+#     fields = (
+#         "bouquet",
+#         "amount_of_flowers",
+#         "discount",
+#         "discount_expiration_datetime",
+#         "price",
+#         "diameter",
+#     )
+#     list_display = (
+#         "bouquet",
+#         "amount_of_flowers",
+#         "discount",
+#         "discount_expiration_datetime",
+#         "price",
+#         "diameter",
+#     )
+#     inlines = [
+#         BouquetSizeImagesInLine,
+#     ]
 
 
-class BouquetSizesInLine(admin.StackedInline):
-    model = BouquetSize
-    extra = 1
-    max_num = 3
-    show_change_link = True
+# class BouquetSizesInLine(admin.StackedInline):
+#     model = BouquetSize
+#     extra = 1
+#     max_num = 3
+#     show_change_link = True
 
 
 @admin.register(BouquetCategory)
@@ -328,7 +328,7 @@ class BouquetSubcategoryAdmin(TranslationAdmin):
 class BouquetAdmin(TranslationAdmin):
     inlines = [
         BouquetImagesInLine,
-        BouquetSizesInLine,
+        # BouquetSizesInLine,
     ]
     fieldsets = (
         (
@@ -397,46 +397,46 @@ class BouquetAdmin(TranslationAdmin):
     )
 
 
-@admin.register(IndividualQuestion)
-class IndividualQuestionAdmin(admin.ModelAdmin):
-    fields = (
-        "user",
-        "contact_method",
-        "recall_me",
-        "product",
-        "bouquet",
-    )
-    list_display = (
-        "user",
-        "contact_method",
-        "recall_me",
-        "product",
-        "bouquet",
-    )
+# @admin.register(IndividualQuestion)
+# class IndividualQuestionAdmin(admin.ModelAdmin):
+#     fields = (
+#         "user",
+#         "contact_method",
+#         "recall_me",
+#         "product",
+#         "bouquet",
+#     )
+#     list_display = (
+#         "user",
+#         "contact_method",
+#         "recall_me",
+#         "product",
+#         "bouquet",
+#     )
 
 
-@admin.register(CatalogPageModel)
-class CatalogPageAdmin(TranslationAdmin):
-    fields = (
-        "meta_tags",
-        "json_ld",
-    )
-    list_display = ("id",)
+# @admin.register(CatalogPageModel)
+# class CatalogPageAdmin(TranslationAdmin):
+#     fields = (
+#         "meta_tags",
+#         "json_ld",
+#     )
+#     list_display = ("id",)
 
 
-@admin.register(ProductsListPageModel)
-class ProductsListPageAdmin(TranslationAdmin):
-    fields = (
-        "meta_tags",
-        "json_ld",
-    )
-    list_display = ("id",)
+# @admin.register(ProductsListPageModel)
+# class ProductsListPageAdmin(TranslationAdmin):
+#     fields = (
+#         "meta_tags",
+#         "json_ld",
+#     )
+#     list_display = ("id",)
 
 
-@admin.register(BouquetsListPageModel)
-class BouquetsListPageAdmin(TranslationAdmin):
-    fields = (
-        "meta_tags",
-        "json_ld",
-    )
-    list_display = ("id",)
+# @admin.register(BouquetsListPageModel)
+# class BouquetsListPageAdmin(TranslationAdmin):
+#     fields = (
+#         "meta_tags",
+#         "json_ld",
+#     )
+#     list_display = ("id",)
