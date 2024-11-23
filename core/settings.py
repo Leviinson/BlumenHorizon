@@ -90,7 +90,17 @@ INTERNAL_IPS = [
     os.getenv("PUBLIC_IP"),
 ]
 
-SECURE_CROSS_ORIGIN_OPENER_POLICY = None
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_SSL_HOST = os.getenv("DOMAIN")
+SECURE_HSTS_SECONDS = 31536000
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+SECURE_SSL_REDIRECT = True
+CORS_ALLOWED_ORIGINS = [
+    f'https://www.{os.getenv("DOMAIN")}',
+    f'https://{os.getenv("DOMAIN")}',
+]
+# SECURE_CROSS_ORIGIN_OPENER_POLICY = None
 
 
 # Application definition
