@@ -33,4 +33,4 @@ document.addEventListener("DOMContentLoaded", function () {
             e.preventDefault();
             sendAjax(individualOrderForm);
         });
-    });
+    }, {passive: false});
