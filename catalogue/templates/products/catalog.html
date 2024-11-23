@@ -27,8 +27,10 @@
                 {% for subcategory in category.subcategories.all %}
                 <a href="{{ subcategory.get_relative_url }}" class="text-decoration-none text-dark">
                     <div class="subcategory-container d-flex align-items-center">
-                        <img style="width: 70px;" class="img-thumbnail rounded me-2" src="{{ subcategory.image.url }}"
+                        <div class="image-wrapper">
+                            <img style="width: 70px;" class="img-thumbnail rounded me-2" src="{{ subcategory.image.url }}"
                             alt="{{ subcategory.image_alt }}">
+                        </div>
                         <h3 class="fs-6 fw-light mb-0">{{ subcategory.name }}</h3>
                     </div>
                 </a>

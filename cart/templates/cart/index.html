@@ -38,7 +38,7 @@
                         {% endif %}
                         <div class="row product-container" id="{{ item.product.slug }}">
                             <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
-                                <div class="bg-image hover-overlay hover-zoom ripple image-wrapper">
+                                <div class="bg-image hover-overlay ripple image-wrapper">
                                     <a href="{{ item.product.get_relative_url }}" class="w-100">
                                         <img src="{% if item.product.first_image_uri %}{{ MEDIA_URL }}{{ item.product.first_image_uri }}{% else %}{% static 'defaults/no-image.webp' %}{% endif %}"
                                             class="square-image rounded img-thumbnail"
@@ -83,7 +83,7 @@
                         {% endif %}
                         <div class="row product-container" id="{{ item.product.slug }}">
                             <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
-                                <div class="bg-image hover-overlay hover-zoom ripple image-wrapper">
+                                <div class="bg-image image-wrapper">
                                     <a href="{{ item.product.get_relative_url }}" class="w-100">
                                         <img src="{% if item.product.first_image_uri %}{{ MEDIA_URL }}{{ item.product.first_image_uri }}{% else %}{% static 'defaults/no-image.webp' %}{% endif %}"
                                             class="square-image rounded img-thumbnail"
