@@ -178,10 +178,8 @@ class CartBouquetAddView(
     BaseFormView,
 ):
     def get_success_message(self, product):
-        return _(
-            'Букет "{product_name}" успешно добавлен в корзину.'.format(
-                product_name=product.name
-            )
+        return _('Букет "{product_name}" успешно добавлен в корзину.').format(
+            product_name=product.name
         )
 
     def get_error_message(self):
@@ -195,10 +193,8 @@ class CartProductAddView(
     BaseFormView,
 ):
     def get_success_message(self, product):
-        return _(
-            'Продукт "{product_name}" успешно добавлен в корзину.'.format(
-                product_name=product.name
-            )
+        return _('Продукт "{product_name}" успешно добавлен в корзину.').format(
+            product_name=product.name
         )
 
     def get_error_message(self):
@@ -212,10 +208,8 @@ class CartBouquetRemoveView(
     BaseFormView,
 ):
     def get_success_message(self, product):
-        return _(
-            'Букет "{product_name}" успешно убран из корзины.'.format(
-                product_name=product.name
-            )
+        return _('Букет "{product_name}" успешно убран из корзины.').format(
+            product_name=product.name
         )
 
     def get_error_message(self):
@@ -229,10 +223,8 @@ class CartProductRemoveView(
     BaseFormView,
 ):
     def get_success_message(self, product):
-        return _(
-            'Продукт "{product_name}" успешно убран из корзины.'.format(
-                product_name=product.name
-            )
+        return _('Продукт "{product_name}" успешно убран из корзины.').format(
+            product_name=product.name
         )
 
     def get_error_message(self):
@@ -246,10 +238,8 @@ class CartBouquetRemoveSingleView(
     BaseFormView,
 ):
     def get_success_message(self, product):
-        return _(
-            'Букет "{product_name}" успешно удалён из корзины.'.format(
-                product_name=product.name
-            )
+        return _('Букет "{product_name}" успешно удалён из корзины.').format(
+            product_name=product.name
         )
 
     def get_error_message(self):
@@ -263,10 +253,8 @@ class CartProductRemoveSingleView(
     BaseFormView,
 ):
     def get_success_message(self, product):
-        return _(
-            'Продукт "{product_name}" успешно удалён из корзины.'.format(
-                product_name=product.name
-            )
+        return _('Продукт "{product_name}" успешно удалён из корзины.').format(
+            product_name=product.name
         )
 
     def get_error_message(self):
