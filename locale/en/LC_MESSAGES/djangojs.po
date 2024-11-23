@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-07 19:37+0100\n"
-"PO-Revision-Date: 2024-11-07 19:39+0100\n"
-"Last-Translator: None None <root@gmail.com>\n"
+"PO-Revision-Date: 2024-11-23 22:19+0100\n"
+"Last-Translator: None None <blumenhorizon@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -24,11 +24,11 @@ msgstr ""
 #: cart/templates/cart/scripts/removeProduct.js:35
 #: core/staticfiles/scripts/cartButton.js:41
 msgid "Произошла ошибка. Повторите попытку позже."
-msgstr ""
+msgstr "An error has occurred. Please try again later."
 
 #: cart/templates/cart/scripts/increaseOrDecreaseProduct.js:38
 msgid "В корзине всего один продукт. Вместо этого удалите его."
-msgstr ""
+msgstr "There is only one product in the cart. Instead, delete it."
 
 #: cart/templates/cart/scripts/removeProduct.js:25
 #, javascript-format
@@ -37,16 +37,16 @@ msgstr "%s pcs"
 
 #: core/staticfiles/scripts/liveSearch.js:69
 msgid "Продукты:"
-msgstr ""
+msgstr "Products:"
 
 #: core/staticfiles/scripts/liveSearch.js:74
 msgid "Букеты:"
-msgstr ""
+msgstr "Bouquets:"
 
 #: core/staticfiles/scripts/liveSearch.js:79
 msgid "Нет результатов"
-msgstr ""
+msgstr "No results"
 
 #: core/staticfiles/scripts/liveSearch.js:96
 msgid "Ошибка при поиске"
-msgstr ""
+msgstr "Error while searching"

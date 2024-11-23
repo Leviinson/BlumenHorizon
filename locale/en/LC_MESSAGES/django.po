@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-23 21:58+0100\n"
-"PO-Revision-Date: 2024-11-23 22:18+0100\n"
+"PO-Revision-Date: 2024-11-23 22:20+0100\n"
 "Last-Translator: None None <blumenhorizon@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -283,7 +283,7 @@ msgstr ""
 "cart of bouquets, online store of bouquets, flower delivery, place an order"
 
 #: cart/templates/cart/index.html:26
-#, fuzzy, python-format
+#, python-format
 #| msgid ""
 #| "\n"
 #| "                                    %(total_amount)s эл.\n"
@@ -294,7 +294,7 @@ msgid ""
 "                                "
 msgstr ""
 "\n"
-"%(total_amount)s pcs"
+"%(total_amount)s pcs."
 
 #: cart/templates/cart/index.html:45 cart/templates/cart/index.html:90
 #: catalogue/templates/products/base_detail.html:49
@@ -361,7 +361,7 @@ msgstr "Clarify the address with recipient?"
 
 #: cart/templates/cart/index.html:277
 msgid "Email"
-msgstr ""
+msgstr "Email"
 
 #: cart/templates/cart/index.html:288
 msgid "Форма обращения"
