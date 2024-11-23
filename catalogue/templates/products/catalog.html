@@ -25,17 +25,19 @@
                     </a>
                 </h2>
                 <hr>
-                {% for subcategory in category.subcategories.all %}
-                <a href="{{ subcategory.get_relative_url }}" class="text-decoration-none text-dark">
-                    <div class="subcategory-container d-flex align-items-center">
-                        <div class="category-image-wrapper me-2">
-                            <img class="img-thumbnail category-square-image rounded" src="{{ subcategory.image.url }}"
-                            alt="{{ subcategory.image_alt }}">
+                <div class="d-flex flex-column gap-2"></div>
+                    {% for subcategory in category.subcategories.all %}
+                    <a href="{{ subcategory.get_relative_url }}" class="text-decoration-none text-dark">
+                        <div class="subcategory-container d-flex align-items-center">
+                            <div class="category-image-wrapper me-2">
+                                <img class="img-thumbnail category-square-image rounded" src="{{ subcategory.image.url }}"
+                                alt="{{ subcategory.image_alt }}">
+                            </div>
+                            <h3 class="fs-6 fw-light mb-0">{{ subcategory.name }}</h3>
                         </div>
-                        <h3 class="fs-6 fw-light mb-0">{{ subcategory.name }}</h3>
-                    </div>
-                </a>
-                {% endfor %}
+                    </a>
+                    {% endfor %}
+                </div>
             </div>
         </div>
         {% endfor %}
@@ -49,18 +51,21 @@
                     </a>
                 </h2>
                 <hr>
-                {% for subcategory in category.subcategories.all %}
-                <a href="{{ subcategory.get_relative_url }}" class="text-decoration-none text-dark">
-                    <div class="subcategory-container
-                                        d-flex align-items-center">
-                        <div class="category-image-wrapper me-2">
-                            <img class="img-thumbnail category-square-image rounded" src="{{ subcategory.image.url }}"
-                            alt="{{ subcategory.image_alt }}">
+
+                <div class="d-flex flex-column gap-2"></div>
+                    {% for subcategory in category.subcategories.all %}
+                    <a href="{{ subcategory.get_relative_url }}" class="text-decoration-none text-dark">
+                        <div class="subcategory-container
+                                            d-flex align-items-center">
+                            <div class="category-image-wrapper me-2">
+                                <img class="img-thumbnail category-square-image rounded" src="{{ subcategory.image.url }}"
+                                alt="{{ subcategory.image_alt }}">
+                            </div>
+                            <h3 class="fs-6 fw-light">{{ subcategory.name }}</h3>
                         </div>
-                        <h3 class="fs-6 fw-light">{{ subcategory.name }}</h3>
-                    </div>
-                </a>
-                {% endfor %}
+                    </a>
+                    {% endfor %}
+                </div>
             </div>
         </div>
         {% endfor %}
