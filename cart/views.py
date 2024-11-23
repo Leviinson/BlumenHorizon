@@ -204,7 +204,7 @@ class CartBouquetRemoveView(
     BaseFormView,
 ):
     def get_success_message(self, product):
-        return _("Букет {product_name} успешно убран из корзины.")
+        return _("Букет {product_name} успешно убран из корзины.".format(product_name=product.name))
 
     def get_error_message(self):
         return _("Ошибка уменьшения количества букета в корзине.")
