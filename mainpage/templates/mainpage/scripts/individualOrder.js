@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     const individualOrderForm = document.getElementById('individual-order-form');
-    console.log("initialized");
+
     async function sendAjax(form) {
         try {
             const response = await fetch(form.action, {
