@@ -20,6 +20,8 @@ class OrderForm(forms.ModelForm):
     street = forms.CharField(required=False, widget=forms.TextInput())
     building = forms.CharField(required=False, widget=forms.TextInput())
     flat = forms.CharField(required=False, widget=forms.TextInput())
+    message_card = forms.CharField(required=False, widget=forms.Textarea())
+    instructions = forms.CharField(required=False, widget=forms.Textarea())
 
     class Meta:
         model = Order
@@ -34,6 +36,8 @@ class OrderForm(forms.ModelForm):
             "street",
             "building",
             "flat",
+            "message_card",
+            "instructions",
             "recipient_address_form",
             "recipient_name",
             "recipient_phonenumber",

@@ -32,6 +32,8 @@ class OrderAdminModel(admin.ModelAdmin):
         "street",
         "building",
         "flat",
+        "message_card",
+        "instructions",
         "recipient_address_form",
         "recipient_name",
         "recipient_phonenumber",

@@ -446,6 +446,14 @@
                                 {% endfor %}
                                 {% endif %}
                             </div>
+                            <div class="mb-3 form-floating">
+                                <textarea class="form-control" name="message_card" id="message_card" resize="vertical" style="height: 100px;"></textarea>
+                                <label for="message_card">{% translate 'Записка к букету' %}</label>
+                            </div>
+                            <div class="mb-3 form-floating">
+                                <textarea class="form-control" name="instructions" id="instructions" resize="vertical" style="height: 100px;"></textarea>
+                                <label for="message_card">{% translate 'Что нам стоит учесть?' %}</label>
+                            </div>
                             <button type="submit" class="btn btn-dark-green" id="btn-checkout">
                                 {% translate 'Оформить заказ' %}
                             </button>

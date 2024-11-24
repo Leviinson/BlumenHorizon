@@ -75,9 +75,12 @@ class CartView(CommonContextMixin, FormView):
                 "building",
                 "postal_code",
                 "flat",
+                "message_card",
+                "instructions",
                 "tax",
                 "sub_total",
                 "grand_total",
+                "created_at",
                 "recipient_address_form",
                 "recipient_name",
                 "recipient_phonenumber",
@@ -98,7 +101,6 @@ class CartView(CommonContextMixin, FormView):
                 "bouquets__product__subcategory__slug",
                 "bouquets__product__subcategory__category__slug",
                 "bouquets__product__colors__name",
-                "created_at",
             )
             .get(pk=order.pk)
         )
@@ -127,6 +129,8 @@ class CartView(CommonContextMixin, FormView):
                 "street": order.street,
                 "building": order.building,
                 "flat": order.flat,
+                "message_card": order.message_card,
+                "instructions": order.instructions,
                 "tax": order.tax,
                 "sub_total": order.sub_total,
                 "grand_total": order.grand_total,

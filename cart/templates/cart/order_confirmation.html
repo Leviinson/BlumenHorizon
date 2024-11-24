@@ -557,8 +557,22 @@
 																		{% translate 'Уточнить у получателя.' %}
 																		{% endif %}
 																	</p>
-																	<p style="margin: 0; margin-bottom: 1px;"><strong>{% translate 'Имя получателя' %}: </strong>{{ recipient_name }}</p>
-																	<p style="margin: 0;"><strong>{% translate 'Номер телефона получателя' %}: </strong>{{ recipient_phonenumber }}</p>
+																	<p style="margin: 0; margin-bottom: 1px;">
+																		<strong>{% translate 'Имя получателя' %}: </strong>
+																		{{ recipient_name }}
+																	</p>
+																	<p style="margin: 0;  margin-bottom: 1px;">
+																		<strong>{% translate 'Номер телефона получателя' %}: </strong>
+																		{{ recipient_phonenumber }}
+																	</p>
+																	<p style="margin: 0;  margin-bottom: 1px;">
+																		<strong>{% translate 'Записка' %}: </strong>
+																		{{ message_card }}
+																	</p>
+																	<p style="margin: 0;">
+																		<strong>{% translate 'Что нам стоит учесть?' %}: </strong>
+																		{{ instructions }}
+																	</p>
 																</div>
 															</td>
 														</tr>

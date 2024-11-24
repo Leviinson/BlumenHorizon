@@ -44,6 +44,8 @@ class Order(TimeStampAdbstractModel, models.Model):
     street = models.CharField(verbose_name="Улица", max_length=255, null=True)
     building = models.CharField(verbose_name="Здание", max_length=40, null=True)
     flat = models.CharField(verbose_name="Квартира/офис", max_length=40, null=True)
+    message_card = models.TextField(verbose_name="Записка к букету", max_length=10000, null=True)
+    instructions = models.TextField(verbose_name="Инструкции к доставке", max_length=800, null=True)
     recipient_address_form = models.CharField(
         max_length=20,
         choices=ADDRESS_FORM_CHOICES,
