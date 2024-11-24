@@ -373,6 +373,22 @@ argon2 = ["argon2-cffi (>=19.1.0)"]
 bcrypt = ["bcrypt"]
 
 [[package]]
+name = "django-cacheops"
+version = "7.1"
+description = "A slick ORM cache with automatic granular event-driven invalidation for Django."
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "django_cacheops-7.1-py2.py3-none-any.whl", hash = "sha256:7d5e0f42e41ab4a8052130d33d9f3b26c47bef944ef2df0a64db92d70e51d87e"},
+    {file = "django_cacheops-7.1.tar.gz", hash = "sha256:ec079abb968557321ee208c6274820231820f98ca6377dda971f04981bc2ab52"},
+]
+
+[package.dependencies]
+django = ">=3.2"
+funcy = ">=1.8"
+redis = ">=3.0.0"
+
+[[package]]
 name = "django-carton"
 version = "1.2.1"
 description = "django-carton is a simple and lightweight application for shopping carts and wish lists."
@@ -535,6 +551,17 @@ files = [
 mccabe = ">=0.7.0,<0.8.0"
 pycodestyle = ">=2.12.0,<2.13.0"
 pyflakes = ">=3.2.0,<3.3.0"
+
+[[package]]
+name = "funcy"
+version = "2.0"
+description = "A fancy and practical functional tools"
+optional = false
+python-versions = "*"
+files = [
+    {file = "funcy-2.0-py2.py3-none-any.whl", hash = "sha256:53df23c8bb1651b12f095df764bfb057935d49537a56de211b098f4c79614bb0"},
+    {file = "funcy-2.0.tar.gz", hash = "sha256:3963315d59d41c6f30c04bc910e10ab50a3ac4a225868bfa96feed133df075cb"},
+]
 
 [[package]]
 name = "idna"
@@ -1072,4 +1099,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "372572869c4520e71fda51c17adf144cdc5e88134d6bf59c7144c793444dc3fa"
+content-hash = "a3f9ecdad78ea55d105268262e24e651da21c3a45a08be8757e1def3545e144a"
