@@ -228,7 +228,7 @@ class CartProductRemoveView(
         )
 
     def get_error_message(self):
-        return _("Ошибка удаления продукта из корзине.")
+        return _("Ошибка удаления продукта из корзины.")
 
 
 class CartBouquetRemoveSingleView(
