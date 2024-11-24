@@ -156,6 +156,7 @@ body {
 
     #fillers-links {
         justify-content: center !important;
+        flex-direction: column;
     }
 
     #fillers-links li:last-child a {
@@ -165,6 +166,8 @@ body {
     .navbar-brand {
         margin-right: 0;
     }
+
+
 }
 
 .carousel-control-prev-icon, .carousel-control-next-icon {
