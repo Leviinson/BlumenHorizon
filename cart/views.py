@@ -243,7 +243,7 @@ class CartBouquetRemoveSingleView(
         )
 
     def get_error_message(self):
-        return _("Ошибка уменьшения количества букета в корзины.")
+        return _("Ошибка уменьшения количества букета в корзине.")
 
 
 class CartProductRemoveSingleView(
@@ -258,7 +258,7 @@ class CartProductRemoveSingleView(
         )
 
     def get_error_message(self):
-        return _("Ошибка уменьшения количества продукта в корзины.")
+        return _("Ошибка уменьшения количества продукта в корзине.")
 
 
 def cart_clear(request: HttpRequest) -> Type[JsonResponse]:
