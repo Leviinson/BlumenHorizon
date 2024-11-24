@@ -81,42 +81,44 @@
     {{ description|safe }}
   </div>
 
-  <div class="card w-40 mt-4 mb-5">
+  <div class="card w-50 mt-4 mb-5">
     <form id="individual-order-form"
           class="d-flex w-100 flex-column justify-content-start align-items-start text-start card-body"
           action="{% url 'mainpage:individual-order-negotiate' %}"
           method="POST">
-        <legend class="text-center">
-          <h2 class="fs-4 fw-normal" id="contact-us">
-            {% translate 'Свяжитесь с нами' %}
-          </h2>
-        </legend>
-        {% csrf_token %}
-        <div class="form-text">{% translate 'Заполните форму, чтобы заказать букет из индивидуального состава.' %}</div>
-        <div class="mb-3 w-100">
-          <label for="{{ individual_order_form.first_name.id_for_label }}" class="form-label">
-            {% translate 'Имя' %}
-          </label>
-          <div class="d-flex">
-            {{ individual_order_form.first_name }}
+        <fieldset class="w-100">
+          <legend class="text-center">
+            <h2 class="fs-4 fw-normal" id="contact-us">
+              {% translate 'Свяжитесь с нами' %}
+            </h2>
+          </legend>
+          {% csrf_token %}
+          <div class="form-text">{% translate 'Заполните форму, чтобы заказать букет из индивидуального состава.' %}</div>
+          <div class="mb-3 w-100">
+            <label for="{{ individual_order_form.first_name.id_for_label }}" class="form-label">
+              {% translate 'Имя' %}
+            </label>
+            <div class="d-flex">
+              {{ individual_order_form.first_name }}
+            </div>
           </div>
-        </div>
-        <div class="mb-3">
-          <label for="{{ individual_order_form.contact_method.id_for_label }}" class="form-label">
-            {% translate 'Тел. номер в любой соц. сети или ссылка профиля' %}
-          </label>
-          <div class="d-flex">
-            {{ individual_order_form.contact_method }}
+          <div class="mb-3">
+            <label for="{{ individual_order_form.contact_method.id_for_label }}" class="form-label">
+              {% translate 'Тел. номер в любой соц. сети или ссылка профиля' %}
+            </label>
+            <div class="d-flex">
+              {{ individual_order_form.contact_method }}
+            </div>
           </div>
-        </div>
-        <div class="mb-3 form-check">
-          {{ individual_order_form.recall_me }}
-          <label class="form-check-label" for="{{ individual_order_form.recall_me.id_for_label }}">
-            <small>
-              {% translate 'Разрешаю мне перезвонить' %}
-            </small>
-          </label>
-        </div>
+          <div class="mb-3 form-check">
+            {{ individual_order_form.recall_me }}
+            <label class="form-check-label" for="{{ individual_order_form.recall_me.id_for_label }}">
+              <small>
+                {% translate 'Разрешаю мне перезвонить' %}
+              </small>
+            </label>
+          </div>
+        </fieldset>
         <button type="submit" class="btn btn-dark-green">{% translate 'Связаться' %}</button>
     </form>
   </div>
