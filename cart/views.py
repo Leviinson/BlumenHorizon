@@ -12,6 +12,7 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 from django.views.generic.edit import BaseFormView, FormView
 
+from core.services.decorators.db.db_queries import inspect_db_queries
 from core.services.mixins.views import CommonContextMixin
 
 from .cart import BouquetCart, ProductCart
@@ -31,6 +32,7 @@ class CartView(CommonContextMixin, FormView):
     template_name = "cart/index.html"
     form_class = OrderForm
 
+    @inspect_db_queries
     def form_valid(self, form: OrderForm):
         site = get_current_site(self.request)
         products_cart = ProductCart(
@@ -104,6 +106,13 @@ class CartView(CommonContextMixin, FormView):
             )
             .get(pk=order.pk)
         )
+
+        for order_product in order.products.all():
+            order_product.product.first_image = order_product.product.images.first()
+
+        for order_bouquet in order.bouquets.all():
+            order_bouquet.product.first_image = order_bouquet.product.images.first()
+
         currency_symbol = site.extended.currency_symbol
         site_name = site.name
         domain = site.domain

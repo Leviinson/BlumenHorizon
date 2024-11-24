@@ -5,6 +5,7 @@ from django.db import transaction
 
 from accounts.models import User
 from catalogue.models import Bouquet, Product
+from core.services.decorators.db.db_queries import inspect_db_queries
 
 from .cart import BouquetCart, ProductCart
 from .models import Order, OrderBouquets, OrderProducts
@@ -46,6 +47,7 @@ class OrderForm(forms.ModelForm):
             "is_surprise",
         ]
 
+    @inspect_db_queries
     def save(
         self,
         products_cart: ProductCart,
@@ -73,7 +75,7 @@ class OrderForm(forms.ModelForm):
                             order=order,
                             product=product,
                             product_price=product.price,
-                            product_discount=product.discount,
+                            product_discount=product.discount if product.has_discount else 0,
                             product_discount_price=product.discount_price,
                             product_tax_price=product.tax_price,
                             product_tax_price_discounted=product.tax_price_discounted,
@@ -90,7 +92,7 @@ class OrderForm(forms.ModelForm):
                             order=order,
                             product=bouquet,
                             product_price=bouquet.price,
-                            product_discount=bouquet.discount,
+                            product_discount=bouquet.discount if bouquet.has_discount else 0,
                             product_discount_price=bouquet.discount_price,
                             product_tax_price=bouquet.tax_price,
                             product_tax_price_discounted=bouquet.tax_price_discounted,

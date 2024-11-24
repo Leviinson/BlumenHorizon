@@ -55,6 +55,8 @@ class CartMixin:
             "name",
             "slug",
             "price",
+            "discount",
+            "discount_expiration_datetime",
             "is_active",
             "subcategory__is_active",
             "subcategory__category__is_active",
