@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-24 17:48+0100\n"
+"POT-Creation-Date: 2024-11-24 18:44+0100\n"
 "PO-Revision-Date: 2024-11-24 15:33+0100\n"
 "Last-Translator: None None <blumenhorizon@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -322,7 +322,7 @@ msgstr ""
 msgid "Резюме заказа"
 msgstr ""
 
-#: cart/templates/cart/index.html:235 core/staticfiles/templates/footer.html:34
+#: cart/templates/cart/index.html:235 core/staticfiles/templates/footer.html:37
 #: core/staticfiles/templates/header.html:30
 msgid "Доставка"
 msgstr ""
@@ -578,7 +578,7 @@ msgid "Букет \"{product_name}\" успешно добавлен в корз
 msgstr ""
 
 #: cart/views.py:186
-msgid "Неизвестная ошибка добавления букета в корзину."
+msgid "Ошибка добавления букета в корзину."
 msgstr ""
 
 #: cart/views.py:196
@@ -596,7 +596,7 @@ msgid "Букет \"{product_name}\" успешно убран из корзин
 msgstr ""
 
 #: cart/views.py:216
-msgid "Ошибка уменьшения количества букета в корзине."
+msgid "Ошибка удаления букета из корзины."
 msgstr ""
 
 #: cart/views.py:226
@@ -605,25 +605,25 @@ msgid "Продукт \"{product_name}\" успешно убран из корз
 msgstr ""
 
 #: cart/views.py:231
-msgid "Ошибка уменьшения количества продукта в корзине."
+msgid "Ошибка удаления продукта из корзине."
 msgstr ""
 
 #: cart/views.py:241
 #, python-brace-format
-msgid "Букет \"{product_name}\" успешно удалён из корзины."
+msgid "Количество букета \"{product_name}\" успешно уменьшено."
 msgstr ""
 
 #: cart/views.py:246
-msgid "Ошибка удаления букета из корзины."
+msgid "Ошибка уменьшения количества букета в корзине."
 msgstr ""
 
 #: cart/views.py:256
 #, python-brace-format
-msgid "Продукт \"{product_name}\" успешно удалён из корзины."
+msgid "Количество продукта \"{product_name}\" успешно уменьшено."
 msgstr ""
 
 #: cart/views.py:261
-msgid "Ошибка удаления продукта из корзины."
+msgid "Ошибка уменьшения количества продукта в корзине."
 msgstr ""
 
 #: cart/views.py:272
@@ -844,25 +844,25 @@ msgstr ""
 msgid "Клиентам"
 msgstr ""
 
-#: core/staticfiles/templates/footer.html:31
+#: core/staticfiles/templates/footer.html:34
 msgid "Компания"
 msgstr ""
 
-#: core/staticfiles/templates/footer.html:33
+#: core/staticfiles/templates/footer.html:36
 #: core/staticfiles/templates/header.html:25
 msgid "О нас"
 msgstr ""
 
-#: core/staticfiles/templates/footer.html:35
+#: core/staticfiles/templates/footer.html:38
 #: core/staticfiles/templates/header.html:33
 msgid "Контакты"
 msgstr ""
 
-#: core/staticfiles/templates/footer.html:36
+#: core/staticfiles/templates/footer.html:39
 msgid "Частозадаваемые вопросы"
 msgstr ""
 
-#: core/staticfiles/templates/footer.html:54
+#: core/staticfiles/templates/footer.html:57
 msgid "Все права защищены"
 msgstr ""
 
