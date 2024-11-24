@@ -67,14 +67,14 @@ document.addEventListener('DOMContentLoaded', function() {
         // Render products by category
         if (Object.keys(data.results.products).length > 0) {
             for (const [category, products] of Object.entries(data.results.products)) {
-                searchResults.innerHTML += renderCategory(category, products, 'Продукты:');
+                searchResults.innerHTML += renderCategory(category, products, gettext('Продукты:'));
             }
         }
 
         // Render bouquets by category
         if (Object.keys(data.results.bouquets).length > 0) {
             for (const [category, bouquets] of Object.entries(data.results.bouquets)) {
-                searchResults.innerHTML += renderCategory(category, bouquets, 'Букеты:');
+                searchResults.innerHTML += renderCategory(category, bouquets, gettext('Букеты:'));
             }
         }
 
