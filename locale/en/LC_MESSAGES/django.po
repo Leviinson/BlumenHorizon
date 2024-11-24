@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-24 15:38+0100\n"
-"PO-Revision-Date: 2024-11-24 16:05+0100\n"
+"PO-Revision-Date: 2024-11-24 18:36+0100\n"
 "Last-Translator: None None <blumenhorizon@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -611,7 +611,7 @@ msgstr "Product \"{product_name}\" has been successfully added to cart."
 
 #: cart/views.py:201
 msgid "Ошибка добавления продукта в корзину."
-msgstr "Error adding product to cart."
+msgstr "Error adding product to the cart."
 
 #: cart/views.py:211
 #, python-brace-format
@@ -620,34 +620,34 @@ msgstr "Bouquet \"{product_name}\" has been successfully removed from the cart."
 
 #: cart/views.py:216
 msgid "Ошибка уменьшения количества букета в корзине."
-msgstr "Error reducing the number of bouquets in the cart."
+msgstr "Error removing bouquet from the cart."
 
 #: cart/views.py:226
 #, python-brace-format
 msgid "Продукт \"{product_name}\" успешно убран из корзины."
-msgstr "Product \"{product_name}\" has been successfully reduced in the cart."
+msgstr "Product \"{product_name}\" has been successfully removed from the cart."
 
 #: cart/views.py:231
 msgid "Ошибка уменьшения количества продукта в корзине."
-msgstr "Error reducing the quantity of product in the cart."
+msgstr "Error removing product from the cart."
 
 #: cart/views.py:241
 #, python-brace-format
 msgid "Букет \"{product_name}\" успешно удалён из корзины."
-msgstr "Bouquet \"{product_name}\" was successfully removed from the cart."
+msgstr "Bouquet \"{product_name}\" was successfully reduced in the cart."
 
 #: cart/views.py:246
 msgid "Ошибка удаления букета из корзины."
-msgstr "Error deleting bouquet from cart."
+msgstr "Error reducing the number of the bouquet from the cart."
 
 #: cart/views.py:256
 #, python-brace-format
 msgid "Продукт \"{product_name}\" успешно удалён из корзины."
-msgstr "Product \"{product_name}\" was successfully removed from the cart."
+msgstr "Product \"{product_name}\" quantity was successfully reduced in the cart."
 
 #: cart/views.py:261
 msgid "Ошибка удаления продукта из корзины."
-msgstr "Error removing product from cart."
+msgstr "Error reducing the quantity of product in the cart."
 
 #: cart/views.py:272
 msgid "Корзина очищена"
