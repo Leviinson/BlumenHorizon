@@ -66,3 +66,12 @@
     object-fit: cover;
     object-position: center;
 }
+
+.flower-badge {
+    white-space: normal;
+    word-wrap: break-word;
+    display: inline-block;
+    text-align: center;
+    max-width: 100%;
+    line-height: 1.2; 
+}

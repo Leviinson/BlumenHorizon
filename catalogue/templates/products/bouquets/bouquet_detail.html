@@ -17,7 +17,7 @@
                 <strong>{% translate 'Состав' %}:</strong>
                 <div class="d-flex flex-wrap mt-2">
                     {% for flower in product.flowers.all %}
-                        <span class="badge bg-soft-turquoise p-2 ms-0 mb-2 me-2 text-light">
+                        <span class="badge flower-badge bg-soft-turquoise p-2 ms-0 mb-2 me-2 text-light">
                             {{ flower.name }}
                         </span>
                     {% endfor %}
