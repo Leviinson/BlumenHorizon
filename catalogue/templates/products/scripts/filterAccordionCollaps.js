@@ -22,4 +22,3 @@ function updateFilters() {
 }
 updateFilters();
 filtersButton.addEventListener('click', updateFilters);
-window.addEventListener('resize', updateFilters);
