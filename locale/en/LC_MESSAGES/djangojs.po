@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-07 19:37+0100\n"
-"PO-Revision-Date: 2024-11-23 22:19+0100\n"
+"POT-Creation-Date: 2024-11-24 19:51+0100\n"
+"PO-Revision-Date: 2024-11-24 19:50+0100\n"
 "Last-Translator: None None <blumenhorizon@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -19,34 +19,39 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Translated-Using: django-rosetta 0.10.1\n"
 
-#: cart/templates/cart/scripts/clearCart.js:34
-#: cart/templates/cart/scripts/increaseOrDecreaseProduct.js:29
-#: cart/templates/cart/scripts/removeProduct.js:35
-#: core/staticfiles/scripts/cartButton.js:41
-msgid "Произошла ошибка. Повторите попытку позже."
-msgstr "An error has occurred. Please try again later."
-
-#: cart/templates/cart/scripts/increaseOrDecreaseProduct.js:38
-msgid "В корзине всего один продукт. Вместо этого удалите его."
-msgstr "There is only one product in the cart. Instead, delete it."
-
+#: cart/templates/cart/scripts/clearCart.js:21
+#: cart/templates/cart/scripts/increaseOrDecreaseProduct.js:23
 #: cart/templates/cart/scripts/removeProduct.js:25
 #, javascript-format
 msgid "%s эл."
 msgstr "%s pcs"
 
-#: core/staticfiles/scripts/liveSearch.js:69
+#: cart/templates/cart/scripts/clearCart.js:34
+#: cart/templates/cart/scripts/increaseOrDecreaseProduct.js:29
+#: cart/templates/cart/scripts/removeProduct.js:35
+#: catalogue/templates/products/scripts/individualQuestion.js:28
+#: core/staticfiles/scripts/cartButton.js:38
+#: mainpage/templates/mainpage/scripts/individualOrder.js:28
+msgid "Произошла ошибка. Повторите попытку позже."
+msgstr "An error has occurred. Please try again later."
+
+#: cart/templates/cart/scripts/increaseOrDecreaseProduct.js:38
+msgid ""
+"В корзине всего один продукт. Вместо уменьшения количества - удалите его."
+msgstr "There is only one product in the cart. Instead, delete it."
+
+#: core/staticfiles/scripts/liveSearch.js:70
 msgid "Продукты:"
 msgstr "Products:"
 
-#: core/staticfiles/scripts/liveSearch.js:74
+#: core/staticfiles/scripts/liveSearch.js:77
 msgid "Букеты:"
 msgstr "Bouquets:"
 
-#: core/staticfiles/scripts/liveSearch.js:79
+#: core/staticfiles/scripts/liveSearch.js:83
 msgid "Нет результатов"
 msgstr "No results"
 
-#: core/staticfiles/scripts/liveSearch.js:96
+#: core/staticfiles/scripts/liveSearch.js:100
 msgid "Ошибка при поиске"
 msgstr "Error while searching"

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-22 21:32+0100\n"
-"PO-Revision-Date: 2024-11-23 01:05+0100\n"
+"POT-Creation-Date: 2024-11-24 19:49+0100\n"
+"PO-Revision-Date: 2024-11-24 19:50+0100\n"
 "Last-Translator: None None <blumenhorizon@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -30,7 +30,7 @@ msgstr "%s Stk."
 #: cart/templates/cart/scripts/increaseOrDecreaseProduct.js:29
 #: cart/templates/cart/scripts/removeProduct.js:35
 #: catalogue/templates/products/scripts/individualQuestion.js:28
-#: core/staticfiles/scripts/cartButton.js:41
+#: core/staticfiles/scripts/cartButton.js:38
 #: mainpage/templates/mainpage/scripts/individualOrder.js:28
 msgid "Произошла ошибка. Повторите попытку позже."
 msgstr "Ein Fehler ist aufgetreten. Versuchen Sie es später noch einmal."
@@ -41,6 +41,14 @@ msgid ""
 msgstr ""
 "Es befindet sich nur ein Produkt im Warenkorb. Anstatt die Menge zu "
 "verringern, löschen Sie es bitte."
+
+#: core/staticfiles/scripts/liveSearch.js:70
+msgid "Продукты:"
+msgstr "Produkte:"
+
+#: core/staticfiles/scripts/liveSearch.js:77
+msgid "Букеты:"
+msgstr "Blumensträuße:"
 
 #: core/staticfiles/scripts/liveSearch.js:83
 msgid "Нет результатов"
