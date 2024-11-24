@@ -11,6 +11,11 @@ class IndividualOrderForm(forms.ModelForm):
         model = IndividualOrder
         fields = ("first_name", "contact_method", "recall_me")
         widgets = {
+            "first_name": forms.TextInput(
+                attrs={
+                    "class": "form-control text-start",
+                },
+            ),
             "contact_method": forms.Textarea(
                 attrs={
                     "style": "height: 60px; width: 100%",
@@ -20,6 +25,12 @@ class IndividualOrderForm(forms.ModelForm):
                     "autocomplete": "tel",
                 }
             ),
+            "recall_me": forms.CheckboxInput(
+                attrs={
+                    "id": "recall-me",
+                    "class": "form-check-input checkbox-dark"
+                }
+            )
         }
 
     def save(self, commit=False, user: User = None):
