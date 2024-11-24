@@ -154,11 +154,6 @@ body {
         margin-bottom: 10px !important;
     }
 
-    #fillers-links {
-        justify-content: center !important;
-        flex-direction: column;
-    }
-
     #fillers-links li:last-child a {
         margin-right: 0 !important;
     }
@@ -168,6 +163,13 @@ body {
     }
 
 
+}
+
+@media (max-width: 1199px) {
+    #fillers-links {
+        justify-content: center !important;
+        flex-direction: column;
+    }
 }
 
 .carousel-control-prev-icon, .carousel-control-next-icon {
