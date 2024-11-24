@@ -39,7 +39,7 @@
         </button>
       </h2>
       <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#colorsAccordion">
-        <div class="accordion-body p-0">
+        <div class="accordion-body p-0" onclick="event.stopPropagation();">
             <ul class="list-group my-1">
                 <input style="display: none;" name="colors" id="colors-input" value="{{ view.request.GET.colors|default:'' }}">
                 {% for color in colors %}
