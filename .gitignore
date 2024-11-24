@@ -12,6 +12,7 @@ nginx/access.log
 nginx/error.log
 
 media/**
+!media/defaults/
 static/**
 
 .env
