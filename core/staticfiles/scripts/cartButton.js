@@ -22,9 +22,6 @@ document.addEventListener("DOMContentLoaded", function () {
         try {
             const response = await fetch(url, {
                 method: "POST",
-                headers: {
-                    "X-CSRFToken": csrfToken
-                },
                 body: new FormData(form)
             });
 
