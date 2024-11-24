@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-24 18:52+0100\n"
+"POT-Creation-Date: 2024-11-24 19:08+0100\n"
 "PO-Revision-Date: 2024-11-24 15:33+0100\n"
 "Last-Translator: None None <blumenhorizon@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -703,7 +703,8 @@ msgid "Следующее фото букета"
 msgstr ""
 
 #: catalogue/templates/products/base_detail.html:88
-msgid "Состав букета изменяем"
+#: mainpage/templates/mainpage/index.html:65
+msgid "Состав букета можно менять"
 msgstr ""
 
 #: catalogue/templates/products/base_detail.html:93
@@ -897,10 +898,6 @@ msgstr ""
 
 #: mainpage/templates/mainpage/index.html:60
 msgid "Наши преимущества"
-msgstr ""
-
-#: mainpage/templates/mainpage/index.html:65
-msgid "Состав букета можно менять"
 msgstr ""
 
 #: mainpage/templates/mainpage/index.html:70
