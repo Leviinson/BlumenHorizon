@@ -14,21 +14,25 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul id="fillers-links" class="text-end d-flex justify-content-end list-unstyled gap-2 align-items-center m-0">
-          <li class="nav-item">
-            <a class="nav-link active text-light text-start" href="{% url 'mainpage:offers' %}">{% translate 'Главная' %}</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-light text-start" href="{% url 'catalogue:catalog' %}">{% translate 'Каталог' %}</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-light text-start" href="{% url 'mainpage:about' %}">{% translate 'О нас' %}</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-light text-start" href="{% url 'mainpage:delivery' %}">{% translate 'Доставка' %}</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-light text-start me-2" href="{% url 'mainpage:contact' %}">{% translate 'Контакты' %}</a>
-          </li>
+          <div class="d-flex gap-2">
+            <li class="nav-item">
+              <a class="nav-link active text-light text-start" href="{% url 'mainpage:offers' %}">{% translate 'Главная' %}</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-light text-start" href="{% url 'catalogue:catalog' %}">{% translate 'Каталог' %}</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-light text-start" href="{% url 'mainpage:about' %}">{% translate 'О нас' %}</a>
+            </li>
+          </div>
+          <div class="d-flex gap-2">
+            <li class="nav-item">
+              <a class="nav-link text-light text-start" href="{% url 'mainpage:delivery' %}">{% translate 'Доставка' %}</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-light text-start me-2" href="{% url 'mainpage:contact' %}">{% translate 'Контакты' %}</a>
+            </li>
+          </div>
       </div>
       <div id="header-right-panel" class="d-flex justify-content-center">
         <form method="post" action="{% url 'set_language' %}" class="me-1" style="min-width: 70px;">
