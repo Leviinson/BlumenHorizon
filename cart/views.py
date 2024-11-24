@@ -183,7 +183,7 @@ class CartBouquetAddView(
         )
 
     def get_error_message(self):
-        return _("Неизвестная ошибка добавления букета в корзину.")
+        return _("Ошибка добавления букета в корзину.")
 
 
 class CartProductAddView(
@@ -213,7 +213,7 @@ class CartBouquetRemoveView(
         )
 
     def get_error_message(self):
-        return _("Ошибка уменьшения количества букета в корзине.")
+        return _("Ошибка удаления букета из корзины.")
 
 
 class CartProductRemoveView(
@@ -228,7 +228,7 @@ class CartProductRemoveView(
         )
 
     def get_error_message(self):
-        return _("Ошибка уменьшения количества продукта в корзине.")
+        return _("Ошибка удаления продукта из корзине.")
 
 
 class CartBouquetRemoveSingleView(
@@ -238,12 +238,12 @@ class CartBouquetRemoveSingleView(
     BaseFormView,
 ):
     def get_success_message(self, product):
-        return _('Букет "{product_name}" успешно удалён из корзины.').format(
+        return _('Количество букета "{product_name}" успешно уменьшено.').format(
             product_name=product.name
         )
 
     def get_error_message(self):
-        return _("Ошибка удаления букета из корзины.")
+        return _("Ошибка уменьшения количества букета в корзины.")
 
 
 class CartProductRemoveSingleView(
@@ -253,12 +253,12 @@ class CartProductRemoveSingleView(
     BaseFormView,
 ):
     def get_success_message(self, product):
-        return _('Продукт "{product_name}" успешно удалён из корзины.').format(
+        return _('Количество продукта "{product_name}" успешно уменьшено.').format(
             product_name=product.name
         )
 
     def get_error_message(self):
-        return _("Ошибка удаления продукта из корзины.")
+        return _("Ошибка уменьшения количества продукта в корзины.")
 
 
 def cart_clear(request: HttpRequest) -> Type[JsonResponse]:
