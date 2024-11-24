@@ -41,7 +41,7 @@
         </button>
         <div class="social-list d-none" id="socialList">
             {% for social in socials_right_bottom %}
-            <a href="mailto:{{ company_email }}" class="btn btn-outline-primary social-link" style="
+            <a href="mailto:{{ company_email }}" class="btn btn-outline-primary social-link mt-2" style="
                 margin-right: .55rem;
                 --bs-btn-color: {{ social.icon_hex_code }};
                 --bs-btn-bg: {{ social.background_hex_code }};
@@ -54,7 +54,7 @@
                 --bs-btn-disabled-border-color: {{ social.background_hex_code }};
                 "><i class="bi bi-{{ social.bootstrap_icon }}"></i></a>
             {% if forloop.last %}
-            <a href="{{ social.absolute_url }}" class="btn btn-outline-primary social-link" style="
+            <a href="{{ social.absolute_url }}" class="btn btn-outline-primary social-link mt-2" style="
                 margin-right: .55rem;
                 --bs-btn-color: {{ social.icon_hex_code }};
                 --bs-btn-bg: {{ social.background_hex_code }};
