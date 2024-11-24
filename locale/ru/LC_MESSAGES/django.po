@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-24 18:44+0100\n"
+"POT-Creation-Date: 2024-11-24 18:52+0100\n"
 "PO-Revision-Date: 2024-11-24 15:33+0100\n"
 "Last-Translator: None None <blumenhorizon@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -605,7 +605,7 @@ msgid "Продукт \"{product_name}\" успешно убран из корз
 msgstr ""
 
 #: cart/views.py:231
-msgid "Ошибка удаления продукта из корзине."
+msgid "Ошибка удаления продукта из корзины."
 msgstr ""
 
 #: cart/views.py:241
