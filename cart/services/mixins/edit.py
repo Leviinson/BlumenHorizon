@@ -1,9 +1,9 @@
-from decimal import ROUND_HALF_UP, Decimal
 import logging
 from abc import ABC, abstractmethod
+from decimal import ROUND_HALF_UP, Decimal
 from typing import Type
-from django.contrib.sites.models import Site
 
+from django.contrib.sites.models import Site
 from django.db import transaction
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
@@ -13,7 +13,6 @@ from cart.cart import BouquetCart, ProductCart
 from cart.forms import CartForm
 from cart.services.dataclasses import CartAction
 from catalogue.models import Bouquet, Product
-from core.services.decorators.db.db_queries import inspect_db_queries
 
 
 class CartEditAbstractMixin(ABC):
@@ -43,7 +42,6 @@ class CartEditAbstractMixin(ABC):
     def get_error_message(self) -> str:
         pass
 
-    @inspect_db_queries
     def form_valid(self, form: CartForm) -> JsonResponse:
         cart = self.get_cart()
         remaining_cart = self.get_remaining_cart()
@@ -96,7 +94,7 @@ class CartEditAbstractMixin(ABC):
             product_quantity=cart.get_quantity(product),
             product_grand_total=cart.get_subtotal(product),
             total_quantity=cart.count + remaining_cart.count,
-            taxes = taxes
+            taxes=taxes,
         )
 
     def form_invalid(self, form) -> JsonResponse:

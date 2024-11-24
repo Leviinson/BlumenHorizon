@@ -41,11 +41,21 @@ class Order(TimeStampAdbstractModel, models.Model):
     postal_code = models.CharField(
         verbose_name="Почтовый индекс", max_length=40, null=True, blank=True
     )
-    street = models.CharField(verbose_name="Улица", max_length=255, null=True, blank=True)
-    building = models.CharField(verbose_name="Здание", max_length=40, null=True, blank=True)
-    flat = models.CharField(verbose_name="Квартира/офис", max_length=40, null=True, blank=True)
-    message_card = models.TextField(verbose_name="Записка к букету", max_length=10000, null=True, blank=True)
-    instructions = models.TextField(verbose_name="Инструкции к доставке", max_length=800, null=True, blank=True)
+    street = models.CharField(
+        verbose_name="Улица", max_length=255, null=True, blank=True
+    )
+    building = models.CharField(
+        verbose_name="Здание", max_length=40, null=True, blank=True
+    )
+    flat = models.CharField(
+        verbose_name="Квартира/офис", max_length=40, null=True, blank=True
+    )
+    message_card = models.TextField(
+        verbose_name="Записка к букету", max_length=10000, null=True, blank=True
+    )
+    instructions = models.TextField(
+        verbose_name="Инструкции к доставке", max_length=800, null=True, blank=True
+    )
     recipient_address_form = models.CharField(
         max_length=20,
         choices=ADDRESS_FORM_CHOICES,
@@ -105,7 +115,7 @@ class Order(TimeStampAdbstractModel, models.Model):
 
     def __str__(self):
         return f"{self.code} - {self.status}"
-    
+
 
 class OrderItem(models.Model):
     product_price = models.DecimalField(

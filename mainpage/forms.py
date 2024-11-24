@@ -26,11 +26,8 @@ class IndividualOrderForm(forms.ModelForm):
                 }
             ),
             "recall_me": forms.CheckboxInput(
-                attrs={
-                    "id": "recall-me",
-                    "class": "form-check-input checkbox-dark"
-                }
-            )
+                attrs={"id": "recall-me", "class": "form-check-input checkbox-dark"}
+            ),
         }
 
     def save(self, commit=False, user: User = None):
