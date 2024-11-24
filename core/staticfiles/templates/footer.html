@@ -1,5 +1,5 @@
 {% load i18n %}
-
+{% load static %}
 <div class="container-fluid bg-soft-turquoise d-flex justify-content-center align-items-center mt-5">
     <footer class="py-5 text-light" style="font-size: .75rem;">
         <div id="footer-sections" class="d-flex justify-content-center align-items-start gap-5">
@@ -26,7 +26,10 @@
                     </li>
                 </ul>
             </div>
-
+            <a href="{% url 'mainpage:offers' %}" class="navbar-brand fs-3 text-light d-flex flex-column align-items-center">
+                <img src="{% static 'defaults/logo.png' %}" alt="{{ site_name }} logo" width="72" height="72" class="me-2">
+                {{ site_name }}
+            </a>
             <div class="mb-3">
                 <h5 class="fw-bold text-light">{% translate 'Компания' %}</h5>
                 <ul class="nav flex-column">
