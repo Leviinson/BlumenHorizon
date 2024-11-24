@@ -1,6 +1,8 @@
+from decimal import ROUND_HALF_UP, Decimal
 import logging
 from abc import ABC, abstractmethod
 from typing import Type
+from django.contrib.sites.models import Site
 
 from django.db import transaction
 from django.http import JsonResponse
@@ -11,6 +13,7 @@ from cart.cart import BouquetCart, ProductCart
 from cart.forms import CartForm
 from cart.services.dataclasses import CartAction
 from catalogue.models import Bouquet, Product
+from core.services.decorators.db.db_queries import inspect_db_queries
 
 
 class CartEditAbstractMixin(ABC):
@@ -40,6 +43,7 @@ class CartEditAbstractMixin(ABC):
     def get_error_message(self) -> str:
         pass
 
+    @inspect_db_queries
     def form_valid(self, form: CartForm) -> JsonResponse:
         cart = self.get_cart()
         remaining_cart = self.get_remaining_cart()
@@ -50,7 +54,7 @@ class CartEditAbstractMixin(ABC):
                 with transaction.atomic():
                     cart.add(
                         product,
-                        price=product.discount_price,
+                        price=product.tax_price_discounted,
                     )
                     product.amount_of_savings += 1
                     product.subcategory.amount_of_savings += 1
@@ -73,13 +77,26 @@ class CartEditAbstractMixin(ABC):
                     )
                 )
 
+        site = (
+            Site.objects.prefetch_related("extended")
+            .only("extended__tax_percent")
+            .first()
+        )
+        tax_percent = site.extended.tax_percent
+        cart_grand_total = cart.total + remaining_cart.total
+        cart_sub_total = (cart_grand_total / Decimal(1 + tax_percent / 100)).quantize(
+            Decimal("0.01"), rounding=ROUND_HALF_UP
+        )
+        taxes = cart_grand_total - cart_sub_total
         return self._action_response(
             detail=self.get_success_message(product),
             status=201,
-            grand_total=cart.total + remaining_cart.total,
-            quantity=cart.get_quantity(product),
-            subtotal=cart.get_subtotal(product),
-            count=cart.count + remaining_cart.count,
+            cart_grand_total=cart_grand_total,
+            cart_sub_total=cart_sub_total,
+            product_quantity=cart.get_quantity(product),
+            product_grand_total=cart.get_subtotal(product),
+            total_quantity=cart.count + remaining_cart.count,
+            taxes = taxes
         )
 
     def form_invalid(self, form) -> JsonResponse:
@@ -99,19 +116,23 @@ class CartEditAbstractMixin(ABC):
         self,
         detail: str,
         status: int,
-        grand_total: float,
-        subtotal: float,
-        quantity: int,
-        count: int,
+        cart_grand_total: float,
+        product_grand_total: float,
+        product_quantity: int,
+        cart_sub_total: float,
+        total_quantity: int,
+        taxes: float,
     ) -> JsonResponse:
         return JsonResponse(
             {
                 "detail": detail,
                 "status": "success",
-                "grand_total": grand_total,
-                "subtotal": subtotal,
-                "quantity": quantity,
-                "count": count,
+                "cartGrandTotal": cart_grand_total,
+                "productGrandTotal": product_grand_total,
+                "productQuantity": product_quantity,
+                "cartSubTotal": cart_sub_total,
+                "totalQuantity": total_quantity,
+                "taxes": taxes,
             },
             status=status,
         )

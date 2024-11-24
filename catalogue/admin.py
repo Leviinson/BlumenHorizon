@@ -154,6 +154,8 @@ class ProductAdmin(TranslationAdmin):
     )
     list_display = (
         "name",
+        "price",
+        "discount",
         "slug",
         "is_active",
         "amount_of_orders",
@@ -381,6 +383,8 @@ class BouquetAdmin(TranslationAdmin):
     )
     list_display = (
         "name",
+        "price",
+        "discount",
         "slug",
         "diameter",
         "amount_of_orders",

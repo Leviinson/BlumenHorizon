@@ -159,10 +159,10 @@
                   <div class="d-flex flex-column justify-content-center mt-auto">
                     <p class="card-text">
                       {% if recommended_bouquet.has_discount %}
-                      <strong class="text-danger mb-0 me-2">{{ recommended_bouquet.discount_price|floatformat:"2u" }} {{ currency_symbol }}</strong>
-                      <strong class="text-muted text-decoration-line-through mb-0">{{ recommended_bouquet.price|floatformat:"2u" }} {{ currency_symbol }}</strong>
+                      <strong class="text-danger mb-0 me-2">{{ recommended_bouquet.tax_price_discounted|floatformat:"2u" }} {{ currency_symbol }}</strong>
+                      <strong class="text-muted text-decoration-line-through mb-0">{{ recommended_bouquet.tax_price|floatformat:"2u" }} {{ currency_symbol }}</strong>
                       {% else %}
-                      <strong>{{ recommended_bouquet.price|floatformat:"2u" }} {{ currency_symbol }}</strong>
+                      <strong>{{ recommended_bouquet.tax_price|floatformat:"2u" }} {{ currency_symbol }}</strong>
                       {% endif %}
                     </p>
                     <form method="post" class="add-to-cart-form w-100 me-2" data-add-url="{% url 'cart:bouquet-add' %}"
@@ -224,14 +224,14 @@
                     <p class="card-text">
                       {% if recommended_product.has_discount %}
                       <strong class="text-danger mb-0 me-2">
-                        {{ recommended_product.discount_price|floatformat:"2u" }} {{ currency_symbol }}
+                        {{ recommended_product.tax_price_discounted|floatformat:"2u" }} {{ currency_symbol }}
                       </strong>
                       <strong class="text-muted text-decoration-line-through mb-0">
-                        {{ recommended_product.price|floatformat:"2u" }} {{ currency_symbol }}
+                        {{ recommended_product.tax_price|floatformat:"2u" }} {{ currency_symbol }}
                       </strong>
                       {% else %}
                       <strong>
-                        {{ recommended_product.price|floatformat:"2u" }} {{ currency_symbol }}
+                        {{ recommended_product.tax_price|floatformat:"2u" }} {{ currency_symbol }}
                       </strong>
                       {% endif %}
                     </p>

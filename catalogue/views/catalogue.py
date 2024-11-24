@@ -140,7 +140,7 @@ class BuyItemView(FormView):
             )
             if item not in cart.products:
                 with transaction.atomic():
-                    cart.add(item, item.discount_price)
+                    cart.add(item, item.tax_price_discounted)
                     item.amount_of_savings += 1
                     item.subcategory.amount_of_savings += 1
                     item.subcategory.save(update_fields=["amount_of_savings"])

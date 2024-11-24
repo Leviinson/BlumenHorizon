@@ -16,14 +16,17 @@ document.addEventListener("DOMContentLoaded", function () {
                 const productElement = document.getElementById(productElementId);
                 const grandTotalElement = document.getElementById("grand-total-price");
                 const countElement = document.getElementById("total-count");
-                document.getElementById('products-total-price').textContent = data.grand_total;
+                const taxesElement = document.getElementById("taxes");
+
+                document.getElementById('products-total-price').textContent = data.cartSubTotal;
                 if (productElement) {
                     productElement.remove();
                     if (hr) {
                         hr.remove();
                     }
-                    countElement.textContent = interpolate(gettext('%s эл.'), [data.count]);
-                    grandTotalElement.textContent = data.grand_total;
+                    countElement.textContent = interpolate(gettext('%s эл.'), [data.totalQuantity]);
+                    taxesElement.textContent = data.taxes;
+                    grandTotalElement.textContent = data.cartGrandTotal;
                     emptyCartHandler();
                 }
                 showToast(data.detail, "danger");

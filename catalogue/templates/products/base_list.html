@@ -114,14 +114,14 @@
                                     <p class="card-text text-center">
                                         {% if product.has_discount %}
                                             <span class="text-danger mb-0 me-2">
-                                                {{ product.discount_price|floatformat:"2u" }} {{ currency_symbol }}
+                                                {{ product.tax_price_discounted|floatformat:"2u" }} {{ currency_symbol }}
                                             </span>
                                             <span class="text-muted text-decoration-line-through mb-0">
-                                                {{ product.price|floatformat:"2u" }} {{ currency_symbol }}
+                                                {{ product.tax_price|floatformat:"2u" }} {{ currency_symbol }}
                                             </span>
-                                            {% else %}
+                                        {% else %}
                                             <span>
-                                                {{ product.price|floatformat:"2u" }} {{ currency_symbol }}
+                                                {{ product.tax_price|floatformat:"2u" }} {{ currency_symbol }}
                                             </span>
                                         {% endif %}
                                     </p>

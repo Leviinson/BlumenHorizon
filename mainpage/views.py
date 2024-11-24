@@ -17,6 +17,7 @@ from catalogue.models import (
     ProductCategory,
     ProductImage,
 )
+from core.services.decorators.db.db_queries import inspect_db_queries
 from core.services.mixins.views import CommonContextMixin
 
 from .forms import IndividualOrderForm
@@ -35,6 +36,10 @@ from .services.dataclasses.related_model import RelatedModel
 class MainPageView(CommonContextMixin, TemplateView):
     template_name = "mainpage/index.html"
     http_method_names = ["get"]
+
+    @inspect_db_queries
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)

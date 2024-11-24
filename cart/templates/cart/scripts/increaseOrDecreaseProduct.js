@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const subtotalElement = document.getElementById(form.dataset.subtotalId);
         const grandTotalElement = document.getElementById("grand-total-price");
         const countElement = document.getElementById("total-count");
+        const taxesElement = document.getElementById("taxes");
 
         try {
             const response = await fetch(form.action, {
@@ -17,11 +18,12 @@ document.addEventListener("DOMContentLoaded", function () {
             const data = await response.json();
 
             if (data.status === "success") {
-                quantityInput.value = data.quantity;
-                subtotalElement.textContent = data.subtotal;
-                grandTotalElement.textContent = data.grand_total;
-                countElement.textContent = interpolate(gettext('%s эл.'), [data.count]);
-                document.getElementById('products-total-price').textContent = data.grand_total;
+                quantityInput.value = data.productQuantity;
+                countElement.textContent = interpolate(gettext('%s эл.'), [data.totalQuantity]);
+                subtotalElement.textContent = data.productGrandTotal;
+                grandTotalElement.textContent = data.cartGrandTotal;
+                document.getElementById('products-total-price').textContent = data.cartSubTotal;
+                taxesElement.textContent = data.taxes;
             } else {
                 showToast(data.detail, "danger");
             }

@@ -17,10 +17,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 const productsTotalPrice = document.getElementById('products-total-price');
                 const productContainers = productsListContainer.querySelectorAll(".product-container")
                 const hrElements = productsListContainer.querySelectorAll("hr");
+                const taxesElement = document.getElementById("taxes");
+
                 if (productsListContainer && grandTotalElement && countElement) {
                     countElement.textContent = interpolate(gettext('%s эл.'), [data.count]);
                     grandTotalElement.textContent = data.grand_total;
                     productsTotalPrice.textContent = data.grand_total;
+                    taxesElement.textContent = data.grand_total;
                     productContainers.forEach(container => container.remove());
                     hrElements.forEach(hr => hr.remove());
                     emptyCartHandler();

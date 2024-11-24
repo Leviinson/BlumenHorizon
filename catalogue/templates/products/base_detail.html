@@ -145,14 +145,14 @@
                     <div class="mb-3 d-flex flex-column align-items-end">
                         {% if product.has_discount %}
                             <h2 class="text-danger mb-0 me-2" style="font-size: x-large;">
-                                {{ product.discount_price|floatformat:"2u" }} {{ currency_symbol }}
+                                {{ product.tax_price_discounted|floatformat:"2u" }} {{ currency_symbol }}
                             </h2>
                             <h2 class="text-muted text-decoration-line-through mb-0" style="font-size: 1.25em;">
-                                {{ product.price|floatformat:"2u" }} {{ currency_symbol }}
+                                {{ product.tax_price|floatformat:"2u" }} {{ currency_symbol }}
                             </h2>
                         {% else %}
                             <h2 class="mb-0">
-                                {{ product.price|floatformat:"2u" }} {{ currency_symbol }}
+                                {{ product.tax_price|floatformat:"2u" }} {{ currency_symbol }}
                             </h2>
                         {% endif %}
                     </div>

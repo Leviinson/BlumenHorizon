@@ -90,17 +90,17 @@ INTERNAL_IPS = [
     os.getenv("PUBLIC_IP"),
 ]
 
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-SECURE_SSL_HOST = os.getenv("DOMAIN")
-SECURE_HSTS_SECONDS = 31536000
-SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-SECURE_SSL_REDIRECT = True
-CORS_ALLOWED_ORIGINS = [
-    f'https://www.{os.getenv("DOMAIN")}',
-    f'https://{os.getenv("DOMAIN")}',
-]
-# SECURE_CROSS_ORIGIN_OPENER_POLICY = None
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
+# SECURE_SSL_HOST = os.getenv("DOMAIN")
+# SECURE_HSTS_SECONDS = 31536000
+# SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+# SECURE_SSL_REDIRECT = True
+# CORS_ALLOWED_ORIGINS = [
+#     f'https://www.{os.getenv("DOMAIN")}',
+#     f'https://{os.getenv("DOMAIN")}',
+# ]
+SECURE_CROSS_ORIGIN_OPENER_POLICY = None
 
 
 # Application definition
@@ -134,6 +134,7 @@ THIRDPARTY_APPS = [
     "django_filters",
     "colorfield",
     "rest_framework",
+    "cacheops",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRDPARTY_APPS + LOCAL_APPS
@@ -357,6 +358,13 @@ CACHES = {
     }
 }
 
+# CACHEOPS_REDIS = os.getenv("CACHEOPS_REDIS")
+# CACHEOPS = {
+#     "sites.site": {"ops": "all", "timeout": 15},
+#     "extended_contrib_models.extended_site": {"ops": "all", "timeout": 15},
+#     "extended_contrib_models.social": {"ops": "all", "timeout": 15},
+# }
+
 # Celery
 # https://docs.celeryq.dev/en/stable/userguide/application.html#config-from-object
 
@@ -435,8 +443,14 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 TESTING = "test" in sys.argv
 
 if not TESTING and DEBUG:
-    INSTALLED_APPS.append("debug_toolbar")
-    MIDDLEWARE.append("debug_toolbar.middleware.DebugToolbarMiddleware")
+    INSTALLED_APPS = [
+        *INSTALLED_APPS,
+        "debug_toolbar",
+    ]
+    MIDDLEWARE = [
+        "debug_toolbar.middleware.DebugToolbarMiddleware",
+        *MIDDLEWARE,
+    ]
 
 
 # REGION_SETTINGS ISO 3166-1

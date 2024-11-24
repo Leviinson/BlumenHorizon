@@ -28,8 +28,8 @@ class Order(TimeStampAdbstractModel, models.Model):
         blank=False,
     )
     clarify_address = models.BooleanField(default=False, verbose_name="Уточнить адрес?")
-    country = models.CharField(verbose_name="Страна", max_length=40, null=True)
-    city = models.CharField(verbose_name="Город", max_length=40, null=True)
+    country = models.CharField(verbose_name="Страна", max_length=40)
+    city = models.CharField(verbose_name="Город", max_length=40)
     email = models.EmailField(verbose_name="Почта")
     address_form = models.CharField(
         max_length=20,
@@ -39,13 +39,13 @@ class Order(TimeStampAdbstractModel, models.Model):
     )
     name = models.CharField(verbose_name="Имя заказчика", max_length=80)
     postal_code = models.CharField(
-        verbose_name="Почтовый индекс", max_length=40, null=True
+        verbose_name="Почтовый индекс", max_length=40, null=True, blank=True
     )
-    street = models.CharField(verbose_name="Улица", max_length=255, null=True)
-    building = models.CharField(verbose_name="Здание", max_length=40, null=True)
-    flat = models.CharField(verbose_name="Квартира/офис", max_length=40, null=True)
-    message_card = models.TextField(verbose_name="Записка к букету", max_length=10000, null=True)
-    instructions = models.TextField(verbose_name="Инструкции к доставке", max_length=800, null=True)
+    street = models.CharField(verbose_name="Улица", max_length=255, null=True, blank=True)
+    building = models.CharField(verbose_name="Здание", max_length=40, null=True, blank=True)
+    flat = models.CharField(verbose_name="Квартира/офис", max_length=40, null=True, blank=True)
+    message_card = models.TextField(verbose_name="Записка к букету", max_length=10000, null=True, blank=True)
+    instructions = models.TextField(verbose_name="Инструкции к доставке", max_length=800, null=True, blank=True)
     recipient_address_form = models.CharField(
         max_length=20,
         choices=ADDRESS_FORM_CHOICES,
@@ -76,14 +76,12 @@ class Order(TimeStampAdbstractModel, models.Model):
         decimal_places=2,
         verbose_name=_("Чистая стоимость"),
         help_text="Без налога",
-        null=True,
     )
     tax = models.DecimalField(
         max_digits=10,
         decimal_places=2,
         verbose_name=_("Налоговая стоимость"),
         help_text="Стоимость налога",
-        null=True,
     )
     tax_percent = models.IntegerField(
         validators=(
@@ -92,7 +90,6 @@ class Order(TimeStampAdbstractModel, models.Model):
         ),
         verbose_name=_("НДС"),
         help_text="%",
-        null=True,
         default=0,
     )
     grand_total = models.DecimalField(
@@ -100,7 +97,6 @@ class Order(TimeStampAdbstractModel, models.Model):
         decimal_places=2,
         verbose_name=_("Итоговая стоимость"),
         help_text="С налогом",
-        null=True,
     )
 
     class Meta:
@@ -109,16 +105,51 @@ class Order(TimeStampAdbstractModel, models.Model):
 
     def __str__(self):
         return f"{self.code} - {self.status}"
+    
+
+class OrderItem(models.Model):
+    product_price = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        verbose_name="Цена продукта",
+    )
+    product_discount = models.IntegerField(
+        validators=(
+            MinValueValidator(0),
+            MaxValueValidator(100),
+        ),
+        verbose_name="Скидка на продукт",
+        null=True,
+        default=0,
+    )
+    product_discount_price = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        verbose_name="Цена продукта cо скидкой",
+    )
+    product_tax_price = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        verbose_name="Цена продукта с налогом",
+    )
+    product_tax_price_discounted = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        verbose_name="Цена продукта со скидкой и налогом",
+    )
+    quantity = models.IntegerField(verbose_name="Количество продукта")
+
+    class Meta:
+        abstract = True
 
 
-class OrderProducts(TimeStampAdbstractModel, models.Model):
+class OrderProducts(TimeStampAdbstractModel, OrderItem):
     order = models.ForeignKey(
         Order, related_name="products", verbose_name="Заказ", on_delete=models.PROTECT
     )
     product = models.ForeignKey(
         Product, related_name="orders", verbose_name="Продукт", on_delete=models.PROTECT
     )
-    quantity = models.IntegerField(verbose_name="Количество продукта")
 
     class Meta:
         verbose_name = "Продукт в заказе"
@@ -128,14 +159,13 @@ class OrderProducts(TimeStampAdbstractModel, models.Model):
         return f"{self.pk}"
 
 
-class OrderBouquets(TimeStampAdbstractModel, models.Model):
+class OrderBouquets(TimeStampAdbstractModel, OrderItem):
     order = models.ForeignKey(
         Order, related_name="bouquets", verbose_name="Заказ", on_delete=models.PROTECT
     )
     product = models.ForeignKey(
         Bouquet, related_name="orders", verbose_name="Букет", on_delete=models.PROTECT
     )
-    quantity = models.IntegerField(verbose_name="Количество продукта")
 
     class Meta:
         verbose_name = "Букет в заказе"

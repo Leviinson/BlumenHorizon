@@ -52,8 +52,11 @@
                 </form>
             </div> -->
         </div>
-
-        <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center pt-4 mt-4 border-top">
+        
+        <div class="w-100 text-end">
+            <span>{{ company_email }}</span>
+        </div>
+        <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center pt-4 mt-1 border-top">
             <p>© 2024 {{ site_name }}. {% translate 'Все права защищены' %}.</p>
             <ul class="list-unstyled d-flex">
                 {% for social in socials_right_bottom %}
@@ -65,10 +68,7 @@
                 </li>
                 {% endfor %}
                 <li class="ms-3">
-                    <a class="link-body-emphasis" href="mailto:{{ company_email }}">
-                        <i class="bi bi-envelope fs-5"
-                           style="color: white;"></i>
-                    </a>
+                    
                 </li>
             </ul>
         </div>

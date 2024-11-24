@@ -167,8 +167,11 @@ class CartView(CommonContextMixin, FormView):
         context["bouquets_cart"] = BouquetCart(
             True, self.request.session, session_key="bouquets_cart"
         )
-        sub_total = context["products_cart"].total + context["bouquets_cart"].total
-        tax = sub_total * Decimal(self.current_site.extended.tax_percent / 100)
+
+        tax_percent = self.current_site.extended.tax_percent
+        grand_total = context["products_cart"].total + context["bouquets_cart"].total
+        sub_total = grand_total / Decimal(1 + tax_percent / 100)
+        tax = grand_total - sub_total
         context["tax"] = tax
         context["sub_total"] = sub_total
         context["grand_total"] = sub_total + tax

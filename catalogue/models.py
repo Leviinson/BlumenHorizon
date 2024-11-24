@@ -264,11 +264,38 @@ class ProductAbstract(TimeStampAdbstractModel, MetaDataAbstractModel):
         if self.subcategory is None:
             self.is_active = False
 
+    def _get_tax_percent(self):
+        site = (
+            Site.objects.prefetch_related("extended")
+            .only("extended__tax_percent")
+            .first()
+        )
+        return Decimal(site.extended.tax_percent)
+
     @property
-    def discount_price(self) -> float:
-        discount = Decimal(self.discount)
-        result = self.price * (1 - discount / 100) if self.has_discount else self.price
-        return result.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+    def discount_price(self) -> Decimal:
+        if self.has_discount:
+            discount_factor = Decimal(1) - (Decimal(self.discount) / 100)
+            return (self.price * discount_factor).quantize(
+                Decimal("0.01"),
+                rounding=ROUND_HALF_UP,
+            )
+        return self.price
+
+    @property
+    def tax_price(self) -> Decimal:
+        tax_percent = self._get_tax_percent()
+        return (self.price * (Decimal(1) + tax_percent / 100)).quantize(
+            Decimal("0.01"), rounding=ROUND_HALF_UP
+        )
+
+    @property
+    def tax_price_discounted(self) -> Decimal:
+        tax_percent = self._get_tax_percent()
+        discounted_price = self.discount_price
+        return (discounted_price * (Decimal(1) + tax_percent / 100)).quantize(
+            Decimal("0.01"), rounding=ROUND_HALF_UP
+        )
 
     @property
     def has_discount(self) -> bool:

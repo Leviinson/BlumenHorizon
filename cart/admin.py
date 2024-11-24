@@ -5,12 +5,12 @@ from .models import Order, OrderBouquets, OrderProducts
 
 class OrderProductsTabularInline(admin.TabularInline):
     model = OrderProducts
-    extra = 1
+    extra = 0
 
 
 class OrderBouquetsTabularInline(admin.TabularInline):
     model = OrderBouquets
-    extra = 1
+    extra = 0
 
 
 @admin.register(Order)
