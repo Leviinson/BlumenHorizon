@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-24 19:40+0100\n"
+"POT-Creation-Date: 2024-11-24 19:43+0100\n"
 "PO-Revision-Date: 2024-11-24 15:33+0100\n"
 "Last-Translator: None None <blumenhorizon@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -418,7 +418,8 @@ msgid ""
 msgstr ""
 
 #: cart/templates/cart/index.html:451
-msgid "Записка к букету"
+#: cart/templates/cart/order_confirmation.html:569
+msgid "Записка получателю"
 msgstr ""
 
 #: cart/templates/cart/index.html:455
@@ -496,10 +497,6 @@ msgstr ""
 #: cart/templates/cart/order_confirmation.html:550
 #: cart/templates/cart/order_confirmation.html:557
 msgid "Уточнить у получателя."
-msgstr ""
-
-#: cart/templates/cart/order_confirmation.html:569
-msgid "Записка"
 msgstr ""
 
 #: cart/templates/cart/order_confirmation.html:602

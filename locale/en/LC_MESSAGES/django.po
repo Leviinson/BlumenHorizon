@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-24 19:40+0100\n"
-"PO-Revision-Date: 2024-11-24 19:42+0100\n"
+"POT-Creation-Date: 2024-11-24 19:43+0100\n"
+"PO-Revision-Date: 2024-11-24 19:44+0100\n"
 "Last-Translator: None None <blumenhorizon@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -432,14 +432,13 @@ msgstr ""
 "magical."
 
 #: cart/templates/cart/index.html:451
-#, fuzzy
-#| msgid "Категории букетов"
-msgid "Записка к букету"
-msgstr "Bouquet categories"
+#: cart/templates/cart/order_confirmation.html:569
+#| msgid "Имя получателя"
+msgid "Записка получателю"
+msgstr "Message card to recipient"
 
 #: cart/templates/cart/index.html:455
 #: cart/templates/cart/order_confirmation.html:573
-#| msgid "Итоговая стоимость"
 msgid "Что нам стоит учесть?"
 msgstr "What should we consider?"
 
@@ -518,10 +517,6 @@ msgstr "DELIVERY ADDRESS"
 #: cart/templates/cart/order_confirmation.html:557
 msgid "Уточнить у получателя."
 msgstr "Check with the recipient."
-
-#: cart/templates/cart/order_confirmation.html:569
-msgid "Записка"
-msgstr "Message card"
 
 #: cart/templates/cart/order_confirmation.html:602
 #: core/staticfiles/templates/footer.html:10
@@ -985,6 +980,13 @@ msgstr "Previous gifts slide"
 #: mainpage/templates/mainpage/index.html:264
 msgid "Следующий слайд подарков"
 msgstr "Next slide of gifts"
+
+#, fuzzy
+#~ msgid "Записка к букету"
+#~ msgstr "Bouquet categories"
+
+#~ msgid "Записка"
+#~ msgstr "Message card"
 
 #~ msgid "Состав букета изменяем"
 #~ msgstr "We change the composition of the bouquet"
