@@ -29,8 +29,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-
-
     individualQuestionForm.addEventListener('submit', function (e) {
             e.preventDefault();
             sendAjax(individualQuestionForm);
