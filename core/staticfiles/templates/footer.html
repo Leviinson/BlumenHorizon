@@ -4,25 +4,25 @@
     <footer class="py-5 text-light" style="font-size: .75rem;">
         <div id="footer-sections" class="d-flex justify-content-center align-items-start gap-5">
             <div class="mb-3">
-                <h5 class="fw-bold">{% translate 'Клиентам' %}</h5>
+                <h5 class="fw-bold fs-4">{% translate 'Клиентам' %}</h5>
                 <ul class="nav flex-column">
                     <li class="nav-item mb-2">
-                        <a href="#" class="nav-link p-0 text-white">{% translate 'Условия доставки' %}</a>
+                        <a href="#" class="nav-link p-0 text-white fs-5">{% translate 'Условия доставки' %}</a>
                     </li>
                     <li class="nav-item mb-2">
-                        <a href="#" class="nav-link p-0 text-white">{% translate 'Условия оплаты' %}</a>
+                        <a href="#" class="nav-link p-0 text-white fs-5">{% translate 'Условия оплаты' %}</a>
                     </li>
                     <li class="nav-item mb-2">
-                        <a href="#" class="nav-link p-0 text-white">{% translate 'Условия возврата' %}</a>
+                        <a href="#" class="nav-link p-0 text-white fs-5">{% translate 'Условия возврата' %}</a>
                     </li>
                     <li class="nav-item mb-2">
-                        <a href="#" class="nav-link p-0 text-white">{% translate 'Условия и положения' %}</a>
+                        <a href="#" class="nav-link p-0 text-white fs-5">{% translate 'Условия и положения' %}</a>
                     </li>
                     <li class="nav-item mb-2">
-                        <a href="#" class="nav-link p-0 text-white">{% translate 'Юридическая информация' %}</a>
+                        <a href="#" class="nav-link p-0 text-white fs-5">{% translate 'Юридическая информация' %}</a>
                     </li>
                     <li class="nav-item mb-2">
-                        <a href="#" class="nav-link p-0 text-white">{% translate 'Политика конфиденциальности' %}</a>
+                        <a href="#" class="nav-link p-0 text-white fs-5">{% translate 'Политика конфиденциальности' %}</a>
                     </li>
                 </ul>
             </div>
@@ -31,12 +31,28 @@
                 {{ site_name }}
             </a>
             <div class="mb-3">
-                <h5 class="fw-bold text-light">{% translate 'Компания' %}</h5>
+                <h5 class="fw-bold text-light fs-4">{% translate 'Компания' %}</h5>
                 <ul class="nav flex-column">
-                    <li class="nav-item mb-2"><a href="{% url 'mainpage:about' %}" class="nav-link p-0 text-light">{% translate 'О нас' %}</a></li>
-                    <li class="nav-item mb-2"><a href="{% url 'mainpage:delivery' %}" class="nav-link p-0 text-light">{% translate 'Доставка' %}</a></li>
-                    <li class="nav-item mb-2"><a href="{% url 'mainpage:contact' %}" class="nav-link p-0 text-light">{% translate 'Контакты' %}</a></li>
-                    <li class="nav-item mb-2"><a href="{% url 'mainpage:faq' %}" class="nav-link p-0 text-light">{% translate 'Часто задаваемые вопросы' %}</a></li>
+                    <li class="nav-item mb-2">
+                        <a href="{% url 'mainpage:about' %}" class="nav-link p-0 text-light fs-5">
+                            {% translate 'О нас' %}
+                        </a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a href="{% url 'mainpage:delivery' %}" class="nav-link p-0 text-light fs-5">
+                            {% translate 'Доставка' %}
+                        </a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a href="{% url 'mainpage:contact' %}" class="nav-link p-0 text-light fs-5">
+                            {% translate 'Контакты' %}
+                        </a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a href="{% url 'mainpage:faq' %}" class="nav-link p-0 text-light fs-5">
+                            {% translate 'Часто задаваемые вопросы' %}
+                        </a>
+                    </li>
                 </ul>
             </div>
 
