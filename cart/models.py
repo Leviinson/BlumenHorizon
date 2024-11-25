@@ -50,6 +50,8 @@ class Order(TimeStampAdbstractModel, models.Model):
     flat = models.CharField(
         verbose_name="Квартира/офис", max_length=40, null=True, blank=True
     )
+    delivery_date = models.DateField(verbose_name="Дата доставки")
+    delivery_time = models.TimeField(verbose_name="Время доставки")
     message_card = models.TextField(
         verbose_name="Записка к букету", max_length=10000, null=True, blank=True
     )

@@ -32,6 +32,8 @@ class OrderAdminModel(admin.ModelAdmin):
         "street",
         "building",
         "flat",
+        "delivery_date",
+        "delivery_time",
         "message_card",
         "instructions",
         "recipient_address_form",
@@ -49,12 +51,14 @@ class OrderAdminModel(admin.ModelAdmin):
         "code",
     )
     list_display = (
-        "code",
         "grand_total",
-        "user",
+        "delivery_date",
+        "delivery_time",
         "street",
-        "recipient_name",
-        "recipient_phonenumber",
         "building",
         "flat",
+        "recipient_name",
+        "recipient_phonenumber",
+        "code",
+        "user",
     )

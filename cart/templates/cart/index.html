@@ -188,12 +188,6 @@
                         </div>
                     </div>
                 </div>
-                <div id="expected-delivery-time" class="card mb-4 d-none">
-                    <div class="card-body">
-                        <p><strong>{% translate 'Ожидаемое время доставки:' %}</strong></p>
-                        <p class="mb-0">12.10.2020 - 14.10.2020</p>
-                    </div>
-                </div>
                 <div class="card mb-4 mb-lg-0">
                     <div class="card-body">
                         <p><strong>{% translate 'Способы оплаты:' %}</strong></p>
@@ -384,6 +378,31 @@
                                 {% endfor %}
                                 {% endif %}
                             </div>
+                            <div class="mb-3" id="delivery-date-container">
+                                <label for="delivery-date" class="form-label">{% translate 'Дата доставки' %}</label>
+                                <input name="delivery_date" type="date" class="form-control" id="delivery-date" required>
+                                {% if form.errors.delivery_date %}
+                                {% for error in form.errors.delivery_date %}
+                                <div class="form-text text-danger">
+                                    {{ error|striptags }}
+                                </div>
+                                {% endfor %}
+                                {% endif %}
+                            </div>
+                            <div class="mb-3" id="delivery-date-container">
+                                <label for="delivery-time" class="form-label">{% translate 'Время доставки' %}</label>
+                                <input name="delivery_time" type="time" class="form-control" id="delivery-time" required>
+                                {% if form.errors.delivery_time %}
+                                {% for error in form.errors.delivery_time %}
+                                <div class="form-text text-danger">
+                                    {{ error|striptags }}
+                                </div>
+                                {% endfor %}
+                                {% endif %}
+                                <div class="form-text text-danger">
+                                    {% translate 'Минимум 3 часа после оформления заказа. Мы сообщим Вам о возможности доставки.' %}
+                                </div>
+                            </div>
                             <div class="mb-3" id="recipient-address-form-container">
                                 <label for="recipient-address-form" class="form-label">{% translate 'Форма обращения к получателю' %}</label>
                                 <select class="form-select" id="recipient-address-form"
@@ -473,9 +492,10 @@
 {% endblock %}
 
 {% block additional_scripts %}
-<script src="{% static 'cart/scripts/addressInputsToggle.js' %}"></script>
-<script src="{% static 'cart/scripts/emptyCartHandler.js' %}"></script>
-<script src="{% static 'cart/scripts/increaseOrDecreaseProduct.js' %}"></script>
-<script src="{% static 'cart/scripts/removeProduct.js' %}"></script>
-<script src="{% static 'cart/scripts/clearCart.js' %}"></script>
+<script src="{% static 'cart/scripts/setMinimalDateAndTime.js' %}"></script>
+<script src="{% static 'cart/scripts/addressInputsToggle.js' %}" ></script>
+<script src="{% static 'cart/scripts/emptyCartHandler.js' %}" ></script>
+<script src="{% static 'cart/scripts/increaseOrDecreaseProduct.js' %}" ></script>
+<script src="{% static 'cart/scripts/removeProduct.js' %}" ></script>
+<script src="{% static 'cart/scripts/clearCart.js' %}" ></script>
 {% endblock %}

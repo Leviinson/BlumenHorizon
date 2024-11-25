@@ -77,6 +77,8 @@ class CartView(CommonContextMixin, FormView):
                 "building",
                 "postal_code",
                 "flat",
+                "delivery_date",
+                "delivery_time",
                 "message_card",
                 "instructions",
                 "tax",
@@ -138,6 +140,8 @@ class CartView(CommonContextMixin, FormView):
                 "street": order.street,
                 "building": order.building,
                 "flat": order.flat,
+                "delivery_date": order.delivery_date,
+                "delivery_time": order.delivery_time,
                 "message_card": order.message_card,
                 "instructions": order.instructions,
                 "tax": order.tax,
@@ -311,7 +315,7 @@ class SuccessOrderView(CommonContextMixin, TemplateView):
         self.order_code = self.kwargs["order_code"]
         try:
             self.order = Order.objects.only(
-                "created_at", "code", "grand_total", "email", "status"
+                "created_at", "code", "grand_total", "email", "status", "delivery_date", "delivery_time",
             ).get(code=self.order_code)
         except Order.DoesNotExist:
             return HttpResponseForbidden()

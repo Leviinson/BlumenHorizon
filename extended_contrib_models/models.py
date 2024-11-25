@@ -24,8 +24,8 @@ class ExtendedSite(models.Model):
         null=True,
         default=0,
     )
-    iban = models.CharField(verbose_name="IBAN для оплаты", max_length=50)
-    account_name = models.CharField(verbose_name="Название счёта", max_length=40)
+    iban = models.CharField(verbose_name="IBAN для оплаты", max_length=100)
+    account_name = models.CharField(verbose_name="Название счёта", max_length=100)
 
     def __str__(self):
         return f"{self.site.name} | {self.site.domain}"

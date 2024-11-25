@@ -20,14 +20,24 @@
             </h1>
         </div>
         <div id="body">
-            <span>
-                {% blocktranslate with order_date=order.created_at|date:"Y-m-d H:i:s" %}
-                Дата оформления заказа: {{ order_date }}
-                {% endblocktranslate %}
-            </span>
+            <div class="d-flex flex-column">
+                <span>
+                    {% translate 'Дата оформления заказа' %}: {{ order.created_at }}
+                </span>
+                <span>
+                    {% translate 'Дата доставки' %}: {{ order.delivery_date }}
+                </span>
+                <span>
+                    {% translate 'Время доставки' %}: {{ order.delivery_time }}
+                </span>
+                <span>
+                    {% translate 'Статус' %}: {{ order.get_status_display }}
+                </span>
+            </div>
+            <br>
             <p>
                 {% blocktranslate with email=order.email %}
-                <strong>В скором времени мы свяжемся с Вами</strong> по поводу Вашего заказа по указанной электронной почте <strong>({{ email }})</strong>.
+                <strong>В скором времени мы свяжемся с Вами </strong>по поводу Вашего заказа по указанной электронной почте <strong>({{ email }})</strong>.
                 {% endblocktranslate %}
             </p>
             <p>
