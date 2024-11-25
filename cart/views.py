@@ -131,7 +131,7 @@ class CartView(CommonContextMixin, FormView):
                 "domain": domain,
                 "MEDIA_URL": settings.MEDIA_URL,
                 "name": order.name,
-                "address_form": order.address_form,
+                "address_form": dict(Order.ADDRESS_FORM_CHOICES).get(order.address_form, "Dear"),
                 "order_code": order.code,
                 "order_date": order.created_at,
                 "order_products": order.products,
