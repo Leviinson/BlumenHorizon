@@ -12,7 +12,10 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 from django.views.generic.edit import BaseFormView, FormView
 
+from catalogue.models import Bouquet, BouquetImage, Product, ProductImage
+from core.services.dataclasses.related_model import RelatedModel
 from core.services.decorators.db.db_queries import inspect_db_queries
+from core.services.get_recommended_items import get_recommended_items_with_first_image
 from core.services.mixins.views import CommonContextMixin
 
 from .cart import BouquetCart, ProductCart
@@ -179,6 +182,32 @@ class CartView(CommonContextMixin, FormView):
         )
         context["bouquets_cart"] = BouquetCart(
             True, self.request.session, session_key="bouquets_cart"
+        )
+        related_models = [
+            RelatedModel(model="subcategory", attributes=["slug", "name"]),
+            RelatedModel(model="subcategory__category", attributes=["slug"]),
+        ]
+        context["recommended_products"] = get_recommended_items_with_first_image(
+            model=Product,
+            image_model=ProductImage,
+            related_models=related_models,
+            image_filter_field="product",
+            order_fields=[
+                "-amount_of_orders",
+                "-amount_of_savings",
+            ],
+            limit=6
+        )
+        context["recommended_bouquets"] = get_recommended_items_with_first_image(
+            model=Bouquet,
+            image_model=BouquetImage,
+            related_models=related_models,
+            image_filter_field="bouquet",
+            order_fields=[
+                "-amount_of_orders",
+                "-amount_of_savings",
+            ],
+            limit=6
         )
 
         tax_percent = self.current_site.extended.tax_percent
