@@ -2,7 +2,7 @@
 {% load static %}
 <div class="container-fluid bg-soft-turquoise d-flex justify-content-center align-items-center mt-5">
     <footer class="pt-2 pb-3 text-light" style="font-size: .75rem;">
-        <a href="{% url 'mainpage:offers' %}" class="navbar-brand fs-3 text-light d-flex flex-column align-items-center">
+        <a href="{% url 'mainpage:offers' %}" class="navbar-brand fs-3 text-light d-flex flex-column align-items-center mb-3">
             <img src="{% static 'defaults/logo.png' %}" alt="{{ site_name }} logo" width="72" height="72" class="me-2">
             {{ site_name }}
         </a>
@@ -83,9 +83,6 @@
                     </a>
                 </li>
                 {% endfor %}
-                <li class="ms-3">
-                    
-                </li>
             </ul>
         </div>
     </footer>
