@@ -47,7 +47,7 @@
     </div>
     <div id="mainpage-slider" class="carousel-inner">
       {% for image in slider_images %}
-      <div data-bs-interval="5000" class="carousel-item {% if forloop.first %}active{% endif %} w-100"
+      <div data-bs-interval="3000" class="carousel-item {% if forloop.first %}active{% endif %} w-100"
         style="overflow: hidden;">
         <img src="{{ image.image.url }}" class="d-block w-100 carousel-img" alt="{{ image.image_alt }}">
       </div>
