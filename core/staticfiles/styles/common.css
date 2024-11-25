@@ -165,6 +165,10 @@ body {
 
 }
 
+.flag {
+    font-family: 'Segoe UI Emoji';
+}
+
 @media (max-width: 1199px) {
     #fillers-links {
         justify-content: center !important;
