@@ -55,20 +55,20 @@ class MainpageSitemap(FixedSitemapMixin):
             MainPageSeoBlock.objects.only("updated_at").latest("updated_at").updated_at
         )
 
-        product_lastmod = (
-            Product.objects.filter(
-                is_active=True,
-                subcategory__is_active=True,
-                subcategory__category__is_active=True,
-            )
-            .only(
-                "updated_at",
-                "amount_of_orders",
-                "amount_of_savings",
-            )
-            .order_by("-amount_of_orders", "-amount_of_savings")[:12]
-            .aggregate(Max("updated_at"))["updated_at__max"]
-        )
+        # product_lastmod = (
+        #     Product.objects.filter(
+        #         is_active=True,
+        #         subcategory__is_active=True,
+        #         subcategory__category__is_active=True,
+        #     )
+        #     .only(
+        #         "updated_at",
+        #         "amount_of_orders",
+        #         "amount_of_savings",
+        #     )
+        #     .order_by("-amount_of_orders", "-amount_of_savings")[:12]
+        #     .aggregate(Max("updated_at"))["updated_at__max"]
+        # )
 
         bouquet_lastmod = (
             Bouquet.objects.filter(
