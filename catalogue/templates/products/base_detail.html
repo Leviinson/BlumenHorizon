@@ -1,6 +1,8 @@
 {% extends "templates/base.html" %}
 {% load static %}
 {% load i18n %}
+{% load chunk_filters %}
+
 
 {% block json_ld %}
 <script type="application/ld+json">
@@ -164,7 +166,7 @@
                         class="w-100 me-2"
                         data-add-url="{% if product.is_bouquet %}{% url 'cart:bouquet-add' %}{% else %}{% url 'cart:product-add' %}{% endif %}"
                         data-remove-url="{% if product.is_bouquet %}{% url 'cart:bouquet-remove' %}{% else %}{% url 'cart:product-remove' %}{% endif %}"
-                        data-is-in-cart="{% if product in products_cart or product in bouquets_cart  %}true{% else %}false{% endif %}"
+                        data-is-in-cart="{% if product in products_cart  %}true{% else %}false{% endif %}"
                     >
                         {% csrf_token %}
                         <input type="hidden" name="product_slug" value="{{ product.slug }}">
@@ -203,6 +205,70 @@
                 <p class="info-text">{{ product.specs|safe }}</p>
             </div>
         </div>
+    </div>
+
+    <h3 class="text-center fs-2 my-4">{% translate 'Рекомендуемые продукты к покупке' %}</h2>
+    <div id="bouquetCarousel" class="carousel slide w-100" data-bs-ride="carousel">
+        <div class="carousel-inner cards-container">
+        {% for recommended_products_chunk in recommended_products|chunked:4 %}
+        <div data-bs-interval="5000" class="carousel-item {% if forloop.first %}active{% endif %} w-100">
+            <div class="row m-0 w-100">
+            {% for recommended_product in recommended_products_chunk %}
+            <div class="col-6 col-md-3 col-lg-3 mb-4 d-flex product-card-in-slider">
+                <a href="{{ recommended_product.get_relative_url }}" class="text-decoration-none text-dark w-100">
+                <div class="card h-100 w-100" style="min-height: 404px;">
+                    <div class="image-wrapper">
+                    {% if recommended_product.has_discount %}
+                    <span class="badge bg-dark-green m-2 p-2 fs-5 product-discount-badge">-{{ recommended_product.discount }}%</span>
+                    {% endif %}
+                    {% if recommended_product.first_image_uri %}
+                    <img src="{{ MEDIA_URL }}{{ recommended_product.first_image_uri }}" class="card-img-top square-image"
+                        alt="{% if recommended_product.first_image_alt %}{{ recommended_product.first_image_alt }}{% else %}{% translate 'Изображение продукта временно отсутствует.' %}{% endif %}"
+                        loading="lazy">
+                    {% else %}
+                    <img src="{% static 'defaults/no-image.webp' %}" class="card-img-top square-image"
+                        alt="{% translate 'Изображение продукта временно отсутствует.' %}" loading="lazy">
+                    {% endif %}
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">{{ recommended_product.name }}</h5>
+                    <div class="d-flex flex-column justify-content-center mt-auto">
+                        <p class="card-text">
+                        {% if recommended_product.has_discount %}
+                        <strong class="text-danger mb-0 me-2">{{ recommended_product.tax_price_discounted|floatformat:"2u" }} {{ currency_symbol }}</strong>
+                        <strong class="text-muted text-decoration-line-through mb-0">{{ recommended_product.tax_price|floatformat:"2u" }} {{ currency_symbol }}</strong>
+                        {% else %}
+                        <strong>{{ recommended_product.tax_price|floatformat:"2u" }} {{ currency_symbol }}</strong>
+                        {% endif %}
+                        </p>
+                        <form method="post" class="add-to-cart-form w-100 me-2" data-add-url="{% url 'cart:bouquet-add' %}"
+                        data-remove-url="{% url 'cart:bouquet-remove' %}"
+                        data-is-in-cart="{% if recommended_product in products_cart %}true{% else %}false{% endif %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="product_slug" value="{{ recommended_product.slug }}">
+                        {% include 'templates/cartButton.html' %}
+                        </form>
+                    </div>
+                    </div>
+                </div>
+                </a>
+            </div>
+            {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+        </div>
+    
+        <button class="carousel-control-prev outside-control" type="button" data-bs-target="#bouquetCarousel"
+        data-bs-slide="prev" style="height: 35%; width: 10%; top: 32.5%;">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">{% translate 'Предыдущий слайд букетов' %}</span>
+        </button>
+        <button class="carousel-control-next outside-control" type="button" data-bs-target="#bouquetCarousel"
+        data-bs-slide="next" style="height: 35%; width: 10%; top: 32.5%;">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">{% translate 'Следующий слайд букетов' %}</span>
+        </button>
     </div>
 </div>
 {% endblock %}
