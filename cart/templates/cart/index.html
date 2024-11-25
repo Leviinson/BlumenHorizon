@@ -4,6 +4,7 @@
 
 {% block additional_head_styles %}
 <link rel="stylesheet" href="{% static 'cart/styles/cart.css' %}">
+<link rel="stylesheet" href="{% static 'styles/common.css' %}">
 {% endblock %}
 
 {% block meta_tags %}
@@ -188,7 +189,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card mb-4 mb-lg-0">
+                <div class="card mb-4 mb-lg-4">
                     <div class="card-body">
                         <p><strong>{% translate 'Способы оплаты:' %}</strong></p>
                         <img class="me-2"
@@ -197,11 +198,103 @@
                              src="{% static 'defaults/iban.png' %}"/>
                     </div>
                 </div>
+                <div class="card mb-4 mb-lg-4">
+                    <h2 class="text-center mt-2">{% translate 'Рекомендуемые букеты к покупке' %}</h2>
+                    <div class="card-body row gy-2">
+                        {% for recommended_product in recommended_bouquets %}
+                        <div class="col-6 col-lg-4">
+                            <div class="card h-100 w-100  d-flex" style="min-height: 404px;">
+                                <a href="{{ recommended_product.get_relative_url }}" class="text-decoration-none text-dark w-100">
+                                    <div class="image-wrapper">
+                                    {% if recommended_product.has_discount %}
+                                        <span class="badge bg-dark-green m-2 p-2 fs-5 product-discount-badge">-{{ recommended_product.discount }}%</span>
+                                    {% endif %}
+                                    {% if recommended_product.first_image_uri %}
+                                        <img src="{{ MEDIA_URL }}{{ recommended_product.first_image_uri }}" class="card-img-top square-image"
+                                            alt="{% if recommended_product.first_image_alt %}{{ recommended_product.first_image_alt }}{% else %}{% translate 'Изображение продукта временно отсутствует.' %}{% endif %}"
+                                            loading="lazy">
+                                    {% else %}
+                                        <img src="{% static 'defaults/no-image.webp' %}" class="card-img-top square-image"
+                                            alt="{% translate 'Изображение продукта временно отсутствует.' %}" loading="lazy">
+                                    {% endif %}
+                                    </div>
+                                </a>
+                                <div class="card-body d-flex flex-column">
+                                    <h5 class="card-title">{{ recommended_product.name }}</h5>
+                                    <div class="d-flex flex-column justify-content-center mt-auto">
+                                        <p class="card-text">
+                                        {% if recommended_product.has_discount %}
+                                        <strong class="text-danger mb-0 me-2">{{ recommended_product.tax_price_discounted|floatformat:"2u" }} {{ currency_symbol }}</strong>
+                                        <strong class="text-muted text-decoration-line-through mb-0">{{ recommended_product.tax_price|floatformat:"2u" }} {{ currency_symbol }}</strong>
+                                        {% else %}
+                                        <strong>{{ recommended_product.tax_price|floatformat:"2u" }} {{ currency_symbol }}</strong>
+                                        {% endif %}
+                                        </p>
+                                        <form method="post" class="add-to-cart-form w-100 me-2" data-add-url="{% url 'cart:bouquet-add' %}"
+                                        data-remove-url="{% url 'cart:bouquet-remove' %}"
+                                        data-is-in-cart="{% if recommended_product in products_cart %}true{% else %}false{% endif %}">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="product_slug" value="{{ recommended_product.slug }}">
+                                        {% include 'templates/cartButton.html' %}
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="card mb-4 mb-lg-0">
+                    <h2 class="text-center mt-2">{% translate 'Рекомендуемые подарки к букетам' %}</h2>
+                    <div class="card-body row gy-2">
+                        {% for recommended_product in recommended_products %}
+                        <div class="col-6 col-lg-4">
+                            <div class="card h-100 w-100  d-flex" style="min-height: 404px;">
+                                <a href="{{ recommended_product.get_relative_url }}" class="text-decoration-none text-dark w-100">
+                                    <div class="image-wrapper">
+                                    {% if recommended_product.has_discount %}
+                                        <span class="badge bg-dark-green m-2 p-2 fs-5 product-discount-badge">-{{ recommended_product.discount }}%</span>
+                                    {% endif %}
+                                    {% if recommended_product.first_image_uri %}
+                                        <img src="{{ MEDIA_URL }}{{ recommended_product.first_image_uri }}" class="card-img-top square-image"
+                                            alt="{% if recommended_product.first_image_alt %}{{ recommended_product.first_image_alt }}{% else %}{% translate 'Изображение продукта временно отсутствует.' %}{% endif %}"
+                                            loading="lazy">
+                                    {% else %}
+                                        <img src="{% static 'defaults/no-image.webp' %}" class="card-img-top square-image"
+                                            alt="{% translate 'Изображение продукта временно отсутствует.' %}" loading="lazy">
+                                    {% endif %}
+                                    </div>
+                                </a>
+                                <div class="card-body d-flex flex-column">
+                                    <h5 class="card-title">{{ recommended_product.name }}</h5>
+                                    <div class="d-flex flex-column justify-content-center mt-auto">
+                                        <p class="card-text">
+                                        {% if recommended_product.has_discount %}
+                                        <strong class="text-danger mb-0 me-2">{{ recommended_product.tax_price_discounted|floatformat:"2u" }} {{ currency_symbol }}</strong>
+                                        <strong class="text-muted text-decoration-line-through mb-0">{{ recommended_product.tax_price|floatformat:"2u" }} {{ currency_symbol }}</strong>
+                                        {% else %}
+                                        <strong>{{ recommended_product.tax_price|floatformat:"2u" }} {{ currency_symbol }}</strong>
+                                        {% endif %}
+                                        </p>
+                                        <form method="post" class="add-to-cart-form w-100 me-2" data-add-url="{% url 'cart:bouquet-add' %}"
+                                        data-remove-url="{% url 'cart:bouquet-remove' %}"
+                                        data-is-in-cart="{% if recommended_product in products_cart %}true{% else %}false{% endif %}">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="product_slug" value="{{ recommended_product.slug }}">
+                                        {% include 'templates/cartButton.html' %}
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
             <div class="col-md-4">
                 <div class="card mb-4">
                     <div class="card-header py-3">
-                        <h5 class="mb-0">{% translate 'Резюме заказа' %}:</h5>
+                        <h2 class="mb-0 fs-5">{% translate 'Резюме заказа' %}:</h2>
                     </div>
                     <div class="card-body">
                         <ul class="list-group list-group-flush">
