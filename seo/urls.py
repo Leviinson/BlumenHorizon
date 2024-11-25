@@ -20,9 +20,9 @@ from .views import robots_txt
 sitemaps = {
     "mainpage": MainpageSitemap,
     # "products-list": ProductListSitemap,
-    "products-category": ProductCategorySitemap,
-    "products-subcategory": ProductSubcategorySitemap,
-    "product-details": ProductDetailSitemap,
+    # "products-category": ProductCategorySitemap,
+    # "products-subcategory": ProductSubcategorySitemap,
+    # "product-details": ProductDetailSitemap,
     # "bouquets-list": BouquetListSitemap,
     "bouquets-category": BouquetCategorySitemap,
     "bouquets-subcategory": BouquetSubcategorySitemap,
