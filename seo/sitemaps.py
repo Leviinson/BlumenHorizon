@@ -85,7 +85,7 @@ class MainpageSitemap(FixedSitemapMixin):
             .aggregate(Max("updated_at"))["updated_at__max"]
         )
 
-        return max(seo_block_lastmod, product_lastmod, bouquet_lastmod)
+        return max(seo_block_lastmod, bouquet_lastmod)
 
 
 # class ProductListSitemap(FixedSitemapMixin):
