@@ -315,7 +315,13 @@ class SuccessOrderView(CommonContextMixin, TemplateView):
         self.order_code = self.kwargs["order_code"]
         try:
             self.order = Order.objects.only(
-                "created_at", "code", "grand_total", "email", "status", "delivery_date", "delivery_time",
+                "created_at",
+                "code",
+                "grand_total",
+                "email",
+                "status",
+                "delivery_date",
+                "delivery_time",
             ).get(code=self.order_code)
         except Order.DoesNotExist:
             return HttpResponseForbidden()
