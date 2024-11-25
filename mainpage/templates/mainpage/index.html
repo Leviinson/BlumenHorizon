@@ -21,11 +21,11 @@
   <h2 class="mb-3">{% translate 'Категории букетов' %}</h2>
   <nav class="nav nav-pills nav-fill mx-2 mb-5 d-flex flex-wrap justify-content-start gap-2 w-100">
     {% for category in products_categories %}
-    <a class="text-light text-center nav-item nav-link bg-soft-turquoise d-flex justify-content-center align-items-center"
+    <a class="text-light text-center nav-item nav-link bg-soft-turquoise d-flex justify-content-center align-items-center fw-bold"
       style="flex: 1 1 calc(25% - 10px);" href="{% url 'catalogue:category' category.slug %}">{{ category.name }}</a>
     {% endfor %}
     {% for category in bouquets_categories %}
-    <a class="text-light text-center nav-item nav-link bg-soft-turquoise d-flex justify-content-center align-items-center"
+    <a class="text-light text-center nav-item nav-link bg-soft-turquoise d-flex justify-content-center align-items-center fw-bold"
       style="flex: 1 1 calc(25% - 10px);" href="{% url 'catalogue:category' category.slug %}">{{ category.name }}</a>
     {% endfor %}
   </nav>
@@ -257,7 +257,7 @@
     {{ description|safe }}
   </div>
 
-  <div id="seo-block"
+  <div class="seo-block"
     style="max-width: 1000px; width: 100%; background-color: beige; aspect-ratio: 1000 / 450; overflow: hidden; display: flex; align-items: center; justify-content: center;">
     <img
       src="{% if seo_block.image %}{{ seo_block.image.url }}{% else %}{% static 'defaults/no-image.webp' %}{% endif %}"

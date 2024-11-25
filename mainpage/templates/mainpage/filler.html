@@ -6,11 +6,12 @@
 {% endblock %}
 
 {% block additional_head_styles %}
+<link rel="stylesheet" href="{% static 'mainpage/styles/filler.css' %}">
 {% endblock %}
 
 {% block body %}
 <div class="container mx-auto d-flex flex-column align-items-center">
-    <div id="seo-block"
+    <div class="seo-block"
         style="max-width: 1000px; width: 100%; background-color: beige; aspect-ratio: 1000 / 450; overflow: hidden; display: flex; align-items: center; justify-content: center;">
         <img src="{% if page.image %}{{ page.image.url }}{% endif %}"
             alt="{{ page.image_alt }}" style="width: 100%; height: 100%; object-fit: cover;">

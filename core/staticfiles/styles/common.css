@@ -165,6 +165,10 @@ body {
 
 }
 
+.seo-block {
+    border-radius: 15px;
+}
+
 .flag {
     font-family: 'Segoe UI Emoji';
 }

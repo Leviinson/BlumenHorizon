@@ -2,6 +2,10 @@
   min-height: 3rem;
 }
 
+#mainpage-slider {
+  border-radius: 15px;
+}
+
 #mainpage-slider .carousel-item {
   max-width: 1000px;
 }
