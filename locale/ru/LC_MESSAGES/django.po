@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-25 01:14+0100\n"
+"POT-Creation-Date: 2024-11-25 01:28+0100\n"
 "PO-Revision-Date: 2024-11-24 15:33+0100\n"
 "Last-Translator: None None <blumenhorizon@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -63,7 +63,7 @@ msgstr ""
 #: accounts/models.py:40
 #: accounts/templates/accounts/authorization/sign_up.html:52
 #: accounts/templates/accounts/index.html:62
-#: mainpage/templates/mainpage/index.html:99
+#: mainpage/templates/mainpage/index.html:229
 msgid "Имя"
 msgstr ""
 
@@ -284,10 +284,10 @@ msgstr ""
 #: cart/templates/cart/index.html:45 cart/templates/cart/index.html:90
 #: catalogue/templates/products/base_detail.html:49
 #: catalogue/templates/products/base_list.html:108
-#: mainpage/templates/mainpage/index.html:150
-#: mainpage/templates/mainpage/index.html:154
-#: mainpage/templates/mainpage/index.html:214
-#: mainpage/templates/mainpage/index.html:218
+#: mainpage/templates/mainpage/index.html:96
+#: mainpage/templates/mainpage/index.html:100
+#: mainpage/templates/mainpage/index.html:160
+#: mainpage/templates/mainpage/index.html:164
 msgid "Изображение продукта временно отсутствует."
 msgstr ""
 
@@ -500,12 +500,12 @@ msgid "Уточнить у получателя."
 msgstr ""
 
 #: cart/templates/cart/order_confirmation.html:602
-#: core/staticfiles/templates/footer.html:10
+#: core/staticfiles/templates/footer.html:22
 msgid "Юридическая информация"
 msgstr ""
 
 #: cart/templates/cart/order_confirmation.html:602
-#: core/staticfiles/templates/footer.html:13
+#: core/staticfiles/templates/footer.html:25
 msgid "Политика конфиденциальности"
 msgstr ""
 
@@ -520,12 +520,12 @@ msgid "Условия и положения"
 msgstr ""
 
 #: cart/templates/cart/order_confirmation.html:608
-#: core/staticfiles/templates/footer.html:22
+#: core/staticfiles/templates/footer.html:10
 msgid "Условия доставки"
 msgstr ""
 
 #: cart/templates/cart/order_confirmation.html:608
-#: core/staticfiles/templates/footer.html:25
+#: core/staticfiles/templates/footer.html:13
 msgid "Условия оплаты"
 msgstr ""
 
@@ -739,12 +739,12 @@ msgid "Предложим решение в течении 10 минут"
 msgstr ""
 
 #: catalogue/templates/products/base_detail.html:126
-#: mainpage/templates/mainpage/index.html:117
+#: mainpage/templates/mainpage/index.html:247
 msgid "Разрешаю мне перезвонить"
 msgstr ""
 
 #: catalogue/templates/products/base_detail.html:130
-#: mainpage/templates/mainpage/index.html:122
+#: mainpage/templates/mainpage/index.html:252
 msgid "Связаться"
 msgstr ""
 
@@ -914,38 +914,38 @@ msgstr ""
 msgid "Связь с клиентом на каждом этапе заказа"
 msgstr ""
 
-#: mainpage/templates/mainpage/index.html:92
-msgid "Свяжитесь с нами"
-msgstr ""
-
-#: mainpage/templates/mainpage/index.html:96
-msgid "Заполните форму, чтобы заказать букет из индивидуального состава."
-msgstr ""
-
-#: mainpage/templates/mainpage/index.html:107
-msgid "Тел. номер в любой соц. сети или ссылка профиля"
-msgstr "Тел. номер в любой соц. сети или ссылка на Ваш профиль"
-
-#: mainpage/templates/mainpage/index.html:134
+#: mainpage/templates/mainpage/index.html:80
 msgid "Рекомендуемые букеты к покупке"
 msgstr ""
 
-#: mainpage/templates/mainpage/index.html:189
+#: mainpage/templates/mainpage/index.html:135
 msgid "Предыдущий слайд букетов"
 msgstr ""
 
-#: mainpage/templates/mainpage/index.html:194
+#: mainpage/templates/mainpage/index.html:140
 msgid "Следующий слайд букетов"
 msgstr ""
 
-#: mainpage/templates/mainpage/index.html:198
+#: mainpage/templates/mainpage/index.html:144
 msgid "Рекомендуемые подарки к букетам"
 msgstr ""
 
-#: mainpage/templates/mainpage/index.html:259
+#: mainpage/templates/mainpage/index.html:205
 msgid "Предыдущий слайд подарков"
 msgstr ""
 
-#: mainpage/templates/mainpage/index.html:264
+#: mainpage/templates/mainpage/index.html:210
 msgid "Следующий слайд подарков"
 msgstr ""
+
+#: mainpage/templates/mainpage/index.html:222
+msgid "Свяжитесь с нами"
+msgstr ""
+
+#: mainpage/templates/mainpage/index.html:226
+msgid "Заполните форму, чтобы заказать букет из индивидуального состава."
+msgstr ""
+
+#: mainpage/templates/mainpage/index.html:237
+msgid "Тел. номер в любой соц. сети или ссылка профиля"
+msgstr "Тел. номер в любой соц. сети или ссылка на Ваш профиль"
