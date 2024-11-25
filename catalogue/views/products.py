@@ -4,6 +4,8 @@ from django.views.generic.detail import DetailView
 from django_filters.views import FilterView
 
 from cart.cart import ProductCart
+from core.services.dataclasses import RelatedModel
+from core.services.get_recommended_items import get_recommended_items_with_first_image
 from core.services.mixins.views import CommonContextMixin
 
 from ..filters import ProductFilter
@@ -53,6 +55,20 @@ class ProductView(
         context = super().get_context_data(*args, **kwargs)
         context["products_cart"] = ProductCart(
             session=self.request.session, session_key="products_cart"
+        )
+        related_models = [
+            RelatedModel(model="subcategory", attributes=["slug", "name"]),
+            RelatedModel(model="subcategory__category", attributes=["slug"]),
+        ]
+        context["recommended_products"] = get_recommended_items_with_first_image(
+            model=Product,
+            image_model=ProductImage,
+            related_models=related_models,
+            image_filter_field="product",
+            order_fields=[
+                "-amount_of_orders",
+                "-amount_of_savings",
+            ],
         )
         return context
 

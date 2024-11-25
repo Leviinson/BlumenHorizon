@@ -9,6 +9,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from cart.cart import BouquetCart
+from core.services.dataclasses import RelatedModel
+from core.services.get_recommended_items import get_recommended_items_with_first_image
 from core.services.mixins.views import CommonContextMixin
 
 from ..filters import BouquetFilter
@@ -106,8 +108,22 @@ class BouquetView(
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context["bouquets_cart"] = BouquetCart(
+        context["products_cart"] = BouquetCart(
             session=self.request.session, session_key="bouquets_cart"
+        )
+        related_models = [
+            RelatedModel(model="subcategory", attributes=["slug", "name"]),
+            RelatedModel(model="subcategory__category", attributes=["slug"]),
+        ]
+        context["recommended_products"] = get_recommended_items_with_first_image(
+            model=Bouquet,
+            image_model=BouquetImage,
+            related_models=related_models,
+            image_filter_field="bouquet",
+            order_fields=[
+                "-amount_of_orders",
+                "-amount_of_savings",
+            ],
         )
         return context
 
