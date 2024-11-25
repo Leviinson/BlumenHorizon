@@ -10,12 +10,12 @@ from .dataclasses.related_model import RelatedModel
 
 
 def get_recommended_items_with_first_image(
-    self,
     model: Product | Bouquet,
     image_model: ProductImage | BouquetImage,
     related_models: list[RelatedModel],
     image_filter_field: Literal["product"] | Literal["bouquet"],
     order_fields: list[str],
+    limit: int = 12
 ) -> BaseManager[Product] | BaseManager[Bouquet]:
     """
     A function to retrieve recommended products/bouquets with an annotated first image.
@@ -62,6 +62,6 @@ def get_recommended_items_with_first_image(
                 first_image_subquery.values(f"image_alt_{language}")[:1],
             ),
         )
-        .order_by(*order_fields)[:12]
+        .order_by(*order_fields)[:limit]
     )
     return queryset
