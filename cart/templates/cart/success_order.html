@@ -31,7 +31,7 @@
                     {% translate 'Время доставки' %}: {{ order.delivery_time }}
                 </span>
                 <span>
-                    {% translate 'Статус' %}: {{ order.get_status_display }}
+                    {% translate 'Статус' %}: <strong>{{ order.get_status_display }}</strong>
                 </span>
             </div>
             <br>
