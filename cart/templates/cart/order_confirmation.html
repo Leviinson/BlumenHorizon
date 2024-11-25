@@ -470,7 +470,7 @@
 																	<p style="margin: 0; margin-bottom: 1px;">{% translate 'ДОСТАВКА' %}: 0.00{{ currency }}</p>
 																	<p style="margin: 0; margin-bottom: 1px;">{% translate 'ЧИСТАЯ СТОИМОСТЬ' %}: {{ sub_total|floatformat:"2u" }}{{ currency }}</p>
 																	<p style="margin: 0; margin-bottom: 1px;">{% translate 'НАЛОГОВАЯ СТОИМОСТЬ' %}: {{ tax|floatformat:"2u" }}{{ currency }}</p>
-																	<p style="margin: 0;">{% translate 'ИТОГОВАЯ СТОИМОСТЬ' %}: {{ grand_total|floatformat:"2u" }}{{ currency }}</p>
+																	<p style="margin: 0;"><strong>{% translate 'ИТОГОВАЯ СТОИМОСТЬ' %}:</strong> {{ grand_total|floatformat:"2u" }}{{ currency }}</p>
 																</div>
 															</td>
 														</tr>
