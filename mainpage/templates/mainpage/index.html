@@ -18,15 +18,23 @@
     Цветочный интернет-магазин {{ city }}
     {% endblocktranslate %}
   </h1>
-  <h2 class="mb-3">{% translate 'Категории букетов' %}</h2>
+
   <nav class="nav nav-pills nav-fill mx-2 mb-5 d-flex flex-wrap justify-content-start gap-2 w-100">
     {% for category in products_categories %}
     <a class="text-light text-center nav-item nav-link bg-soft-turquoise d-flex justify-content-center align-items-center fw-bold"
-      style="flex: 1 1 calc(25% - 10px);" href="{% url 'catalogue:category' category.slug %}">{{ category.name }}</a>
+      style="flex: 1 1 calc(25% - 10px);" href="{% url 'catalogue:category' category.slug %}">
+      <h2 class="fs-6 mb-0">
+        {{ category.name }}
+      </h2>
+    </a>
     {% endfor %}
     {% for category in bouquets_categories %}
     <a class="text-light text-center nav-item nav-link bg-soft-turquoise d-flex justify-content-center align-items-center fw-bold"
-      style="flex: 1 1 calc(25% - 10px);" href="{% url 'catalogue:category' category.slug %}">{{ category.name }}</a>
+      style="flex: 1 1 calc(25% - 10px);" href="{% url 'catalogue:category' category.slug %}">
+      <h2 class="fs-6 mb-0">
+        {{ category.name }}
+      </h2>
+    </a>
     {% endfor %}
   </nav>
   <div id="carouselIndicators" class="carousel slide w-100" style="max-width: 1000px;" data-bs-ride="carousel">
@@ -57,7 +65,7 @@
 
   <div id="our-advantages" class="d-flex justify-content-between flex-column align-items-center mt-5 w-100"
     style="max-width: 1000px;">
-    <h2>{% translate 'Наши преимущества' %}</h2>
+    <h3 class="fs-2">{% translate 'Наши преимущества' %}</h2>
     <div id="advantages-container" class="d-flex justify-content-between w-100 mt-3">
       <div class="advantage-container text-center d-flex flex-column align-items-center" style="max-width: 140px;">
         <i id="composition-advantage" class="fa-solid fa-handshake fa-fade"
@@ -77,7 +85,7 @@
     </div>
   </div>
 
-  <h2 class="text-center my-4">{% translate 'Рекомендуемые букеты к покупке' %}</h2>
+  <h3 class="text-center fs-2 my-4">{% translate 'Рекомендуемые букеты к покупке' %}</h2>
   <div id="bouquetCarousel" class="carousel slide w-100" data-bs-ride="carousel">
     <div class="carousel-inner cards-container">
       {% for recommended_bouquets_chunk in recommended_bouquets|chunked:4 %}
@@ -141,7 +149,7 @@
     </button>
   </div>
 
-  <h2 class="text-center my-4">{% translate 'Рекомендуемые подарки к букетам' %}</h2>
+  <h3 class="text-center fs-2 my-4">{% translate 'Рекомендуемые подарки к букетам' %}</h2>
   <div id="productCarousel" class="carousel slide w-100" data-bs-ride="carousel">
     <div class="carousel-inner cards-container">
       {% for recommended_products_chunk in recommended_products|chunked:4 %}
@@ -218,9 +226,9 @@
           method="POST">
         <fieldset class="w-100">
           <legend class="text-center">
-            <h2 class="fs-4 fw-normal" id="contact-us">
+            <h3 class="fs-4 fw-normal" id="contact-us">
               {% translate 'Свяжитесь с нами' %}
-            </h2>
+            </h3>
           </legend>
           {% csrf_token %}
           <div class="form-text">{% translate 'Заполните форму, чтобы заказать букет из индивидуального состава.' %}</div>
@@ -257,8 +265,7 @@
     {{ description|safe }}
   </div>
 
-  <div class="seo-block"
-    style="max-width: 1000px; width: 100%; background-color: beige; aspect-ratio: 1000 / 450; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+  <div class="seo-block">
     <img
       src="{% if seo_block.image %}{{ seo_block.image.url }}{% else %}{% static 'defaults/no-image.webp' %}{% endif %}"
       alt="{{ seo_block.image_alt }}" style="width: 100%; height: 100%; object-fit: cover;">

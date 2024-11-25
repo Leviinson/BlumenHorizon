@@ -121,10 +121,10 @@ class FAQPageModel(TimeStampAdbstractModel):
     )
 
     def __str__(self):
-        return f"{self.pk}"
+        return f"Страница часто задаваемых вопрос"
 
     class Meta:
-        verbose_name = "Частозадаваемые вопросы"
+        verbose_name = "Часто задаваемые вопросы"
         verbose_name_plural = verbose_name
 
 
@@ -156,7 +156,7 @@ class AboutUsPageModel(TimeStampAdbstractModel):
     )
 
     def __str__(self):
-        return f"{self.pk}"
+        return "Страница 'О нас'"
 
     class Meta:
         verbose_name = "О нас"
@@ -191,7 +191,7 @@ class DeliveryPageModel(TimeStampAdbstractModel):
     )
 
     def __str__(self):
-        return f"{self.pk}"
+        return "Страница о условиях доставки"
 
     class Meta:
         verbose_name = "Доставка"
@@ -226,7 +226,7 @@ class ContactsPageModel(TimeStampAdbstractModel):
     )
 
     def __str__(self):
-        return f"{self.pk}"
+        return "Страница с контактами"
 
     class Meta:
         verbose_name = "Контакты"

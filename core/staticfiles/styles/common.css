@@ -167,6 +167,13 @@ body {
 
 .seo-block {
     border-radius: 15px;
+    max-width: 1000px;
+    width: 100%;
+    background-color: beige;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .flag {
