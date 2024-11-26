@@ -136,7 +136,8 @@
       </div>
       {% endfor %}
     </div>
-
+    
+    {% if recommended_bouquets|length > 4 %}
     <button class="carousel-control-prev outside-control" type="button" data-bs-target="#bouquetCarousel"
       data-bs-slide="prev" style="height: 35%; width: 10%; top: 32.5%;">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -147,6 +148,7 @@
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="visually-hidden">{% translate 'Следующий слайд букетов' %}</span>
     </button>
+    {% endif %}
   </div>
 
   <h3 class="text-center fs-2 my-4">{% translate 'Рекомендуемые подарки к букетам' %}</h2>
@@ -206,17 +208,18 @@
       </div>
       {% endfor %}
     </div>
-
-    <button class="carousel-control-prev outside-control" type="button" data-bs-target="#productCarousel"
-      data-bs-slide="prev" style="height: 35%; width: 10%; top: 32.5%;">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">{% translate 'Предыдущий слайд подарков' %}</span>
-    </button>
-    <button class="carousel-control-next outside-control" type="button" data-bs-target="#productCarousel"
-      data-bs-slide="next" style="height: 35%; width: 10%; top: 32.5%;">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">{% translate 'Следующий слайд подарков' %}</span>
-    </button>
+    {% if recommended_products|length > 4 %}
+      <button class="carousel-control-prev outside-control" type="button" data-bs-target="#productCarousel"
+        data-bs-slide="prev" style="height: 35%; width: 10%; top: 32.5%;">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">{% translate 'Предыдущий слайд подарков' %}</span>
+      </button>
+      <button class="carousel-control-next outside-control" type="button" data-bs-target="#productCarousel"
+        data-bs-slide="next" style="height: 35%; width: 10%; top: 32.5%;">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">{% translate 'Следующий слайд подарков' %}</span>
+      </button>
+      {% endif %}
   </div>
 
   <div class="card mt-4 mb-5">
