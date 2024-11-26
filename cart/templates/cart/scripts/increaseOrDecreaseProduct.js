@@ -1,6 +1,5 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const decreaseForms = document.querySelectorAll('.product-decrease-form');
-    const increaseForms = document.querySelectorAll('.product-increase-form');
+function initializeCartListeners(containerId = "products-list-container") {
+    const productsListContainer = document.getElementById(containerId);
 
     async function sendAjax(form) {
         const quantityInput = document.getElementById(form.dataset.productQuantityInputId);
@@ -32,23 +31,38 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    decreaseForms.forEach(form => {
-        form.addEventListener('submit', function (e) {
-            const quantityInput = document.getElementById(form.dataset.productQuantityInputId);
-            if (parseInt(quantityInput.value) <= 1) {
-                e.preventDefault();
-                showToast(gettext("В корзине всего один продукт. Вместо уменьшения количества - удалите его."), "danger");
-            } else {
-                e.preventDefault();
-                sendAjax(form);
-            }
-        });
-    });
-
-    increaseForms.forEach(form => {
-        form.addEventListener('submit', function (e) {
+    function handleDecreaseFormSubmit(e) {
+        const form = e.target;
+        const quantityInput = document.getElementById(form.dataset.productQuantityInputId);
+        if (parseInt(quantityInput.value) <= 1) {
+            e.preventDefault();
+            showToast(gettext("В корзине всего один продукт. Вместо уменьшения количества - удалите его."), "danger");
+        } else {
             e.preventDefault();
             sendAjax(form);
+        }
+    }
+
+    function handleIncreaseFormSubmit(e) {
+        e.preventDefault();
+        sendAjax(e.target);
+    }
+
+    function attachFormEventListeners() {
+        const decreaseForms = productsListContainer.querySelectorAll('.product-decrease-form');
+        const increaseForms = productsListContainer.querySelectorAll('.product-increase-form');
+
+        decreaseForms.forEach(form => {
+            form.removeEventListener('submit', handleDecreaseFormSubmit);
+            form.addEventListener('submit', handleDecreaseFormSubmit);
         });
-    });
-});
+
+        increaseForms.forEach(form => {
+            form.removeEventListener('submit', handleIncreaseFormSubmit);
+            form.addEventListener('submit', handleIncreaseFormSubmit);
+        });
+    }
+
+    attachFormEventListeners();
+}
+initializeCartListeners();

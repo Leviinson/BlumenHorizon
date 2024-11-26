@@ -1,5 +1,5 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const removeForms = document.querySelectorAll('.product-remove-form');
+function initializeRemoveForms(formSelector = '.product-remove-form') {
+    const removeForms = document.querySelectorAll(formSelector);
 
     async function sendAjax(form) {
         try {
@@ -24,6 +24,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     if (hr) {
                         hr.remove();
                     }
+                    const recommendedProductAddToCartForm = document.getElementById(`${productElementId}AddForm`)
+                    updateCartButtonState(recommendedProductAddToCartForm, false);
                     countElement.textContent = interpolate(gettext('%s эл.'), [data.totalQuantity]);
                     taxesElement.textContent = data.taxes;
                     grandTotalElement.textContent = data.cartGrandTotal;
@@ -34,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 showToast(data.detail, "danger");
             }
         } catch (error) {
-            console.log(error);
+            console.error(error);
             showToast(gettext("Произошла ошибка. Повторите попытку позже."), "danger");
         }
     }
@@ -45,4 +47,6 @@ document.addEventListener("DOMContentLoaded", function () {
             sendAjax(form);
         });
     });
-});
+}
+
+initializeRemoveForms();

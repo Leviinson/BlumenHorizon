@@ -26,6 +26,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     taxesElement.textContent = data.grand_total;
                     productContainers.forEach(container => container.remove());
                     hrElements.forEach(hr => hr.remove());
+                    const addToCartForms = document.querySelectorAll(".add-to-cart-form");
+                    addToCartForms.forEach(form => {
+                        updateCartButtonState(form, false);
+                    });
                     emptyCartHandler();
                 }
                 showToast(data.detail, "danger");

@@ -16,7 +16,7 @@
 
 {% block body %}
 <section class="h-100">
-    <div class="container py-5">
+    <div class="container px-2">
         <div class="row d-flex justify-content-center my-4">
             <div class="col-md-8">
                 <div class="card mb-4">
@@ -190,8 +190,10 @@
                     </div>
                 </div>
                 <div class="card mb-4 mb-lg-4">
+                    <div class="card-header">
+                        <h3 class="fs-6 mt-2">{% translate 'Способы оплаты:' %}</h3>
+                    </div>
                     <div class="card-body">
-                        <p><strong>{% translate 'Способы оплаты:' %}</strong></p>
                         <img class="me-2"
                              width="90px"
                              alt="{% translate 'способ оплаты по IBAN' %}"
@@ -199,12 +201,14 @@
                     </div>
                 </div>
                 <div class="card cards-container mb-4 mb-lg-4">
-                    <h2 class="text-center mt-2">{% translate 'Рекомендуемые букеты к покупке' %}</h2>
+                    <div class="card-header">
+                        <h2 class="text-center mt-2">{% translate 'Рекомендуемые букеты к покупке' %}</h2>
+                    </div>
                     <div class="card-body row gy-2">
                         {% for recommended_product in recommended_bouquets %}
                         <div class="col-6 col-lg-4">
                             <div class="card h-100 w-100  d-flex" style="min-height: 404px;">
-                                <a href="{{ recommended_product.get_relative_url }}" class="text-decoration-none text-dark w-100">
+                                <a href="{{ recommended_product.get_relative_url }}" class="text-dark w-100">
                                     <div class="image-wrapper">
                                     {% if recommended_product.has_discount %}
                                         <span class="badge bg-dark-green m-2 p-2 fs-5 product-discount-badge">-{{ recommended_product.discount }}%</span>
@@ -224,15 +228,16 @@
                                     <div class="d-flex flex-column justify-content-center mt-auto">
                                         <p class="card-text">
                                         {% if recommended_product.has_discount %}
-                                        <strong class="text-danger mb-0 me-2">{{ recommended_product.tax_price_discounted|floatformat:"2u" }} {{ currency_symbol }}</strong>
-                                        <strong class="text-muted text-decoration-line-through mb-0">{{ recommended_product.tax_price|floatformat:"2u" }} {{ currency_symbol }}</strong>
+                                        <strong class="text-danger mb-0 product-discounted-price">{{ recommended_product.tax_price_discounted|floatformat:"2u" }}</strong><strong class="me-2 text-danger">{{ currency_symbol }}</strong>
+                                        <strong class="text-muted text-decoration-line-through mb-0 product-old-price">{{ recommended_product.tax_price|floatformat:"2u" }}</strong><strong class="text-muted text-decoration-line-through">{{ currency_symbol }}</strong>
                                         {% else %}
-                                        <strong>{{ recommended_product.tax_price|floatformat:"2u" }} {{ currency_symbol }}</strong>
+                                        <strong class="product-price">{{ recommended_product.tax_price|floatformat:"2u" }}</strong><strong>{{ currency_symbol }}</strong>
                                         {% endif %}
                                         </p>
-                                        <form method="post" class="add-to-cart-form w-100 me-2" data-add-url="{% url 'cart:bouquet-add' %}"
+                                        <form id="{{ recommended_product.slug }}AddForm" method="post" class="add-to-cart-form w-100 me-2" data-add-url="{% url 'cart:bouquet-add' %}"
                                         data-remove-url="{% url 'cart:bouquet-remove' %}"
-                                        data-is-in-cart="{% if recommended_product in products_cart %}true{% else %}false{% endif %}">
+                                        data-is-in-cart="{% if recommended_product in bouquets_cart %}true{% else %}false{% endif %}"
+                                        data-is-bouquet="true">
                                         {% csrf_token %}
                                         <input type="hidden" name="product_slug" value="{{ recommended_product.slug }}">
                                         {% include 'templates/cartButton.html' %}
@@ -244,8 +249,10 @@
                         {% endfor %}
                     </div>
                 </div>
-                <div class="card cards-container mb-4 mb-lg-0">
-                    <h2 class="text-center mt-2">{% translate 'Рекомендуемые подарки к букетам' %}</h2>
+                <div class="card cards-container mb-4 mb-lg-4">
+                    <div class="card-header">
+                        <h2 class="text-center mt-2">{% translate 'Рекомендуемые подарки к букетам' %}</h2>
+                    </div>
                     <div class="card-body row gy-2">
                         {% for recommended_product in recommended_products %}
                         <div class="col-6 col-lg-4">
@@ -270,15 +277,16 @@
                                     <div class="d-flex flex-column justify-content-center mt-auto">
                                         <p class="card-text">
                                         {% if recommended_product.has_discount %}
-                                        <strong class="text-danger mb-0 me-2">{{ recommended_product.tax_price_discounted|floatformat:"2u" }} {{ currency_symbol }}</strong>
-                                        <strong class="text-muted text-decoration-line-through mb-0">{{ recommended_product.tax_price|floatformat:"2u" }} {{ currency_symbol }}</strong>
+                                        <strong class="text-danger mb-0 product-discounted-price">{{ recommended_product.tax_price_discounted|floatformat:"2u" }}</strong><strong class="me-2 text-danger">{{ currency_symbol }}</strong>
+                                        <strong class="text-muted text-decoration-line-through mb-0 product-old-price">{{ recommended_product.tax_price|floatformat:"2u" }}</strong><strong class="text-muted text-decoration-line-through">{{ currency_symbol }}</strong>
                                         {% else %}
-                                        <strong>{{ recommended_product.tax_price|floatformat:"2u" }} {{ currency_symbol }}</strong>
+                                        <strong class="product-price">{{ recommended_product.tax_price|floatformat:"2u" }}</strong><strong>{{ currency_symbol }}</strong>
                                         {% endif %}
                                         </p>
-                                        <form method="post" class="add-to-cart-form w-100 me-2" data-add-url="{% url 'cart:bouquet-add' %}"
-                                        data-remove-url="{% url 'cart:bouquet-remove' %}"
-                                        data-is-in-cart="{% if recommended_product in products_cart %}true{% else %}false{% endif %}">
+                                        <form id="{{ recommended_product.slug }}AddForm" method="post" class="add-to-cart-form w-100 me-2" data-add-url="{% url 'cart:product-add' %}"
+                                        data-remove-url="{% url 'cart:product-remove' %}"
+                                        data-is-in-cart="{% if recommended_product in products_cart %}true{% else %}false{% endif %}"
+                                        data-is-bouquet="false">
                                         {% csrf_token %}
                                         <input type="hidden" name="product_slug" value="{{ recommended_product.slug }}">
                                         {% include 'templates/cartButton.html' %}
@@ -585,10 +593,11 @@
 {% endblock %}
 
 {% block additional_scripts %}
-<script src="{% static 'cart/scripts/setMinimalDateAndTime.js' %}"></script>
-<script src="{% static 'cart/scripts/addressInputsToggle.js' %}" ></script>
-<script src="{% static 'cart/scripts/emptyCartHandler.js' %}" ></script>
-<script src="{% static 'cart/scripts/increaseOrDecreaseProduct.js' %}" ></script>
-<script src="{% static 'cart/scripts/removeProduct.js' %}" ></script>
-<script src="{% static 'cart/scripts/clearCart.js' %}" ></script>
+<script src="{% static 'cart/scripts/setMinimalDateAndTime.js' %}" defer></script>
+<script src="{% static 'cart/scripts/addressInputsToggle.js' %}" defer></script>
+<script src="{% static 'cart/scripts/emptyCartHandler.js' %}" defer></script>
+<script src="{% static 'cart/scripts/increaseOrDecreaseProduct.js' %}" defer></script>
+<script src="{% static 'cart/scripts/removeProduct.js' %}" defer></script>
+<script src="{% static 'cart/scripts/clearCart.js' %}" defer></script>
+<script src="{% static 'cart/scripts/moveOrRemoveRecommendedItemFromCart.js' %}" defer></script>
 {% endblock %}

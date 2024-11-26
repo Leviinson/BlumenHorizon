@@ -197,7 +197,7 @@ DATABASES = {
         "PASSWORD": os.getenv("MYSQL_PASSWORD"),
         "OPTIONS": {
             "charset": "utf8mb4",
-        }
+        },
     }
 }
 
