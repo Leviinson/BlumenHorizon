@@ -401,31 +401,31 @@ class BouquetAdmin(TranslationAdmin):
     )
 
 
-# @admin.register(IndividualQuestion)
-# class IndividualQuestionAdmin(admin.ModelAdmin):
-#     fields = (
-#         "user",
-#         "contact_method",
-#         "recall_me",
-#         "product",
-#         "bouquet",
-#     )
-#     list_display = (
-#         "user",
-#         "contact_method",
-#         "recall_me",
-#         "product",
-#         "bouquet",
-#     )
+@admin.register(IndividualQuestion)
+class IndividualQuestionAdmin(admin.ModelAdmin):
+    fields = (
+        "user",
+        "contact_method",
+        "recall_me",
+        "product",
+        "bouquet",
+    )
+    list_display = (
+        "user",
+        "contact_method",
+        "recall_me",
+        "product",
+        "bouquet",
+    )
 
 
-# @admin.register(CatalogPageModel)
-# class CatalogPageAdmin(TranslationAdmin):
-#     fields = (
-#         "meta_tags",
-#         "json_ld",
-#     )
-#     list_display = ("id",)
+@admin.register(CatalogPageModel)
+class CatalogPageAdmin(TranslationAdmin):
+    fields = (
+        "meta_tags",
+        "json_ld",
+    )
+    list_display = ("id",)
 
 
 # @admin.register(ProductsListPageModel)
