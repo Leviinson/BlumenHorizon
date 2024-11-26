@@ -30,6 +30,7 @@
             });
         }
         document.addEventListener('DOMContentLoaded', function () {
+            console.log(window.google_tag_data.ics.getConsentState("analytics_storage"));
             console.log(gtag("get", "ad_storage"));
             console.log(1);
             console.log(gtag("get", "consent", "ad_storage"));
