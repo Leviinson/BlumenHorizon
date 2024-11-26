@@ -36,15 +36,21 @@
       </div>
       <div id="header-right-panel" class="d-flex justify-content-center">
         <div class="dropdown">
+          {% get_available_languages as LANGUAGES %}
           <button class="btn btn-dark-green me-1 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            {% get_current_language as LANGUAGE_CODE %}
-            {% get_language_info for LANGUAGE_CODE as lang %}
+            {% get_current_language as CURRENT_LANGUAGE_CODE %}
+            {% get_language_info for CURRENT_LANGUAGE_CODE as lang %}
             {{ lang.name_translated }}
           </button>
           <ul class="dropdown-menu">
             {% get_available_languages as LANGUAGES %}
             {% for lang_code, lang_name in LANGUAGES %}
+            {% if lang_code == LANGUAGE_CODE %}
+            <li><a class="dropdown-item" href="/">{{ lang_name }}</a></li>
+            {% elif lang_code == LANGUAGE_CODE %}
+            {% else %}
             <li><a class="dropdown-item" href="/{{ lang_code }}">{{ lang_name }}</a></li>
+            {% endif %}
             {% endfor %}
           </ul>
         </div>
