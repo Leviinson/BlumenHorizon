@@ -112,9 +112,7 @@
   <!-- Google Analytics (will be loaded dynamically after accepting "consent cookies") -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            if (getCookie('cookies_accepted') === 'yes') {
-                loadAnalytics();
-            } else {
+            if (getCookie('cookies_accepted') === 'no') {
                 document.getElementById('cookieConsentBanner').style.display = 'block';
             }
 
@@ -128,8 +126,6 @@
                     'ad_personalization': 'granted',
                     'analytics_storage': 'granted'
                 });
-
-                loadAnalytics();
             });
 
             document.getElementById('declineCookies').addEventListener('click', function() {
@@ -157,20 +153,6 @@
                 if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
             }
             return null;
-        }
-
-        function loadAnalytics() {
-            var script = document.createElement('script');
-            script.async = true;
-            script.src = 'https://www.googletagmanager.com/gtag/js?id=G-KWXBK65TXT';
-            document.head.appendChild(script);
-
-            script.onload = function() {
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', 'G-KWXBK65TXT');
-            }
         }
     </script>
     {% include "templates/footer.html" %}
