@@ -13,9 +13,12 @@
 
 {% block body %}
 <div class="container px-4 text-center">
-    <a href="{{ category.get_relative_url }}" class="text-decoration-none text-dark">
-        <img style="width: 200px;" class="rounded img-thumbnail" src="{{ category.image.url }}"
+    <a href="{{ category.get_relative_url }}" class="text-decoration-none text-dark d-flex flex-column justify-content-center align-items-center">
+        <div class="category-image-wrapper" style="height: 200px; width: 200px;">
+            <img class="img-thumbnail category-square-image rounded" src="{{ category.image.url }}"
             alt="{{ category.image_alt }}">
+        </div>
+        
         <h1 class="mb-4">{{ category.name }}</h1>
     </a>
     <div class="subcategories-container row gap-3 justify-content-center">
