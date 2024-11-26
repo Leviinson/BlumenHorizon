@@ -29,7 +29,7 @@
                     {% for subcategory in category.subcategories.all %}
                     <a href="{{ subcategory.get_relative_url }}" class="text-decoration-none text-dark">
                         <div class="subcategory-container d-flex align-items-center">
-                            <div class="category-image-wrapper me-2">
+                            <div class="category-image-wrapper me-2" style="min-width: 80px;">
                                 <img class="img-thumbnail category-square-image rounded" src="{{ subcategory.image.url }}"
                                 alt="{{ subcategory.image_alt }}">
                             </div>
@@ -57,7 +57,7 @@
                     <a href="{{ subcategory.get_relative_url }}" class="text-decoration-none text-dark">
                         <div class="subcategory-container
                                             d-flex align-items-center">
-                            <div class="category-image-wrapper me-2">
+                            <div class="category-image-wrapper me-2" style="min-width: 80px;">
                                 <img class="img-thumbnail category-square-image rounded" src="{{ subcategory.image.url }}"
                                 alt="{{ subcategory.image_alt }}">
                             </div>
