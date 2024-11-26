@@ -22,14 +22,18 @@
     </script>
     <script>
         function consentGrantedAdStorage() {
-            document.getElementById('cookieConsentBanner').style.display = 'none';
             gtag('consent', 'update', {
-                    'ad_storage': 'granted',
-                    'ad_user_data': 'granted',
-                    'ad_personalization': 'granted',
-                    'analytics_storage': 'granted'
-                });
+                'ad_storage': 'granted',
+                'ad_user_data': 'granted',
+                'ad_personalization': 'granted',
+                'analytics_storage': 'granted'
+            });
         }
+        document.addEventListener('DOMContentLoaded', function () {
+            if (!window.google_tag_data.ics.getConsentState("ad_storage")) {
+                document.getElementById('cookieConsentBanner').style.display = 'block';
+            }
+        });
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -107,7 +111,8 @@
          class="bg-soft-turquoise text-light"
          style="position: fixed; bottom: 0; left: 0; width: 100%;
                 background-color: #333; padding: 15px 10px;
-                z-index: 9999; text-align: center;">
+                display: none; z-index: 9999;
+                text-align: center;">
         <p>
         {% blocktranslate %}
         Мы используем <span class="text-warning">cookies</span> для улучшения работы сайта.
@@ -116,7 +121,7 @@
         {% endblocktranslate %}
         </p>
         <button id="acceptCookies" class="btn btn-dark-green fw-bold" onclick="consentGrantedAdStorage()">{% translate 'Принять' %}</button>
-        <button id="declineCookies" class="btn btn-dark-green fw-bold" onclick="this.parentElement.style.display='none';">{% translate 'Отклонить' %}</button>
+        <button id="declineCookies" class="btn btn-dark-green fw-bold" oncanplay="this.parent.style.display = 'none';">{% translate 'Отклонить' %}</button>
     </div>
   
   <!-- Google Analytics (will be loaded dynamically after accepting "consent cookies") -->
