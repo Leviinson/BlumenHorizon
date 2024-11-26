@@ -6,13 +6,13 @@ function emptyCartHandler() {
     const productCount = productsListContainer.querySelectorAll(".product-container").length;
     if (productsListContainer && noImageContainer) {
         if (productCount === 0) {
-            noImageContainer.classList.remove("d-none");
-            noImageContainer.classList.add("d-flex");
+            noImageContainer.classList.add("d-none");
+            noImageContainer.classList.remove("d-flex");
             checkoutButton.classList.add("disabled");
             cartClearButton.classList.add("disabled");
         } else {
-            noImageContainer.classList.remove("d-flex");
-            noImageContainer.classList.add("d-none");
+            noImageContainer.classList.add("d-flex");
+            noImageContainer.classList.remove("d-none");
             checkoutButton.classList.remove("disabled");
             cartClearButton.classList.remove("disabled");
         }
