@@ -96,21 +96,23 @@
   
   <!-- Google Analytics (will be loaded dynamically after accepting "consent cookies") -->
     <script>
-        if (!getCookie('cookies_accepted')) {
-        document.getElementById('cookieConsentBanner').style.display = 'block';
-        }
+        document.addEventListener('DOMContentLoaded', function () {
+            if (getCookie('cookies_accepted') === 'yes') {
+                loadAnalytics();
+            } else {
+                document.getElementById('cookieConsentBanner').style.display = 'block';
+            }
 
-        document.getElementById('acceptCookies').addEventListener('click', function() {
-            setCookie('cookies_accepted', 'yes', 365);
-            document.getElementById('cookieConsentBanner').style.display = 'none';
-            loadAnalytics();
-            // Don't download Google Analytics
-        });
+            document.getElementById('acceptCookies').addEventListener('click', function() {
+                setCookie('cookies_accepted', 'yes', 365);
+                document.getElementById('cookieConsentBanner').style.display = 'none';
+                loadAnalytics();
+            });
 
-        document.getElementById('declineCookies').addEventListener('click', function() {
-            setCookie('cookies_accepted', 'no', 365);
-            document.getElementById('cookieConsentBanner').style.display = 'none';
-            // Download Google Analytics
+            document.getElementById('declineCookies').addEventListener('click', function() {
+                setCookie('cookies_accepted', 'no', 365);
+                document.getElementById('cookieConsentBanner').style.display = 'none';
+            });
         });
 
         function setCookie(name, value, days) {
@@ -120,7 +122,7 @@
                 date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
                 expires = "; expires=" + date.toUTCString();
             }
-            document.cookie = name + "=" + (value || "") + expires + "; path=/";
+            document.cookie = name + "=" + (value || "") + expires + "; path=/; SameSite=None; Secure";
         }
 
         function getCookie(name) {
