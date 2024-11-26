@@ -21,50 +21,14 @@
     gtag('config', 'G-KWXBK65TXT');
     </script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            if (getCookie('cookies_accepted') === 'no') {
-                console.log(getCookie('cookies_accepted'));
-                document.getElementById('cookieConsentBanner').style.display = 'block';
-            } else {
-                console.log(getCookie('cookies_accepted'));
-                gtag('consent', 'update', {
+        function consentGrantedAdStorage() {
+            document.getElementById('cookieConsentBanner').style.display = 'none';
+            gtag('consent', 'update', {
                     'ad_storage': 'granted',
                     'ad_user_data': 'granted',
                     'ad_personalization': 'granted',
                     'analytics_storage': 'granted'
                 });
-            }
-
-            document.getElementById('acceptCookies').addEventListener('click', function() {
-                setCookie('cookies_accepted', 'yes', 365);
-                document.getElementById('cookieConsentBanner').style.display = 'none';
-            });
-
-            document.getElementById('declineCookies').addEventListener('click', function() {
-                setCookie('cookies_accepted', 'no', 365);
-                document.getElementById('cookieConsentBanner').style.display = 'none';
-            });
-        });
-
-        function setCookie(name, value, days) {
-            var expires = "";
-            if (days) {
-                var date = new Date();
-                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-                expires = "; expires=" + date.toUTCString();
-            }
-            document.cookie = name + "=" + (value || "") + expires + "; path=/; SameSite=None; Secure";
-        }
-
-        function getCookie(name) {
-            var nameEQ = name + "=";
-            var ca = document.cookie.split(';');
-            for (var i = 0; i < ca.length; i++) {
-                var c = ca[i];
-                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-            }
-            return null;
         }
     </script>
     <meta charset="UTF-8">
@@ -143,8 +107,7 @@
          class="bg-soft-turquoise text-light"
          style="position: fixed; bottom: 0; left: 0; width: 100%;
                 background-color: #333; padding: 15px 10px;
-                display: none; z-index: 9999;
-                text-align: center;">
+                z-index: 9999; text-align: center;">
         <p>
         {% blocktranslate %}
         Мы используем <span class="text-warning">cookies</span> для улучшения работы сайта.
