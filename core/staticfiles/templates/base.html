@@ -5,6 +5,21 @@
 <html lang="{{ LANGUAGE_CODE }}">
 
 <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KWXBK65TXT"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('consent', 'default', {
+            'ad_storage': 'denied',
+            'ad_user_data': 'denied',
+            'ad_personalization': 'denied',
+            'analytics_storage': 'denied'
+        });
+
+    gtag('config', 'G-KWXBK65TXT');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {{ meta_tags|safe }}
@@ -106,6 +121,14 @@
             document.getElementById('acceptCookies').addEventListener('click', function() {
                 setCookie('cookies_accepted', 'yes', 365);
                 document.getElementById('cookieConsentBanner').style.display = 'none';
+
+                gtag('consent', 'update', {
+                    'ad_storage': 'granted',
+                    'ad_user_data': 'granted',
+                    'ad_personalization': 'granted',
+                    'analytics_storage': 'granted'
+                });
+
                 loadAnalytics();
             });
 
