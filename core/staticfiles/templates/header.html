@@ -41,13 +41,11 @@
             {% get_current_language as CURRENT_LANGUAGE_CODE %}
             {% get_language_info for CURRENT_LANGUAGE_CODE as lang %}
             {{ lang.name_translated }}
-            {{ LANGUAGE_CODE }}
-            {{ CURRENT_LANGUAGE_CODE }}
           </button>
           <ul class="dropdown-menu">
             {% for lang_code, lang_name in LANGUAGES %}
             {% if lang_code == CURRENT_LANGUAGE_CODE %}
-            {% elif lang_code == LANGUAGE_CODE %}
+            {% elif lang_code == 'de' %}
             <li><a class="dropdown-item" href="/">{{ lang_name }}</a></li>
             {% else %}
             <li><a class="dropdown-item" href="/{{ lang_code }}">{{ lang_name }}</a></li>
