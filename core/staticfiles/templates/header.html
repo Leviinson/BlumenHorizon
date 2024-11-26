@@ -45,9 +45,9 @@
           <ul class="dropdown-menu">
             {% get_available_languages as LANGUAGES %}
             {% for lang_code, lang_name in LANGUAGES %}
-            {% if lang_code == LANGUAGE_CODE %}
+            {% if lang_code == CURRENT_LANGUAGE_CODE %}
+            {% elif lang_code == lang_code %}
             <li><a class="dropdown-item" href="/">{{ lang_name }}</a></li>
-            {% elif lang_code == CURRENT_LANGUAGE_CODE %}
             {% else %}
             <li><a class="dropdown-item" href="/{{ lang_code }}">{{ lang_name }}</a></li>
             {% endif %}
