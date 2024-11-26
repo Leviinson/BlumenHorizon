@@ -30,6 +30,7 @@
             });
         }
         document.addEventListener('DOMContentLoaded', function () {
+            console.log(window.google_tag_data.ics.getConsentState("ad_storage"))
             if (!window.google_tag_data.ics.getConsentState("ad_storage")) {
                 document.getElementById('cookieConsentBanner').style.display = 'block';
             }
