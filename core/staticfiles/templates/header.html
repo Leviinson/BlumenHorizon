@@ -41,6 +41,7 @@
             {% get_current_language as CURRENT_LANGUAGE_CODE %}
             {% get_language_info for CURRENT_LANGUAGE_CODE as lang %}
             {{ lang.name_translated }}
+            {{ LANGUAGE_CODE }}
           </button>
           <ul class="dropdown-menu">
             {% for lang_code, lang_name in LANGUAGES %}
