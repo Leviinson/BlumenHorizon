@@ -40,6 +40,7 @@ i18n_urlpatterns = i18n_patterns(
     path("catalog/", include("catalogue.urls")),
     path("search/", include("livesearch.urls")),
     path("cart/", include("cart.urls")),
+    prefix_default_language=False,
 )
 
 urlpatterns = service_urlpatterns + i18n_urlpatterns

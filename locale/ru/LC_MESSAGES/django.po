@@ -8,17 +8,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-26 03:24+0100\n"
-"PO-Revision-Date: 2024-11-24 15:33+0100\n"
+"POT-Creation-Date: 2024-11-26 04:44+0100\n"
+"PO-Revision-Date: 2024-11-26 05:24+0100\n"
 "Last-Translator: None None <blumenhorizon@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
-"(n%100>=11 && n%100<=14)? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
 "X-Translated-Using: django-rosetta 0.10.1\n"
 
 #: accounts/forms/user_form.py:11 accounts/models.py:35
@@ -26,87 +24,92 @@ msgstr ""
 #: accounts/templates/accounts/authorization/sign_up.html:36
 #: accounts/templates/accounts/index.html:49
 msgid "Номер телефона"
-msgstr ""
+msgstr "Номер телефона"
 
 #: accounts/forms/user_form.py:24
 msgid "Пользователь с этой электронной почтой уже существует."
-msgstr ""
+msgstr "Пользователь с этой электронной почтой уже существует."
 
 #: accounts/forms/user_form.py:25
 msgid "Email нужно обязательно внести."
-msgstr ""
+msgstr "Email нужно обязательно внести."
 
 #: accounts/forms/user_form.py:36 accounts/forms/user_form.py:41
 msgid "Пользователь с этим номером телефона уже существует."
-msgstr ""
+msgstr "Пользователь с этим номером телефона уже существует."
 
 #: accounts/forms/user_signin_form.py:11
 msgid ""
 "Пожалуйста, введите корректную электронную почту и пароль. Помните, что оба "
 "поля чувствительны к регистру"
 msgstr ""
+"Пожалуйста, введите корректную электронную почту и пароль. Помните, что оба "
+"поля чувствительны к регистру"
 
 #: accounts/forms/user_signin_form.py:15
 msgid ""
 "Почта не подтверждена. Мы отправили письмо на Вашу почту, проверьте папку "
 "\"Входящие\"/\"Спам\"."
 msgstr ""
+"Почта не подтверждена. Мы отправили письмо на Вашу почту, проверьте папку "
+"\"Входящие\"/\"Спам\"."
 
 #: accounts/forms/user_signup_form.py:10
 msgid "Пароли не совпадают. Пожалуйста, введите одинаковые пароли."
-msgstr ""
+msgstr "Пароли не совпадают. Пожалуйста, введите одинаковые пароли."
 
 #: accounts/models.py:32
 msgid "Электронная почта"
-msgstr ""
+msgstr "Электронная почта"
 
 #: accounts/models.py:40
 #: accounts/templates/accounts/authorization/sign_up.html:52
 #: accounts/templates/accounts/index.html:62
 #: mainpage/templates/mainpage/index.html:237
 msgid "Имя"
-msgstr ""
+msgstr "Имя"
 
 #: accounts/models.py:41
 #: accounts/templates/accounts/authorization/sign_up.html:63
 #: accounts/templates/accounts/index.html:74
 msgid "Фамилия"
-msgstr ""
+msgstr "Фамилия"
 
 #: accounts/templates/accounts/authorization/sign_in.html:38
 msgid "Введите пароль"
-msgstr ""
+msgstr "Введите пароль"
 
 #: accounts/templates/accounts/authorization/sign_in.html:44
 msgid "Запомнить меня"
-msgstr ""
+msgstr "Запомнить меня"
 
 #: accounts/templates/accounts/authorization/sign_in.html:47
 #: accounts/templates/accounts/authorization/sign_up.html:97
 msgid "Войти"
-msgstr ""
+msgstr "Войти"
 
 #: accounts/templates/accounts/authorization/sign_in.html:49
 #: accounts/templates/accounts/authorization/sign_up.html:98
 msgid "Зарегистрироваться"
-msgstr ""
+msgstr "Зарегистрироваться"
 
 #: accounts/templates/accounts/authorization/sign_up.html:32
 msgid "Мы не передаём Ваш Email третьим лицам."
-msgstr ""
+msgstr "Мы не передаём Ваш Email третьим лицам."
 
 #: accounts/templates/accounts/authorization/sign_up.html:41
 msgid ""
 "Мы передаём Ваш номер телефона нашим партнёрам при доставке на Ваше имя."
 msgstr ""
+"Мы передаём Ваш номер телефона нашим партнёрам при доставке на Ваше имя."
 
 #: accounts/templates/accounts/authorization/sign_up.html:74
 msgid "Пароль"
-msgstr ""
+msgstr "Пароль"
 
 #: accounts/templates/accounts/authorization/sign_up.html:85
 msgid "Повторите пароль"
-msgstr ""
+msgstr "Повторите пароль"
 
 #: accounts/templates/accounts/email_confirmation/email_body.html:5
 #, python-format
@@ -114,6 +117,8 @@ msgid ""
 "\n"
 "Уважаемый %(first_name)s,\n"
 msgstr ""
+"\n"
+"Уважаемый %(first_name)s,\n"
 
 #: accounts/templates/accounts/email_confirmation/email_body.html:9
 #, python-format
@@ -121,47 +126,49 @@ msgid ""
 "\n"
 "Уважаемый %(last_name)s,\n"
 msgstr ""
+"\n"
+"Уважаемый %(last_name)s,\n"
 
 #: accounts/templates/accounts/email_confirmation/email_body.html:13
 msgid "Уважаемый пользователь,"
-msgstr ""
+msgstr "Уважаемый пользователь,"
 
 #: accounts/templates/accounts/index.html:90
 msgid "Выйти"
-msgstr ""
+msgstr "Выйти"
 
 #: accounts/templates/accounts/index.html:93
 msgid "Редактировать"
-msgstr ""
+msgstr "Редактировать"
 
 #: accounts/views/me.py:17
 msgid "Профиль"
-msgstr ""
+msgstr "Профиль"
 
 #: accounts/views/me.py:22
 msgid "Настройки"
-msgstr ""
+msgstr "Настройки"
 
 #: accounts/views/me.py:27
 msgid "Заказы"
-msgstr ""
+msgstr "Заказы"
 
 #: accounts/views/me.py:52
 msgid "Личный кабинет"
-msgstr ""
+msgstr "Личный кабинет"
 
 #: accounts/views/signin.py:15
 msgid "Вход"
-msgstr ""
+msgstr "Вход"
 
 #: accounts/views/signup.py:34
 msgid "Регистрация"
-msgstr ""
+msgstr "Регистрация"
 
 #: accounts/views/signup.py:55
 #, python-brace-format
 msgid "{site_name} | Подтвердите Ваш Email"
-msgstr ""
+msgstr "{site_name} | Подтвердите Ваш Email"
 
 #: accounts/views/signup.py:75
 #, python-brace-format
@@ -169,6 +176,8 @@ msgid ""
 "Дорогой пользователь, зайдите на почту {to_email} и подтвердите активацию "
 "аккаунта."
 msgstr ""
+"Дорогой пользователь, зайдите на почту {to_email} и подтвердите активацию "
+"аккаунта."
 
 #: accounts/views/signup.py:82
 #, python-brace-format
@@ -176,84 +185,88 @@ msgid ""
 "Дорогой пользователь, неудалось отправить письмо с просьбой о подтверждении "
 "почты. Проверьте правильно ли она написана: {email}"
 msgstr ""
+"Дорогой пользователь, неудалось отправить письмо с просьбой о подтверждении "
+"почты. Проверьте правильно ли она написана: {email}"
 
 #: accounts/views/signup.py:103
 msgid "Ваша почта успешно подтверждена, теперь Вы можете пойти в аккаунт."
-msgstr ""
+msgstr "Ваша почта успешно подтверждена, теперь Вы можете пойти в аккаунт."
 
 #: accounts/views/signup.py:108
 msgid "Ссылка для подтверждения почты истекла или неверна."
-msgstr ""
+msgstr "Ссылка для подтверждения почты истекла или неверна."
 
 #: cart/models.py:12
 msgid "В обработке"
-msgstr ""
+msgstr "В обработке"
 
 #: cart/models.py:13
 msgid "Отказан"
-msgstr ""
+msgstr "Отказан"
 
 #: cart/models.py:14
 msgid "Ожидание оплаты"
-msgstr ""
+msgstr "Ожидание оплаты"
 
 #: cart/models.py:15
 msgid "В доставке"
-msgstr ""
+msgstr "В доставке"
 
 #: cart/models.py:16
 msgid "Доставлен"
-msgstr ""
+msgstr "Доставлен"
 
 #: cart/models.py:19 cart/templates/cart/index.html:388
 #: cart/templates/cart/index.html:513
 msgid "Уважаемый"
-msgstr ""
+msgstr "Уважаемый"
 
 #: cart/models.py:20 cart/templates/cart/index.html:389
 #: cart/templates/cart/index.html:514
 msgid "Уважаемая"
-msgstr ""
+msgstr "Уважаемая"
 
 #: cart/models.py:89 cart/templates/cart/index.html:311
 msgid "Чистая стоимость"
-msgstr ""
+msgstr "Чистая стоимость"
 
 #: cart/models.py:95 cart/templates/cart/index.html:321
 msgid "Налоговая стоимость"
-msgstr ""
+msgstr "Налоговая стоимость"
 
 #: cart/models.py:103 extended_contrib_models/models.py:23
 msgid "НДС"
-msgstr ""
+msgstr "НДС"
 
 #: cart/models.py:110 cart/templates/cart/index.html:336
 msgid "Итоговая стоимость"
-msgstr ""
+msgstr "Итоговая стоимость"
 
 #: cart/services/mixins/edit.py:74
 msgid ""
 "Ой-ой, мы неправильно обработали Вашу корзину. Скоро администрация это "
 "исправит!"
 msgstr ""
+"Ой-ой, мы неправильно обработали Вашу корзину. Скоро администрация это "
+"исправит!"
 
 #: cart/services/mixins/edit.py:109 cart/views.py:332
 #: catalogue/views/catalogue.py:206 mainpage/views.py:132
 msgid "Метод не разрешен. Используйте POST."
-msgstr ""
+msgstr "Метод не разрешен. Используйте POST."
 
 #: cart/templates/cart/cartClearForm.html:8
 msgid "Очистить корзину"
-msgstr ""
+msgstr "Очистить корзину"
 
 #: cart/templates/cart/decreaseItemInCart.html:15
 #: cart/templates/cart/increaseItemInCart.html:15
 msgid "Уменьшить количество продукта в корзине"
-msgstr ""
+msgstr "Уменьшить количество продукта в корзине"
 
 #: cart/templates/cart/index.html:12 cart/templates/cart/index.html:25
 msgid "Корзина"
-msgstr ""
+msgstr "Корзина"
 
 #: cart/templates/cart/index.html:13
 #, python-format
@@ -318,7 +331,8 @@ msgstr ""
 msgid "способ оплаты по IBAN"
 msgstr ""
 
-#: cart/templates/cart/index.html:205 mainpage/templates/mainpage/index.html:88
+#: cart/templates/cart/index.html:205
+#: mainpage/templates/mainpage/index.html:88
 msgid "Рекомендуемые букеты к покупке"
 msgstr ""
 
@@ -331,7 +345,8 @@ msgstr ""
 msgid "Резюме заказа"
 msgstr ""
 
-#: cart/templates/cart/index.html:330 core/staticfiles/templates/footer.html:43
+#: cart/templates/cart/index.html:330
+#: core/staticfiles/templates/footer.html:43
 #: core/staticfiles/templates/header.html:30
 msgid "Доставка"
 msgstr ""
@@ -581,9 +596,7 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"                <strong>В скором времени мы свяжемся с Вами </strong>по "
-"поводу Вашего заказа по указанной электронной почте <strong>(%(email)s)</"
-"strong>.\n"
+"                <strong>В скором времени мы свяжемся с Вами </strong>по поводу Вашего заказа по указанной электронной почте <strong>(%(email)s)</strong>.\n"
 "                "
 msgstr ""
 
@@ -591,8 +604,7 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"                На данный момент Вам необходимо оплатить сумму "
-"<strong>%(grand_total)s%(currency_symbol)s</strong>\n"
+"                На данный момент Вам необходимо оплатить сумму <strong>%(grand_total)s%(currency_symbol)s</strong>\n"
 "                по данным реквизитам:\n"
 "                "
 msgstr ""
@@ -866,7 +878,7 @@ msgid "Количество цветов в букете"
 msgstr ""
 
 #: catalogue/templates/products/catalog.html:16
-msgid "Каталог категорий товаров"
+msgid "Каталог букетов и подарков"
 msgstr ""
 
 #: catalogue/views/catalogue.py:153

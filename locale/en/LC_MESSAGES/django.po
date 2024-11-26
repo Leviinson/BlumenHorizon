@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-26 03:24+0100\n"
-"PO-Revision-Date: 2024-11-26 03:38+0100\n"
+"POT-Creation-Date: 2024-11-26 04:44+0100\n"
+"PO-Revision-Date: 2024-11-26 04:45+0100\n"
 "Last-Translator: None None <blumenhorizon@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -823,7 +823,6 @@ msgid "Характеристики"
 msgstr "Specifications"
 
 #: catalogue/templates/products/base_detail.html:210
-#| msgid "Рекомендуемые букеты к покупке"
 msgid "Рекомендуемые продукты к покупке"
 msgstr "Recommended products for purchase"
 
@@ -895,8 +894,9 @@ msgid "Количество цветов в букете"
 msgstr "Number of flowers in a bouquet"
 
 #: catalogue/templates/products/catalog.html:16
-msgid "Каталог категорий товаров"
-msgstr "Catalog of product categories"
+#| msgid "Каталог категорий товаров"
+msgid "Каталог букетов и подарков"
+msgstr "Catalog of bouquets and gifts"
 
 #: catalogue/views/catalogue.py:153
 msgid "Данный продукт был недавно удалён из каталога нашими администраторами"
