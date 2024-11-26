@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-26 04:44+0100\n"
+"POT-Creation-Date: 2024-11-26 05:32+0100\n"
 "PO-Revision-Date: 2024-11-26 04:45+0100\n"
 "Last-Translator: None None <blumenhorizon@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -329,8 +329,7 @@ msgstr "Payment methods:"
 msgid "способ оплаты по IBAN"
 msgstr "payment method by IBAN"
 
-#: cart/templates/cart/index.html:205
-#: mainpage/templates/mainpage/index.html:88
+#: cart/templates/cart/index.html:205 mainpage/templates/mainpage/index.html:88
 msgid "Рекомендуемые букеты к покупке"
 msgstr "Recommended bouquets for purchase"
 
@@ -343,8 +342,7 @@ msgstr "Recommended gifts for bouquets"
 msgid "Резюме заказа"
 msgstr "Summary"
 
-#: cart/templates/cart/index.html:330
-#: core/staticfiles/templates/footer.html:43
+#: cart/templates/cart/index.html:330 core/staticfiles/templates/footer.html:43
 #: core/staticfiles/templates/header.html:30
 msgid "Доставка"
 msgstr "Delivery"
@@ -604,22 +602,27 @@ msgstr "Status"
 #, python-format
 msgid ""
 "\n"
-"                <strong>В скором времени мы свяжемся с Вами </strong>по поводу Вашего заказа по указанной электронной почте <strong>(%(email)s)</strong>.\n"
+"                <strong>В скором времени мы свяжемся с Вами </strong>по "
+"поводу Вашего заказа по указанной электронной почте <strong>(%(email)s)</"
+"strong>.\n"
 "                "
 msgstr ""
 "\n"
-"<strong>We will contact you shortly </strong>about your order via the specified email <strong>(%(email)s)</strong>."
+"<strong>We will contact you shortly </strong>about your order via the "
+"specified email <strong>(%(email)s)</strong>."
 
 #: cart/templates/cart/success_order.html:44
 #, python-format
 msgid ""
 "\n"
-"                На данный момент Вам необходимо оплатить сумму <strong>%(grand_total)s%(currency_symbol)s</strong>\n"
+"                На данный момент Вам необходимо оплатить сумму "
+"<strong>%(grand_total)s%(currency_symbol)s</strong>\n"
 "                по данным реквизитам:\n"
 "                "
 msgstr ""
 "\n"
-"At the moment you need to pay the amount <strong>%(grand_total)s%(currency_symbol)s</strong>"
+"At the moment you need to pay the amount "
+"<strong>%(grand_total)s%(currency_symbol)s</strong>"
 
 #: cart/templates/cart/success_order.html:59
 msgid "Задать вопрос"
@@ -651,7 +654,8 @@ msgstr "Error adding product to the cart."
 #: cart/views.py:262
 #, python-brace-format
 msgid "Букет \"{product_name}\" успешно убран из корзины."
-msgstr "Bouquet \"{product_name}\" has been successfully removed from the cart."
+msgstr ""
+"Bouquet \"{product_name}\" has been successfully removed from the cart."
 
 #: cart/views.py:267
 msgid "Ошибка удаления букета из корзины."
@@ -660,7 +664,8 @@ msgstr "Error reducing the number of the bouquet in the cart."
 #: cart/views.py:277
 #, python-brace-format
 msgid "Продукт \"{product_name}\" успешно убран из корзины."
-msgstr "Product \"{product_name}\" has been successfully removed from the cart."
+msgstr ""
+"Product \"{product_name}\" has been successfully removed from the cart."
 
 #: cart/views.py:282
 msgid "Ошибка удаления продукта из корзины."
@@ -894,7 +899,6 @@ msgid "Количество цветов в букете"
 msgstr "Number of flowers in a bouquet"
 
 #: catalogue/templates/products/catalog.html:16
-#| msgid "Каталог категорий товаров"
 msgid "Каталог букетов и подарков"
 msgstr "Catalog of bouquets and gifts"
 
@@ -1019,7 +1023,8 @@ msgstr "Phone number in any social network or profile link"
 
 #, python-brace-format
 #~ msgid "Продукт \"{product_name}\" успешно удалён из корзины."
-#~ msgstr "Product \"{product_name}\" quantity was successfully reduced in the cart."
+#~ msgstr ""
+#~ "Product \"{product_name}\" quantity was successfully reduced in the cart."
 
 #~ msgid "Корзины пользователей"
 #~ msgstr "User carts"
