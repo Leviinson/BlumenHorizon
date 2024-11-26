@@ -88,10 +88,10 @@ document.querySelectorAll('.add-to-cart-form').forEach(function(form) {
             }
 
             if (productsListContainer.children.length === 1 && productsListContainer.firstElementChild === emptyCartImage) {
-                emptyCartImage.classList.toggle("d-flex");
-                emptyCartImage.classList.toggle("d-none");
-                clearCartButton.classList.toggle("disabled")
-                checkoutButton.classList.toggle("disabled");
+                emptyCartImage.classList.remove("d-flex");
+                emptyCartImage.classList.add("d-none");
+                clearCartButton.classList.add("disabled")
+                checkoutButton.classList.add("disabled");
             }
             return
         }
@@ -106,10 +106,10 @@ document.querySelectorAll('.add-to-cart-form').forEach(function(form) {
         let needsHr = true;
         if (productsListContainer.children.length === 1 && productsListContainer.firstElementChild === emptyCartImage) {
             needsHr = false;
-            clearCartButton.classList.toggle("disabled")
-            emptyCartImage.classList.toggle("d-flex");
-            emptyCartImage.classList.toggle("d-none");
-            checkoutButton.classList.toggle("disabled");
+            clearCartButton.classList.remove("disabled")
+            emptyCartImage.classList.remove("d-flex");
+            emptyCartImage.classList.add("d-none");
+            checkoutButton.classList.remove("disabled");
         }
 
         const newProductElement = `
