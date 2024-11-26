@@ -11,8 +11,8 @@ function emptyCartHandler() {
             checkoutButton.classList.add("disabled");
             cartClearButton.classList.add("disabled");
         } else {
-            noImageContainer.classList.add("d-flex");
-            noImageContainer.classList.remove("d-none");
+            noImageContainer.classList.remove("d-flex");
+            noImageContainer.classList.add("d-none");
             checkoutButton.classList.remove("disabled");
             cartClearButton.classList.remove("disabled");
         }
