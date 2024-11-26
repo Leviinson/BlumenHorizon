@@ -131,7 +131,9 @@ class CartView(CommonContextMixin, FormView):
                 "domain": domain,
                 "MEDIA_URL": settings.MEDIA_URL,
                 "name": order.name,
-                "address_form": dict(Order.ADDRESS_FORM_CHOICES).get(order.address_form, "Dear"),
+                "address_form": dict(Order.ADDRESS_FORM_CHOICES).get(
+                    order.address_form, "Dear"
+                ),
                 "order_code": order.code,
                 "order_date": order.created_at,
                 "order_products": order.products,
@@ -196,7 +198,7 @@ class CartView(CommonContextMixin, FormView):
                 "-amount_of_orders",
                 "-amount_of_savings",
             ],
-            limit=6
+            limit=6,
         )
         context["recommended_bouquets"] = get_recommended_items_with_first_image(
             model=Bouquet,
@@ -207,7 +209,7 @@ class CartView(CommonContextMixin, FormView):
                 "-amount_of_orders",
                 "-amount_of_savings",
             ],
-            limit=6
+            limit=6,
         )
 
         tax_percent = self.current_site.extended.tax_percent
