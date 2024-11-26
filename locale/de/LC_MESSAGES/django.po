@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-26 05:32+0100\n"
+"POT-Creation-Date: 2024-11-26 20:19+0100\n"
 "PO-Revision-Date: 2024-11-26 04:45+0100\n"
 "Last-Translator: None None <blumenhorizon@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -66,7 +66,7 @@ msgstr "E-Mail-Adresse"
 #: accounts/models.py:40
 #: accounts/templates/accounts/authorization/sign_up.html:52
 #: accounts/templates/accounts/index.html:62
-#: mainpage/templates/mainpage/index.html:237
+#: mainpage/templates/mainpage/index.html:240
 msgid "Имя"
 msgstr "Vorname"
 
@@ -304,8 +304,8 @@ msgstr ""
 #: catalogue/templates/products/base_list.html:108
 #: mainpage/templates/mainpage/index.html:104
 #: mainpage/templates/mainpage/index.html:108
-#: mainpage/templates/mainpage/index.html:168
-#: mainpage/templates/mainpage/index.html:172
+#: mainpage/templates/mainpage/index.html:170
+#: mainpage/templates/mainpage/index.html:174
 msgid "Изображение продукта временно отсутствует."
 msgstr "Produktbild vorübergehend nicht verfügbar."
 
@@ -337,7 +337,7 @@ msgid "Рекомендуемые букеты к покупке"
 msgstr "Empfohlene Blumensträuße zum Kauf"
 
 #: cart/templates/cart/index.html:254
-#: mainpage/templates/mainpage/index.html:152
+#: mainpage/templates/mainpage/index.html:154
 msgid "Рекомендуемые подарки к букетам"
 msgstr "Empfohlene Geschenke zu den Blumensträußen"
 
@@ -803,12 +803,12 @@ msgid "Предложим решение в течении 10 минут"
 msgstr "Wir werden eine Lösung innerhalb von 10 Minuten vorschlagen"
 
 #: catalogue/templates/products/base_detail.html:128
-#: mainpage/templates/mainpage/index.html:255
+#: mainpage/templates/mainpage/index.html:258
 msgid "Разрешаю мне перезвонить"
 msgstr "Ich erlaube Ihnen, mich zurückzurufen"
 
 #: catalogue/templates/products/base_detail.html:132
-#: mainpage/templates/mainpage/index.html:260
+#: mainpage/templates/mainpage/index.html:263
 msgid "Связаться"
 msgstr "Kontaktieren"
 
@@ -839,12 +839,12 @@ msgid "Рекомендуемые продукты к покупке"
 msgstr "Empfohlene Produkte zum Kauf"
 
 #: catalogue/templates/products/base_detail.html:265
-#: mainpage/templates/mainpage/index.html:143
+#: mainpage/templates/mainpage/index.html:144
 msgid "Предыдущий слайд букетов"
 msgstr "Vorheriger Blumenstrauß-Slide"
 
 #: catalogue/templates/products/base_detail.html:270
-#: mainpage/templates/mainpage/index.html:148
+#: mainpage/templates/mainpage/index.html:149
 msgid "Следующий слайд букетов"
 msgstr "Nächster Blumenstrauß-Slide"
 
@@ -933,6 +933,25 @@ msgstr "Erstellungsdatum"
 msgid "Дата обновления"
 msgstr "Aktualisierungsdatum"
 
+#: core/staticfiles/templates/base.html:87
+msgid ""
+"\n"
+"        Мы используем <span class=\"text-warning\">cookies</span> для "
+"улучшения работы сайта.\n"
+"        <br>\n"
+"        Продолжая использовать сайт, Вы соглашаетесь на использование "
+"cookies.\n"
+"        "
+msgstr ""
+
+#: core/staticfiles/templates/base.html:93
+msgid "Принять"
+msgstr ""
+
+#: core/staticfiles/templates/base.html:94
+msgid "Отклонить"
+msgstr ""
+
 #: core/staticfiles/templates/footer.html:11
 msgid "Клиентам"
 msgstr "Kunden"
@@ -967,8 +986,8 @@ msgstr "Startseite"
 msgid "Каталог"
 msgstr "Katalog"
 
-#: core/staticfiles/templates/header.html:64
-#: core/staticfiles/templates/header.html:65
+#: core/staticfiles/templates/header.html:69
+#: core/staticfiles/templates/header.html:70
 msgid "Поиск"
 msgstr "Suche"
 
@@ -994,25 +1013,25 @@ msgstr "Unsere Vorteile"
 msgid "Связь с клиентом на каждом этапе заказа"
 msgstr "Kontakt mit dem Kunden in jedem Schritt der Bestellung"
 
-#: mainpage/templates/mainpage/index.html:213
+#: mainpage/templates/mainpage/index.html:215
 msgid "Предыдущий слайд подарков"
 msgstr "Vorheriger Geschenke-Slide"
 
-#: mainpage/templates/mainpage/index.html:218
+#: mainpage/templates/mainpage/index.html:220
 msgid "Следующий слайд подарков"
 msgstr "Nächster Geschenke-Slide"
 
-#: mainpage/templates/mainpage/index.html:230
+#: mainpage/templates/mainpage/index.html:233
 msgid "Свяжитесь с нами"
 msgstr "Kontaktieren Sie uns"
 
-#: mainpage/templates/mainpage/index.html:234
+#: mainpage/templates/mainpage/index.html:237
 msgid "Заполните форму, чтобы заказать букет из индивидуального состава."
 msgstr ""
 "Füllen Sie das Formular aus, um einen Blumenstrauß mit individueller "
 "Zusammenstellung zu bestellen."
 
-#: mainpage/templates/mainpage/index.html:245
+#: mainpage/templates/mainpage/index.html:248
 msgid "Тел. номер в любой соц. сети или ссылка профиля"
 msgstr "Telefonnummer in einem beliebigen sozialen Netzwerk oder Profil-Link"
 
