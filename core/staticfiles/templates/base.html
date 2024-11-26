@@ -23,8 +23,10 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             if (getCookie('cookies_accepted') === 'no') {
+                console.log(getCookie('cookies_accepted'));
                 document.getElementById('cookieConsentBanner').style.display = 'block';
             } else {
+                console.log(getCookie('cookies_accepted'));
                 gtag('consent', 'update', {
                     'ad_storage': 'granted',
                     'ad_user_data': 'granted',
