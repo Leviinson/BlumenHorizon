@@ -116,7 +116,7 @@
         {% endblocktranslate %}
         </p>
         <button id="acceptCookies" class="btn btn-dark-green fw-bold" onclick="consentGrantedAdStorage">{% translate 'Принять' %}</button>
-        <button id="declineCookies" class="btn btn-dark-green fw-bold">{% translate 'Отклонить' %}</button>
+        <button id="declineCookies" class="btn btn-dark-green fw-bold" onclick="this.parentElement.style.display='none';">{% translate 'Отклонить' %}</button>
     </div>
   
   <!-- Google Analytics (will be loaded dynamically after accepting "consent cookies") -->
