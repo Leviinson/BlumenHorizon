@@ -35,7 +35,7 @@ class IndividualOrderAdmin(admin.ModelAdmin):
 class MainPageModelAdmin(TranslationAdmin):
     fields = [
         "meta_tags",
-        "json_ld",
+        "json_ld_description",
         "description",
     ]
     list_display = ["id"]
