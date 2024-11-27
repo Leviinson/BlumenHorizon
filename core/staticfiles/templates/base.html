@@ -22,6 +22,7 @@
     </script>
     <script>
         function consentGrantedAdStorage() {
+            gtag("set", "userIsAgreed", true);
             gtag('consent', 'update', {
                 'ad_storage': 'granted',
                 'ad_user_data': 'granted',
@@ -30,11 +31,8 @@
             });
         }
         document.addEventListener('DOMContentLoaded', function () {
-            console.log(window.google_tag_data.ics.getConsentState());
-            console.log(gtag("get", "ad_storage"));
-            console.log(1);
-            console.log(gtag("get", "consent", "ad_storage"));
-            if (!window.google_tag_data.ics.getConsentState("ad_storage")) {
+            console.log(gtag("get", "userIsAgreed"));
+            if (!gtag("get", "userIsAgreed")) {
                 document.getElementById('cookieConsentBanner').style.display = 'block';
             }
         });
