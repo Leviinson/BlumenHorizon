@@ -36,16 +36,14 @@
       "itemListElement": [
         {% for recommended_product in recommended_bouquets %}
         {
-          "@type": "Offer",
+          "@type": "Product",
           "name": "{{ recommended_product.name }}",
           "url": "{{ recommended_product.get_absolute_url }}",
-          "priceCurrency": "{{ currency_code }}",
-          "price": "{{ recommended_product.tax_price_discounted|floatformat:'2u' }}",
-          "availability": "https://schema.org/InStock",
-          "itemOffered": {
-            "@type": "Product",
-            "name": "{{ recommended_product.name }}",
-            "url": "{{ recommended_product.get_absolute_url }}"
+          "offers": {
+            "@type": "Offer",
+            "priceCurrency": "{{ currency_code }}",
+            "price": "{{ recommended_product.tax_price_discounted|floatformat:'2u' }}",
+            "availability": "https://schema.org/InStock"
           }
         }{% if not forloop.last %},{% endif %}{% endfor %}
       ]
