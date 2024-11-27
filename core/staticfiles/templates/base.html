@@ -33,7 +33,7 @@
         }
         document.addEventListener('DOMContentLoaded', function () {
             console.log(gtag("get", "userIsAgreed"));
-            if (!gtag("get", "userIsAgreed").hello) {
+            if (!gtag("get", "userIsAgreed", "hello")) {
                 document.getElementById('cookieConsentBanner').style.display = 'block';
             }
         });
