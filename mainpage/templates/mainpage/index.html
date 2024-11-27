@@ -27,7 +27,7 @@
     },
     "sameAs": [
       {% for social in socials_right_bottom %}
-        {{ social.absolute_url }}{% if not forloop.last %},{% endif %}
+        "{{ social.absolute_url }}"{% if not forloop.last %},{% endif %}
       {% endfor %}
     ],
     "hasOfferCatalog": {
