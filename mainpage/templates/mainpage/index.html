@@ -48,16 +48,34 @@
             "availability": "https://schema.org/InStock",
             "shippingDetails": {
               "@type": "OfferShippingDetails",
-              "shippingRate": "0.00",  //
+              "shippingRate": {
+                "@type": "MonetaryAmount",
+                "value": 0,
+                "currency": "{{ currency }}"
+              },
               "shippingDestination": {
-                "@type": "ShippingRateSettings",
-                "country": "DE"
+                "@type": "DefinedRegion",
+                "addressCountry": "DE"
+              },
+              "deliveryTime": {
+                "@type": "ShippingDeliveryTime",
+                "handlingTime": {
+                  "@type": "QuantitativeValue",
+                  "minValue": 0,
+                  "maxValue": 1,
+                  "unitCode": "DAY"
+                },
+                "transitTime": {
+                  "@type": "QuantitativeValue",
+                  "minValue": 0,
+                  "maxValue": 1,
+                  "unitCode": "DAY"
+                }
               }
             },
             "hasMerchantReturnPolicy": {
               "@type": "MerchantReturnPolicy",
-              "returnPolicyCategory": "https://schema.org/NoReturnPolicy",
-              "returnFees": "https://schema.org/NonRefundable"
+              "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted",
             }
           }
         }{% if not forloop.last %},{% endif %}{% endfor %}
