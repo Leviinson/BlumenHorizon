@@ -20,11 +20,11 @@
         {% endif %}
       {% endlanguage %}
     {% else %}
-    {% if product.is_bouquet %}
-        <link rel="alternate" href="https://{{ domain_name }}{% url 'catalogue:product-details' product.subcategory.category.slug product.subcategory.slug product.slug %}">
-    {% else %}
-        <link rel="alternate" href="https://{{ domain_name }}{% url 'catalogue:product-details' product.subcategory.category.slug product.subcategory.slug product.slug %}">
-    {% endif %}
+        {% if product.is_bouquet %}
+            <link rel="alternate" href="https://{{ domain_name }}{% url 'catalogue:bouquet-details' product.subcategory.category.slug product.subcategory.slug product.slug %}">
+        {% else %}
+            <link rel="alternate" href="https://{{ domain_name }}{% url 'catalogue:product-details' product.subcategory.category.slug product.subcategory.slug product.slug %}">
+        {% endif %}
     {% endif %}
   {% endfor %}
 
