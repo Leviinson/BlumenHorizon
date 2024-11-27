@@ -76,7 +76,7 @@ class CategoryListViewMixin(ListViewMixin):
         )
         context["meta_tags"] = self.category.meta_tags
         context["json_ld"] = self.category.json_ld
-        context["category_slug"] = self.category.slug
+        context["category"] = self.category
         return context
 
 
@@ -103,8 +103,7 @@ class SubcategoryListViewMixin(ListViewMixin):
         )
         context["meta_tags"] = self.subcategory.meta_tags
         context["json_ld"] = self.subcategory.json_ld
-        context["category_slug"] = self.subcategory.category.slug
-        context["subcategory_slug"] = self.subcategory.slug
+        context["subcategory"] = self.subcategory
         return context
 
 
