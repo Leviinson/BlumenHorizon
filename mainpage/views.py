@@ -88,7 +88,7 @@ class MainPageView(CommonContextMixin, TemplateView):
         )
         page_model = MainPageModel.objects.first()
         context["meta_tags"] = page_model.meta_tags
-        context["json_ld"] = page_model.json_ld
+        context["json_ld_description"] = page_model.json_ld_description
         context["description"] = page_model.description
         context["contact_us_absolute_url"] = self.request.build_absolute_uri(
             reverse_lazy("mainpage:contact")

@@ -12,15 +12,10 @@ class MainPageModel(models.Model):
         max_length=1000,
         default="<title>BlumenHorizon | </title>",
     )
-    json_ld = models.TextField(
-        verbose_name="JSON-LD",
-        max_length=4000,
-        default="""<script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "WebPage"
-        }
-        </script>""",
+    json_ld_description = models.CharField(
+        verbose_name="Description в JSON LD для OnlineStore",
+        max_length=500,
+        default="BlumenHorizon интернет-магазин цветов и подарков в Берлине",
     )
     description = HTMLField(
         verbose_name=_("Описание"),
