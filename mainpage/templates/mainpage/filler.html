@@ -6,6 +6,23 @@
 {{ json_ld|safe }}
 {% endblock %}
 
+{% block localization_meta_tags %}
+  {% get_available_languages as LANGUAGES %}
+
+  {% for lang_code, lang_name in LANGUAGES %}
+    {% if forloop.first %}
+      {% language lang_code %}
+        <link rel="canonical" href="https://{{ domain_name }}{{ url }}">
+      {% endlanguage %}
+    {% else %}
+      {% language lang_code %}
+      <link rel="alternate" href="https://{{ domain_name }}{{ url }}">
+      {% endlanguage %}
+    {% endif %}
+  {% endfor %}
+
+{% endblock %}
+
 {% block additional_head_styles %}
 {% endblock %}
 
