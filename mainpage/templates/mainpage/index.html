@@ -45,7 +45,7 @@
           "itemOffered": {
             "@type": "Product",
             "name": "{{ recommended_product.name }}",
-            "url": "{{ recommended_product.get_absolute_url }}",
+            "url": "{{ recommended_product.get_absolute_url }}"
           }
         }{% if not forloop.last %},{% endif %}{% endfor %}
       ]
