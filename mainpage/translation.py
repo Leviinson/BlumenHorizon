@@ -32,6 +32,7 @@ class MainPageModelTranslationOptions(TranslationOptions):
     fields = (
         "meta_tags",
         "description",
+        "json_ld_description",
     )
 
 
