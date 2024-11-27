@@ -23,7 +23,7 @@
             {% if is_product_category %}
                 <link rel="canonical" href="https://{{ domain_name }}{% url 'catalogue:products-category' category_slug %}">
             {% elif is_bouquet_category %}
-            <link rel="canonical" href="https://{{ domain_name }}{% url 'catalogue:bouquets-category' category_slug %}">
+                <link rel="canonical" href="https://{{ domain_name }}{% url 'catalogue:bouquets-category' category_slug %}">
             {% endif %}
         {% elif is_subcategory_list %}
             {% if is_product_subcategory %}
@@ -33,7 +33,19 @@
             {% endif %}
         {% endif %}
       {% else %}
-        <link rel="alternate" href="https://{{ domain_name }}{% url 'catalogue:category' category.slug %}">
+        {% if is_category_list %}
+            {% if is_product_category %}
+                <link rel="alternate" href="https://{{ domain_name }}{% url 'catalogue:products-category' category_slug %}">
+            {% elif is_bouquet_category %}
+                <link rel="alternate" href="https://{{ domain_name }}{% url 'catalogue:bouquets-category' category_slug %}">
+            {% endif %}
+        {% elif is_subcategory_list %}
+            {% if is_product_subcategory %}
+                <link rel="alternate" href="https://{{ domain_name }}{% url 'catalogue:products-subcategory' category_slug subcategory_slug %}">
+            {% elif is_bouquet_subcategory %}
+                <link rel="alternate" href="https://{{ domain_name }}{% url 'catalogue:bouquets-subcategory' category_slug subcategory_slug %}">
+            {% endif %}
+        {% endif %}
       {% endif %}
     {% endlanguage %}
   {% endfor %}
