@@ -74,17 +74,29 @@ class MainPageView(CommonContextMixin, TemplateView):
         )
         context["individual_order_form"] = IndividualOrderForm()
         context["seo_block"] = MainPageSeoBlock.objects.first()
-        context["products_categories"] = ProductCategory.objects.filter(
-            is_active=True
-        ).only(
-            "name",
-            "slug",
+        context["products_categories"] = (
+            ProductCategory.objects.filter(is_active=True)
+            .prefetch_related("subcategories")
+            .only(
+                "name",
+                "slug",
+                "code_value",
+                "subcategories__code_value",
+                "subcategories__slug",
+                "subcategories__name",
+            )
         )
-        context["bouquets_categories"] = BouquetCategory.objects.filter(
-            is_active=True
-        ).only(
-            "name",
-            "slug",
+        context["bouquets_categories"] = (
+            BouquetCategory.objects.filter(is_active=True)
+            .prefetch_related("subcategories")
+            .only(
+                "name",
+                "slug",
+                "code_value",
+                "subcategories__code_value",
+                "subcategories__slug",
+                "subcategories__name",
+            )
         )
         page_model = MainPageModel.objects.first()
         context["meta_tags"] = page_model.meta_tags

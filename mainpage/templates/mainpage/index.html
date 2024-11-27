@@ -15,7 +15,7 @@
     "@type": "OnlineStore",
     "name": "{{ site_name }}",
     "legalName": "{{ site_name }}",
-    "logo": "{% static 'defaults/logo.png' %}",
+    "logo": "https://{{ domain_name }}{% static 'defaults/logo.png' %}",
     "slogan": "Empowering individuals, delighting the chosen",
     "description": "{{ json_ld_description }}",
     "contactPoint": {
@@ -40,7 +40,7 @@
           "name": "{{ recommended_product.name }}",
           "image": "https://{{ domain_name }}{{ MEDIA_URL }}{{ recommended_bouquet.first_image_uri }}",
           "url": "{{ recommended_product.get_absolute_url }}",
-          "description": "{{ recommended_product.description }}",
+          "description": "{{ recommended_product.description|safe|striptags }}",
           "offers": {
             "@type": "Offer",
             "priceCurrency": "{{ currency_code }}",
@@ -78,6 +78,44 @@
               "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"
             }
           }
+        }{% if not forloop.last %},{% endif %}{% endfor %}
+      ]
+    },
+    "hasCategoryCode": {
+      "@type": "CategoryCodeSet",
+      "name": "Категории товаров",
+      "hasCategoryCode": [
+        {% for category in bouquets_categories %}
+        {
+          "@type": "CategoryCode",
+          "name": "{{ category.name }}",
+          "codeValue": "{{ category.code_value }}",
+          "url": "{{ category.get_absolute_url }}",
+          "hasCategoryCode": [
+            {% for subcategory in category.subcategories %}
+            {
+              "@type": "CategoryCode",
+              "name": "{{ subcategory.name }}",
+              "codeValue": "{{ subcategory.code_value }}",
+              "url": "{{ subcategory.get_absolute_url }}"
+            }{% if not forloop.last %},{% endif %}{% endfor %}
+          ]
+        }{% if not products_categories %},{% endif %}{% endfor %}
+        {% for category in products_categories %}
+        {
+          "@type": "CategoryCode",
+          "name": "{{ category.name }}",
+          "codeValue": "{{ category.code_value }}",
+          "url": "{{ category.get_absolute_url }}",
+          "hasCategoryCode": [
+            {% for subcategory in category.subcategories %}
+            {
+              "@type": "CategoryCode",
+              "name": "{{ subcategory.name }}",
+              "codeValue": "{{ subcategory.code_value }}",
+              "url": "{{ subcategory.get_absolute_url }}"
+            }{% if not forloop.last %},{% endif %}{% endfor %}
+          ]
         }{% if not forloop.last %},{% endif %}{% endfor %}
       ]
     }
