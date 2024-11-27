@@ -5,12 +5,15 @@
 
 
 {% block json_ld %}
-<script type="application/ld+json">
-</script>
+{{ product.json_ld }}
 {% endblock %}
 
 {% block additional_head_styles %}
 <link rel="stylesheet" href="{% static 'products/styles/common.css' %}">
+{% endblock %}
+
+{% block json_ld %}
+{{ json_ld }}
 {% endblock %}
 
 {% block body %}

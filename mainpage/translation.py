@@ -31,6 +31,7 @@ class MainPageSliderImageTranslationOptions(TranslationOptions):
 class MainPageModelTranslationOptions(TranslationOptions):
     fields = (
         "meta_tags",
+        "json_ld",
         "description",
     )
 
@@ -41,6 +42,7 @@ class FAQPageModelTranslationOptions(TranslationOptions):
         "image_alt",
         "image",
         "meta_tags",
+        "json_ld",
         "description",
     )
 
@@ -51,6 +53,7 @@ class ContactsPageModelTranslationOptions(TranslationOptions):
         "image_alt",
         "image",
         "meta_tags",
+        "json_ld",
         "description",
     )
 
@@ -61,6 +64,7 @@ class DeliveryPageModelTranslationOptions(TranslationOptions):
         "image_alt",
         "image",
         "meta_tags",
+        "json_ld",
         "description",
     )
 
@@ -71,5 +75,6 @@ class AboutUsPageModelTranslationOptions(TranslationOptions):
         "image_alt",
         "image",
         "meta_tags",
+        "json_ld",
         "description",
     )

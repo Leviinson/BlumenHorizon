@@ -25,6 +25,7 @@ class ProductCategoryTranslationOptions(TranslationOptions):
         "slug",
         "image_alt",
         "meta_tags",
+        "json_ld",
     )
 
 
@@ -35,6 +36,7 @@ class ProductSubcategoryTranslationOptions(TranslationOptions):
         "slug",
         "image_alt",
         "meta_tags",
+        "json_ld",
     )
 
 
@@ -45,6 +47,7 @@ class BouquetCategoryTranslationOptions(TranslationOptions):
         "slug",
         "image_alt",
         "meta_tags",
+        "json_ld",
     )
 
 
@@ -55,6 +58,7 @@ class BouquetSubcategoryTranslationOptions(TranslationOptions):
         "slug",
         "image_alt",
         "meta_tags",
+        "json_ld",
     )
 
 
@@ -66,6 +70,7 @@ class ProductTranslationOptions(TranslationOptions):
         "description",
         "specs",
         "meta_tags",
+        "json_ld",
     )
 
 
@@ -87,6 +92,7 @@ class BouquetTranslationOptions(TranslationOptions):
         "description",
         "specs",
         "meta_tags",
+        "json_ld",
     )
 
 
@@ -107,7 +113,10 @@ class BouquetSizeImageTranslationOptions(TranslationOptions):
 
 @register(CatalogPageModel)
 class CatalogPageModelTranslationOptions(TranslationOptions):
-    fields = ("meta_tags",)
+    fields = (
+        "meta_tags",
+        "json_ld",
+    )
 
 
 @register(ProductsListPageModel)
