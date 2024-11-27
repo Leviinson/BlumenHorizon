@@ -18,7 +18,7 @@
             "{{ image.image.url }}"{% if not forloop.last %},{% endif %}
           {% endfor %}
         ],
-        "description": "{{ product.description|safe|striptags }}",
+        "description": "{{ product.description|striptags|escape }}",
         {% if product.is_bouquet %}
         "color": "{% for color in product.colors.all %}{{ color.name }}{% if not forloop.last %},{% endif %}{% endfor %}",
         {% endif %}

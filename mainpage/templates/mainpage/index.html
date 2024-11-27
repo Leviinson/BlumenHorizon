@@ -40,7 +40,7 @@
           "name": "{{ recommended_product.name }}",
           "image": "https://{{ domain_name }}{{ MEDIA_URL }}{{ recommended_bouquet.first_image_uri }}",
           "url": "{{ recommended_product.get_absolute_url }}",
-          "description": "{{ recommended_product.description|safe|striptags }}",
+          "description": "{{ recommended_product.description|striptags|escape }}",
           "offers": {
             "@type": "Offer",
             "priceCurrency": "{{ currency_code }}",
