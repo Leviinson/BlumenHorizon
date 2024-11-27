@@ -18,9 +18,9 @@
   {% for lang_code, lang_name in LANGUAGES %}
     {% language lang_code %}
       {% if forloop.first %}
-        <link rel="canonical" href="https://{{ domain_name }}{% url 'mainpage:category' category.slug %}">
+        <link rel="canonical" href="https://{{ domain_name }}{% url 'catalogue:category' category.slug %}">
       {% else %}
-        <link rel="alternate" href="https://{{ domain_name }}{% url 'mainpage:category' category.slug %}">
+        <link rel="alternate" href="https://{{ domain_name }}{% url 'catalogue:category' category.slug %}">
       {% endif %}
     {% endlanguage %}
   {% endfor %}
