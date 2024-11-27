@@ -21,29 +21,29 @@
       {% if forloop.first %}
         {% if is_category_list %}
             {% if is_product_category %}
-                <link rel="canonical" href="https://{{ domain_name }}{% url 'catalogue:products-category' self.category.slug %}">
+                <link rel="canonical" href="https://{{ domain_name }}{% url 'catalogue:products-category' category.slug %}">
             {% elif is_bouquet_category %}
-                <link rel="canonical" href="https://{{ domain_name }}{% url 'catalogue:bouquets-category' self.category.slug %}">
+                <link rel="canonical" href="https://{{ domain_name }}{% url 'catalogue:bouquets-category' category.slug %}">
             {% endif %}
         {% elif is_subcategory_list %}
             {% if is_product_subcategory %}
-                <link rel="canonical" href="https://{{ domain_name }}{% url 'catalogue:products-subcategory' self.subcategory.category.slug self.subcategory.slug %}">
+                <link rel="canonical" href="https://{{ domain_name }}{% url 'catalogue:products-subcategory' subcategory.category.slug self.subcategory.slug %}">
             {% elif is_bouquet_subcategory %}
-                <link rel="canonical" href="https://{{ domain_name }}{% url 'catalogue:bouquets-subcategory' self.subcategory.category.slug self.subcategory.slug %}">
+                <link rel="canonical" href="https://{{ domain_name }}{% url 'catalogue:bouquets-subcategory' subcategory.category.slug self.subcategory.slug %}">
             {% endif %}
         {% endif %}
       {% else %}
         {% if is_category_list %}
             {% if is_product_category %}
-                <link rel="alternate" href="https://{{ domain_name }}{% url 'catalogue:products-category' self.category.slug %}">
+                <link rel="alternate" href="https://{{ domain_name }}{% url 'catalogue:products-category' category.slug %}">
             {% elif is_bouquet_category %}
-                <link rel="alternate" href="https://{{ domain_name }}{% url 'catalogue:bouquets-category' self.category.slug %}">
+                <link rel="alternate" href="https://{{ domain_name }}{% url 'catalogue:bouquets-category' category.slug %}">
             {% endif %}
         {% elif is_subcategory_list %}
             {% if is_product_subcategory %}
-                <link rel="alternate" href="https://{{ domain_name }}{% url 'catalogue:products-subcategory' self.subcategory.category.slug self.subcategory.slug %}">
+                <link rel="alternate" href="https://{{ domain_name }}{% url 'catalogue:products-subcategory' subcategory.category.slug self.subcategory.slug %}">
             {% elif is_bouquet_subcategory %}
-                <link rel="alternate" href="https://{{ domain_name }}{% url 'catalogue:bouquets-subcategory' self.subcategory.category.slug self.subcategory.slug %}">
+                <link rel="alternate" href="https://{{ domain_name }}{% url 'catalogue:bouquets-subcategory' subcategory.category.slug self.subcategory.slug %}">
             {% endif %}
         {% endif %}
       {% endif %}
