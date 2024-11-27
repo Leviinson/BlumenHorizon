@@ -12,6 +12,20 @@
 <link rel="stylesheet" href="{% static 'products/styles/common.css' %}">
 {% endblock %}
 
+{% block localization_meta_tags %}
+  {% get_available_languages as LANGUAGES %}
+
+  {% for lang_code, lang_name in LANGUAGES %}
+    {% language lang_code %}
+      {% if forloop.first %}
+        <link rel="canonical" href="https://{{ domain_name }}{% url 'mainpage:category' category.slug %}">
+      {% else %}
+        <link rel="alternate" href="https://{{ domain_name }}{% url 'mainpage:category' category.slug %}">
+      {% endif %}
+    {% endlanguage %}
+  {% endfor %}
+{% endblock %}
+
 {% block body %}
 <div class="container px-4 text-center">
     <a href="{{ category.get_relative_url }}" class="text-decoration-none text-dark d-flex flex-column justify-content-center align-items-center">

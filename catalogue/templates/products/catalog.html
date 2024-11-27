@@ -12,6 +12,21 @@
 {{ json_ld|safe }}
 {% endblock %}
 
+{% block localization_meta_tags %}
+  {% get_available_languages as LANGUAGES %}
+
+  {% for lang_code, lang_name in LANGUAGES %}
+    {% language lang_code %}
+      {% if forloop.first %}
+        <link rel="canonical" href="https://{{ domain_name }}{% url 'mainpage:catalog' %}">
+      {% else %}
+        <link rel="alternate" href="https://{{ domain_name }}{% url 'mainpage:catalog' %}">
+      {% endif %}
+    {% endlanguage %}
+  {% endfor %}
+{% endblock %}
+
+
 {% block body %}
 <div class="container px-4 text-center">
     <h1 class="mb-4">{% translate 'Каталог букетов и подарков' %}</h1>
