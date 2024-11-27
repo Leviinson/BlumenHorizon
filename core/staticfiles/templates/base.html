@@ -21,19 +21,40 @@
     gtag('config', 'G-KWXBK65TXT');
     </script>
     <script>
+        function setCookie(name, value, days) {
+            var expires = "";
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (value || "") + expires + "; path=/; SameSite=None; Secure";
+        }
+
+        function getCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+
         function consentGrantedAdStorage() {
-            gtag("set", "userIsAgreed", {"hello": true});
             gtag('consent', 'update', {
-                'ad_storage': 'granted',
-                'ad_user_data': 'granted',
-                'ad_personalization': 'granted',
-                'analytics_storage': 'granted'
+                    'ad_storage': 'granted',
+                    'ad_user_data': 'granted',
+                    'ad_personalization': 'granted',
+                    'analytics_storage': 'granted'
             });
             document.getElementById('cookieConsentBanner').style.display = 'none';
-        }
-        document.addEventListener('DOMContentLoaded', function () {
-            console.log(gtag("get", "userIsAgreed"));
-            if (!gtag("get", "userIsAgreed", "hello")) {
+            setCookie('cookies_accepted', 'yes', 365);
+        };
+
+        document.addEventListener("DOMContentLoaded", function (){
+            if (!getCookie('cookies_accepted') === 'yes') {
                 document.getElementById('cookieConsentBanner').style.display = 'block';
             }
         });
