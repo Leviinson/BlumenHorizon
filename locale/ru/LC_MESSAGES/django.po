@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-26 20:19+0100\n"
-"PO-Revision-Date: 2024-11-26 05:33+0100\n"
+"POT-Creation-Date: 2024-11-27 16:25+0100\n"
+"PO-Revision-Date: 2024-11-27 16:22+0100\n"
 "Last-Translator: None None <blumenhorizon@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -829,12 +829,12 @@ msgstr "Характеристики"
 msgid "Рекомендуемые продукты к покупке"
 msgstr "Рекомендуемые продукты к покупке"
 
-#: catalogue/templates/products/base_detail.html:265
+#: catalogue/templates/products/base_detail.html:266
 #: mainpage/templates/mainpage/index.html:144
 msgid "Предыдущий слайд букетов"
 msgstr "Предыдущий слайд букетов"
 
-#: catalogue/templates/products/base_detail.html:270
+#: catalogue/templates/products/base_detail.html:271
 #: mainpage/templates/mainpage/index.html:149
 msgid "Следующий слайд букетов"
 msgstr "Следующий слайд букетов"
@@ -920,7 +920,7 @@ msgstr "Дата создания"
 msgid "Дата обновления"
 msgstr "Дата обновления"
 
-#: core/staticfiles/templates/base.html:87
+#: core/staticfiles/templates/base.html:148
 msgid ""
 "\n"
 "        Мы используем <span class=\"text-warning\">cookies</span> для "
@@ -930,14 +930,19 @@ msgid ""
 "cookies.\n"
 "        "
 msgstr ""
+"\n"
+"Мы используем <span class=\"text-warning\">cookies</span> для улучшения "
+"работы сайта.\n"
+"<br>\n"
+"Продолжая использовать сайт, Вы соглашаетесь на использование cookies."
 
-#: core/staticfiles/templates/base.html:93
+#: core/staticfiles/templates/base.html:154
 msgid "Принять"
-msgstr ""
+msgstr "Принять"
 
-#: core/staticfiles/templates/base.html:94
+#: core/staticfiles/templates/base.html:155
 msgid "Отклонить"
-msgstr ""
+msgstr "Отклонить"
 
 #: core/staticfiles/templates/footer.html:11
 msgid "Клиентам"
@@ -982,11 +987,11 @@ msgstr "Поиск"
 #, python-format
 msgid ""
 "\n"
-"    Цветочный интернет-магазин %(city)s\n"
+"    Цветочный интернет-магазин %(site_name)s\n"
 "    "
 msgstr ""
 "\n"
-"Цветочный интернет-магазин %(city)s"
+"Цветочный интернет-магазин %(site_name)s"
 
 #: mainpage/templates/mainpage/index.html:62
 msgid "Вперёд"

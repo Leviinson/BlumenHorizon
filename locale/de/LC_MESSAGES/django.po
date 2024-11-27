@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-26 20:19+0100\n"
-"PO-Revision-Date: 2024-11-26 04:45+0100\n"
+"POT-Creation-Date: 2024-11-27 16:25+0100\n"
+"PO-Revision-Date: 2024-11-27 16:22+0100\n"
 "Last-Translator: None None <blumenhorizon@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -838,12 +838,12 @@ msgstr "Eigenschaften"
 msgid "Рекомендуемые продукты к покупке"
 msgstr "Empfohlene Produkte zum Kauf"
 
-#: catalogue/templates/products/base_detail.html:265
+#: catalogue/templates/products/base_detail.html:266
 #: mainpage/templates/mainpage/index.html:144
 msgid "Предыдущий слайд букетов"
 msgstr "Vorheriger Blumenstrauß-Slide"
 
-#: catalogue/templates/products/base_detail.html:270
+#: catalogue/templates/products/base_detail.html:271
 #: mainpage/templates/mainpage/index.html:149
 msgid "Следующий слайд букетов"
 msgstr "Nächster Blumenstrauß-Slide"
@@ -933,7 +933,7 @@ msgstr "Erstellungsdatum"
 msgid "Дата обновления"
 msgstr "Aktualisierungsdatum"
 
-#: core/staticfiles/templates/base.html:87
+#: core/staticfiles/templates/base.html:148
 msgid ""
 "\n"
 "        Мы используем <span class=\"text-warning\">cookies</span> для "
@@ -943,14 +943,19 @@ msgid ""
 "cookies.\n"
 "        "
 msgstr ""
+"\n"
+"Wir verwenden <span class=\"text-warning\">Cookies</span>, um die "
+"Funktionalität der Website zu verbessern.<br>  \n"
+"Durch die weitere Nutzung der Website stimmen Sie der Verwendung von Cookies "
+"zu."
 
-#: core/staticfiles/templates/base.html:93
+#: core/staticfiles/templates/base.html:154
 msgid "Принять"
-msgstr ""
+msgstr "Akzeptieren"
 
-#: core/staticfiles/templates/base.html:94
+#: core/staticfiles/templates/base.html:155
 msgid "Отклонить"
-msgstr ""
+msgstr "Ablehnen"
 
 #: core/staticfiles/templates/footer.html:11
 msgid "Клиентам"
@@ -995,11 +1000,11 @@ msgstr "Suche"
 #, python-format
 msgid ""
 "\n"
-"    Цветочный интернет-магазин %(city)s\n"
+"    Цветочный интернет-магазин %(site_name)s\n"
 "    "
 msgstr ""
 "\n"
-"Online-Blumenladen %(city)s"
+"Online-Blumenladen %(site_name)s"
 
 #: mainpage/templates/mainpage/index.html:62
 msgid "Вперёд"
