@@ -5,7 +5,7 @@
 {% load extract_meta_tags %}
 
 {% block json_ld %}
-{{ category.json_ld }}
+{{ category.json_ld|safe }}
 {% endblock %}
 
 {% block additional_head_styles %}
