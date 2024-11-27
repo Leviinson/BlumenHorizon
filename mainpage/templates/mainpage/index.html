@@ -38,12 +38,27 @@
         {
           "@type": "Product",
           "name": "{{ recommended_product.name }}",
-          "url": "{{ recommended_product.get_absolute_url }}",
+          "image": "{{ recommended_product.image_url }}",
+          "url": "https://{{ domain_name }}{{ MEDIA_URL }}{{ recommended_bouquet.first_image_uri }}",
+          "description": "{{ recommended_product.description }}",
           "offers": {
             "@type": "Offer",
             "priceCurrency": "{{ currency_code }}",
             "price": "{{ recommended_product.tax_price_discounted|floatformat:'2u' }}",
-            "availability": "https://schema.org/InStock"
+            "availability": "https://schema.org/InStock",
+            "shippingDetails": {
+              "@type": "OfferShippingDetails",
+              "shippingRate": "0.00",  //
+              "shippingDestination": {
+                "@type": "ShippingRateSettings",
+                "country": "DE"
+              }
+            },
+            "hasMerchantReturnPolicy": {
+              "@type": "MerchantReturnPolicy",
+              "returnPolicyCategory": "https://schema.org/NoReturnPolicy",
+              "returnFees": "https://schema.org/NonRefundable"
+            }
           }
         }{% if not forloop.last %},{% endif %}{% endfor %}
       ]
