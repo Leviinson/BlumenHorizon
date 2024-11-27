@@ -15,7 +15,7 @@
         "name": "{{ product.name }}",
         "image": [
           {% for image in product.images.all %}
-            "{{ image.image.url }}"{% if not forloop.last %},{% endif %}
+            "https://{{ domain_name }}{{ image.image.url }}"{% if not forloop.last %},{% endif %}
           {% endfor %}
         ],
         "description": "{{ product.description|striptags|escape }}",
