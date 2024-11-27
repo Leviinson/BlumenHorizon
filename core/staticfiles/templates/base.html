@@ -56,6 +56,13 @@
         document.addEventListener("DOMContentLoaded", function (){
             if (!(getCookie('cookies_accepted') === 'yes')) {
                 document.getElementById('cookieConsentBanner').style.display = 'block';
+            } else if (getCookie('cookies_accepted') === 'yes') {
+                gtag('consent', 'update', {
+                    'ad_storage': 'granted',
+                    'ad_user_data': 'granted',
+                    'ad_personalization': 'granted',
+                    'analytics_storage': 'granted'
+                });
             }
         });
     </script>
