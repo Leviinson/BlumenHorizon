@@ -1,0 +1,34 @@
+{% extends 'admin/base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block extrahead %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+{% endblock %}
+
+{% block extrastyle %}
+<link rel="stylesheet" href="{% static 'styles/common.css' %}">
+{% endblock %}
+
+{% block nav-global %}
+<div class="dropdown">
+    {% get_available_languages as LANGUAGES %}
+    <button style="background-color: #417690;" class="btn mt-2 btn-dark-green text-light me-1 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+      {% get_current_language as CURRENT_LANGUAGE_CODE %}
+      {% get_language_info for CURRENT_LANGUAGE_CODE as lang %}
+      {{ lang.code }}
+    </button>
+    <ul class="dropdown-menu">
+      {% for lang_code, lang_name in LANGUAGES %}
+      {% if lang_code == CURRENT_LANGUAGE_CODE %}
+      {% elif lang_code == 'de' %}
+      <li class="list-unstyled"><a class="dropdown-item text-dark fw-bold" href="/admin">{{ lang_name }} {{ lang_code }}</a></li>
+      {% else %}
+      <li class="list-unstyled"><a class="dropdown-item text-dark fw-bold" href="/{{ lang_code }}/admin">{{ lang_name }} {{ lang_code }}</a></li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+{% endblock %}

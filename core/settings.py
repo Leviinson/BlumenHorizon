@@ -168,6 +168,7 @@ TEMPLATES = [
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [
             "core/staticfiles/",
+            BASE_DIR / "templates"
         ],
         "APP_DIRS": True,
         "OPTIONS": {
@@ -410,7 +411,7 @@ LOGOUT_REDIRECT_URL = "accounts:signin"
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = "de"
+LANGUAGE_CODE = "ru"
 LANGUAGES = [
     ("de", "🇩🇪"),
     ("en", "🇺🇸"),
