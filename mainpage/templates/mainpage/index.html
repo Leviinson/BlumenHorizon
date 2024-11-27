@@ -38,8 +38,8 @@
         {
           "@type": "Product",
           "name": "{{ recommended_product.name }}",
-          "image": "{{ recommended_product.image_url }}",
-          "url": "https://{{ domain_name }}{{ MEDIA_URL }}{{ recommended_bouquet.first_image_uri }}",
+          "image": "https://{{ domain_name }}{{ MEDIA_URL }}{{ recommended_bouquet.first_image_uri }}",
+          "url": "{{ recommended_product.get_absolute_url }}",
           "description": "{{ recommended_product.description }}",
           "offers": {
             "@type": "Offer",
