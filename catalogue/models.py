@@ -76,7 +76,7 @@ class CatalogPageModel(models.Model):
     )
     json_ld = models.TextField(
         verbose_name="JSON-LD",
-        max_length=1000,
+        max_length=4000,
         default="""<script type="application/ld+json">
         {
             "@context": "https://schema.org",
@@ -109,7 +109,7 @@ class ProductsListPageModel(models.Model):
     )
     json_ld = models.TextField(
         verbose_name="JSON-LD",
-        max_length=1000,
+        max_length=4000,
         default="""<script type="application/ld+json">
         {
             "@context": "https://schema.org",
@@ -135,7 +135,7 @@ class BouquetsListPageModel(models.Model):
     )
     json_ld = models.TextField(
         verbose_name="JSON-LD",
-        max_length=1000,
+        max_length=4000,
         default="""<script type="application/ld+json">
         {
             "@context": "https://schema.org",
