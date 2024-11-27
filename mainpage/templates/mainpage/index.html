@@ -92,7 +92,7 @@
           "codeValue": "{{ category.code_value }}",
           "url": "{{ category.get_absolute_url }}",
           "hasCategoryCode": [
-            {% for subcategory in category.subcategories %}
+            {% for subcategory in category.subcategories.all %}
             {
               "@type": "CategoryCode",
               "name": "{{ subcategory.name }}",
@@ -108,7 +108,7 @@
           "codeValue": "{{ category.code_value }}",
           "url": "{{ category.get_absolute_url }}",
           "hasCategoryCode": [
-            {% for subcategory in category.subcategories %}
+            {% for subcategory in category.subcategories.all %}
             {
               "@type": "CategoryCode",
               "name": "{{ subcategory.name }}",
