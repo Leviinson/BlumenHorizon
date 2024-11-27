@@ -11,21 +11,21 @@
   {% get_available_languages as LANGUAGES %}
 
   {% for lang_code, lang_name in LANGUAGES %}
-    {% if forloop.first %}
-      {% language lang_code %}
-        {% if product.is_bouquet %}
-        <link rel="canonical" href="https://{{ domain_name }}{% url 'catalogue:bouquet-details' product.subcategory.category.slug product.subcategory.slug product.slug %}">
+    {% language lang_code %}
+        {% if forloop.first %}
+            {% if product.is_bouquet %}
+            <link rel="canonical" href="https://{{ domain_name }}{% url 'catalogue:bouquet-details' product.subcategory.category.slug product.subcategory.slug product.slug %}">
+            {% else %}
+            <link rel="canonical" href="https://{{ domain_name }}{% url 'catalogue:product-details' product.subcategory.category.slug product.subcategory.slug product.slug %}">
+            {% endif %}
         {% else %}
-        <link rel="canonical" href="https://{{ domain_name }}{% url 'catalogue:product-details' product.subcategory.category.slug product.subcategory.slug product.slug %}">
+            {% if product.is_bouquet %}
+                <link rel="alternate" href="https://{{ domain_name }}{% url 'catalogue:bouquet-details' product.subcategory.category.slug product.subcategory.slug product.slug %}">
+            {% else %}
+                <link rel="alternate" href="https://{{ domain_name }}{% url 'catalogue:product-details' product.subcategory.category.slug product.subcategory.slug product.slug %}">
+            {% endif %}
         {% endif %}
-      {% endlanguage %}
-    {% else %}
-        {% if product.is_bouquet %}
-            <link rel="alternate" href="https://{{ domain_name }}{% url 'catalogue:bouquet-details' product.subcategory.category.slug product.subcategory.slug product.slug %}">
-        {% else %}
-            <link rel="alternate" href="https://{{ domain_name }}{% url 'catalogue:product-details' product.subcategory.category.slug product.subcategory.slug product.slug %}">
-        {% endif %}
-    {% endif %}
+    {% endlanguage %}
   {% endfor %}
 
 {% endblock %}
