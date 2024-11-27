@@ -83,7 +83,7 @@
     },
     "hasCategoryCode": {
       "@type": "CategoryCodeSet",
-      "name": "Категории товаров",
+      "name": "{% translate 'Категории букетов' %}",
       "hasCategoryCode": [
         {% for category in bouquets_categories %}
         {
@@ -100,7 +100,7 @@
               "url": "{{ subcategory.get_absolute_url }}"
             }{% if not forloop.last %},{% endif %}{% endfor %}
           ]
-        }{% if not products_categories %},{% endif %}{% endfor %}
+        }{% if not forloop.last %},{% elif forloop.last and products_categories %},{% endif %}{% endfor %}
         {% for category in products_categories %}
         {
           "@type": "CategoryCode",
