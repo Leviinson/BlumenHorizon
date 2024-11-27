@@ -411,7 +411,7 @@ LOGOUT_REDIRECT_URL = "accounts:signin"
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = "ru"
+LANGUAGE_CODE = "de"
 LANGUAGES = [
     ("de", "🇩🇪"),
     ("en", "🇺🇸"),
