@@ -4,11 +4,24 @@
 {% load chunk_filters %}
 {% load extract_meta_tags %}
 
+{% block localization_meta_tags %}
+  {% get_available_languages as LANGUAGES %}
+
+  {% for lang_code, lang_name in languages %}
+    {% if forloop.first %}
+      {% language lang_code %}
+        <link rel="canonical" href="https://{{ domain_name }}">
+      {% endlanguage %}
+    {% else %}
+      {% language lang_code %}
+      <link rel="alternate" href="https://{{ domain_name }}{% url 'mainpage:offers' %}">
+      {% endlanguage %}
+    {% endif %}
+  {% endfor %}
+
+{% endblock %}
 
 {% block json_ld %}
-{% get_available_languages as LANGUAGES %}
-{% get_current_language as CURRENT_LANGUAGE_CODE %}
-
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
