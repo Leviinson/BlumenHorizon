@@ -8,7 +8,72 @@
 {% endblock %}
 
 {% block json_ld %}
-{{ product.json_ld }}
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": "{{ product.name }}",
+        "image": [
+          {% for image in product.images.all %}
+            "{{ image.image.url }}"{% if not forloop.last %},{% endif %}
+          {% endfor %}
+        ],
+        "description": "{{ product.description|safe|striptags }}",
+        {% if product.is_bouquet %}
+        "color": "{% for color in product.colors.all %}{{ color.name }}{% if not forloop.last %},{% endif %}{% endfor %}",
+        {% endif %}
+        "category": {
+            "@type": "CategoryCode",
+            "name": "{{ product.subcategory.name }}",
+            "codeValue": "{{ product.subcategory.code_value }}",
+            "url": "{{ product.subcategory.get_absolute_url }}"
+        },
+        "sku": "{{ product.sku }}",
+        "offers": {
+            "@type": "Offer",
+            "url": "{{ product.get_absolute_url }}",
+            "priceCurrency": "{{ currency_code }}",
+            "price": "{{ product.tax_price_discounted|floatformat:'2u' }}",
+            "availability": "https://schema.org/InStock",
+            "itemCondition": "https://schema.org/NewCondition",
+            "seller": {
+                "@type": "Organization",
+                "name": "{{ site_name }}"
+            },
+            "shippingDetails": {
+                "@type": "OfferShippingDetails",
+                "shippingRate": {
+                    "@type": "MonetaryAmount",
+                    "value": 0,
+                    "currency": "{{ currency_code }}"
+                },
+                "shippingDestination": {
+                    "@type": "DefinedRegion",
+                    "addressCountry": "DE"
+                },
+                "deliveryTime": {
+                    "@type": "ShippingDeliveryTime",
+                    "handlingTime": {
+                        "@type": "QuantitativeValue",
+                        "minValue": 0,
+                        "maxValue": 1,
+                        "unitCode": "DAY"
+                    },
+                    "transitTime": {
+                        "@type": "QuantitativeValue",
+                        "minValue": 0,
+                        "maxValue": 1,
+                        "unitCode": "DAY"
+                    }
+                }
+            },
+            "hasMerchantReturnPolicy": {
+              "@type": "MerchantReturnPolicy",
+              "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"
+            }
+        }
+    }
+</script>
 {% endblock %}
 
 {% block body %}
