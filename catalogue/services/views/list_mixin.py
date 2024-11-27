@@ -76,6 +76,7 @@ class CategoryListViewMixin(ListViewMixin):
         )
         context["meta_tags"] = self.category.meta_tags
         context["json_ld"] = self.category.json_ld
+        context["category_slug"] = self.category.slug
         return context
 
 
@@ -102,6 +103,8 @@ class SubcategoryListViewMixin(ListViewMixin):
         )
         context["meta_tags"] = self.subcategory.meta_tags
         context["json_ld"] = self.subcategory.json_ld
+        context["category_slug"] = self.subcategory.category.slug
+        context["subcategory_slug"] = self.subcategory.slug
         return context
 
 
@@ -137,6 +140,12 @@ class ProductCategoryListViewMixin(CategoryListViewMixin):
         return qs.filter(
             subcategory__category=self.category,
         )
+    
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context["is_category_list"] = True
+        context["is_product_category"] = True
+        return context
 
 
 class ProductSubcategoryListViewMixin(SubcategoryListViewMixin):
@@ -157,6 +166,12 @@ class ProductSubcategoryListViewMixin(SubcategoryListViewMixin):
         return qs.filter(
             subcategory=self.subcategory,
         )
+    
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context["is_subcategory_list"] = True
+        context["is_product_subcategory"] = True
+        return context
 
 
 class BouquetCategoryListViewMixin(CategoryListViewMixin):
@@ -173,6 +188,12 @@ class BouquetCategoryListViewMixin(CategoryListViewMixin):
         return qs.filter(
             subcategory__category=self.category,
         )
+    
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context["is_category_list"] = True
+        context["is_bouquet_category"] = True
+        return context
 
 
 class BouquetSubcategoryListViewMixin(SubcategoryListViewMixin):
@@ -193,3 +214,9 @@ class BouquetSubcategoryListViewMixin(SubcategoryListViewMixin):
         return qs.filter(
             subcategory=self.subcategory,
         )
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context["is_subcategory_list"] = True
+        context["is_bouquet_subcategory"] = True
+        return context

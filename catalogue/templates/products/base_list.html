@@ -13,6 +13,32 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.6.3/nouislider.min.css" />
 {% endblock %}
 
+{% block localization_meta_tags %}
+  {% get_available_languages as LANGUAGES %}
+
+  {% for lang_code, lang_name in LANGUAGES %}
+    {% language lang_code %}
+      {% if forloop.first %}
+        {% if is_category_list %}
+            {% if is_product_category %}
+                <link rel="canonical" href="https://{{ domain_name }}{% url 'catalogue:products-category' category_slug %}">
+            {% elif is_bouquet_category %}
+            <link rel="canonical" href="https://{{ domain_name }}{% url 'catalogue:bouquets-category' category_slug %}">
+            {% endif %}
+        {% elif is_subcategory_list %}
+            {% if is_product_subcategory %}
+                <link rel="canonical" href="https://{{ domain_name }}{% url 'catalogue:products-subcategory' category_slug subcategory_slug %}">
+            {% elif is_bouquet_subcategory %}
+                <link rel="canonical" href="https://{{ domain_name }}{% url 'catalogue:bouquets-subcategory' category_slug subcategory_slug %}">
+            {% endif %}
+        {% endif %}
+      {% else %}
+        <link rel="alternate" href="https://{{ domain_name }}{% url 'catalogue:category' category.slug %}">
+      {% endif %}
+    {% endlanguage %}
+  {% endfor %}
+{% endblock %}
+
 {% block body %}
 <div class="container mt-4">
     <div class="row">
