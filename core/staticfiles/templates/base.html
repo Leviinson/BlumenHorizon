@@ -55,7 +55,7 @@
 
         document.addEventListener("DOMContentLoaded", function (){
             console.log(getCookie, getCookie('cookies_accepted'));
-            if (!getCookie('cookies_accepted') === 'yes') {
+            if (!(getCookie('cookies_accepted') === 'yes')) {
                 document.getElementById('cookieConsentBanner').style.display = 'block';
             }
         });
