@@ -8,17 +8,14 @@
   {% get_available_languages as LANGUAGES %}
 
   {% for lang_code, lang_name in LANGUAGES %}
-    {% if forloop.first %}
-      {% language lang_code %}
+    {% language lang_code %}
+      {% if forloop.first %}
         <link rel="canonical" href="https://{{ domain_name }}">
-      {% endlanguage %}
-    {% else %}
-      {% language lang_code %}
-      <link rel="alternate" href="https://{{ domain_name }}{% url 'mainpage:offers' %}">
-      {% endlanguage %}
-    {% endif %}
+      {% else %}
+        <link rel="alternate" href="https://{{ domain_name }}{% url 'mainpage:offers' %}">
+      {% endif %}
+    {% endlanguage %}
   {% endfor %}
-
 {% endblock %}
 
 {% block json_ld %}
