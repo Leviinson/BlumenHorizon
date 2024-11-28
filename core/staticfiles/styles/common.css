@@ -185,6 +185,10 @@ body {
         justify-content: center !important;
         flex-direction: column;
     }
+
+    #navbarDropdown {
+        justify-content: center !important;
+    }
 }
 
 .carousel-control-prev-icon, .carousel-control-next-icon {
