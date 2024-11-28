@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-27 22:28+0100\n"
-"PO-Revision-Date: 2024-11-27 22:19+0100\n"
+"POT-Creation-Date: 2024-11-28 18:15+0100\n"
+"PO-Revision-Date: 2024-11-28 18:15+0100\n"
 "Last-Translator: None None <blumenhorizon@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -67,7 +67,7 @@ msgstr "Электронная почта"
 #: accounts/models.py:40
 #: accounts/templates/accounts/authorization/sign_up.html:52
 #: accounts/templates/accounts/index.html:62
-#: mainpage/templates/mainpage/index.html:356
+#: mainpage/templates/mainpage/index.html:366
 msgid "Имя"
 msgstr "Имя"
 
@@ -298,14 +298,14 @@ msgstr ""
 #: cart/templates/cart/index.html:46 cart/templates/cart/index.html:91
 #: cart/templates/cart/index.html:218 cart/templates/cart/index.html:222
 #: cart/templates/cart/index.html:267 cart/templates/cart/index.html:271
-#: catalogue/templates/products/base_detail.html:114
-#: catalogue/templates/products/base_detail.html:289
-#: catalogue/templates/products/base_detail.html:293
-#: catalogue/templates/products/base_list.html:112
-#: mainpage/templates/mainpage/index.html:220
-#: mainpage/templates/mainpage/index.html:224
-#: mainpage/templates/mainpage/index.html:286
-#: mainpage/templates/mainpage/index.html:290
+#: catalogue/templates/products/base_detail.html:137
+#: catalogue/templates/products/base_detail.html:312
+#: catalogue/templates/products/base_detail.html:316
+#: catalogue/templates/products/base_list.html:150
+#: mainpage/templates/mainpage/index.html:230
+#: mainpage/templates/mainpage/index.html:234
+#: mainpage/templates/mainpage/index.html:296
+#: mainpage/templates/mainpage/index.html:300
 msgid "Изображение продукта временно отсутствует."
 msgstr "Изображение продукта временно отсутствует."
 
@@ -316,7 +316,7 @@ msgid "Количество"
 msgstr "Количество"
 
 #: cart/templates/cart/index.html:128
-#: catalogue/templates/products/base_list.html:150
+#: catalogue/templates/products/base_list.html:188
 msgid "Отсутствие продуктов"
 msgstr "Отсутствие продуктов"
 
@@ -332,13 +332,13 @@ msgstr "Способы оплаты:"
 msgid "способ оплаты по IBAN"
 msgstr "способ оплаты по IBAN"
 
-#: cart/templates/cart/index.html:205 mainpage/templates/mainpage/index.html:35
-#: mainpage/templates/mainpage/index.html:204
+#: cart/templates/cart/index.html:205 mainpage/templates/mainpage/index.html:45
+#: mainpage/templates/mainpage/index.html:214
 msgid "Рекомендуемые букеты к покупке"
 msgstr "Рекомендуемые букеты к покупке"
 
 #: cart/templates/cart/index.html:254
-#: mainpage/templates/mainpage/index.html:270
+#: mainpage/templates/mainpage/index.html:280
 msgid "Рекомендуемые подарки к букетам"
 msgstr "Рекомендуемые подарки к букетам"
 
@@ -514,7 +514,7 @@ msgstr "РЕЗЮМЕ ЗАКАЗА"
 
 #: cart/templates/cart/order_confirmation.html:303
 #: cart/templates/cart/order_confirmation.html:407
-#: catalogue/templates/products/base_list.html:68
+#: catalogue/templates/products/base_list.html:106
 msgid "Цена"
 msgstr "Цена"
 
@@ -755,113 +755,113 @@ msgstr "По алфавиту"
 msgid "Со скидкой"
 msgstr "Со скидкой"
 
-#: catalogue/templates/products/base_detail.html:84
-#: catalogue/templates/products/base_list.html:24
+#: catalogue/templates/products/base_detail.html:107
+#: catalogue/templates/products/base_list.html:62
 msgid "Главная страница"
 msgstr "Главная страница"
 
-#: catalogue/templates/products/base_detail.html:127
+#: catalogue/templates/products/base_detail.html:150
 msgid "Предыдущее фото букета"
 msgstr "Предыдущее фото букета"
 
-#: catalogue/templates/products/base_detail.html:131
+#: catalogue/templates/products/base_detail.html:154
 msgid "Следующее фото букета"
 msgstr "Следующее фото букета"
 
-#: catalogue/templates/products/base_detail.html:153
-#: mainpage/templates/mainpage/index.html:189
+#: catalogue/templates/products/base_detail.html:176
+#: mainpage/templates/mainpage/index.html:199
 msgid "Состав букета можно менять"
 msgstr "Состав букета можно менять"
 
-#: catalogue/templates/products/base_detail.html:158
+#: catalogue/templates/products/base_detail.html:181
 msgid "Связь на каждом этапе"
 msgstr "Связь на каждом этапе"
 
-#: catalogue/templates/products/base_detail.html:162
-#: mainpage/templates/mainpage/index.html:199
+#: catalogue/templates/products/base_detail.html:185
+#: mainpage/templates/mainpage/index.html:209
 msgid "Анонимная доставка"
 msgstr "Анонимная доставка"
 
-#: catalogue/templates/products/base_detail.html:173
+#: catalogue/templates/products/base_detail.html:196
 msgid "Необходимо индивидуальное решение?"
 msgstr "Необходимо индивидуальное решение?"
 
-#: catalogue/templates/products/base_detail.html:178
+#: catalogue/templates/products/base_detail.html:201
 msgid "Тел. номер в соц.сети или ссылка профиля"
 msgstr "Тел. номер в соц.сети или ссылка профиля"
 
-#: catalogue/templates/products/base_detail.html:184
+#: catalogue/templates/products/base_detail.html:207
 msgid "Предложим решение в течении 10 минут"
 msgstr "Предложим решение в течении 10 минут"
 
-#: catalogue/templates/products/base_detail.html:191
-#: mainpage/templates/mainpage/index.html:374
+#: catalogue/templates/products/base_detail.html:214
+#: mainpage/templates/mainpage/index.html:384
 msgid "Разрешаю мне перезвонить"
 msgstr "Разрешаю мне перезвонить"
 
-#: catalogue/templates/products/base_detail.html:195
-#: mainpage/templates/mainpage/index.html:379
+#: catalogue/templates/products/base_detail.html:218
+#: mainpage/templates/mainpage/index.html:389
 msgid "Связаться"
 msgstr "Связаться"
 
-#: catalogue/templates/products/base_detail.html:203
+#: catalogue/templates/products/base_detail.html:226
 msgid "Артикул"
 msgstr "Артикул"
 
-#: catalogue/templates/products/base_detail.html:207
+#: catalogue/templates/products/base_detail.html:230
 msgid "Есть в наличии"
 msgstr "Есть в наличии"
 
-#: catalogue/templates/products/base_detail.html:247
+#: catalogue/templates/products/base_detail.html:270
 msgid "Купить"
 msgstr "Купить"
 
-#: catalogue/templates/products/base_detail.html:258 mainpage/models.py:21
+#: catalogue/templates/products/base_detail.html:281 mainpage/models.py:21
 #: mainpage/models.py:100 mainpage/models.py:135 mainpage/models.py:170
 #: mainpage/models.py:205
 msgid "Описание"
 msgstr "Описание"
 
-#: catalogue/templates/products/base_detail.html:267
+#: catalogue/templates/products/base_detail.html:290
 msgid "Характеристики"
 msgstr "Характеристики"
 
-#: catalogue/templates/products/base_detail.html:273
+#: catalogue/templates/products/base_detail.html:296
 msgid "Рекомендуемые продукты к покупке"
 msgstr "Рекомендуемые продукты к покупке"
 
-#: catalogue/templates/products/base_detail.html:329
-#: mainpage/templates/mainpage/index.html:260
+#: catalogue/templates/products/base_detail.html:352
+#: mainpage/templates/mainpage/index.html:270
 msgid "Предыдущий слайд букетов"
 msgstr "Предыдущий слайд букетов"
 
-#: catalogue/templates/products/base_detail.html:334
-#: mainpage/templates/mainpage/index.html:265
+#: catalogue/templates/products/base_detail.html:357
+#: mainpage/templates/mainpage/index.html:275
 msgid "Следующий слайд букетов"
 msgstr "Следующий слайд букетов"
 
-#: catalogue/templates/products/base_list.html:44
+#: catalogue/templates/products/base_list.html:82
 msgid "Сортировка"
 msgstr "Сортировка"
 
-#: catalogue/templates/products/base_list.html:58
+#: catalogue/templates/products/base_list.html:96
 msgid "Фильтры"
 msgstr "Фильтры"
 
-#: catalogue/templates/products/base_list.html:210
+#: catalogue/templates/products/base_list.html:248
 msgid "К сожалению не нашлось продуктов по заданным фильтрам."
 msgstr "К сожалению не нашлось продуктов по заданным фильтрам."
 
-#: catalogue/templates/products/base_list.html:219
-#: mainpage/templates/mainpage/index.html:174
+#: catalogue/templates/products/base_list.html:257
+#: mainpage/templates/mainpage/index.html:184
 msgid "Назад"
 msgstr "Назад"
 
-#: catalogue/templates/products/base_list.html:246
+#: catalogue/templates/products/base_list.html:284
 msgid "Предыдущая страница букетов"
 msgstr "Предыдущая страница букетов"
 
-#: catalogue/templates/products/base_list.html:252
+#: catalogue/templates/products/base_list.html:290
 msgid "Следующая страница букетов"
 msgstr "Следующая страница букетов"
 
@@ -897,7 +897,7 @@ msgstr "Диаметр букета"
 msgid "Количество цветов в букете"
 msgstr "Количество цветов в букете"
 
-#: catalogue/templates/products/catalog.html:17
+#: catalogue/templates/products/catalog.html:32
 msgid "Каталог букетов и подарков"
 msgstr "Каталог букетов и подарков"
 
@@ -921,7 +921,7 @@ msgstr "Дата создания"
 msgid "Дата обновления"
 msgstr "Дата обновления"
 
-#: core/staticfiles/templates/base.html:153
+#: core/staticfiles/templates/base.html:157
 msgid ""
 "\n"
 "        Мы используем <span class=\"text-warning\">cookies</span> для "
@@ -937,11 +937,11 @@ msgstr ""
 "<br>\n"
 "Продолжая использовать сайт, Вы соглашаетесь на использование cookies."
 
-#: core/staticfiles/templates/base.html:159
+#: core/staticfiles/templates/base.html:163
 msgid "Принять"
 msgstr "Принять"
 
-#: core/staticfiles/templates/base.html:160
+#: core/staticfiles/templates/base.html:164
 msgid "Отклонить"
 msgstr "Отклонить"
 
@@ -984,11 +984,11 @@ msgstr "Каталог"
 msgid "Поиск"
 msgstr "Поиск"
 
-#: mainpage/templates/mainpage/index.html:86
+#: mainpage/templates/mainpage/index.html:96
 msgid "Категории букетов"
 msgstr "Категории букетов и подарков"
 
-#: mainpage/templates/mainpage/index.html:133
+#: mainpage/templates/mainpage/index.html:143
 #, python-format
 msgid ""
 "\n"
@@ -996,36 +996,36 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"Цветочный интернет-магазин %(site_name)s"
+"Цветочный магазин %(site_name)s в Берлине"
 
-#: mainpage/templates/mainpage/index.html:178
+#: mainpage/templates/mainpage/index.html:188
 msgid "Вперёд"
 msgstr "Вперёд"
 
-#: mainpage/templates/mainpage/index.html:184
+#: mainpage/templates/mainpage/index.html:194
 msgid "Наши преимущества"
 msgstr "Наши преимущества"
 
-#: mainpage/templates/mainpage/index.html:194
+#: mainpage/templates/mainpage/index.html:204
 msgid "Связь с клиентом на каждом этапе заказа"
 msgstr "Связь с клиентом на каждом этапе заказа"
 
-#: mainpage/templates/mainpage/index.html:331
+#: mainpage/templates/mainpage/index.html:341
 msgid "Предыдущий слайд подарков"
 msgstr "Предыдущий слайд подарков"
 
-#: mainpage/templates/mainpage/index.html:336
+#: mainpage/templates/mainpage/index.html:346
 msgid "Следующий слайд подарков"
 msgstr "Следующий слайд подарков"
 
-#: mainpage/templates/mainpage/index.html:349
+#: mainpage/templates/mainpage/index.html:359
 msgid "Свяжитесь с нами"
 msgstr "Свяжитесь с нами"
 
-#: mainpage/templates/mainpage/index.html:353
+#: mainpage/templates/mainpage/index.html:363
 msgid "Заполните форму, чтобы заказать букет из индивидуального состава."
 msgstr "Заполните форму, чтобы заказать букет из индивидуального состава."
 
-#: mainpage/templates/mainpage/index.html:364
+#: mainpage/templates/mainpage/index.html:374
 msgid "Тел. номер в любой соц. сети или ссылка профиля"
 msgstr "Тел. номер в любой соц. сети или ссылка на Ваш профиль"
