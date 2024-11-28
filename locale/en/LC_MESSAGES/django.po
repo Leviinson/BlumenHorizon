@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-27 22:28+0100\n"
-"PO-Revision-Date: 2024-11-27 22:19+0100\n"
+"PO-Revision-Date: 2024-11-28 17:44+0100\n"
 "Last-Translator: None None <blumenhorizon@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -329,7 +329,8 @@ msgstr "Payment methods:"
 msgid "способ оплаты по IBAN"
 msgstr "payment method by IBAN"
 
-#: cart/templates/cart/index.html:205 mainpage/templates/mainpage/index.html:35
+#: cart/templates/cart/index.html:205
+#: mainpage/templates/mainpage/index.html:35
 #: mainpage/templates/mainpage/index.html:204
 msgid "Рекомендуемые букеты к покупке"
 msgstr "Recommended bouquets for purchase"
@@ -343,7 +344,8 @@ msgstr "Recommended gifts for bouquets"
 msgid "Резюме заказа"
 msgstr "Summary"
 
-#: cart/templates/cart/index.html:330 core/staticfiles/templates/footer.html:43
+#: cart/templates/cart/index.html:330
+#: core/staticfiles/templates/footer.html:43
 #: core/staticfiles/templates/header.html:30
 msgid "Доставка"
 msgstr "Delivery"
@@ -603,27 +605,22 @@ msgstr "Status"
 #, python-format
 msgid ""
 "\n"
-"                <strong>В скором времени мы свяжемся с Вами </strong>по "
-"поводу Вашего заказа по указанной электронной почте <strong>(%(email)s)</"
-"strong>.\n"
+"                <strong>В скором времени мы свяжемся с Вами </strong>по поводу Вашего заказа по указанной электронной почте <strong>(%(email)s)</strong>.\n"
 "                "
 msgstr ""
 "\n"
-"<strong>We will contact you shortly </strong>about your order via the "
-"specified email <strong>(%(email)s)</strong>."
+"<strong>We will contact you shortly </strong>about your order via the specified email <strong>(%(email)s)</strong>."
 
 #: cart/templates/cart/success_order.html:44
 #, python-format
 msgid ""
 "\n"
-"                На данный момент Вам необходимо оплатить сумму "
-"<strong>%(grand_total)s%(currency_symbol)s</strong>\n"
+"                На данный момент Вам необходимо оплатить сумму <strong>%(grand_total)s%(currency_symbol)s</strong>\n"
 "                по данным реквизитам:\n"
 "                "
 msgstr ""
 "\n"
-"At the moment you need to pay the amount "
-"<strong>%(grand_total)s%(currency_symbol)s</strong>"
+"At the moment you need to pay the amount <strong>%(grand_total)s%(currency_symbol)s</strong>"
 
 #: cart/templates/cart/success_order.html:59
 msgid "Задать вопрос"
@@ -655,8 +652,7 @@ msgstr "Error adding product to the cart."
 #: cart/views.py:262
 #, python-brace-format
 msgid "Букет \"{product_name}\" успешно убран из корзины."
-msgstr ""
-"Bouquet \"{product_name}\" has been successfully removed from the cart."
+msgstr "Bouquet \"{product_name}\" has been successfully removed from the cart."
 
 #: cart/views.py:267
 msgid "Ошибка удаления букета из корзины."
@@ -665,8 +661,7 @@ msgstr "Error reducing the number of the bouquet in the cart."
 #: cart/views.py:277
 #, python-brace-format
 msgid "Продукт \"{product_name}\" успешно убран из корзины."
-msgstr ""
-"Product \"{product_name}\" has been successfully removed from the cart."
+msgstr "Product \"{product_name}\" has been successfully removed from the cart."
 
 #: cart/views.py:282
 msgid "Ошибка удаления продукта из корзины."
@@ -927,16 +922,13 @@ msgstr "Update date"
 #: core/staticfiles/templates/base.html:153
 msgid ""
 "\n"
-"        Мы используем <span class=\"text-warning\">cookies</span> для "
-"улучшения работы сайта.\n"
+"        Мы используем <span class=\"text-warning\">cookies</span> для улучшения работы сайта.\n"
 "        <br>\n"
-"        Продолжая использовать сайт, Вы соглашаетесь на использование "
-"cookies.\n"
+"        Продолжая использовать сайт, Вы соглашаетесь на использование cookies.\n"
 "        "
 msgstr ""
 "\n"
-"We use <span class=\"text-warning\">cookies</span> to enhance the "
-"functionality of the website.<br>  \n"
+"We use <span class=\"text-warning\">cookies</span> to enhance the functionality of the website.<br>  \n"
 "By continuing to use the website, you agree to the use of cookies."
 
 #: core/staticfiles/templates/base.html:159
@@ -998,7 +990,7 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"Flower online store %(site_name)s"
+"Online flower shop %(site_name)s"
 
 #: mainpage/templates/mainpage/index.html:178
 msgid "Вперёд"
@@ -1051,8 +1043,7 @@ msgstr "Phone number in any social network or profile link"
 
 #, python-brace-format
 #~ msgid "Продукт \"{product_name}\" успешно удалён из корзины."
-#~ msgstr ""
-#~ "Product \"{product_name}\" quantity was successfully reduced in the cart."
+#~ msgstr "Product \"{product_name}\" quantity was successfully reduced in the cart."
 
 #~ msgid "Корзины пользователей"
 #~ msgstr "User carts"
