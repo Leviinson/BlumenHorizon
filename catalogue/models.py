@@ -49,7 +49,7 @@ class MetaDataAbstractModel(models.Model):
     meta_tags = models.TextField(
         verbose_name="Мета-теги",
         max_length=4000,
-        default="""<title>BlumenHorizon | </title>
+        default="""<title>Blumen Horizon | </title>
 <meta name="description" content="Описание">""",
     )
     json_ld = models.TextField(
@@ -71,7 +71,7 @@ class CatalogPageModel(models.Model):
     meta_tags = models.TextField(
         verbose_name="Мета-теги",
         max_length=1000,
-        default="""<title>BlumenHorizon | </title>
+        default="""<title>Blumen Horizon | </title>
 <meta name="description" content="Описание">""",
     )
     json_ld = models.TextField(
@@ -104,7 +104,7 @@ class ProductsListPageModel(models.Model):
     meta_tags = models.TextField(
         verbose_name="Мета-теги",
         max_length=1000,
-        default="""<title>BlumenHorizon | </title>
+        default="""<title>Blumen Horizon | </title>
 <meta name="description" content="Описание">""",
     )
     json_ld = models.TextField(
@@ -130,7 +130,7 @@ class BouquetsListPageModel(models.Model):
     meta_tags = models.TextField(
         verbose_name="Мета-теги",
         max_length=1000,
-        default="""<title>BlumenHorizon | </title>
+        default="""<title>Blumen Horizon | </title>
 <meta name="description" content="Описание">""",
     )
     json_ld = models.TextField(

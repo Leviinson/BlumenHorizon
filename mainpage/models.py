@@ -10,12 +10,12 @@ class MainPageModel(models.Model):
     meta_tags = models.TextField(
         verbose_name="Мета-теги",
         max_length=1000,
-        default="<title>BlumenHorizon | </title>",
+        default="<title>Blumen Horizon | </title>",
     )
     json_ld_description = models.CharField(
         verbose_name="Description в JSON LD для OnlineStore",
         max_length=500,
-        default="BlumenHorizon интернет-магазин цветов и подарков в Берлине",
+        default="Blumen Horizon интернет-магазин цветов и подарков в Берлине",
     )
     description = HTMLField(
         verbose_name=_("Описание"),
@@ -102,7 +102,7 @@ class FAQPageModel(TimeStampAdbstractModel):
     meta_tags = models.TextField(
         verbose_name="Мета-теги",
         max_length=1000,
-        default="<title>BlumenHorizon | </title>",
+        default="<title>Blumen Horizon | </title>",
     )
     json_ld = models.TextField(
         verbose_name="JSON-LD",
@@ -137,7 +137,7 @@ class AboutUsPageModel(TimeStampAdbstractModel):
     meta_tags = models.TextField(
         verbose_name="Мета-теги",
         max_length=1000,
-        default="<title>BlumenHorizon | </title>",
+        default="<title>Blumen Horizon | </title>",
     )
     json_ld = models.TextField(
         verbose_name="JSON-LD",
@@ -172,7 +172,7 @@ class DeliveryPageModel(TimeStampAdbstractModel):
     meta_tags = models.TextField(
         verbose_name="Мета-теги",
         max_length=1000,
-        default="<title>BlumenHorizon | </title>",
+        default="<title>Blumen Horizon | </title>",
     )
     json_ld = models.TextField(
         verbose_name="JSON-LD",
@@ -207,7 +207,7 @@ class ContactsPageModel(TimeStampAdbstractModel):
     meta_tags = models.TextField(
         verbose_name="Мета-теги",
         max_length=1000,
-        default="<title>BlumenHorizon | </title>",
+        default="<title>Blumen Horizon | </title>",
     )
     json_ld = models.TextField(
         verbose_name="JSON-LD",
