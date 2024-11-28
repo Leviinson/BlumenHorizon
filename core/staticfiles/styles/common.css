@@ -180,7 +180,7 @@ body {
     font-family: 'Segoe UI Emoji';
 }
 
-@media (max-width: 1199px) {
+@media (max-width: 1399px) {
     #fillers-links {
         justify-content: center !important;
         flex-direction: column;
