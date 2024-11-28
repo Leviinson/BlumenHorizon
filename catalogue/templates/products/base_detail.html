@@ -232,16 +232,16 @@
 
                     <div class="mb-3 d-flex flex-column align-items-end">
                         {% if product.has_discount %}
-                            <h2 class="text-danger mb-0 me-2" style="font-size: x-large;">
+                            <span class="text-danger mb-0 me-2" style="font-size: x-large;">
                                 {{ product.tax_price_discounted|floatformat:"2u" }} {{ currency_symbol }}
-                            </h2>
-                            <h2 class="text-muted text-decoration-line-through mb-0" style="font-size: 1.25em;">
+                            </span>
+                            <span class="text-muted text-decoration-line-through mb-0" style="font-size: 1.25em;">
                                 {{ product.tax_price|floatformat:"2u" }} {{ currency_symbol }}
-                            </h2>
+                            </span>
                         {% else %}
-                            <h2 class="mb-0">
+                            <span class="mb-0">
                                 {{ product.tax_price|floatformat:"2u" }} {{ currency_symbol }}
-                            </h2>
+                            </span>
                         {% endif %}
                     </div>
                 </div>
@@ -278,7 +278,7 @@
     <div class="row mt-4">
         <div class="col">
             <div class="info-block p-4">
-                <h4 class="info-title">{% translate 'Описание' %}</h4>
+                <h2 class="info-title">{% translate 'Описание' %}</h2>
                 <p class="info-text">{{ product.description|safe }}</p>
             </div>
         </div>
@@ -287,7 +287,7 @@
     <div class="row mt-4">
         <div class="col">
             <div class="info-block p-4">
-                <h4 class="info-title">{% translate 'Характеристики' %}</h4>
+                <h2 class="info-title">{% translate 'Характеристики' %}</h2>
                 <p class="info-text">{{ product.specs|safe }}</p>
             </div>
         </div>
@@ -317,14 +317,14 @@
                     {% endif %}
                     </div>
                     <div class="card-body d-flex flex-column">
-                    <h5 class="card-title">{{ recommended_product.name }}</h5>
+                    <span class="card-title fw-bold">{{ recommended_product.name }}</span>
                     <div class="d-flex flex-column justify-content-center mt-auto">
                         <p class="card-text">
                         {% if recommended_product.has_discount %}
-                        <strong class="text-danger mb-0 me-2">{{ recommended_product.tax_price_discounted|floatformat:"2u" }} {{ currency_symbol }}</strong>
-                        <strong class="text-muted text-decoration-line-through mb-0">{{ recommended_product.tax_price|floatformat:"2u" }} {{ currency_symbol }}</strong>
+                        <span class="text-danger mb-0 me-2 fw-bold">{{ recommended_product.tax_price_discounted|floatformat:"2u" }} {{ currency_symbol }}</span>
+                        <span class="text-muted text-decoration-line-through mb-0 fw-bold">{{ recommended_product.tax_price|floatformat:"2u" }} {{ currency_symbol }}</span>
                         {% else %}
-                        <strong>{{ recommended_product.tax_price|floatformat:"2u" }} {{ currency_symbol }}</strong>
+                        <span class="fw-bold">{{ recommended_product.tax_price|floatformat:"2u" }} {{ currency_symbol }}</span>
                         {% endif %}
                         </p>
                         <form method="post" class="add-to-cart-form w-100 me-2" data-add-url="{% url 'cart:bouquet-add' %}"
