@@ -186,7 +186,7 @@ body {
         flex-direction: column;
     }
 
-    #navbarDropdown {
+    #navbarNavDropdown {
         justify-content: center !important;
     }
 }
