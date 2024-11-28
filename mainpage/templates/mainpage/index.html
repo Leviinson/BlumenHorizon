@@ -10,7 +10,7 @@
   {% for lang_code, lang_name in LANGUAGES %}
     {% language lang_code %}
       {% if forloop.first %}
-        <link rel="canonical" href="https://{{ domain_name }}">
+        <link rel="canonical" href="https://{{ domain_name }}/">
       {% else %}
         <link rel="alternate" href="https://{{ domain_name }}{% url 'mainpage:offers' %}">
       {% endif %}
