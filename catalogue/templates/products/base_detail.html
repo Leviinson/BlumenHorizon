@@ -14,15 +14,15 @@
     {% language lang_code %}
         {% if forloop.first %}
             {% if product.is_bouquet %}
-            <link rel="canonical" href="https://{{ domain_name }}{% url 'catalogue:bouquet-details' product.subcategory.category.slug product.subcategory.slug product.slug %}">
+            <link rel="canonical" hreflang="{{ lang_code }}" href="https://{{ domain_name }}{% url 'catalogue:bouquet-details' product.subcategory.category.slug product.subcategory.slug product.slug %}">
             {% else %}
-            <link rel="canonical" href="https://{{ domain_name }}{% url 'catalogue:product-details' product.subcategory.category.slug product.subcategory.slug product.slug %}">
+            <link rel="canonical" hreflang="{{ lang_code }}" href="https://{{ domain_name }}{% url 'catalogue:product-details' product.subcategory.category.slug product.subcategory.slug product.slug %}">
             {% endif %}
         {% else %}
             {% if product.is_bouquet %}
-                <link rel="alternate" href="https://{{ domain_name }}{% url 'catalogue:bouquet-details' product.subcategory.category.slug product.subcategory.slug product.slug %}">
+                <link rel="alternate" hreflang="{{ lang_code }}" href="https://{{ domain_name }}{% url 'catalogue:bouquet-details' product.subcategory.category.slug product.subcategory.slug product.slug %}">
             {% else %}
-                <link rel="alternate" href="https://{{ domain_name }}{% url 'catalogue:product-details' product.subcategory.category.slug product.subcategory.slug product.slug %}">
+                <link rel="alternate" hreflang="{{ lang_code }}" href="https://{{ domain_name }}{% url 'catalogue:product-details' product.subcategory.category.slug product.subcategory.slug product.slug %}">
             {% endif %}
         {% endif %}
     {% endlanguage %}
