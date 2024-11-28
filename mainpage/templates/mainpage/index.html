@@ -235,7 +235,7 @@
                   {% endif %}
                 </div>
                 <div class="card-body d-flex flex-column">
-                  <h5 class="card-title">{{ recommended_bouquet.name }}</h5>
+                  <strong class="card-title">{{ recommended_bouquet.name }}</strong>
                   <div class="d-flex flex-column justify-content-center mt-auto">
                     <p class="card-text">
                       {% if recommended_bouquet.has_discount %}
@@ -301,7 +301,7 @@
                   {% endif %}
                 </div>
                 <div class="card-body d-flex flex-column">
-                  <h5 class="card-title">{{ recommended_product.name }}</h5>
+                  <strong class="card-title">{{ recommended_product.name }}</strong>
                   <div class="d-flex flex-column justify-content-center mt-auto">
                     <p class="card-text">
                       {% if recommended_product.has_discount %}
@@ -345,7 +345,7 @@
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">{% translate 'Следующий слайд подарков' %}</span>
       </button>
-      {% endif %}
+    {% endif %}
   </div>
 
   <div class="card mt-4 mb-5">
