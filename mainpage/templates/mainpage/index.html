@@ -223,7 +223,7 @@
               <div class="card h-100 w-100" style="min-height: 404px;">
                 <div class="image-wrapper">
                   {% if recommended_bouquet.has_discount %}
-                  <span class="badge bg-dark-green m-2 p-2 fs-5 product-discount-badge">-{{ recommended_bouquet.discount }}%</span>
+                  <span class="badge bg-dark-green m-2 p-2 fs-5 product-discount-badge fw-bold">-{{ recommended_bouquet.discount }}%</span>
                   {% endif %}
                   {% if recommended_bouquet.first_image_uri %}
                   <img src="{{ MEDIA_URL }}{{ recommended_bouquet.first_image_uri }}" class="card-img-top square-image"
@@ -235,14 +235,14 @@
                   {% endif %}
                 </div>
                 <div class="card-body d-flex flex-column">
-                  <strong class="card-title">{{ recommended_bouquet.name }}</strong>
+                  <span class="card-title fw-bold">{{ recommended_bouquet.name }}</span>
                   <div class="d-flex flex-column justify-content-center mt-auto">
                     <p class="card-text">
                       {% if recommended_bouquet.has_discount %}
-                      <strong class="text-danger mb-0 me-2">{{ recommended_bouquet.tax_price_discounted|floatformat:"2u" }} {{ currency_symbol }}</strong>
-                      <strong class="text-muted text-decoration-line-through mb-0">{{ recommended_bouquet.tax_price|floatformat:"2u" }} {{ currency_symbol }}</strong>
+                      <span class="text-danger mb-0 me-2 fw-bold">{{ recommended_bouquet.tax_price_discounted|floatformat:"2u" }} {{ currency_symbol }}</span>
+                      <span class="text-muted text-decoration-line-through mb-0 fw-bold">{{ recommended_bouquet.tax_price|floatformat:"2u" }} {{ currency_symbol }}</span>
                       {% else %}
-                      <strong>{{ recommended_bouquet.tax_price|floatformat:"2u" }} {{ currency_symbol }}</strong>
+                      <span class="fw-bold">{{ recommended_bouquet.tax_price|floatformat:"2u" }} {{ currency_symbol }}</span>
                       {% endif %}
                     </p>
                     <form method="post" class="add-to-cart-form w-100 me-2" data-add-url="{% url 'cart:bouquet-add' %}"
@@ -301,20 +301,20 @@
                   {% endif %}
                 </div>
                 <div class="card-body d-flex flex-column">
-                  <strong class="card-title">{{ recommended_product.name }}</strong>
+                  <span class="card-title fw-bold">{{ recommended_product.name }}</span>
                   <div class="d-flex flex-column justify-content-center mt-auto">
                     <p class="card-text">
                       {% if recommended_product.has_discount %}
-                      <strong class="text-danger mb-0 me-2">
+                      <span class="text-danger mb-0 me-2 fw-bold">
                         {{ recommended_product.tax_price_discounted|floatformat:"2u" }} {{ currency_symbol }}
-                      </strong>
-                      <strong class="text-muted text-decoration-line-through mb-0">
+                      </span>
+                      <span class="text-muted text-decoration-line-through mb-0 fw-bold">
                         {{ recommended_product.tax_price|floatformat:"2u" }} {{ currency_symbol }}
-                      </strong>
+                      </span>
                       {% else %}
-                      <strong>
+                      <span class="fw-bold">
                         {{ recommended_product.tax_price|floatformat:"2u" }} {{ currency_symbol }}
-                      </strong>
+                      </span>
                       {% endif %}
                     </p>
                     <form method="post" class="add-to-cart-form w-100 me-2" data-add-url="{% url 'cart:product-add' %}"
