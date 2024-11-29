@@ -8,6 +8,8 @@ logs/gunicorn/
 logs/mysql/**
 logs/redis/**
 logs/nginx/**
+logs/telegram/**
+
 nginx/access.log
 nginx/error.log
 
