@@ -683,9 +683,9 @@ def order_created(sender, instance: IndividualQuestion, created, **kwargs):
         individual_order = instance
         text = (
             f"*Индивидуальный заказ!* 🎉\n\n"
-            f"*ID заказа*: `{escape_markdown(individual_order.id)}`\n"
+            f"*ID заказа*: `{escape_markdown(str(individual_order.id))}`\n"
             f"*Продукт*: `{escape_markdown(individual_order.product.name if individual_order.product else individual_order.bouquet.name)}\n"
-            f"*Способ связи:*: `\n\n{escape_markdown(individual_order.contact_method)}`\n"
+            f"*Способ связи:*: \n\n `{escape_markdown(individual_order.contact_method)}`\n"
             f"Вперёд за работу! 🚀"
         )
 
