@@ -14,10 +14,11 @@
 
 {% block localization_meta_tags %}
   {% get_available_languages as LANGUAGES %}
+  {% get_current_language as CURRENT_LANGUAGE_CODE %}
 
   {% for lang_code, lang_name in LANGUAGES %}
     {% language lang_code %}
-      {% if forloop.first %}
+      {% if lang_code == CURRENT_LANGUAGE_CODE %}
         <link rel="canonical" hreflang="{{ lang_code }}" href="https://{{ domain_name }}{% url 'catalogue:category' category.slug %}">
       {% else %}
         <link rel="alternate" hreflang="{{ lang_code }}" href="https://{{ domain_name }}{% url 'catalogue:category' category.slug %}">
