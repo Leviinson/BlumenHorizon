@@ -9,7 +9,7 @@ TELEGRAM_BOT_TOKEN = settings.TELEGRAM_BOT_TOKEN
 bot = Bot(token=TELEGRAM_BOT_TOKEN)
 
 
-async def send_message_to_telegram(chat_id, text):
+async def send_message_to_telegram_async(chat_id, text):
     logger = logging.getLogger("telegramBot")
 
     try:
@@ -23,4 +23,4 @@ def send_message_to_telegram(chat_id, text):
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
 
-    loop.run_until_complete(send_message_to_telegram(chat_id, text))
+    loop.run_until_complete(send_message_to_telegram_async(chat_id, text))
