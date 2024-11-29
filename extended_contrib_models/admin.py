@@ -1,4 +1,5 @@
 from django.contrib import admin
+from modeltranslation.admin import TranslationAdmin
 
 from .models import ExtendedSite, Social
 
@@ -10,7 +11,6 @@ class SocialAdmin(admin.ModelAdmin):
         "background_hex_code",
         "bootstrap_icon",
         "extended_site",
-        "header_alert_message",
     )
     search_fields = ("absolute_url", "bootstrap_icon", "extended_site__site__domain")
 
@@ -24,7 +24,7 @@ class SocialInline(admin.TabularInline):
 
 
 @admin.register(ExtendedSite)
-class ExtendedSiteAdmin(admin.ModelAdmin):
+class ExtendedSiteAdmin(TranslationAdmin):
     list_display = (
         "site",
         "currency_code",
