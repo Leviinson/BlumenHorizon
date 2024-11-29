@@ -677,7 +677,7 @@ class IndividualQuestion(TimeStampAdbstractModel, models.Model):
 
 
 @receiver(post_save, sender=IndividualQuestion)
-def order_created(sender, instance: IndividualQuestion, created, **kwargs):
+def individual_order_created(sender, instance: IndividualQuestion, created, **kwargs):
     if created:
 
         individual_order = instance
@@ -685,7 +685,7 @@ def order_created(sender, instance: IndividualQuestion, created, **kwargs):
             f"*Индивидуальный заказ!* 🎉\n\n"
             f"*ID заказа*: `{escape_markdown(str(individual_order.id))}`\n"
             f"*Продукт*: `{escape_markdown(individual_order.product.name if individual_order.product else individual_order.bouquet.name)}`\n"
-            f"*Способ связи:*: \n\n `{escape_markdown(individual_order.contact_method)}`\n"
+            f"*Способ связи:*: \n `{escape_markdown(individual_order.contact_method)}`\n\n"
             f"Вперёд за работу! 🚀"
         )
 
