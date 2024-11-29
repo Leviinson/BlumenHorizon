@@ -12,7 +12,7 @@
 
     {% for lang_code, lang_name in LANGUAGES %}
         {% language lang_code %}
-            {% if if lang_code == CURRENT_LANGUAGE_CODE %}
+            {% if lang_code == CURRENT_LANGUAGE_CODE %}
                 <link rel="canonical" hreflang="{{ lang_code }}" href="https://{{ domain_name }}{{ url }}">
             {% else %}
                 <link rel="alternate" hreflang="{{ lang_code }}" href="https://{{ domain_name }}{{ url }}">
