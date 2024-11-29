@@ -26,6 +26,8 @@ class ExtendedSite(models.Model):
     )
     iban = models.CharField(verbose_name="IBAN для оплаты", max_length=100)
     account_name = models.CharField(verbose_name="Название счёта", max_length=100)
+    country_iso_3166_1_alpha_2 = models.CharField(max_length=2, verbose_name="Код страны ISO 3166-1 alpha-2", help_text="ISO 3166-1 alpha-2")
+    header_alert_message = models.CharField(max_length=174, verbose_name="Текст для красного уведомления под хедером, белый текст на красном фоне во всю ширину строки.")
 
     def __str__(self):
         return f"{self.site.name} | {self.site.domain}"
