@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-29 16:49+0100\n"
+"POT-Creation-Date: 2024-11-29 17:14+0100\n"
 "PO-Revision-Date: 2024-11-28 18:15+0100\n"
 "Last-Translator: None None <blumenhorizon@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -983,12 +983,6 @@ msgstr "Каталог"
 #: core/staticfiles/templates/header.html:70
 msgid "Поиск"
 msgstr "Поиск"
-
-#: core/staticfiles/templates/header.html:82
-msgid ""
-"Сайт находится в статусе разработки и выложен в сеть только для проверки "
-"работоспособности, осуществлять заказы на данный момент невозможно!"
-msgstr ""
 
 #: mainpage/templates/mainpage/index.html:103
 msgid "Категории букетов"
