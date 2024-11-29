@@ -25,6 +25,7 @@ class ProductCategoryTranslationOptions(TranslationOptions):
         "slug",
         "image_alt",
         "meta_tags",
+        "catalog_page_meta_tags",
     )
 
 
@@ -45,6 +46,7 @@ class BouquetCategoryTranslationOptions(TranslationOptions):
         "slug",
         "image_alt",
         "meta_tags",
+        "catalog_page_meta_tags",
     )
 
 

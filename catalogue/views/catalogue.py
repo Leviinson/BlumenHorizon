@@ -83,7 +83,7 @@ class CategoryView(CommonContextMixin, TemplateView):
                         "subcategories__image",
                         "subcategories__image_alt",
                         "code_value",
-                        "meta_tags",
+                        "catalog_page_meta_tags",
                         "json_ld",
                     )
                     .get(slug=self.kwargs["category_slug"])
@@ -93,7 +93,7 @@ class CategoryView(CommonContextMixin, TemplateView):
                 continue
         else:
             raise Http404()
-        context["meta_tags"] = context["category"].meta_tags
+        context["meta_tags"] = context["category"].catalog_page_meta_tags
         context["json_ld"] = context["category"].json_ld
         return context
 

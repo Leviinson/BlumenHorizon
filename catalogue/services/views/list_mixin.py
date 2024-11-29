@@ -144,6 +144,7 @@ class ProductCategoryListViewMixin(CategoryListViewMixin):
         context = super().get_context_data(*args, **kwargs)
         context["is_category_list"] = True
         context["is_product_category"] = True
+        context["meta_tags"] = self.category.meta_tags
         return context
 
 
@@ -170,6 +171,7 @@ class ProductSubcategoryListViewMixin(SubcategoryListViewMixin):
         context = super().get_context_data(*args, **kwargs)
         context["is_subcategory_list"] = True
         context["is_product_subcategory"] = True
+        context["meta_tags"] = self.subcategory.meta_tags
         return context
 
 
@@ -192,6 +194,7 @@ class BouquetCategoryListViewMixin(CategoryListViewMixin):
         context = super().get_context_data(*args, **kwargs)
         context["is_category_list"] = True
         context["is_bouquet_category"] = True
+        context["meta_tags"] = self.category.meta_tags
         return context
 
 
@@ -218,4 +221,5 @@ class BouquetSubcategoryListViewMixin(SubcategoryListViewMixin):
         context = super().get_context_data(*args, **kwargs)
         context["is_subcategory_list"] = True
         context["is_bouquet_subcategory"] = True
+        context["meta_tags"] = self.subcategory.meta_tags
         return context

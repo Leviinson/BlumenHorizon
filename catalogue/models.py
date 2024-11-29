@@ -159,6 +159,12 @@ class ProductCategory(CategoryAbstract, TimeStampAdbstractModel, MetaDataAbstrac
         default="defaults/no-image.webp",
     )
     image_alt = models.CharField(verbose_name="Описание картинки", max_length=200)
+    catalog_page_meta_tags = models.TextField(
+        verbose_name="Мета-теги на странице категории со списком подкатегорий",
+        max_length=4000,
+        default="""<title>Blumen Horizon | </title>
+<meta name="description" content="Описание">""",
+    )
 
     class Meta:
         verbose_name = "Категория продукта"
@@ -406,6 +412,12 @@ class BouquetCategory(CategoryAbstract, TimeStampAdbstractModel, MetaDataAbstrac
         default="defaults/no-image.webp",
     )
     image_alt = models.CharField(verbose_name="Описание картинки", max_length=200)
+    catalog_page_meta_tags = models.TextField(
+        verbose_name="Мета-теги на странице категории со списком подкатегорий",
+        max_length=4000,
+        default="""<title>Blumen Horizon | </title>
+<meta name="description" content="Описание">""",
+    )
 
     class Meta:
         verbose_name = "Категория букета"

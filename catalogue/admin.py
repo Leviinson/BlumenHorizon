@@ -5,9 +5,6 @@ from .models import (
     Bouquet,
     BouquetCategory,
     BouquetImage,
-    BouquetSize,
-    BouquetSizeImage,
-    BouquetsListPageModel,
     BouquetSubcategory,
     CatalogPageModel,
     Color,
@@ -16,7 +13,6 @@ from .models import (
     Product,
     ProductCategory,
     ProductImage,
-    ProductsListPageModel,
     ProductSubcategory,
 )
 
@@ -32,6 +28,7 @@ class ProductCategoryAdmin(TranslationAdmin):
                     "slug",
                     "is_active",
                     "meta_tags",
+                    "catalog_page_meta_tags",
                     "json_ld",
                     "image",
                     "image_alt",
@@ -259,6 +256,7 @@ class BouquetCategoryAdmin(TranslationAdmin):
                     "slug",
                     "is_active",
                     "meta_tags",
+                    "catalog_page_meta_tags",
                     "json_ld",
                     "image",
                     "image_alt",
