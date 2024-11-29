@@ -109,9 +109,7 @@ class BouquetSizeImageTranslationOptions(TranslationOptions):
 
 @register(CatalogPageModel)
 class CatalogPageModelTranslationOptions(TranslationOptions):
-    fields = (
-        "meta_tags",
-    )
+    fields = ("meta_tags",)
 
 
 @register(ProductsListPageModel)

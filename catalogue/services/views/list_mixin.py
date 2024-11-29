@@ -139,7 +139,7 @@ class ProductCategoryListViewMixin(CategoryListViewMixin):
         return qs.filter(
             subcategory__category=self.category,
         )
-    
+
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context["is_category_list"] = True
@@ -166,7 +166,7 @@ class ProductSubcategoryListViewMixin(SubcategoryListViewMixin):
         return qs.filter(
             subcategory=self.subcategory,
         )
-    
+
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context["is_subcategory_list"] = True
@@ -189,7 +189,7 @@ class BouquetCategoryListViewMixin(CategoryListViewMixin):
         return qs.filter(
             subcategory__category=self.category,
         )
-    
+
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context["is_category_list"] = True

@@ -75,5 +75,5 @@ class AboutUsPageModelTranslationOptions(TranslationOptions):
         "image",
         "meta_tags",
         "description",
-        "json_ld"
+        "json_ld",
     )

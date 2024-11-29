@@ -38,6 +38,10 @@ ALLOWED_HOSTS = [
     f"www.{os.getenv("DOMAIN")}",
 ]
 
+# TELEGRAM
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
+
 # DJANGO-TINYMCE
 TINYMCE_DEFAULT_CONFIG = {
     "height": 500,
@@ -166,10 +170,7 @@ ROOT_URLCONF = "core.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [
-            "core/staticfiles/",
-            BASE_DIR / "templates"
-        ],
+        "DIRS": ["core/staticfiles/", BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -278,6 +279,12 @@ LOGGING_HANDLERS = {
         if not DEBUG
         else None
     ),
+    "telegram_file": {
+        "level": "ERROR",
+        "class": "logging.FileHandler",
+        "filename": os.path.join(BASE_DIR, "logs/telegram/bot.logs"),
+        "formatter": "verbose",
+    },
 }
 LOGGING_HANDLERS = {k: v for k, v in LOGGING_HANDLERS.items() if v is not None}
 
@@ -340,6 +347,11 @@ LOGGING = (
                 "handlers": (
                     ["redis_error", "mail_admins"] if not DEBUG else ["redis_error"]
                 ),
+                "level": "ERROR",
+                "propagate": False,
+            },
+            "telegramBot": {
+                "handlers": ["telegram_file"],
                 "level": "ERROR",
                 "propagate": False,
             },
