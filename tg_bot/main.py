@@ -13,4 +13,4 @@ def send_message_to_telegram(chat_id, text):
     try:
         bot.send_message(chat_id, text)
     except TelegramError as e:
-        logger.error(f"Error while sending message: {e}")
+        logger.log(level="ERROR", msg=f"Error while sending message: {e}")
