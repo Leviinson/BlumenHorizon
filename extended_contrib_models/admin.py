@@ -10,6 +10,7 @@ class SocialAdmin(admin.ModelAdmin):
         "background_hex_code",
         "bootstrap_icon",
         "extended_site",
+        "header_alert_message",
     )
     search_fields = ("absolute_url", "bootstrap_icon", "extended_site__site__domain")
 
