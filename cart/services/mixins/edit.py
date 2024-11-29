@@ -68,7 +68,7 @@ class CartEditAbstractMixin(ABC):
                 cart.remove_single(product)
             case _:
                 logger = logging.getLogger("django.request")
-                logger.log(level="ERROR", msg="Wrong cart action selected.")
+                logger.error(msg="Wrong cart action selected.")
                 return self._error_response(
                     _(
                         "Ой-ой, мы неправильно обработали Вашу корзину. Скоро администрация это исправит!"
