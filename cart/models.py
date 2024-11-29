@@ -11,8 +11,6 @@ from catalogue.models import Bouquet, Product, generate_sku
 from core.base_models import TimeStampAdbstractModel
 from tg_bot import send_message_to_telegram
 
-from .models import Order
-
 
 class Order(TimeStampAdbstractModel, models.Model):
     STATUS_CHOICES = [
@@ -124,10 +122,11 @@ class Order(TimeStampAdbstractModel, models.Model):
 
     def __str__(self):
         return f"{self.code} - {self.status}"
-    
+
+
 @receiver(post_save, sender=Order)
 def order_created(sender, instance: Order, created, **kwargs):
-    
+
     if created:
         order = instance
         text = (
@@ -138,7 +137,7 @@ def order_created(sender, instance: Order, created, **kwargs):
             f"*Город*: `{escape_markdown(order.city)}`\n\n"
             f"Вперёд за работу! 🚀"
         )
-        
+
         chat_id = settings.TELEGRAM_CHAT_ID
         send_message_to_telegram(chat_id, text)
 
