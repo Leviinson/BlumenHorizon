@@ -182,6 +182,7 @@ class IndividualQuestionView(CreateView):
 
     def form_valid(self, form: IndividualQuestionForm):
         form.save(commit=True, user=self.request.user)
+        self.send_telegram_message()
         return JsonResponse(
             {
                 "detail": _("Мы скоро с Вами свяжемся, а пока выпейте чаю 😊"),

@@ -3,16 +3,21 @@ from decimal import ROUND_HALF_UP, Decimal
 from random import randint
 
 from colorfield.fields import ColorField
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.sites.models import Site
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.urls import reverse_lazy
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from telegram.helpers import escape_markdown
 from tinymce.models import HTMLField
 
 from core.base_models import TimeStampAdbstractModel
+from tg_bot import send_message_to_telegram
 
 
 def generate_sku():
@@ -669,3 +674,20 @@ class IndividualQuestion(TimeStampAdbstractModel, models.Model):
 
     def __str__(self):
         return f"{self.user if self.user else "Неизвестный пользователь"}"
+
+
+@receiver(post_save, sender=IndividualQuestion)
+def order_created(sender, instance: IndividualQuestion, created, **kwargs):
+    if created:
+
+        individual_order = instance
+        text = (
+            f"*Индивидуальный заказ!* 🎉\n\n"
+            f"*ID заказа*: `{individual_order.id}`\n"
+            f"*Продукт*: `{individual_order.product.name if individual_order.product.name else individual_order.bouquet.name}\n"
+            f"*Способ связи:*: `\n\n{escape_markdown(individual_order.contact_method)}`\n"
+            f"Вперёд за работу! 🚀"
+        )
+
+        chat_id = settings.TELEGRAM_CHAT_ID
+        send_message_to_telegram(chat_id, text)
