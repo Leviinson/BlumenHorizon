@@ -53,6 +53,7 @@ class ContactsPageModelTranslationOptions(TranslationOptions):
         "image",
         "meta_tags",
         "description",
+        "json_ld",
     )
 
 
@@ -63,6 +64,7 @@ class DeliveryPageModelTranslationOptions(TranslationOptions):
         "image",
         "meta_tags",
         "description",
+        "json_ld",
     )
 
 
@@ -73,4 +75,5 @@ class AboutUsPageModelTranslationOptions(TranslationOptions):
         "image",
         "meta_tags",
         "description",
+        "json_ld"
     )
