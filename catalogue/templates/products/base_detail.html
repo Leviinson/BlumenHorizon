@@ -27,6 +27,13 @@
                     <link rel="alternate" hreflang="{{ lang_code }}" href="https://{{ domain_name }}{% url 'catalogue:product-details' product.subcategory.category.slug product.subcategory.slug product.slug %}">
                 {% endif %}
             {% endif %}
+            {% if forloop.first %}
+                {% if product.is_bouquet %}
+                    <link rel="x-default" hreflang="{{ lang_code }}" href="https://{{ domain_name }}{% url 'catalogue:bouquet-details' product.subcategory.category.slug product.subcategory.slug product.slug %}">
+                {% else %}
+                    <link rel="x-default" hreflang="{{ lang_code }}" href="https://{{ domain_name }}{% url 'catalogue:product-details' product.subcategory.category.slug product.subcategory.slug product.slug %}">
+                {% endif %}
+            {% endif %}
         {% endlanguage %}
     {% endfor %}
 

@@ -17,6 +17,9 @@
             {% else %}
                 <link rel="alternate" hreflang="{{ lang_code }}" href="https://{{ domain_name }}{{ url }}">
             {% endif %}
+            {% if forloop.first %}
+                <link rel="x-default" hreflang="{{ lang_code }}" href="https://{{ domain_name }}{{ url }}">
+            {% endif %}
         {% endlanguage %}
     {% endfor %}
 {% endblock %}
