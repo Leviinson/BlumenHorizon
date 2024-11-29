@@ -12,6 +12,6 @@ logger = logging.getLogger("telegramBot")
 
 def send_message_to_telegram(chat_id, text):
     try:
-        async_to_sync(bot.send_message(chat_id, text, parse_mode="Markdown"))
+        async_to_sync(bot.send_message)(chat_id, text, parse_mode="Markdown")
     except TelegramError as e:
         logger.log(level="ERROR", msg=f"Error while sending message: {e}")
