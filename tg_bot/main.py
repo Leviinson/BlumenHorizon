@@ -7,10 +7,11 @@ from telegram.error import TelegramError
 
 TELEGRAM_BOT_TOKEN = settings.TELEGRAM_BOT_TOKEN
 bot = Bot(token=TELEGRAM_BOT_TOKEN)
-logger = logging.getLogger("telegramBot")
 
 
 async def send_message_to_telegram(chat_id, text):
+    logger = logging.getLogger("telegramBot")
+
     try:
         await bot.send_message(chat_id, text, parse_mode="Markdown")
     except TelegramError as e:
