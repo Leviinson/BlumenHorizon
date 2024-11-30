@@ -71,7 +71,7 @@
               },
               "shippingDestination": {
                 "@type": "DefinedRegion",
-                "addressCountry": "DE"
+                "addressCountry": "{{ country_code|upper }}"
               },
               "deliveryTime": {
                 "@type": "ShippingDeliveryTime",
@@ -91,7 +91,7 @@
             },
             "hasMerchantReturnPolicy": {
               "@type": "MerchantReturnPolicy",
-              "applicableCountry": "DE",
+              "applicableCountry": "{{ country_code|upper }}",
               "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"
             }
           }

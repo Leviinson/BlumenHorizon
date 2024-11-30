@@ -1,9 +1,14 @@
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.utils.translation import gettext_lazy as _
+from telegram.helpers import escape_markdown
 from tinymce.models import HTMLField
 
 from core.base_models import TimeStampAdbstractModel
+from tg_bot import send_message_to_telegram
 
 
 class MainPageModel(models.Model):
@@ -70,6 +75,22 @@ class IndividualOrder(models.Model):
 
     def __str__(self):
         return f"{self.first_name}"
+
+
+@receiver(post_save, sender=IndividualOrder)
+def individual_order_created(sender, instance: IndividualOrder, created, **kwargs):
+    if created:
+        individual_order = instance
+        text = (
+            f"*Индивидуальный заказ!* 🎉\n\n"
+            f"*ID вопроса*: `{escape_markdown(str(individual_order.id))}`\n"
+            f"*Имя*: `{escape_markdown(individual_order.first_name)}`\n"
+            f"*Способ связи*: \n `{escape_markdown(individual_order.contact_method)}`\n\n"
+            f"Вперёд за работу! 🚀"
+        )
+
+        chat_id = settings.TELEGRAM_CHAT_ID
+        send_message_to_telegram(chat_id, text)
 
 
 class MainPageSeoBlock(TimeStampAdbstractModel, models.Model):
