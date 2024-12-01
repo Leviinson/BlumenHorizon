@@ -96,12 +96,11 @@ document.querySelectorAll('.add-to-cart-form').forEach(function(form) {
             return
         }
         
-        const langValue = document.documentElement.getAttribute('lang');
         const subtotal = productInfo.discountedPrice ? productInfo.discountedPrice : productInfo.price;
         const csrfToken = productCard.querySelector('input[name="csrfmiddlewaretoken"]').value;
-        const removeProductLink = productInfo.isBouquet ? `/${langValue}/cart/bouquet/remove/` : `/${langValue}/cart/product/remove/`
-        const decreaseProductLink = productInfo.isBouquet ? `/${langValue}/cart/bouquet/decrease/` : `/${langValue}/cart/product/decrease/`
-        const increaseProductLink = productInfo.isBouquet ? `/${langValue}/cart/bouquet/increase/` : `/${langValue}/cart/product/increase/`
+        const removeProductLink = productInfo.isBouquet ? `/cart/bouquet/remove/` : `/cart/product/remove/`
+        const decreaseProductLink = productInfo.isBouquet ? `/cart/bouquet/decrease/` : `/cart/product/decrease/`
+        const increaseProductLink = productInfo.isBouquet ? `/cart/bouquet/increase/` : `/cart/product/increase/`
 
         let needsHr = true;
         if (productsListContainer.children.length === 1 && productsListContainer.firstElementChild === emptyCartImage) {
@@ -127,7 +126,7 @@ document.querySelectorAll('.add-to-cart-form').forEach(function(form) {
             <form class="product-remove-form" action="${removeProductLink}" method="post" data-product-element-id="${productInfo.slug}" data-hr-id="${productInfo.slug}Hr">
                 <input type="hidden" name="csrfmiddlewaretoken" value="${csrfToken}">
                 <input type="hidden" name="product_slug" value="${productInfo.slug}">
-                <button type="submit" class="btn btn-danger btn-sm me-1 mb-2" title="Удалить продукт из корзины">
+                <button type="submit" class="btn btn-danger btn-sm me-1 mt-2" title="Удалить продукт из корзины">
                     <i class="fas fa-trash"></i>
                 </button>
             </form>
