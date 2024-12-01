@@ -53,9 +53,6 @@
           {% endfor %}
         ],
         "description": "{{ product.description|striptags|escape }}",
-        {% if product.is_bouquet %}
-        "color": "{% for color in product.colors.all %}{{ color.name }}{% if not forloop.last %},{% endif %}{% endfor %}",
-        {% endif %}
         "category": {
             "@type": "CategoryCode",
             "name": "{{ product.subcategory.name }}",
