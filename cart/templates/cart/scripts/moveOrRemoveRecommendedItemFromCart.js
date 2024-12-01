@@ -78,8 +78,8 @@ document.querySelectorAll('.add-to-cart-form').forEach(function(form) {
         };
 
         if (productInfo.isIncart) {
-            const productElement = productsListContainer.querySelector(`#${productInfo.slug}`)
-            const productHr = productsListContainer.querySelector(`#${productInfo.slug}Hr`)
+            const productElement = productsListContainer.getElementById(`${productInfo.slug}`)
+            const productHr = productsListContainer.getElementById(`${productInfo.slug}Hr`)
             if (productElement) {
                 productElement.remove()
             }
