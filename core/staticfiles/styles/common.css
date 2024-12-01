@@ -253,7 +253,7 @@ body {
     text-align: right;
 }
 
-#footer-section-right {
+#footer-section-left {
     margin-right: 50px;
 }
 
@@ -271,7 +271,7 @@ body {
         text-align: center;
     }
 
-    #footer-section-right {
+    #footer-section-left {
         margin-right: 0;
     }
 }
