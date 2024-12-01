@@ -11,9 +11,11 @@
   {% for lang_code, lang_name in LANGUAGES %}
     {% language lang_code %}
       {% if lang_code == CURRENT_LANGUAGE_CODE and forlooop.first %}
-        <link rel="canonical" hreflang="{{ lang_code }}" href="https://{{ domain_name }}/">
+        <link rel="canonical" href="https://{{ domain_name }}/">
+        <link rel="alternate" hreflang="{{ lang_code }}" href="https://{{ domain_name }}/">
       {% elif lang_code == CURRENT_LANGUAGE_CODE %}
-        <link rel="canonical" hreflang="{{ lang_code }}" href="https://{{ domain_name }}{% url 'mainpage:offers' %}">
+        <link rel="canonical" href="https://{{ domain_name }}{% url 'mainpage:offers' %}">
+        <link rel="alternate" hreflang="{{ lang_code }}" href="https://{{ domain_name }}{% url 'mainpage:offers' %}">
       {% else %}
         <link rel="alternate" hreflang="{{ lang_code }}" href="https://{{ domain_name }}{% url 'mainpage:offers' %}">
       {% endif %}

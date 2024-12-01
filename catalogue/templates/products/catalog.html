@@ -19,7 +19,8 @@
     {% for lang_code, lang_name in LANGUAGES %}
         {% language lang_code %}
             {% if lang_code == CURRENT_LANGUAGE_CODE %}
-                <link rel="canonical" hreflang="{{ lang_code }}" href="https://{{ domain_name }}{% url 'catalogue:catalog' %}">
+                <link rel="canonical" href="https://{{ domain_name }}{% url 'catalogue:catalog' %}">
+                <link rel="alternate" hreflang="{{ lang_code }}" href="https://{{ domain_name }}{% url 'catalogue:catalog' %}">
             {% else %}
                 <link rel="alternate" hreflang="{{ lang_code }}" href="https://{{ domain_name }}{% url 'catalogue:catalog' %}">
             {% endif %}
