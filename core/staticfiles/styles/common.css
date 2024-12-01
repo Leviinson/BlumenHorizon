@@ -253,6 +253,10 @@ body {
     text-align: right;
 }
 
+#footer-section-right {
+    margin-right: 50px;
+}
+
 #footer-sections {
     align-items: start;
 }
@@ -265,6 +269,10 @@ body {
 
     #footer-section-right, #footer-section-left, #footer-company-email {
         text-align: center;
+    }
+
+    #footer-section-right {
+        margin-right: 0;
     }
 }
 
