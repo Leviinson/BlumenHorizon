@@ -32,8 +32,6 @@ SECRET_KEY = "django-insecure-#mvxx*v8tn1h23&6w^i2q%kzz*ki@$rpox$a^%jy1r0bhuufnq
 DEBUG = bool(int(os.getenv("DEBUG")))
 
 ALLOWED_HOSTS = [
-    "127.0.0.1",
-    os.getenv("PUBLIC_IP"),
     os.getenv("DOMAIN"),
     f"www.{os.getenv("DOMAIN")}",
 ]
