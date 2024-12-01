@@ -252,7 +252,20 @@ body {
 @media (max-width: 767px) {
     #footer-sections {
         flex-direction: column;
+        align-items: center;
     }
+
+    #footer-section-right, #footer-section-left, #footer-company-email {
+        text-align: center;
+    }
+}
+
+#footer-section-right, #footer-company-email {
+    text-align: right;
+}
+
+#footer-sections {
+    align-items: start;
 }
 
 .product-discount-badge {

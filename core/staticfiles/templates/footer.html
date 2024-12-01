@@ -6,8 +6,8 @@
             <img src="{% static 'defaults/logo.png' %}" alt="{{ site_name }} logo" width="72" height="72" class="me-2">
             {{ site_name }}
         </a>
-        <div id="footer-sections" class="d-flex justify-content-center align-items-start gap-5">
-            <div class="mb-3">
+        <div id="footer-sections" class="d-flex justify-content-center gap-5">
+            <div id="footer-section-left" class="mb-3">
                 <span class="fw-bold fs-4">{% translate 'Клиентам' %}</span>
                 <ul class="nav flex-column">
                     <li class="nav-item mb-2">
@@ -30,7 +30,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="mb-3 text-end">
+            <div id="footer-section-right" class="mb-3">
                 <span class="fw-bold text-light fs-4">{% translate 'Компания' %}</span>
                 <ul class="nav flex-column">
                     <li class="nav-item mb-2">
@@ -69,7 +69,7 @@
             </div> -->
         </div>
         
-        <div class="w-100 text-end">
+        <div id="footer-company-email" class="w-100">
             <span class="fs-6">{{ company_email }}</span>
         </div>
         <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center pt-4 mt-1 border-top">
