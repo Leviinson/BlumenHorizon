@@ -2,8 +2,8 @@ function initializeCartListeners(containerId = "products-list-container") {
     const productsListContainer = document.getElementById(containerId);
 
     async function sendAjax(form) {
-        const quantityInput = document.getElementById(form.dataset.productQuantityInputId);
-        const subtotalElement = document.getElementById(form.dataset.subtotalId);
+        const quantityInput = document.querySelector(`[data-id='${form.dataset.productQuantityInputId}']`);
+        const subtotalElement = document.querySelector(`[data-id='${form.dataset.subtotalId}']`);
         const grandTotalElement = document.getElementById("grand-total-price");
         const countElement = document.getElementById("total-count");
         const taxesElement = document.getElementById("taxes");
@@ -33,7 +33,7 @@ function initializeCartListeners(containerId = "products-list-container") {
 
     function handleDecreaseFormSubmit(e) {
         const form = e.target;
-        const quantityInput = document.getElementById(form.dataset.productQuantityInputId);
+        const quantityInput = document.querySelector(`[data-id='${form.dataset.productQuantityInputId}']`);
         if (parseInt(quantityInput.value) <= 1) {
             e.preventDefault();
             showToast(gettext("В корзине всего один продукт. Вместо уменьшения количества - удалите его."), "danger");

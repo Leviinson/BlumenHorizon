@@ -35,9 +35,9 @@
                         <!-- Single item -->
                         {% for item in bouquets_cart.items %}
                         {% if not forloop.first %}
-                        <hr id="{{ item.product.slug }}Hr">
+                        <hr data-id="{{ item.product.slug }}Hr">
                         {% endif %}
-                        <div class="row product-container" id="{{ item.product.slug }}">
+                        <div class="row product-container" data-id="{{ item.product.slug }}">
                             <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
                                 <div class="bg-image hover-overlay ripple image-wrapper">
                                     <a href="{{ item.product.get_relative_url }}" class="w-100">
@@ -56,7 +56,7 @@
                                 <div class="d-flex mb-4 mx-l-auto mx-auto" style="max-width: 300px">
                                     {% include 'cart/decreaseItemInCart.html' %}
                                     <div class="form-outline text-center">
-                                        <input id="{{ item.product.slug }}QuantityInput" min="1" name="quantity"
+                                        <input data-id="{{ item.product.slug }}QuantityInput" min="1" name="quantity"
                                             value="{{ item.quantity }}" type="number" class="form-control" disabled />
                                         <label class="form-label m-0" for="{{ item.product.slug }}QuantityInput">
                                             {% translate 'Количество' %}
@@ -66,7 +66,7 @@
                                 </div>
 
                                 <p class="text-center text-md-center">
-                                    <strong id="{{ item.product.slug }}Subtotal">
+                                    <strong data-id="{{ item.product.slug }}Subtotal">
                                         {{ item.subtotal|floatformat:"2u"}}
                                     </strong>
                                     {{ currency_symbol }}
@@ -77,12 +77,12 @@
                         <!-- Single item -->
                         {% for item in products_cart.items %}
                         {% if bouquets_cart.items %}
-                        <hr id="{{ item.product.slug }}Hr">
+                        <hr data-id="{{ item.product.slug }}Hr">
                         {% endif %}
                         {% if not bouquets_cart.items and not forloop.first %}
-                        <hr id="{{ item.product.slug }}Hr">
+                        <hr data-id="{{ item.product.slug }}Hr">
                         {% endif %}
-                        <div class="row product-container" id="{{ item.product.slug }}">
+                        <div class="row product-container" data-id="{{ item.product.slug }}">
                             <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
                                 <div class="bg-image image-wrapper">
                                     <a href="{{ item.product.get_relative_url }}" class="w-100">
@@ -101,7 +101,7 @@
                                 <div class="d-flex mb-4 mx-l-auto mx-auto">
                                     {% include 'cart/decreaseItemInCart.html' %}
                                     <div class="form-outline text-center">
-                                        <input id="{{ item.product.slug }}QuantityInput" min="1" name="quantity"
+                                        <input data-id="{{ item.product.slug }}QuantityInput" min="1" name="quantity"
                                             value="{{ item.quantity }}" type="number" class="form-control" disabled />
                                         <label class="form-label m-0" for="{{ item.product.slug }}QuantityInput">
                                             {% translate 'Количество' %}
@@ -111,7 +111,7 @@
                                 </div>
 
                                 <p class="text-center text-md-center">
-                                    <strong id="{{ item.product.slug }}Subtotal">
+                                    <strong data-id="{{ item.product.slug }}Subtotal">
                                         {{ item.subtotal|floatformat:"2u"}}
                                     </strong>
                                     {{ currency_symbol }}
@@ -234,7 +234,7 @@
                                         <span class="product-price fw-bold">{{ recommended_product.tax_price|floatformat:"2u" }}</span><span>{{ currency_symbol }}</span>
                                         {% endif %}
                                         </p>
-                                        <form id="{{ recommended_product.slug }}AddForm" method="post" class="add-to-cart-form w-100 me-2" data-add-url="{% url 'cart:bouquet-add' %}"
+                                        <form data-id="{{ recommended_product.slug }}AddForm" method="post" class="add-to-cart-form w-100 me-2" data-add-url="{% url 'cart:bouquet-add' %}"
                                         data-remove-url="{% url 'cart:bouquet-remove' %}"
                                         data-is-in-cart="{% if recommended_product in bouquets_cart %}true{% else %}false{% endif %}"
                                         data-is-bouquet="true">
@@ -283,7 +283,7 @@
                                         <strong class="product-price">{{ recommended_product.tax_price|floatformat:"2u" }}</strong><strong>{{ currency_symbol }}</strong>
                                         {% endif %}
                                         </p>
-                                        <form id="{{ recommended_product.slug }}AddForm" method="post" class="add-to-cart-form w-100 me-2" data-add-url="{% url 'cart:product-add' %}"
+                                        <form data-id="{{ recommended_product.slug }}AddForm" method="post" class="add-to-cart-form w-100 me-2" data-add-url="{% url 'cart:product-add' %}"
                                         data-remove-url="{% url 'cart:product-remove' %}"
                                         data-is-in-cart="{% if recommended_product in products_cart %}true{% else %}false{% endif %}"
                                         data-is-bouquet="false">

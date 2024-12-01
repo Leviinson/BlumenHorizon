@@ -13,7 +13,7 @@ function initializeRemoveForms(formSelector = '.product-remove-form') {
             if (data.status === "success") {
                 const hr = document.getElementById(form.dataset.hrId);
                 const productElementId = form.dataset.productElementId;
-                const productElement = document.getElementById(productElementId);
+                const productElement = document.querySelector(`[data-id='${productElementId}']`);
                 const grandTotalElement = document.getElementById("grand-total-price");
                 const countElement = document.getElementById("total-count");
                 const taxesElement = document.getElementById("taxes");
@@ -24,7 +24,7 @@ function initializeRemoveForms(formSelector = '.product-remove-form') {
                     if (hr) {
                         hr.remove();
                     }
-                    const recommendedProductAddToCartForm = document.getElementById(`${productElementId}AddForm`)
+                    const recommendedProductAddToCartForm = document.querySelector(`[data-id='${productElementId}AddForm']`);
                     updateCartButtonState(recommendedProductAddToCartForm, false);
                     countElement.textContent = interpolate(gettext('%s эл.'), [data.totalQuantity]);
                     taxesElement.textContent = data.taxes;

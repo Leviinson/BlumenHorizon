@@ -78,8 +78,8 @@ document.querySelectorAll('.add-to-cart-form').forEach(function(form) {
         };
 
         if (productInfo.isIncart) {
-            const productElement = productsListContainer.getElementById(`${productInfo.slug}`)
-            const productHr = productsListContainer.getElementById(`${productInfo.slug}Hr`)
+            const productElement = productsListContainer.querySelector(`[data-id='${productInfo.slug}']`);
+            const productHr = productsListContainer.querySelector(`[data-id='${productInfo.slug}Hr']`);
             if (productElement) {
                 productElement.remove()
             }
@@ -112,8 +112,8 @@ document.querySelectorAll('.add-to-cart-form').forEach(function(form) {
         }
 
         const newProductElement = `
-    ${needsHr ? `<hr id="${productInfo.slug}Hr">` : ''}
-    <div class="row product-container" id="${productInfo.slug}">
+    ${needsHr ? `<hr data-id="${productInfo.slug}Hr">` : ''}
+    <div class="row product-container" data-id="${productInfo.slug}">
         <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
             <div class="bg-image hover-overlay ripple image-wrapper">
                 <a href="${productInfo.link}">
@@ -141,7 +141,7 @@ document.querySelectorAll('.add-to-cart-form').forEach(function(form) {
                     </button>
                 </form>
                 <div class="form-outline text-center">
-                    <input id="${productInfo.slug}QuantityInput" min="1" name="quantity" value="1" type="number" class="form-control" disabled="">
+                    <input data-id="${productInfo.slug}QuantityInput" min="1" name="quantity" value="1" type="number" class="form-control" disabled="">
                     <label class="form-label m-0" for="${productInfo.slug}QuantityInput">
                         Количество
                     </label>
@@ -155,7 +155,7 @@ document.querySelectorAll('.add-to-cart-form').forEach(function(form) {
                 </form>
             </div>
             <p class="text-center text-md-center">
-                <strong id="${productInfo.slug}Subtotal">
+                <strong data-id="${productInfo.slug}Subtotal">
                     ${subtotal}
                 </strong>
                 $
