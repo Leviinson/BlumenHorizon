@@ -87,7 +87,7 @@ document.querySelectorAll('.add-to-cart-form').forEach(function(form) {
                 productHr.remove()
             }
 
-            if (productsListContainer.children.length === 0) {
+            if (productsListContainer.children.length === 1) {
                 emptyCartImage.classList.remove("d-flex");
                 emptyCartImage.classList.add("d-none");
                 clearCartButton.classList.add("disabled")
@@ -104,7 +104,7 @@ document.querySelectorAll('.add-to-cart-form').forEach(function(form) {
         const increaseProductLink = productInfo.isBouquet ? `/${langValue}/cart/bouquet/increase/` : `/${langValue}/cart/product/increase/`
 
         let needsHr = true;
-        if (productsListContainer.children.length === 0) {
+        if (productsListContainer.children.length === 1) {
             needsHr = false;
             clearCartButton.classList.remove("disabled")
             emptyCartImage.classList.remove("d-flex");
