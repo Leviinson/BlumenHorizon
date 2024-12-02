@@ -28,6 +28,11 @@ DJANGO_SETTINGS_MODULE = "core.settings"
 addopts = "-v"
 log_level = "INFO"
 
+[tool.pytest_env]
+ENV="test"
+SITE_NAME="BlumenHorizon"
+SITE_DOMAIN="0.0.0.0:8000"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
@@ -55,3 +60,4 @@ djangorestframework = "^3.15.2"
 markdown = "^3.7"
 django-cacheops = "^7.1"
 python-telegram-bot = "^21.7"
+pytest-env = "^1.1.5"

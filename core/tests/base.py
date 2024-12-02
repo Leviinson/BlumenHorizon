@@ -1,3 +1,4 @@
+import os
 from dataclasses import asdict
 
 from django.conf import settings
@@ -17,8 +18,8 @@ class BaseTestCase(TestCase):
         cls.signin_url = reverse_lazy("accounts:signin")
         cls.profile_url = reverse_lazy("accounts:me")
         site = Site.objects.get(id=1)
-        site.name = settings.SITE_NAME
-        site.domain = settings.SITE_DOMAIN
+        site.name = os.getenv("SITE_NAME")
+        site.domain = os.getenv("SITE_DOMAIN")
         site.save(
             update_fields=[
                 "name",
