@@ -5,7 +5,7 @@ function emptyCartHandler() {
     const cartClearButton = document.getElementById("cart-clear-button");
     const productCount = productsListContainer.querySelectorAll(".product-container").length;
     if (productsListContainer && noImageContainer) {
-        if (productCount === 0) {
+        if (productCount === 1) {
             noImageContainer.classList.remove("d-none");
             noImageContainer.classList.add("d-flex");
             checkoutButton.classList.add("disabled");
