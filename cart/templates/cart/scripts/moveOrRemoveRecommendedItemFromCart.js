@@ -104,7 +104,7 @@ document.querySelectorAll('.add-to-cart-form').forEach(function(form) {
         const increaseProductLink = productInfo.isBouquet ? `/${langValue}/cart/bouquet/increase/` : `/${langValue}/cart/product/increase/`
 
         let needsHr = true;
-        if (productsListContainer.children.length === 1 && productsListContainer.firstElementChild === emptyCartImage) {
+        if (productsListContainer.children.length === 0) {
             needsHr = false;
             clearCartButton.classList.remove("disabled")
             emptyCartImage.classList.remove("d-flex");
