@@ -96,11 +96,12 @@ document.querySelectorAll('.add-to-cart-form').forEach(function(form) {
             return
         }
         
+        const langValue = document.documentElement.getAttribute('lang');
         const subtotal = productInfo.discountedPrice ? productInfo.discountedPrice : productInfo.price;
         const csrfToken = productCard.querySelector('input[name="csrfmiddlewaretoken"]').value;
-        const removeProductLink = productInfo.isBouquet ? `/cart/bouquet/remove/` : `/cart/product/remove/`
-        const decreaseProductLink = productInfo.isBouquet ? `/cart/bouquet/decrease/` : `/cart/product/decrease/`
-        const increaseProductLink = productInfo.isBouquet ? `/cart/bouquet/increase/` : `/cart/product/increase/`
+        const removeProductLink = productInfo.isBouquet ? `/${langValue}/cart/bouquet/remove/` : `/${langValue}/cart/product/remove/`
+        const decreaseProductLink = productInfo.isBouquet ? `/${langValue}/cart/bouquet/decrease/` : `/${langValue}/cart/product/decrease/`
+        const increaseProductLink = productInfo.isBouquet ? `/${langValue}/cart/bouquet/increase/` : `/${langValue}/cart/product/increase/`
 
         let needsHr = true;
         if (productsListContainer.children.length === 1 && productsListContainer.firstElementChild === emptyCartImage) {
