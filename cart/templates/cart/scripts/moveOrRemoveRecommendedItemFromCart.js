@@ -87,7 +87,7 @@ document.querySelectorAll('.add-to-cart-form').forEach(function(form) {
                 productHr.remove()
             }
 
-            if (productsListContainer.children.length === 1 && productsListContainer.firstElementChild === emptyCartImage) {
+            if (productsListContainer.children.length === 0) {
                 emptyCartImage.classList.remove("d-flex");
                 emptyCartImage.classList.add("d-none");
                 clearCartButton.classList.add("disabled")
