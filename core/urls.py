@@ -45,7 +45,7 @@ i18n_urlpatterns = i18n_patterns(
 
 urlpatterns = service_urlpatterns + i18n_urlpatterns
 
-if settings.DEBUG and not settings.TESTING:
+if settings.DEBUG and not settings.TEST_MODE:
     urlpatterns.extend(debug_toolbar_urls())
 
 if "rosetta" in settings.INSTALLED_APPS:

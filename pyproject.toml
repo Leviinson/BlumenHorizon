@@ -29,7 +29,7 @@ addopts = "-v"
 log_level = "INFO"
 
 [tool.pytest_env]
-ENV="test"
+ENV="no-test"
 SITE_NAME="BlumenHorizon"
 SITE_DOMAIN="0.0.0.0:8000"
 

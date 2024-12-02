@@ -95,7 +95,7 @@ DATA_UPLOAD_MAX_MEMORY_SIZE = (
     10485760 // 2
 )  # 10MB : 2 = 5MB (for comfort changing in the future)
 
-if DEBUG or TEST_MODE:
+if DEBUG:
     SECURE_CROSS_ORIGIN_OPENER_POLICY = None
 else:
     SESSION_COOKIE_SECURE = True
