@@ -11,7 +11,7 @@ function initializeRemoveForms(formSelector = '.product-remove-form') {
             const data = await response.json();
 
             if (data.status === "success") {
-                const hr = document.getElementById(form.dataset.hrId);
+                const hr = document.querySelector(`[data-id='${form.dataset.hrId}']`);
                 const productElementId = form.dataset.productElementId;
                 const productElement = document.querySelector(`[data-id='${productElementId}']`);
                 const grandTotalElement = document.getElementById("grand-total-price");
