@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 import os
-import sys
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -30,12 +29,19 @@ SECRET_KEY = "django-insecure-#mvxx*v8tn1h23&6w^i2q%kzz*ki@$rpox$a^%jy1r0bhuufnq
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(int(os.getenv("DEBUG")))
+TEST_MODE = os.getenv("ENV") == "test"
 
 ALLOWED_HOSTS = [
-    "127.0.0.1",
     os.getenv("DOMAIN"),
     f"www.{os.getenv("DOMAIN")}",
 ]
+INTERNAL_IPS = [
+    os.getenv("PUBLIC_IP"),
+]
+
+if DEBUG:
+    ALLOWED_HOSTS.append("127.0.0.1")
+    INTERNAL_IPS.append("127.0.0.1")
 
 # TELEGRAM
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
@@ -89,21 +95,19 @@ DATA_UPLOAD_MAX_MEMORY_SIZE = (
     10485760 // 2
 )  # 10MB : 2 = 5MB (for comfort changing in the future)
 
-INTERNAL_IPS = [
-    os.getenv("PUBLIC_IP"),
-]
-
-# SESSION_COOKIE_SECURE = True
-# CSRF_COOKIE_SECURE = True
-# SECURE_SSL_HOST = os.getenv("DOMAIN")
-# SECURE_HSTS_SECONDS = 31536000
-# SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-# SECURE_SSL_REDIRECT = True
-# CORS_ALLOWED_ORIGINS = [
-#     f'https://www.{os.getenv("DOMAIN")}',
-#     f'https://{os.getenv("DOMAIN")}',
-# ]
-SECURE_CROSS_ORIGIN_OPENER_POLICY = None
+if DEBUG or TEST_MODE:
+    SECURE_CROSS_ORIGIN_OPENER_POLICY = None
+else:
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_SSL_HOST = os.getenv("DOMAIN")
+    SECURE_HSTS_SECONDS = 31536000
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+    SECURE_SSL_REDIRECT = True
+    CORS_ALLOWED_ORIGINS = [
+        f'https://www.{os.getenv("DOMAIN")}',
+        f'https://{os.getenv("DOMAIN")}',
+    ]
 
 
 # Application definition
@@ -169,7 +173,9 @@ ROOT_URLCONF = "core.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": ["core/staticfiles/", BASE_DIR / "templates"],
+        "DIRS": [
+            "core/staticfiles/",
+        ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -373,12 +379,12 @@ CACHES = {
     }
 }
 
-# CACHEOPS_REDIS = os.getenv("CACHEOPS_REDIS")
-# CACHEOPS = {
-#     "sites.site": {"ops": "all", "timeout": 15},
-#     "extended_contrib_models.extended_site": {"ops": "all", "timeout": 15},
-#     "extended_contrib_models.social": {"ops": "all", "timeout": 15},
-# }
+CACHEOPS_REDIS = os.getenv("CACHEOPS_REDIS")
+CACHEOPS = {
+    "sites.site": {"ops": "all", "timeout": 15},
+    "extended_contrib_models.extendedsite": {"ops": "all", "timeout": 15},
+    "extended_contrib_models.social": {"ops": "all", "timeout": 15},
+}
 
 # Celery
 # https://docs.celeryq.dev/en/stable/userguide/application.html#config-from-object
@@ -422,7 +428,7 @@ LOGOUT_REDIRECT_URL = "accounts:signin"
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = "de"
+LANGUAGE_CODE = "de" if not TEST_MODE else "ru"
 LANGUAGES = [
     ("de", "🇩🇪"),
     ("en", "🇺🇸"),
@@ -459,10 +465,8 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # DJANGO DEBUG TOOLBAR
-
-TESTING = "test" in sys.argv
-
-if not TESTING and DEBUG:
+print(TEST_MODE)
+if DEBUG and not TEST_MODE:
     INSTALLED_APPS = [
         *INSTALLED_APPS,
         "debug_toolbar",
@@ -478,8 +482,6 @@ PHONENUMBER_DEFAULT_REGION = os.getenv("PHONENUMBER_DEFAULT_REGION")
 
 # SITES
 SITE_ID = 1
-SITE_NAME = os.getenv("SITE_NAME")  # for tests
-SITE_DOMAIN = os.getenv("SITE_DOMAIN")  # for tests
 
 # CARTON
 CART_PRODUCT_LOOKUP = {
