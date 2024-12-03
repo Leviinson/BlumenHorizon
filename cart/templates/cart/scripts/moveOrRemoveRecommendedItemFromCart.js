@@ -102,8 +102,8 @@ document.querySelectorAll('.add-to-cart-form').forEach(function(form) {
         const csrfToken = productCard.querySelector('input[name="csrfmiddlewaretoken"]').value;
 
         let removeProductLink;
-        let decreaseProductLink
-        let increaseProductLink
+        let decreaseProductLink;
+        let increaseProductLink;
         if (langValue === "de") {
             removeProductLink = productInfo.isBouquet ? `/cart/bouquet/remove/` : `/cart/product/remove/`
             decreaseProductLink = productInfo.isBouquet ? `/cart/bouquet/decrease/` : `/cart/product/decrease/`

@@ -33,7 +33,6 @@ TEST_MODE = os.getenv("ENV") == "test"
 
 ALLOWED_HOSTS = [
     os.getenv("DOMAIN"),
-    f"www.{os.getenv("DOMAIN")}",
 ]
 INTERNAL_IPS = [
     os.getenv("PUBLIC_IP"),
@@ -105,7 +104,6 @@ else:
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
     SECURE_SSL_REDIRECT = True
     CORS_ALLOWED_ORIGINS = [
-        f'https://www.{os.getenv("DOMAIN")}',
         f'https://{os.getenv("DOMAIN")}',
     ]
 

@@ -23,7 +23,7 @@ Disallow: /catalog/*?min_amount_of_flowers=
 Disallow: /catalog/*?max_amount_of_flowers=
 Disallow: /catalog/*?colors=
 Disallow: /catalog/*?flowers=
-Sitemap: https://www.blumenhorizon.com/sitemap.xml
+Sitemap: https://blumenhorizon.com/sitemap.xml
 """
     )
 

@@ -482,7 +482,7 @@ class BouquetSubcategory(
                 "subcategory_slug": self.slug,
             },
         )
-        return f"https://www.{site.domain}{relative_url}"
+        return f"https://{site.domain}{relative_url}"
 
     def get_relative_url(self):
         return reverse_lazy(
