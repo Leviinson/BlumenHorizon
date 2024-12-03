@@ -463,7 +463,6 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # DJANGO DEBUG TOOLBAR
-print(TEST_MODE)
 if DEBUG and not TEST_MODE:
     INSTALLED_APPS = [
         *INSTALLED_APPS,
