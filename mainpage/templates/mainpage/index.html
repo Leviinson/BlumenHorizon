@@ -15,7 +15,7 @@
         <link rel="alternate" hreflang="{{ lang_code }}" href="https://{{ domain_name }}/">
         <link rel="x-default" hreflang="{{ lang_code }}" href="https://{{ domain_name }}/">
       {% else %}
-        <link rel="alternate" hreflang="{{ lang_code }}" href="https://{{ domain_name }}{% url 'mainpage:offers' %}">
+      <link rel="alternate" hreflang="{{ lang_code }}" href="https://{{ domain_name }}{% url 'mainpage:offers' %}">
       {% endif %}
     {% endlanguage %}
   {% endfor %}
