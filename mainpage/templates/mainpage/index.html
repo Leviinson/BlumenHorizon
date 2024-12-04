@@ -10,7 +10,7 @@
 
   {% for lang_code, lang_name in LANGUAGES %}
     {% language lang_code %}
-      {% if forlooop.first %}
+      {% if forloop.first %}
         <link rel="canonical" href="https://{{ domain_name }}/">
         <link rel="alternate" hreflang="{{ lang_code }}" href="https://{{ domain_name }}/">
         <link rel="x-default" hreflang="{{ lang_code }}" href="https://{{ domain_name }}/">
