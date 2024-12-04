@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.contrib.sitemaps import Sitemap
 from django.db.models import Max
 from django.urls import reverse_lazy
@@ -55,20 +54,20 @@ class MainpageSitemap(FixedSitemapMixin):
             MainPageSeoBlock.objects.only("updated_at").latest("updated_at").updated_at
         )
 
-        # product_lastmod = (
-        #     Product.objects.filter(
-        #         is_active=True,
-        #         subcategory__is_active=True,
-        #         subcategory__category__is_active=True,
-        #     )
-        #     .only(
-        #         "updated_at",
-        #         "amount_of_orders",
-        #         "amount_of_savings",
-        #     )
-        #     .order_by("-amount_of_orders", "-amount_of_savings")[:12]
-        #     .aggregate(Max("updated_at"))["updated_at__max"]
-        # )
+        product_lastmod = (
+            Product.objects.filter(
+                is_active=True,
+                subcategory__is_active=True,
+                subcategory__category__is_active=True,
+            )
+            .only(
+                "updated_at",
+                "amount_of_orders",
+                "amount_of_savings",
+            )
+            .order_by("-amount_of_orders", "-amount_of_savings")[:12]
+            .aggregate(Max("updated_at"))["updated_at__max"]
+        )
 
         bouquet_lastmod = (
             Bouquet.objects.filter(
@@ -85,7 +84,7 @@ class MainpageSitemap(FixedSitemapMixin):
             .aggregate(Max("updated_at"))["updated_at__max"]
         )
 
-        return max(seo_block_lastmod, bouquet_lastmod)
+        return max(seo_block_lastmod, bouquet_lastmod, product_lastmod)
 
 
 # class ProductListSitemap(FixedSitemapMixin):
