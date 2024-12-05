@@ -44,7 +44,7 @@ class CatalogView(CommonContextMixin, TemplateView):
             "subcategories__slug",
             "subcategories__image",
             "subcategories__image_alt",
-        )
+        ).filter(is_active=True)
         context["products_categories"] = ProductCategory.objects.prefetch_related(
             "subcategories"
         ).only(
@@ -56,7 +56,7 @@ class CatalogView(CommonContextMixin, TemplateView):
             "subcategories__slug",
             "subcategories__image",
             "subcategories__image_alt",
-        )
+        ).filter(is_active=True)
         page_model = CatalogPageModel.objects.first()
         context["meta_tags"] = page_model.meta_tags
         context["json_ld"] = page_model.json_ld
