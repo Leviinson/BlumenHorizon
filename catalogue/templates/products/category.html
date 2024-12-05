@@ -31,36 +31,39 @@
 
 {% block body %}
 <div class="container px-4 text-center">
-    <a href="{{ category.get_relative_url }}" class="text-decoration-none text-dark d-flex flex-column justify-content-center align-items-center">
-        <div class="category-image-wrapper" style="height: 200px; width: 200px;">
-            <img class="img-thumbnail category-square-image rounded" src="{{ category.image.url }}"
-            alt="{{ category.image_alt }}">
-        </div>
-        
-        <h1 class="mb-4">{{ category.name }}</h1>
-    </a>
-    <div class="subcategories-container row gap-3 justify-content-center">
-        {% for subcategory in category.subcategories.all %}
-        <div class="subcategory-container card
-                        col-lg-3 col-md-5 col-12">
-            <div class="subcategory-content card-body text-start">
-                <a href="{{ subcategory.get_relative_url }}" class="text-decoration-none text-dark">
-                    <div class="subcategory-container d-flex align-items-center">
-                        <div class="category-image-wrapper me-2" style="min-width: 80px;">
-                            <img class="img-thumbnail category-square-image rounded" src="{{ subcategory.image.url }}"
-                            alt="{{ subcategory.image_alt }}">
-                        </div>
-                        <div class="w-auto">
-                            <h2 class="fs-6 fw-light mb-0" style="line-break: auto;">{{ subcategory.name }}</h2>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-        {% endfor %}
+  <a href="{{ category.get_relative_url }}" class="text-decoration-none text-dark d-flex flex-column justify-content-center align-items-center">
+    <div class="category-image-wrapper" style="height: 200px; width: 200px;">
+        <img class="img-thumbnail category-square-image rounded" src="{{ category.image.url }}"
+        alt="{{ category.image_alt }}">
     </div>
-
+    
+    <h1 class="mb-4">{{ category.name }}</h1>
+  </a>
+  <div class="subcategories-container row gap-3 justify-content-center">
+      {% for subcategory in category.subcategories.all %}
+        <div class="subcategory-container card
+                      col-lg-3 col-md-5 col-12">
+          <div class="subcategory-content card-body text-start">
+              <a href="{{ subcategory.get_relative_url }}" class="text-decoration-none text-dark">
+                  <div class="subcategory-container d-flex align-items-center">
+                      <div class="category-image-wrapper me-2" style="min-width: 80px;">
+                          <img class="img-thumbnail category-square-image rounded" src="{{ subcategory.image.url }}"
+                          alt="{{ subcategory.image_alt }}">
+                      </div>
+                      <div class="w-auto">
+                          <h2 class="fs-6 fw-light mb-0" style="line-break: auto;">{{ subcategory.name }}</h2>
+                      </div>
+                  </div>
+              </a>
+          </div>
+        </div>
+      {% endfor %}
+  </div>
+  <div id="category-description" class="mt-5">
+    {{ description|safe }}
+  </div>
 </div>
+
 {% endblock %}
 
 {% block additional_scripts %}

@@ -90,7 +90,8 @@ class CatalogPageModel(models.Model):
         </script>""",
     )
     description = HTMLField(
-        verbose_name=_("Описание"),
+        verbose_name=_("Описание на странице 'Каталог'"),
+        null=True
     )
 
     class Meta:
@@ -172,6 +173,10 @@ class ProductCategory(CategoryAbstract, TimeStampAdbstractModel, MetaDataAbstrac
         max_length=4000,
         default="""<title>Blumen Horizon | </title>
 <meta name="description" content="Описание">""",
+    )
+    description = HTMLField(
+        verbose_name="Описание на странице категории",
+        null=True
     )
 
     class Meta:
@@ -425,6 +430,10 @@ class BouquetCategory(CategoryAbstract, TimeStampAdbstractModel, MetaDataAbstrac
         max_length=4000,
         default="""<title>Blumen Horizon | </title>
 <meta name="description" content="Описание">""",
+    )
+    description = HTMLField(
+        verbose_name="Описание на странице категории",
+        null=True
     )
 
     class Meta:

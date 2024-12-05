@@ -104,6 +104,7 @@ class CategoryView(CommonContextMixin, TemplateView):
                         "slug",
                         "image",
                         "image_alt",
+                        "description",
                         "subcategories__name",
                         "subcategories__slug",
                         "subcategories__image",
@@ -121,6 +122,7 @@ class CategoryView(CommonContextMixin, TemplateView):
             raise Http404()
         context["meta_tags"] = context["category"].catalog_page_meta_tags
         context["json_ld"] = context["category"].json_ld
+        context["description"] = context["category"].description
         return context
 
 
