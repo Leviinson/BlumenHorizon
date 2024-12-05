@@ -33,30 +33,40 @@ class CatalogView(CommonContextMixin, TemplateView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context["bouquets_categories"] = BouquetCategory.objects.prefetch_related(
-            "subcategories"
-        ).only(
-            "name",
-            "slug",
-            "image",
-            "image_alt",
-            "subcategories__name",
-            "subcategories__slug",
-            "subcategories__image",
-            "subcategories__image_alt",
-        ).filter(is_active=True, subcategories__is_active=True)
-        context["products_categories"] = ProductCategory.objects.prefetch_related(
-            "subcategories"
-        ).only(
-            "name",
-            "slug",
-            "image",
-            "image_alt",
-            "subcategories__name",
-            "subcategories__slug",
-            "subcategories__image",
-            "subcategories__image_alt",
-        ).filter(is_active=True, subcategories__is_active=True)
+        context["bouquets_categories"] = (
+            BouquetCategory.objects.prefetch_related("subcategories")
+            .only(
+                "name",
+                "slug",
+                "image",
+                "image_alt",
+                "is_active",
+                "subcategories__name",
+                "subcategories__slug",
+                "subcategories__image",
+                "subcategories__image_alt",
+            )
+            .filter(
+                is_active=True,
+            )
+        )
+        context["products_categories"] = (
+            ProductCategory.objects.prefetch_related("subcategories")
+            .only(
+                "name",
+                "slug",
+                "image",
+                "image_alt",
+                "is_active",
+                "subcategories__name",
+                "subcategories__slug",
+                "subcategories__image",
+                "subcategories__image_alt",
+            )
+            .filter(
+                is_active=True,
+            )
+        )
         page_model = CatalogPageModel.objects.first()
         context["meta_tags"] = page_model.meta_tags
         context["json_ld"] = page_model.json_ld
