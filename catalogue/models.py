@@ -89,6 +89,9 @@ class CatalogPageModel(models.Model):
         }
         </script>""",
     )
+    description = HTMLField(
+        verbose_name=_("Описание"),
+    )
 
     class Meta:
         verbose_name = "Мета-тег каталога категорий и подкатегорий"

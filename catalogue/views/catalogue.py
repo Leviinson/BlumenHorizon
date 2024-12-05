@@ -60,6 +60,7 @@ class CatalogView(CommonContextMixin, TemplateView):
         page_model = CatalogPageModel.objects.first()
         context["meta_tags"] = page_model.meta_tags
         context["json_ld"] = page_model.json_ld
+        context["description"] = page_model.description
         return context
 
 
