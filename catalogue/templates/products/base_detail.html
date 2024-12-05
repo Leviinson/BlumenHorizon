@@ -236,7 +236,7 @@
 
                     <div class="mb-3 d-flex flex-column align-items-end">
                         {% if product.has_discount %}
-                            <span class="text-danger mb-0 me-2" style="font-size: x-large;">
+                            <span class="text-danger mb-0 fw-bold" style="font-size: x-large;">
                                 {{ product.tax_price_discounted|floatformat:"2u" }} {{ currency_symbol }}
                             </span>
                             <span class="text-muted text-decoration-line-through mb-0" style="font-size: 1.25em;">
