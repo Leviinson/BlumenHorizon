@@ -428,9 +428,10 @@ LOGOUT_REDIRECT_URL = "accounts:signin"
 
 LANGUAGE_CODE = "de" if not TEST_MODE else "ru"
 LANGUAGES = [
-    ("de", "🇩🇪"),
-    ("en", "🇺🇸"),
-    ("ru", "🇷🇺"),
+    ("de", "🇩🇪 Deutsch"),
+    ("en", "🇺🇸 English"),
+    ("ru", "🇷🇺 Русский"),
+    ("uk", "🇺🇦 Українська"),
 ]
 
 TIME_ZONE = "Europe/Berlin"
