@@ -56,7 +56,7 @@ class CatalogView(CommonContextMixin, TemplateView):
             "subcategories__slug",
             "subcategories__image",
             "subcategories__image_alt",
-        ).filter(is_active=True)
+        ).filter(is_active=True, subcategories__is_active=True)
         page_model = CatalogPageModel.objects.first()
         context["meta_tags"] = page_model.meta_tags
         context["json_ld"] = page_model.json_ld
