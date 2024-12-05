@@ -94,11 +94,11 @@ class CatalogPageModel(models.Model):
     )
 
     class Meta:
-        verbose_name = "Мета-тег каталога категорий и подкатегорий"
-        verbose_name_plural = "Мета-теги каталога категорий и подкатегорий"
+        verbose_name = "Страница 'Каталог'"
+        verbose_name_plural = "Страница 'Каталог'"
 
     def __str__(self):
-        return "Мета-теги каталога категорий и подкатегорий"
+        return "Страница 'Каталог'"
 
 
 class CategoryAbstract(models.Model):
