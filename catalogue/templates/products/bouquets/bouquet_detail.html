@@ -3,58 +3,59 @@
 
 {% block additional_attributes %}
 <div class="d-flex align-items-center">
-    <div class="w-100">
-        <div class="d-flex flex-column justify-content-start">
-            <strong class="mb-2">
-                {% translate 'Количество цветов' %}: {{ product.amount_of_flowers }}
-            </strong>
-            <strong class="mb-2">
-                {% translate 'Диаметр' %}: {{ product.diameter }}{% translate 'см' %}
-            </strong>
-        </div>
-        <div id="colors-flowers-container" class="d-flex w-100">
-            <div id="flowers-container" style="width: 70%;">
-                <strong>{% translate 'Состав' %}:</strong>
-                <div class="d-flex flex-wrap mt-2">
-                    {% for flower in product.flowers.all %}
-                        <span class="badge flower-badge bg-soft-turquoise p-2 ms-0 mb-2 me-2 text-light">
-                            {{ flower.name }}
-                        </span>
-                    {% endfor %}
-                </div>
+    <div class="w-100 card">
+        <div class="card-body">
+            <div class="d-flex flex-column justify-content-start">
+                <strong class="mb-2">
+                    {% translate 'Количество цветов' %}: {{ product.amount_of_flowers }}
+                </strong>
+                <strong class="mb-2">
+                    {% translate 'Диаметр' %}: {{ product.diameter }}{% translate 'см' %}
+                </strong>
             </div>
-            <div id="colors-container" style="width: 40%;">
-                <strong>{% translate 'Цвет' %}:</strong>
-                <div class="d-flex flex-wrap mt-2">
-                    {% for color in product.colors.all %}
-                    <div class="d-flex align-items-center me-2 mb-2">
-                        <span class="badge-color" style="background-color: {{ color.hex_code }};
-                                                         border-color: var(--dark-green-color);
-                                                         border: double">
-                        </span>
+            <div id="colors-flowers-container" class="d-flex w-100">
+                <div id="flowers-container" style="width: 70%;">
+                    <strong>{% translate 'Состав' %}:</strong>
+                    <div class="d-flex flex-wrap mt-2">
+                        {% for flower in product.flowers.all %}
+                            <span class="badge flower-badge bg-soft-turquoise p-2 ms-0 mb-2 me-2 text-light">
+                                {{ flower.name }}
+                            </span>
+                        {% endfor %}
                     </div>
-                    {% endfor %}
                 </div>
+                <div id="colors-container" style="width: 40%;">
+                    <strong>{% translate 'Цвет' %}:</strong>
+                    <div class="d-flex flex-wrap mt-2">
+                        {% for color in product.colors.all %}
+                        <div class="d-flex align-items-center me-2 mb-2">
+                            <span class="badge-color" style="background-color: {{ color.hex_code }};
+                                                             border-color: var(--dark-green-color);
+                                                             border: double">
+                            </span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                
             </div>
-            
+            <div class="w-100">
+                {% with bouquet_sizes=product.sizes.all %}
+                    {% if bouquet_sizes %}
+                    <strong>{% translate 'Размеры' %}:</strong>
+                    <div class="container mb-0 mt-1 p-0 d-flex justify-content-between">
+                        {% for size in bouquet_sizes %}
+                        <a class="btn bg-dark-green text-light"
+                           data-bs-target="#carouselProductImage"
+                           data-bs-slide-to="0">
+                            {{ size.amount_of_flowers }} {% translate "шт." %}
+                        </a>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                {% endwith %}
+            </div>
         </div>
-        <div class="w-100">
-            {% with bouquet_sizes=product.sizes.all %}
-                {% if bouquet_sizes %}
-                <strong>{% translate 'Размеры' %}:</strong>
-                <div class="container mb-0 mt-1 p-0 d-flex justify-content-between">
-                    {% for size in bouquet_sizes %}
-                    <a class="btn bg-dark-green text-light"
-                       data-bs-target="#carouselProductImage"
-                       data-bs-slide-to="0">
-                        {{ size.amount_of_flowers }} {% translate "шт." %}
-                    </a>
-                    {% endfor %}
-                </div>
-                {% endif %}
-            {% endwith %}
-        </div>
-        </ul>
     </div>
 </div>
 {% endblock %}
