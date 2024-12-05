@@ -31,6 +31,10 @@ body {
     background-color: var(--dark-green-color) !important;
 }
 
+.text-dark-green {
+    color: var(--dark-green-color) !important;
+}
+
 .btn-outline-dark-green{
     --bs-btn-color: rgba(var(--bs-light-rgb),var(--bs-text-opacity))!important;
     --bs-btn-border-color: var(--dark-green-color);
