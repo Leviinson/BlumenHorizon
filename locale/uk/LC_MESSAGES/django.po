@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-05 16:13+0100\n"
-"PO-Revision-Date: 2024-12-05 20:06+0100\n"
+"PO-Revision-Date: 2024-12-05 20:17+0100\n"
 "Last-Translator: None None <blumenhorizon@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -771,7 +771,7 @@ msgstr "Склад букета можна міняти"
 
 #: catalogue/templates/products/base_detail.html:185
 msgid "Связь на каждом этапе"
-msgstr "Зв'язок кожному етапі"
+msgstr "Зв'язок на кожному етапі"
 
 #: catalogue/templates/products/base_detail.html:189
 #: mainpage/templates/mainpage/index.html:213
@@ -863,7 +863,7 @@ msgstr "Наступна сторінка букетів"
 
 #: catalogue/templates/products/bouquets/bouquet_detail.html:9
 msgid "Количество цветов"
-msgstr "Кількість кольорів"
+msgstr "Кількість квітів"
 
 #: catalogue/templates/products/bouquets/bouquet_detail.html:12
 msgid "Диаметр"
