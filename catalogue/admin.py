@@ -422,6 +422,7 @@ class CatalogPageAdmin(TranslationAdmin):
     fields = (
         "meta_tags",
         "json_ld",
+        "description",
     )
     list_display = ("id",)
 
