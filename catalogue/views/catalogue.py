@@ -1,4 +1,5 @@
 from django.db import transaction
+from django.db.models import Prefetch
 from django.http import Http404, JsonResponse
 from django.shortcuts import redirect
 from django.utils.translation import gettext_lazy as _
@@ -13,9 +14,11 @@ from ..forms import BuyItemForm
 from ..models import (
     Bouquet,
     BouquetCategory,
+    BouquetSubcategory,
     CatalogPageModel,
     Product,
     ProductCategory,
+    ProductSubcategory,
 )
 from ..services.views import (
     BouquetCategoryListViewMixin,
@@ -34,13 +37,19 @@ class CatalogView(CommonContextMixin, TemplateView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context["bouquets_categories"] = (
-            BouquetCategory.objects.prefetch_related("subcategories")
+            BouquetCategory.objects.prefetch_related(
+                Prefetch(
+                    "subcategories",
+                    queryset=BouquetSubcategory.objects.filter(is_active=True).only(
+                        "name", "slug", "image", "image_alt"
+                    ),
+                )
+            )
             .only(
                 "name",
                 "slug",
                 "image",
                 "image_alt",
-                "is_active",
                 "subcategories__name",
                 "subcategories__slug",
                 "subcategories__image",
@@ -51,13 +60,19 @@ class CatalogView(CommonContextMixin, TemplateView):
             )
         )
         context["products_categories"] = (
-            ProductCategory.objects.prefetch_related("subcategories")
+            ProductCategory.objects.prefetch_related(
+                Prefetch(
+                    "subcategories",
+                    queryset=ProductSubcategory.objects.filter(is_active=True).only(
+                        "name", "slug", "image", "image_alt"
+                    ),
+                )
+            )
             .only(
                 "name",
                 "slug",
                 "image",
                 "image_alt",
-                "is_active",
                 "subcategories__name",
                 "subcategories__slug",
                 "subcategories__image",
