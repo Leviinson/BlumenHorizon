@@ -44,7 +44,7 @@ class CatalogView(CommonContextMixin, TemplateView):
             "subcategories__slug",
             "subcategories__image",
             "subcategories__image_alt",
-        ).filter(is_active=True)
+        ).filter(is_active=True, subcategories__is_active=True)
         context["products_categories"] = ProductCategory.objects.prefetch_related(
             "subcategories"
         ).only(
