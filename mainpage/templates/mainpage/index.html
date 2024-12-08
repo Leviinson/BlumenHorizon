@@ -364,7 +364,7 @@
             </h3>
           </legend>
           {% csrf_token %}
-          <div class="form-text">{% translate 'Заполните форму, чтобы заказать букет из индивидуального состава.' %}</div>
+          <div class="form-text text-success">{% translate 'Заполните форму, чтобы заказать букет из индивидуального состава.' %}</div>
           <div class="mb-3 w-100">
             <label for="{{ individual_order_form.first_name.id_for_label }}" class="form-label">
               {% translate 'Имя' %}
