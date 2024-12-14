@@ -90,7 +90,7 @@ class CatalogPageModel(models.Model):
         </script>""",
     )
     description = HTMLField(
-        verbose_name=_("Описание на странице 'Каталог'"),
+        verbose_name="Описание на странице 'Каталог'",
         null=True
     )
 
