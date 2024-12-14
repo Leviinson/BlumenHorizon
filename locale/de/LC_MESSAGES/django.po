@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-08 23:05+0100\n"
-"PO-Revision-Date: 2024-12-08 23:02+0100\n"
-"Last-Translator: None None <root@gmail.com>\n"
+"POT-Creation-Date: 2024-12-14 18:42+0100\n"
+"PO-Revision-Date: 2024-12-14 18:48+0100\n"
+"Last-Translator: None None <blumenhorizon@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -43,8 +43,8 @@ msgid ""
 "Пожалуйста, введите корректную электронную почту и пароль. Помните, что оба "
 "поля чувствительны к регистру"
 msgstr ""
-"Bitte geben Sie eine gültige E-Mail-Adresse und ein Passwort ein. Denken Sie "
-"daran, dass beide Felder case-sensitive sind."
+"Bitte geben Sie eine gültige E-Mail-Adresse und ein Passwort ein. Denken Sie"
+" daran, dass beide Felder case-sensitive sind."
 
 #: accounts/forms/user_signin_form.py:15
 msgid ""
@@ -66,7 +66,7 @@ msgstr "E-Mail-Adresse"
 #: accounts/models.py:40
 #: accounts/templates/accounts/authorization/sign_up.html:52
 #: accounts/templates/accounts/index.html:62
-#: mainpage/templates/mainpage/index.html:370
+#: mainpage/templates/mainpage/index.html:374
 msgid "Имя"
 msgstr "Vorname"
 
@@ -251,8 +251,8 @@ msgstr ""
 "Oh nein, wir haben Ihren Warenkorb falsch bearbeitet. Die Verwaltung wird "
 "das bald beheben!"
 
-#: cart/services/mixins/edit.py:109 cart/views.py:332
-#: catalogue/views/catalogue.py:234 mainpage/views.py:148
+#: cart/services/mixins/edit.py:109 cart/views.py:333
+#: catalogue/views/catalogue.py:243 mainpage/views.py:148
 msgid "Метод не разрешен. Используйте POST."
 msgstr "Methode nicht erlaubt. Bitte verwenden Sie POST."
 
@@ -275,8 +275,8 @@ msgid ""
 "Оформите заказ на букеты в интернет-магазине %(site_name)s. Ваша корзина "
 "готова к оформлению. Быстрая доставка. "
 msgstr ""
-"Bestellen Sie Ihre Blumensträuße im Online-Shop %(site_name)s. Ihr Warenkorb "
-"ist bereit zur Bestellung. Schnelle Lieferung."
+"Bestellen Sie Ihre Blumensträuße im Online-Shop %(site_name)s. Ihr Warenkorb"
+" ist bereit zur Bestellung. Schnelle Lieferung."
 
 #: cart/templates/cart/index.html:14
 msgid ""
@@ -302,10 +302,10 @@ msgstr ""
 #: catalogue/templates/products/base_detail.html:316
 #: catalogue/templates/products/base_detail.html:320
 #: catalogue/templates/products/base_list.html:160
-#: mainpage/templates/mainpage/index.html:234
 #: mainpage/templates/mainpage/index.html:238
-#: mainpage/templates/mainpage/index.html:300
+#: mainpage/templates/mainpage/index.html:242
 #: mainpage/templates/mainpage/index.html:304
+#: mainpage/templates/mainpage/index.html:308
 msgid "Изображение продукта временно отсутствует."
 msgstr "Produktbild vorübergehend nicht verfügbar."
 
@@ -332,13 +332,14 @@ msgstr "Zahlungsmethoden:"
 msgid "способ оплаты по IBAN"
 msgstr "Zahlungsmethode per IBAN"
 
-#: cart/templates/cart/index.html:205 mainpage/templates/mainpage/index.html:48
-#: mainpage/templates/mainpage/index.html:218
+#: cart/templates/cart/index.html:205
+#: mainpage/templates/mainpage/index.html:48
+#: mainpage/templates/mainpage/index.html:222
 msgid "Рекомендуемые букеты к покупке"
 msgstr "Empfohlene Blumensträuße zum Kauf"
 
 #: cart/templates/cart/index.html:254
-#: mainpage/templates/mainpage/index.html:284
+#: mainpage/templates/mainpage/index.html:288
 msgid "Рекомендуемые подарки к букетам"
 msgstr "Empfohlene Geschenke zu den Blumensträußen"
 
@@ -346,7 +347,8 @@ msgstr "Empfohlene Geschenke zu den Blumensträußen"
 msgid "Резюме заказа"
 msgstr "Bestellübersicht"
 
-#: cart/templates/cart/index.html:330 core/staticfiles/templates/footer.html:37
+#: cart/templates/cart/index.html:330
+#: core/staticfiles/templates/footer.html:37
 #: core/staticfiles/templates/header.html:30
 msgid "Доставка"
 msgstr "Lieferung"
@@ -430,8 +432,8 @@ msgid ""
 "Минимум 3 часа после оформления заказа. Мы сообщим Вам о возможности "
 "доставки."
 msgstr ""
-"Mindestens 3 Stunden nach der Bestellung. Über die Möglichkeit der Lieferung "
-"informieren wir Sie gerne."
+"Mindestens 3 Stunden nach der Bestellung. Über die Möglichkeit der Lieferung"
+" informieren wir Sie gerne."
 
 #: cart/templates/cart/index.html:508
 msgid "Форма обращения к получателю"
@@ -596,101 +598,94 @@ msgstr "Status"
 #, python-format
 msgid ""
 "\n"
-"                <strong>В скором времени мы свяжемся с Вами </strong>по "
-"поводу Вашего заказа по указанной электронной почте <strong>(%(email)s)</"
-"strong>.\n"
+"                <strong>В скором времени мы свяжемся с Вами </strong>по поводу Вашего заказа по указанной электронной почте <strong>(%(email)s)</strong>.\n"
 "                "
 msgstr ""
 "\n"
-"<strong>Wir werden uns in Kürze mit Ihnen in Verbindung setzen </strong> "
-"bezüglich Ihrer Bestellung über die angegebene E-Mail-Adresse "
-"<strong>(%(email)s)</strong>."
+"<strong>Wir werden uns in Kürze mit Ihnen in Verbindung setzen </strong> bezüglich Ihrer Bestellung über die angegebene E-Mail-Adresse <strong>(%(email)s)</strong>."
 
 #: cart/templates/cart/success_order.html:44
 #, python-format
 msgid ""
 "\n"
-"                На данный момент Вам необходимо оплатить сумму "
-"<strong>%(grand_total)s%(currency_symbol)s</strong>\n"
+"                На данный момент Вам необходимо оплатить сумму <strong>%(grand_total)s%(currency_symbol)s</strong>\n"
 "                по данным реквизитам:\n"
 "                "
 msgstr ""
 "\n"
-"Derzeit müssen Sie den Betrag von "
-"<strong>%(grand_total)s%(currency_symbol)s</strong> gemäß den folgenden "
-"Zahlungsdetails begleichen:"
+"Derzeit müssen Sie den Betrag von <strong>%(grand_total)s%(currency_symbol)s</strong> gemäß den folgenden Zahlungsdetails begleichen:"
 
 #: cart/templates/cart/success_order.html:59
 msgid "Задать вопрос"
 msgstr "Frage stellen"
 
-#: cart/views.py:124
+#: cart/views.py:125
 #, python-brace-format
 msgid "{site_name} | Подтверждение заказа {order_code}"
 msgstr "{site_name} | Bestellbestätigung {order_code}"
 
-#: cart/views.py:232
+#: cart/views.py:233
 #, python-brace-format
 msgid "Букет \"{product_name}\" успешно добавлен в корзину."
 msgstr ""
 "Der Blumenstrauß \"{product_name}\" wurde erfolgreich zum Warenkorb "
 "hinzugefügt."
 
-#: cart/views.py:237
+#: cart/views.py:238
 msgid "Ошибка добавления букета в корзину."
 msgstr "Fehler beim Hinzufügen des Blumenstraußes zum Warenkorb."
 
-#: cart/views.py:247
+#: cart/views.py:248
 #, python-brace-format
 msgid "Продукт \"{product_name}\" успешно добавлен в корзину."
 msgstr ""
 "Das Produkt \"{product_name}\" wurde erfolgreich zum Warenkorb hinzugefügt."
 
-#: cart/views.py:252
+#: cart/views.py:253
 msgid "Ошибка добавления продукта в корзину."
 msgstr "Fehler beim Hinzufügen des Produkts zum Warenkorb."
 
-#: cart/views.py:262
+#: cart/views.py:263
 #, python-brace-format
 msgid "Букет \"{product_name}\" успешно убран из корзины."
 msgstr ""
 "Der Blumenstrauß \"{product_name}“ wurde erfolgreich aus dem Warenkorb "
 "entfernt."
 
-#: cart/views.py:267
+#: cart/views.py:268
 msgid "Ошибка удаления букета из корзины."
 msgstr "Fehler beim Entfernen des Blumenstraußes aus dem Warenkorb."
 
-#: cart/views.py:277
+#: cart/views.py:278
 #, python-brace-format
 msgid "Продукт \"{product_name}\" успешно убран из корзины."
 msgstr ""
 "Das Produkt \"{product_name}“ wurde erfolgreich aus dem Warenkorb entfernt."
 
-#: cart/views.py:282
+#: cart/views.py:283
 msgid "Ошибка удаления продукта из корзины."
 msgstr "Fehler beim Entfernen des Produkts aus dem Warenkorb."
 
-#: cart/views.py:292
+#: cart/views.py:293
 #, python-brace-format
 msgid "Количество букета \"{product_name}\" успешно уменьшено."
 msgstr ""
 "Die Menge des Blumenstraußes “{product_name}” wurde erfolgreich reduziert."
 
-#: cart/views.py:297
+#: cart/views.py:298
 msgid "Ошибка уменьшения количества букета в корзине."
 msgstr "Fehler beim Verringern der Menge des Blumenstraußes im Warenkorb."
 
-#: cart/views.py:307
+#: cart/views.py:308
 #, python-brace-format
 msgid "Количество продукта \"{product_name}\" успешно уменьшено."
 msgstr "Die Menge des Produkts “{product_name}” wurde erfolgreich reduziert."
 
-#: cart/views.py:312
+#: cart/views.py:313
 msgid "Ошибка уменьшения количества продукта в корзине."
 msgstr "Fehler beim Verringern der Menge des Produkts im Warenkorb."
 
-#: cart/views.py:323
+#: cart/views.py:324
 msgid "Корзина очищена"
 msgstr "Der Warenkorb wurde geleert."
 
@@ -733,10 +728,9 @@ msgid "Данный продукт был удалён или стал неак�
 msgstr "Dieses Produkt wurde entfernt oder ist nicht mehr verfügbar."
 
 #: catalogue/models.py:93
-#, fuzzy
 #| msgid "Главная страница"
 msgid "Описание на странице 'Каталог'"
-msgstr "Startseite"
+msgstr "Описание на странице 'Каталог'"
 
 #: catalogue/services/views/details_mixin.py:66
 #, python-format
@@ -774,7 +768,7 @@ msgid "Следующее фото букета"
 msgstr "Nächstes Foto des Blumenstraußes"
 
 #: catalogue/templates/products/base_detail.html:180
-#: mainpage/templates/mainpage/index.html:203
+#: mainpage/templates/mainpage/index.html:207
 msgid "Состав букета можно менять"
 msgstr "Der Inhalt des Buketts kann geändert werden"
 
@@ -783,7 +777,7 @@ msgid "Связь на каждом этапе"
 msgstr "Kontakt in jedem Schritt"
 
 #: catalogue/templates/products/base_detail.html:189
-#: mainpage/templates/mainpage/index.html:213
+#: mainpage/templates/mainpage/index.html:217
 msgid "Анонимная доставка"
 msgstr "Anonyme Lieferung"
 
@@ -800,12 +794,12 @@ msgid "Предложим решение в течении 10 минут"
 msgstr "Wir werden eine Lösung innerhalb von 10 Minuten vorschlagen"
 
 #: catalogue/templates/products/base_detail.html:218
-#: mainpage/templates/mainpage/index.html:388
+#: mainpage/templates/mainpage/index.html:392
 msgid "Разрешаю мне перезвонить"
 msgstr "Ich erlaube Ihnen, mich zurückzurufen"
 
 #: catalogue/templates/products/base_detail.html:222
-#: mainpage/templates/mainpage/index.html:393
+#: mainpage/templates/mainpage/index.html:397
 msgid "Связаться"
 msgstr "Kontaktieren"
 
@@ -836,12 +830,12 @@ msgid "Рекомендуемые продукты к покупке"
 msgstr "Empfohlene Produkte zum Kauf"
 
 #: catalogue/templates/products/base_detail.html:356
-#: mainpage/templates/mainpage/index.html:274
+#: mainpage/templates/mainpage/index.html:278
 msgid "Предыдущий слайд букетов"
 msgstr "Vorheriger Blumenstrauß-Slide"
 
 #: catalogue/templates/products/base_detail.html:361
-#: mainpage/templates/mainpage/index.html:279
+#: mainpage/templates/mainpage/index.html:283
 msgid "Следующий слайд букетов"
 msgstr "Nächster Blumenstrauß-Slide"
 
@@ -858,7 +852,7 @@ msgid "К сожалению не нашлось продуктов по зад�
 msgstr "Leider wurden keine Produkte nach den angegebenen Filtern gefunden."
 
 #: catalogue/templates/products/base_list.html:267
-#: mainpage/templates/mainpage/index.html:188
+#: mainpage/templates/mainpage/index.html:191
 msgid "Назад"
 msgstr "Zurück"
 
@@ -906,19 +900,19 @@ msgstr "Anzahl der Blumen im Bukett"
 msgid "Каталог букетов и подарков"
 msgstr "Katalog mit Blumensträußen und Geschenken"
 
-#: catalogue/views/catalogue.py:181
+#: catalogue/views/catalogue.py:190
 msgid "Данный продукт был недавно удалён из каталога нашими администраторами"
 msgstr ""
 "Dieses Produkt wurde kürzlich von unseren Administratoren aus dem Katalog "
 "entfernt"
 
-#: catalogue/views/catalogue.py:215 mainpage/views.py:129
+#: catalogue/views/catalogue.py:224 mainpage/views.py:129
 msgid "Мы скоро с Вами свяжемся, а пока выпейте чаю 😊"
 msgstr ""
 "Wir werden uns bald mit Ihnen in Verbindung setzen, und währenddessen "
 "trinken Sie doch einen Tee 😊"
 
-#: catalogue/views/catalogue.py:224 mainpage/views.py:138
+#: catalogue/views/catalogue.py:233 mainpage/views.py:138
 msgid "Вы неправильно заполнили форму:"
 msgstr "Sie haben das Formular falsch ausgefüllt:"
 
@@ -933,18 +927,14 @@ msgstr "Aktualisierungsdatum"
 #: core/staticfiles/templates/base.html:157
 msgid ""
 "\n"
-"        Мы используем <span class=\"text-warning\">cookies</span> для "
-"улучшения работы сайта.\n"
+"        Мы используем <span class=\"text-warning\">cookies</span> для улучшения работы сайта.\n"
 "        <br>\n"
-"        Продолжая использовать сайт, Вы соглашаетесь на использование "
-"cookies.\n"
+"        Продолжая использовать сайт, Вы соглашаетесь на использование cookies.\n"
 "        "
 msgstr ""
 "\n"
-"Wir verwenden <span class=\"text-warning\">Cookies</span>, um die "
-"Funktionalität der Website zu verbessern.<br>  \n"
-"Durch die weitere Nutzung der Website stimmen Sie der Verwendung von Cookies "
-"zu."
+"Wir verwenden <span class=\"text-warning\">Cookies</span>, um die Funktionalität der Website zu verbessern.<br>  \n"
+"Durch die weitere Nutzung der Website stimmen Sie der Verwendung von Cookies zu."
 
 #: core/staticfiles/templates/base.html:163
 msgid "Принять"
@@ -1007,37 +997,37 @@ msgstr ""
 "\n"
 "Blumenladen %(site_name)s in Berlin"
 
-#: mainpage/templates/mainpage/index.html:192
+#: mainpage/templates/mainpage/index.html:195
 msgid "Вперёд"
 msgstr "Vorwärts"
 
-#: mainpage/templates/mainpage/index.html:198
+#: mainpage/templates/mainpage/index.html:202
 msgid "Наши преимущества"
 msgstr "Unsere Vorteile"
 
-#: mainpage/templates/mainpage/index.html:208
+#: mainpage/templates/mainpage/index.html:212
 msgid "Связь с клиентом на каждом этапе заказа"
 msgstr "Kontakt mit dem Kunden in jedem Schritt der Bestellung"
 
-#: mainpage/templates/mainpage/index.html:345
+#: mainpage/templates/mainpage/index.html:349
 msgid "Предыдущий слайд подарков"
 msgstr "Vorheriger Geschenke-Slide"
 
-#: mainpage/templates/mainpage/index.html:350
+#: mainpage/templates/mainpage/index.html:354
 msgid "Следующий слайд подарков"
 msgstr "Nächster Geschenke-Slide"
 
-#: mainpage/templates/mainpage/index.html:363
+#: mainpage/templates/mainpage/index.html:367
 msgid "Свяжитесь с нами"
 msgstr "Kontaktieren Sie uns"
 
-#: mainpage/templates/mainpage/index.html:367
+#: mainpage/templates/mainpage/index.html:371
 msgid "Заполните форму, чтобы заказать букет из индивидуального состава."
 msgstr ""
 "Füllen Sie das Formular aus, um einen Blumenstrauß mit individueller "
 "Zusammenstellung zu bestellen."
 
-#: mainpage/templates/mainpage/index.html:378
+#: mainpage/templates/mainpage/index.html:382
 msgid "Тел. номер в любой соц. сети или ссылка профиля"
 msgstr "Telefonnummer in einem beliebigen sozialen Netzwerk oder Profil-Link"
 
@@ -1050,7 +1040,6 @@ msgstr "Telefonnummer in einem beliebigen sozialen Netzwerk oder Profil-Link"
 #~ msgid "Условия оплаты"
 #~ msgstr "Zahlungsbedingungen"
 
-#~| msgid "Политика конфиденциальности"
 #~ msgid "Условия конфиденциальности и безопасности данных"
 #~ msgstr "Datenschutzerklärung"
 
@@ -1062,16 +1051,13 @@ msgstr "Telefonnummer in einem beliebigen sozialen Netzwerk oder Profil-Link"
 #~ msgstr "Die Zusammensetzung des Blumenstraußes kann angepasst werden."
 
 #~ msgid "Неизвестная ошибка добавления букета в корзину."
-#~ msgstr ""
-#~ "Unbekannter Fehler beim Hinzufügen des Blumenstraußes zum Warenkorb."
+#~ msgstr "Unbekannter Fehler beim Hinzufügen des Blumenstraußes zum Warenkorb."
 
 #, python-brace-format
 #~ msgid "Букет \"{product_name}\" успешно удалён из корзины."
 #~ msgstr ""
-#~ "Der Blumenstrauß \"{product_name}“ wurde erfolgreich im Warenkorb "
-#~ "reduziert."
+#~ "Der Blumenstrauß \"{product_name}“ wurde erfolgreich im Warenkorb reduziert."
 
 #, python-brace-format
 #~ msgid "Продукт \"{product_name}\" успешно удалён из корзины."
-#~ msgstr ""
-#~ "Das Produkt \"{product_name}“ wurde erfolgreich im Warenkorb reduziert."
+#~ msgstr "Das Produkt \"{product_name}“ wurde erfolgreich im Warenkorb reduziert."
