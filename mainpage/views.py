@@ -20,12 +20,16 @@ from core.services.mixins.views import CommonContextMixin
 from .forms import IndividualOrderForm
 from .models import (
     AboutUsPageModel,
+    AGBPageModel,
     ContactsPageModel,
     DeliveryPageModel,
     FAQPageModel,
+    ImpressumPageModel,
     MainPageModel,
     MainPageSeoBlock,
     MainPageSliderImages,
+    PrivacyAndPolicyPageModel,
+    ReturnPolicyPageModel,
 )
 
 
@@ -210,3 +214,48 @@ class FAQView(CommonContextMixin, TemplateView):
         context["meta_tags"] = page.meta_tags
         context["url"] = reverse_lazy("mainpage:faq")
         return context
+
+
+class ConditionsViewMixin:
+    template_name = "mainpage/conditions.html"
+    http_method_names = [
+        "get",
+    ]
+    url = None
+    page_model = None
+    title: str | None = None
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        PageModel = self.page_model
+        page = PageModel.objects.first()
+        context["page"] = page
+        context["json_ld"] = page.json_ld
+        context["meta_tags"] = page.meta_tags
+        context["url"] = self.url
+        context["title"] = self.title
+        return context
+
+
+class AGBView(ConditionsViewMixin, TemplateView):
+    url = reverse_lazy("mainpage:agb")
+    page_model = AGBPageModel
+    title = _("Условия и положения")
+
+
+class PrivacyAndPolicyView(ConditionsViewMixin, TemplateView):
+    url = reverse_lazy("mainpage:privacy-and-policy")
+    page_model = PrivacyAndPolicyPageModel
+    title = _("Политика конфиденциальности")
+
+
+class ImpressumView(ConditionsViewMixin, TemplateView):
+    url = reverse_lazy("mainpage:impressum")
+    page_model = ImpressumPageModel
+    title = _("Контактная информация")
+
+
+class ReturnPolicyView(ConditionsViewMixin, TemplateView):
+    url = reverse_lazy("mainpage:return-policy")
+    page_model = ReturnPolicyPageModel
+    title = _("Условия возврата")

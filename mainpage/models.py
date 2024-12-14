@@ -247,3 +247,58 @@ class ContactsPageModel(TimeStampAdbstractModel):
     class Meta:
         verbose_name = "Контакты"
         verbose_name_plural = verbose_name
+
+
+class ConditionsPageModelAbstract(models.Model):
+    description = HTMLField(
+        verbose_name=_("Описание"),
+    )
+    meta_tags = models.TextField(
+        verbose_name="Мета-теги",
+        default="<title>Blumen Horizon | </title>",
+    )
+    json_ld = models.TextField(
+        verbose_name="JSON-LD",
+        default="""<script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebPage"
+        }
+</script>""",
+    )
+
+    class Meta:
+        abstract = True
+
+
+class AGBPageModel(ConditionsPageModelAbstract, TimeStampAdbstractModel):
+    class Meta:
+        verbose_name = "Условия и положения"
+        verbose_name_plural = "Условия и положения"
+
+    def __str__(self):
+        return "Условия и положения"
+
+class PrivacyAndPolicyPageModel(ConditionsPageModelAbstract, TimeStampAdbstractModel):
+    class Meta:
+        verbose_name = "Условия конфиденциальности и безопасности данных"
+        verbose_name_plural = "Условия конфиденциальности и безопасности данных"
+
+    def __str__(self):
+        return "Условия конфиденциальности и безопасности данных"
+    
+class ImpressumPageModel(ConditionsPageModelAbstract, TimeStampAdbstractModel):
+    class Meta:
+        verbose_name = "Контактная информация"
+        verbose_name_plural = "Контактная информация"
+
+    def __str__(self):
+        return "Контактная информация"
+    
+class ReturnPolicyPageModel(ConditionsPageModelAbstract, TimeStampAdbstractModel):
+    class Meta:
+        verbose_name = "Условия возврата"
+        verbose_name_plural = "Условия возврата"
+
+    def __str__(self):
+        return "Условия возврата"

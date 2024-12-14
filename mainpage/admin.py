@@ -3,13 +3,17 @@ from modeltranslation.admin import TranslationAdmin
 
 from .models import (
     AboutUsPageModel,
+    AGBPageModel,
     ContactsPageModel,
     DeliveryPageModel,
     FAQPageModel,
+    ImpressumPageModel,
     IndividualOrder,
     MainPageModel,
     MainPageSeoBlock,
     MainPageSliderImages,
+    PrivacyAndPolicyPageModel,
+    ReturnPolicyPageModel,
 )
 
 
@@ -82,6 +86,46 @@ class AboutUsPageModelAdmin(TranslationAdmin):
     fields = [
         "image",
         "image_alt",
+        "meta_tags",
+        "json_ld",
+        "description",
+    ]
+    list_display = ["id"]
+
+
+@admin.register(AGBPageModel)
+class AGBPageModelAdmin(TranslationAdmin):
+    fields = [
+        "meta_tags",
+        "json_ld",
+        "description",
+    ]
+    list_display = ["id"]
+
+
+@admin.register(PrivacyAndPolicyPageModel)
+class PrivacyAndPolicyPageModelAdmin(TranslationAdmin):
+    fields = [
+        "meta_tags",
+        "json_ld",
+        "description",
+    ]
+    list_display = ["id"]
+
+
+@admin.register(ImpressumPageModel)
+class ImpressumPageModelAdmin(TranslationAdmin):
+    fields = [
+        "meta_tags",
+        "json_ld",
+        "description",
+    ]
+    list_display = ["id"]
+
+
+@admin.register(ReturnPolicyPageModel)
+class ReturnPolicyPageModelAdmin(TranslationAdmin):
+    fields = [
         "meta_tags",
         "json_ld",
         "description",

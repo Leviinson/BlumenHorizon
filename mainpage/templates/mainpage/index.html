@@ -168,13 +168,15 @@
     {% endfor %}
   </nav>
   <div id="carouselIndicators" class="carousel slide w-100" style="max-width: 1000px;" data-bs-ride="carousel">
-    <div class="carousel-indicators">
-      {% for image in slider_images %}
-      <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="{{ forloop.counter0 }}"
-        class="{% if forloop.first %}active{% endif %}" aria-current="true" aria-label="Slide {{ forloop.counter }}">
-      </button>
-      {% endfor %}
-    </div>
+    {% if slider_images|length > 1 %}
+      <div class="carousel-indicators">
+        {% for image in slider_images %}
+        <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="{{ forloop.counter0 }}"
+          class="{% if forloop.first %}active{% endif %}" aria-current="true" aria-label="Slide {{ forloop.counter }}">
+        </button>
+        {% endfor %}
+      </div>
+    {% endif %}
     <div id="mainpage-slider" class="carousel-inner">
       {% for image in slider_images %}
       <div data-bs-interval="3000" class="carousel-item {% if forloop.first %}active{% endif %} w-100"
@@ -183,14 +185,16 @@
       </div>
       {% endfor %}
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselIndicators" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">{% translate 'Назад' %}</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselIndicators" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">{% translate 'Вперёд' %}</span>
-    </button>
+    {% if slider_images|length > 1 %}
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselIndicators" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">{% translate 'Назад' %}</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselIndicators" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">{% translate 'Вперёд' %}</span>
+      </button>
+    {% endif   %}
   </div>
 
   <div id="our-advantages" class="d-flex justify-content-between flex-column align-items-center mt-5 w-100"
@@ -199,17 +203,17 @@
     <div id="advantages-container" class="d-flex justify-content-between w-100 mt-3">
       <div class="advantage-container text-center d-flex flex-column align-items-center" style="max-width: 140px;">
         <i id="composition-advantage" class="fa-solid fa-handshake fa-fade"
-          style="color: #2c494b; --fa-animation-duration: 2s; --fa-fade-opacity: 0.6;"></i>
+          style="color: var(--dark-green-color); --fa-animation-duration: 2s; --fa-fade-opacity: 0.6;"></i>
         <small>{% translate "Состав букета можно менять" %}</small>
       </div>
       <div class="advantage-container text-center d-flex flex-column align-items-center" style="max-width: 140px;">
         <i id="connect-advantage" class="fa-solid fa-comments fa-fade"
-          style="color: #2c494b; --fa-animation-duration: 2s; --fa-fade-opacity: 0.6;"></i>
+          style="color: var(--dark-green-color); --fa-animation-duration: 2s; --fa-fade-opacity: 0.6;"></i>
         <small>{% translate "Связь с клиентом на каждом этапе заказа" %}</small>
       </div>
       <div class="advantage-container text-center d-flex flex-column align-items-center" style="max-width: 140px;">
         <i id="anonym-delivery-advantage" class="fa-duotone fa-solid fa-user-secret fa-fade"
-          style="color: #2c494b; --fa-animation-duration: 2s; --fa-fade-opacity: 0.6;"></i>
+          style="color: var(--dark-green-color); --fa-animation-duration: 2s; --fa-fade-opacity: 0.6;"></i>
         <small>{% translate "Анонимная доставка" %}</small>
       </div>
     </div>

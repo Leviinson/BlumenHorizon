@@ -7,6 +7,10 @@ from .views import (
     FAQView,
     IndividualOrderView,
     MainPageView,
+    AGBView,
+    PrivacyAndPolicyView,
+    ImpressumView,
+    ReturnPolicyView
 )
 
 app_name = "mainpage"
@@ -22,7 +26,8 @@ urlpatterns = [
     path("delivery/", AboutDeliveryView.as_view(), name="delivery"),
     path("contact/", ContactUsView.as_view(), name="contact"),
     path("faq/", FAQView.as_view(), name="faq"),
-    # path("payment/", PaymentInstructionsView.as_view(), name="payment"),
-    # path("public-agreement/", PublicAgreementView.as_view(), name="public-agreement"),
-    # path("privacy-and-policy/", PrivacyAndPolicyView.as_view(), name="privacy"),
+    path("agb/", AGBView.as_view(), name="agb"),
+    path("datenschutz/", PrivacyAndPolicyView.as_view(), name="privacy-and-policy"),
+    path("impressum/", ImpressumView.as_view(), name="impressum"),
+    path("widerrufsbelehrung/", ReturnPolicyView.as_view(), name="return-policy"),
 ]
