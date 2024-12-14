@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-05 16:10+0100\n"
+"POT-Creation-Date: 2024-12-08 23:05+0100\n"
 "PO-Revision-Date: 2024-11-28 18:15+0100\n"
 "Last-Translator: None None <blumenhorizon@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -250,7 +250,7 @@ msgstr ""
 "soon!"
 
 #: cart/services/mixins/edit.py:109 cart/views.py:332
-#: catalogue/views/catalogue.py:206 mainpage/views.py:144
+#: catalogue/views/catalogue.py:234 mainpage/views.py:148
 msgid "Метод не разрешен. Используйте POST."
 msgstr "Method not allowed. Use POST."
 
@@ -343,7 +343,7 @@ msgstr "Recommended gifts for bouquets"
 msgid "Резюме заказа"
 msgstr "Summary"
 
-#: cart/templates/cart/index.html:330 core/staticfiles/templates/footer.html:43
+#: cart/templates/cart/index.html:330 core/staticfiles/templates/footer.html:37
 #: core/staticfiles/templates/header.html:30
 msgid "Доставка"
 msgstr "Delivery"
@@ -548,34 +548,26 @@ msgid "Уточнить у получателя."
 msgstr "Check with the recipient."
 
 #: cart/templates/cart/order_confirmation.html:608
-#: core/staticfiles/templates/footer.html:26
-msgid "Юридическая информация"
-msgstr "Legal information"
+#: core/staticfiles/templates/footer.html:14 mainpage/views.py:243
+msgid "Условия и положения"
+msgstr "Terms and Conditions"
 
 #: cart/templates/cart/order_confirmation.html:608
-#: core/staticfiles/templates/footer.html:29
+#: core/staticfiles/templates/footer.html:17 mainpage/views.py:249
 msgid "Политика конфиденциальности"
 msgstr "Privacy Policy"
 
 #: cart/templates/cart/order_confirmation.html:611
-#: core/staticfiles/templates/footer.html:20
+#: core/staticfiles/templates/footer.html:23 mainpage/views.py:261
 msgid "Условия возврата"
 msgstr "Return Policy"
 
 #: cart/templates/cart/order_confirmation.html:611
-#: core/staticfiles/templates/footer.html:23
-msgid "Условия и положения"
-msgstr "Terms and Conditions"
-
-#: cart/templates/cart/order_confirmation.html:614
-#: core/staticfiles/templates/footer.html:14
-msgid "Условия доставки"
-msgstr "Delivery terms"
-
-#: cart/templates/cart/order_confirmation.html:614
-#: core/staticfiles/templates/footer.html:17
-msgid "Условия оплаты"
-msgstr "Payment terms"
+#: core/staticfiles/templates/footer.html:20 mainpage/views.py:255
+#, fuzzy
+#| msgid "Юридическая информация"
+msgid "Контактная информация"
+msgstr "Legal information"
 
 #: cart/templates/cart/removeItemFromCart.html:14
 msgid "Удалить продукт из корзины"
@@ -711,7 +703,7 @@ msgid "Цветовая гамма букета"
 msgstr "Bouquet color scheme"
 
 #: catalogue/filters/bouquets.py:17
-#: catalogue/templates/products/bouquets/bouquet_detail.html:17
+#: catalogue/templates/products/bouquets/bouquet_detail.html:18
 #: catalogue/templates/products/bouquets/bouquet_list.html:63
 msgid "Состав"
 msgstr "Compound"
@@ -735,6 +727,12 @@ msgstr "Maximum number of flowers in a bouquet"
 #: catalogue/forms.py:48
 msgid "Данный продукт был удалён или стал неактивным."
 msgstr "This product has been removed or has become inactive."
+
+#: catalogue/models.py:93
+#, fuzzy
+#| msgid "Главная страница"
+msgid "Описание на странице 'Каталог'"
+msgstr "Home page"
 
 #: catalogue/services/views/details_mixin.py:66
 #, python-format
@@ -820,7 +818,7 @@ msgstr "Buy"
 
 #: catalogue/templates/products/base_detail.html:285 mainpage/models.py:26
 #: mainpage/models.py:121 mainpage/models.py:156 mainpage/models.py:191
-#: mainpage/models.py:226
+#: mainpage/models.py:226 mainpage/models.py:254
 msgid "Описание"
 msgstr "Description"
 
@@ -867,27 +865,27 @@ msgstr "Previous page of bouquets"
 msgid "Следующая страница букетов"
 msgstr "Next page of bouquets"
 
-#: catalogue/templates/products/bouquets/bouquet_detail.html:9
+#: catalogue/templates/products/bouquets/bouquet_detail.html:10
 msgid "Количество цветов"
 msgstr "Number of flowers"
 
-#: catalogue/templates/products/bouquets/bouquet_detail.html:12
+#: catalogue/templates/products/bouquets/bouquet_detail.html:13
 msgid "Диаметр"
 msgstr "Diameter"
 
-#: catalogue/templates/products/bouquets/bouquet_detail.html:12
+#: catalogue/templates/products/bouquets/bouquet_detail.html:13
 msgid "см"
 msgstr "cm"
 
-#: catalogue/templates/products/bouquets/bouquet_detail.html:27
+#: catalogue/templates/products/bouquets/bouquet_detail.html:28
 msgid "Цвет"
 msgstr "Color"
 
-#: catalogue/templates/products/bouquets/bouquet_detail.html:44
+#: catalogue/templates/products/bouquets/bouquet_detail.html:45
 msgid "Размеры"
 msgstr "Sizes"
 
-#: catalogue/templates/products/bouquets/bouquet_detail.html:50
+#: catalogue/templates/products/bouquets/bouquet_detail.html:51
 msgid "шт."
 msgstr "pcs."
 
@@ -903,16 +901,16 @@ msgstr "Number of flowers in a bouquet"
 msgid "Каталог букетов и подарков"
 msgstr "Catalog of bouquets and gifts"
 
-#: catalogue/views/catalogue.py:153
+#: catalogue/views/catalogue.py:181
 msgid "Данный продукт был недавно удалён из каталога нашими администраторами"
 msgstr ""
 "This product was recently removed from the catalog by our administrators"
 
-#: catalogue/views/catalogue.py:187 mainpage/views.py:125
+#: catalogue/views/catalogue.py:215 mainpage/views.py:129
 msgid "Мы скоро с Вами свяжемся, а пока выпейте чаю 😊"
 msgstr "We will contact you soon, but in the meantime, have some tea 😊"
 
-#: catalogue/views/catalogue.py:196 mainpage/views.py:134
+#: catalogue/views/catalogue.py:224 mainpage/views.py:138
 msgid "Вы неправильно заполнили форму:"
 msgstr "You filled out the form incorrectly:"
 
@@ -951,25 +949,25 @@ msgstr "Reject"
 msgid "Клиентам"
 msgstr "For clients"
 
-#: core/staticfiles/templates/footer.html:34
+#: core/staticfiles/templates/footer.html:28
 msgid "Компания"
 msgstr "Company"
 
-#: core/staticfiles/templates/footer.html:38
+#: core/staticfiles/templates/footer.html:32
 #: core/staticfiles/templates/header.html:25
 msgid "О нас"
 msgstr "About us"
 
-#: core/staticfiles/templates/footer.html:48
+#: core/staticfiles/templates/footer.html:42
 #: core/staticfiles/templates/header.html:33
 msgid "Контакты"
 msgstr "Contacts"
 
-#: core/staticfiles/templates/footer.html:53
+#: core/staticfiles/templates/footer.html:47
 msgid "Часто задаваемые вопросы"
 msgstr "FAQs"
 
-#: core/staticfiles/templates/footer.html:76
+#: core/staticfiles/templates/footer.html:70
 msgid "Все права защищены"
 msgstr "All rights reserved"
 
@@ -1031,6 +1029,20 @@ msgstr "Fill out the form to order a custom bouquet."
 #: mainpage/templates/mainpage/index.html:378
 msgid "Тел. номер в любой соц. сети или ссылка профиля"
 msgstr "Phone number in any social network or profile link"
+
+#~ msgid "Юридическая информация"
+#~ msgstr "Legal information"
+
+#~ msgid "Условия доставки"
+#~ msgstr "Delivery terms"
+
+#~ msgid "Условия оплаты"
+#~ msgstr "Payment terms"
+
+#, fuzzy
+#~| msgid "Политика конфиденциальности"
+#~ msgid "Условия конфиденциальности и безопасности данных"
+#~ msgstr "Privacy Policy"
 
 #, fuzzy
 #~ msgid "Записка к букету"
