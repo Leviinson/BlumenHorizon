@@ -118,6 +118,7 @@ class CartView(CommonContextMixin, FormView):
         for order_bouquet in order.bouquets.all():
             order_bouquet.product.first_image = order_bouquet.product.images.first()
 
+        # TODO: перенести в сигнал создания модели заказа
         currency_symbol = site.extended.currency_symbol
         site_name = site.name
         domain = site.domain
