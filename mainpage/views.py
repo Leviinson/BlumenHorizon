@@ -216,7 +216,7 @@ class FAQView(CommonContextMixin, TemplateView):
         return context
 
 
-class ConditionsViewMixin:
+class ConditionsViewMixin(CommonContextMixin):
     template_name = "mainpage/conditions.html"
     http_method_names = [
         "get",
