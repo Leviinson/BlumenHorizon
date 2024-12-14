@@ -94,11 +94,19 @@ class CategoryView(CommonContextMixin, TemplateView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        models = BouquetCategory, ProductCategory
-        for model in models:
+        models = (
+            (BouquetCategory, BouquetSubcategory),
+            (ProductCategory, ProductSubcategory),
+        )
+        for CategoryModel, SubcategoryModel in models:
             try:
                 context["category"] = (
-                    model.objects.prefetch_related("subcategories")
+                    CategoryModel.objects.prefetch_related(
+                        Prefetch(
+                            "subcategories",
+                            queryset=SubcategoryModel.objects.filter(is_active=True),
+                        )
+                    )
                     .only(
                         "name",
                         "slug",
@@ -113,10 +121,11 @@ class CategoryView(CommonContextMixin, TemplateView):
                         "catalog_page_meta_tags",
                         "json_ld",
                     )
+                    .filter(is_active=True)
                     .get(slug=self.kwargs["category_slug"])
                 )
                 break
-            except model.DoesNotExist:
+            except CategoryModel.DoesNotExist:
                 continue
         else:
             raise Http404()

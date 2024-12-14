@@ -135,6 +135,7 @@ class ProductCategoryListViewMixin(CategoryListViewMixin):
                 "json_ld",
             ),
             slug=self.kwargs["category_slug"],
+            is_active=True
         )
         return qs.filter(
             subcategory__category=self.category,
@@ -162,6 +163,7 @@ class ProductSubcategoryListViewMixin(SubcategoryListViewMixin):
             ),
             slug=self.kwargs["subcategory_slug"],
             category__slug=self.kwargs["category_slug"],
+            is_active=True
         )
         return qs.filter(
             subcategory=self.subcategory,
@@ -185,6 +187,7 @@ class BouquetCategoryListViewMixin(CategoryListViewMixin):
                 "json_ld",
             ),
             slug=self.kwargs["category_slug"],
+            is_active=True
         )
         return qs.filter(
             subcategory__category=self.category,
@@ -212,6 +215,7 @@ class BouquetSubcategoryListViewMixin(SubcategoryListViewMixin):
             ),
             slug=self.kwargs["subcategory_slug"],
             category__slug=self.kwargs["category_slug"],
+            is_active=True
         )
         return qs.filter(
             subcategory=self.subcategory,
