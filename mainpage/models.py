@@ -27,11 +27,11 @@ class MainPageModel(models.Model):
     )
 
     class Meta:
-        verbose_name = "Мета-тег и разметка главной страницы"
-        verbose_name_plural = "Мета-теги и разметка главной страницы"
+        verbose_name = "Главная страница"
+        verbose_name_plural = "Главная страница"
 
     def __str__(self):
-        return "Мета-теги главной страницы"
+        return "Главная страница"
 
 
 class MainPageSliderImages(models.Model):
@@ -102,8 +102,8 @@ class MainPageSeoBlock(TimeStampAdbstractModel, models.Model):
     image_alt = models.CharField(max_length=200, verbose_name="Описание картинки")
 
     class Meta:
-        verbose_name = "СЕО Блок"
-        verbose_name_plural = "СЕО Блоки"
+        verbose_name = "Фотография внизу главной страницы"
+        verbose_name_plural = "Фотография внизу главной страницы"
 
     def __str__(self):
         return f"{self.image} ...... {self.image_alt}"
