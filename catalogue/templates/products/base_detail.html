@@ -47,7 +47,6 @@
             "https://{{ domain_name }}{{ image.image.url }}"{% if not forloop.last %},{% endif %}
           {% endfor %}
         ],
-        "description": "{{ product.description|striptags|escape }}",
         "category": {
             "@type": "CategoryCode",
             "name": "{{ product.subcategory.name }}",
