@@ -17,7 +17,7 @@ class SocialAdmin(admin.ModelAdmin):
 
 class SocialInline(admin.StackedInline):
     model = Social
-    extra = 1
+    extra = 0
     max_num = 3
     verbose_name = "Соц. сеть"
     verbose_name_plural = "Социальные сети"
