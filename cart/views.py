@@ -2,6 +2,7 @@ from decimal import Decimal
 from typing import Type
 
 from django.conf import settings
+from django.contrib.sites.models import Site
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMultiAlternatives
 from django.http import HttpRequest, HttpResponseForbidden, JsonResponse
@@ -12,6 +13,7 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 from django.views.generic.edit import BaseFormView, FormView
 
+from accounts.models import User
 from catalogue.models import Bouquet, BouquetImage, Product, ProductImage
 from core.services.dataclasses.related_model import RelatedModel
 from core.services.decorators.db.db_queries import inspect_db_queries
@@ -44,16 +46,111 @@ class CartView(CommonContextMixin, FormView):
         bouquets_cart = BouquetCart(
             session=self.request.session, session_key="bouquets_cart"
         )
-        order = form.save(
-            products_cart=products_cart,
-            bouquets_cart=bouquets_cart,
-            tax_percent=site.extended.tax_percent,
-            commit=True,
-            user=self.request.user,
+
+        order = self.save_order_in_db(
+            form,
+            products_cart,
+            bouquets_cart,
+            site.extended.tax_percent,
+            self.request.user,
         )
         products_cart.clear()
         bouquets_cart.clear()
 
+        self.send_order_confirmation_email(
+            order,
+            site,
+        )
+        self.add_order_in_session(self.request, order)
+        self.success_url = reverse_lazy(
+            "cart:success-order", kwargs={"order_code": order.code}
+        )
+        return super().form_valid(form)
+
+    @staticmethod
+    def send_order_confirmation_email(
+        order: Order,
+        site: Site,
+    ):
+        for order_product in order.products.all():
+            order_product.product.first_image = order_product.product.images.first()
+
+        for order_bouquet in order.bouquets.all():
+            order_bouquet.product.first_image = order_bouquet.product.images.first()
+
+        # TODO: перенести в сигнал создания модели заказа
+        currency_symbol = site.extended.currency_symbol
+        site_name = site.name
+        domain = site.domain
+        mail_subject = _("{site_name} | Подтверждение заказа {order_code}").format(
+            site_name=site_name, order_code=order.code
+        )
+        html_message = render_to_string(
+            "cart/order_confirmation.html",
+            {
+                "site_name": site_name,
+                "domain": domain,
+                "MEDIA_URL": settings.MEDIA_URL,
+                "name": order.name,
+                "address_form": dict(Order.ADDRESS_FORM_CHOICES).get(
+                    order.address_form, "Dear"
+                ),
+                "order_code": order.code,
+                "order_date": order.created_at,
+                "order_products": order.products,
+                "order_bouquets": order.bouquets,
+                "recipient_name": order.recipient_name,
+                "recipient_phonenumber": order.recipient_phonenumber,
+                "country": order.country,
+                "city": order.city,
+                "street": order.street,
+                "building": order.building,
+                "flat": order.flat,
+                "delivery_date": order.delivery_date,
+                "delivery_time": order.delivery_time,
+                "message_card": order.message_card,
+                "instructions": order.instructions,
+                "tax": order.tax,
+                "sub_total": order.sub_total,
+                "grand_total": order.grand_total,
+                "currency": currency_symbol,
+                "postal_code": order.postal_code,
+            },
+        )
+        plain_message = strip_tags(html_message)
+        email = EmailMultiAlternatives(mail_subject, plain_message, to=[order.email])
+        email.attach_alternative(html_message, "text/html")
+        if email.send():
+            pass
+        else:
+            pass
+
+    @staticmethod
+    def add_order_in_session(request: HttpRequest, order: Order):
+        if "orders" in request.session:
+            request.session["orders"].append(order.code)
+            request.session.save()
+        else:
+            request.session["orders"] = [
+                order.code,
+            ]
+            request.session.save()
+
+    @staticmethod
+    def save_order_in_db(
+        form: OrderForm,
+        products_cart: ProductCart,
+        bouquets_cart: BouquetCart,
+        tax_percent: int,
+        user: User,
+    ) -> Order:
+        order = form.save(
+            products_cart=products_cart,
+            bouquets_cart=bouquets_cart,
+            tax_percent=tax_percent,
+            commit=True,
+            user=user,
+        )
         order = (
             Order.objects.prefetch_related(
                 "products",
@@ -111,72 +208,7 @@ class CartView(CommonContextMixin, FormView):
             )
             .get(pk=order.pk)
         )
-
-        for order_product in order.products.all():
-            order_product.product.first_image = order_product.product.images.first()
-
-        for order_bouquet in order.bouquets.all():
-            order_bouquet.product.first_image = order_bouquet.product.images.first()
-
-        # TODO: перенести в сигнал создания модели заказа
-        currency_symbol = site.extended.currency_symbol
-        site_name = site.name
-        domain = site.domain
-        mail_subject = _("{site_name} | Подтверждение заказа {order_code}").format(
-            site_name=site_name, order_code=order.code
-        )
-        html_message = render_to_string(
-            "cart/order_confirmation.html",
-            {
-                "site_name": site_name,
-                "domain": domain,
-                "MEDIA_URL": settings.MEDIA_URL,
-                "name": order.name,
-                "address_form": dict(Order.ADDRESS_FORM_CHOICES).get(
-                    order.address_form, "Dear"
-                ),
-                "order_code": order.code,
-                "order_date": order.created_at,
-                "order_products": order.products,
-                "order_bouquets": order.bouquets,
-                "recipient_name": order.recipient_name,
-                "recipient_phonenumber": order.recipient_phonenumber,
-                "country": order.country,
-                "city": order.city,
-                "street": order.street,
-                "building": order.building,
-                "flat": order.flat,
-                "delivery_date": order.delivery_date,
-                "delivery_time": order.delivery_time,
-                "message_card": order.message_card,
-                "instructions": order.instructions,
-                "tax": order.tax,
-                "sub_total": order.sub_total,
-                "grand_total": order.grand_total,
-                "currency": currency_symbol,
-                "postal_code": order.postal_code,
-            },
-        )
-        plain_message = strip_tags(html_message)
-        self.success_url = reverse_lazy(
-            "cart:success-order", kwargs={"order_code": order.code}
-        )
-        email = EmailMultiAlternatives(mail_subject, plain_message, to=[order.email])
-        email.attach_alternative(html_message, "text/html")
-        if email.send():
-            pass
-        else:
-            pass
-
-        if "orders" in self.request.session:
-            self.request.session["orders"].append(order.code)
-            self.request.session.save()
-        else:
-            self.request.session["orders"] = [
-                order.code,
-            ]
-            self.request.session.save()
-        return super().form_valid(form)
+        return order
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
