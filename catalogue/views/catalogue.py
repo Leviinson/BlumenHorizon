@@ -40,9 +40,7 @@ class CatalogView(CommonContextMixin, TemplateView):
             BouquetCategory.objects.prefetch_related(
                 Prefetch(
                     "subcategories",
-                    queryset=BouquetSubcategory.objects.filter(is_active=True).only(
-                        "name", "slug", "image", "image_alt"
-                    ),
+                    queryset=BouquetSubcategory.objects.filter(is_active=True),
                 )
             )
             .only(
@@ -63,9 +61,7 @@ class CatalogView(CommonContextMixin, TemplateView):
             ProductCategory.objects.prefetch_related(
                 Prefetch(
                     "subcategories",
-                    queryset=ProductSubcategory.objects.filter(is_active=True).only(
-                        "name", "slug", "image", "image_alt"
-                    ),
+                    queryset=ProductSubcategory.objects.filter(is_active=True),
                 )
             )
             .only(
