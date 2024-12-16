@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-15 19:56+0100\n"
-"PO-Revision-Date: 2024-12-15 20:00+0100\n"
-"Last-Translator: None None <root@gmail.com>\n"
+"PO-Revision-Date: 2024-12-16 16:04+0100\n"
+"Last-Translator: None None <blumenhorizon@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -567,7 +567,7 @@ msgstr "Return Policy"
 #: cart/templates/cart/order_confirmation.html:611
 #: core/staticfiles/templates/footer.html:20 mainpage/views.py:255
 msgid "Контактная информация"
-msgstr "Imprint"
+msgstr "Legal Notice"
 
 #: cart/templates/cart/removeItemFromCart.html:14
 msgid "Удалить продукт из корзины"
