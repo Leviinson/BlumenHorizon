@@ -61,3 +61,4 @@ markdown = "^3.7"
 django-cacheops = "^7.1"
 python-telegram-bot = "^21.7"
 pytest-env = "^1.1.5"
+gunicorn = {extras = ["gthread"], version = "^23.0.0"}
