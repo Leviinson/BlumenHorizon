@@ -16,9 +16,10 @@ from django.views.generic.edit import BaseFormView, FormView
 from accounts.models import User
 from catalogue.models import Bouquet, BouquetImage, Product, ProductImage
 from core.services.dataclasses.related_model import RelatedModel
-from core.services.decorators.db.db_queries import inspect_db_queries
 from core.services.get_recommended_items import get_recommended_items_with_first_image
 from core.services.mixins.views import CommonContextMixin
+
+import stripe
 
 from .cart import BouquetCart, ProductCart
 from .forms import OrderForm
@@ -32,12 +33,13 @@ from .services.mixins import (
     CartProductEditMixin,
 )
 
+stripe.api_key = settings.STRIPE_API_KEY
+
 
 class CartView(CommonContextMixin, FormView):
     template_name = "cart/index.html"
     form_class = OrderForm
 
-    @inspect_db_queries
     def form_valid(self, form: OrderForm):
         site = get_current_site(self.request)
         products_cart = ProductCart(
@@ -56,15 +58,38 @@ class CartView(CommonContextMixin, FormView):
         )
         products_cart.clear()
         bouquets_cart.clear()
+        checkout_session = stripe.checkout.Session.create(
+            line_items=[
+                {
+                    # Provide the exact Price ID (for example, pr_1234) of the product you want to sell
+                    "price_data": {
+                        "currency": site.extended.currency_code.lower(),
+                        "product_data": {
+                            "name": "Пример 123",
+                            "unit_amount_decimal": "102.93",
+                        },
+                    },
+                    "quantity": 1,
+                },
+            ],
+            mode="payment",
+            success_url="https://blumenhorizon.de/contact/",
+            cancel_url="https://blumenhorizon.de/delivery/",
+            metadata={
+                "test": 123,
+                "test1": 321.2,
+                "test3": [1, 2, 3],
+                "test4": "asd",
+                "test5": {"test1": 123},
+            },
+        )
 
         self.send_order_confirmation_email(
             order,
             site,
         )
         self.add_order_in_session(self.request, order)
-        self.success_url = reverse_lazy(
-            "cart:success-order", kwargs={"order_code": order.code}
-        )
+        self.success_url = checkout_session.url
         return super().form_valid(form)
 
     @staticmethod
