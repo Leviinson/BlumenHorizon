@@ -15,7 +15,7 @@ class SocialAdmin(admin.ModelAdmin):
     search_fields = ("absolute_url", "bootstrap_icon", "extended_site__site__domain")
 
 
-class SocialInline(admin.TabularInline):
+class SocialInline(admin.StackedInline):
     model = Social
     extra = 1
     max_num = 3
