@@ -96,11 +96,11 @@ class BouquetFilter(BaseFilter):
     def filter_by_colors(self, queryset, name: str, value: str):
         if value:
             color_names = value.split(",")
-            queryset = queryset.filter(colors__name__in=color_names)
+            queryset = queryset.filter(colors__name__in=color_names).distinct()
         return queryset
 
     def filter_by_flowers(self, queryset, name: str, value: str):
         if value:
             flower_names = value.split(",")
-            queryset = queryset.filter(flowers__name__in=flower_names)
+            queryset = queryset.filter(flowers__name__in=flower_names).distinct()
         return queryset
