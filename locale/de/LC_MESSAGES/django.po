@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-15 19:56+0100\n"
+"POT-Creation-Date: 2024-12-16 16:22+0100\n"
 "PO-Revision-Date: 2024-12-15 20:00+0100\n"
 "Last-Translator: None None <root@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -43,8 +43,8 @@ msgid ""
 "Пожалуйста, введите корректную электронную почту и пароль. Помните, что оба "
 "поля чувствительны к регистру"
 msgstr ""
-"Bitte geben Sie eine gültige E-Mail-Adresse und ein Passwort ein. Denken Sie"
-" daran, dass beide Felder case-sensitive sind."
+"Bitte geben Sie eine gültige E-Mail-Adresse und ein Passwort ein. Denken Sie "
+"daran, dass beide Felder case-sensitive sind."
 
 #: accounts/forms/user_signin_form.py:15
 msgid ""
@@ -275,8 +275,8 @@ msgid ""
 "Оформите заказ на букеты в интернет-магазине %(site_name)s. Ваша корзина "
 "готова к оформлению. Быстрая доставка. "
 msgstr ""
-"Bestellen Sie Ihre Blumensträuße im Online-Shop %(site_name)s. Ihr Warenkorb"
-" ist bereit zur Bestellung. Schnelle Lieferung."
+"Bestellen Sie Ihre Blumensträuße im Online-Shop %(site_name)s. Ihr Warenkorb "
+"ist bereit zur Bestellung. Schnelle Lieferung."
 
 #: cart/templates/cart/index.html:14
 msgid ""
@@ -332,8 +332,7 @@ msgstr "Zahlungsmethoden:"
 msgid "способ оплаты по IBAN"
 msgstr "Zahlungsmethode per IBAN"
 
-#: cart/templates/cart/index.html:205
-#: mainpage/templates/mainpage/index.html:48
+#: cart/templates/cart/index.html:205 mainpage/templates/mainpage/index.html:48
 #: mainpage/templates/mainpage/index.html:183
 msgid "Рекомендуемые букеты к покупке"
 msgstr "Empfohlene Blumensträuße zum Kauf"
@@ -347,8 +346,7 @@ msgstr "Empfohlene Geschenke zu den Blumensträußen"
 msgid "Резюме заказа"
 msgstr "Bestellübersicht"
 
-#: cart/templates/cart/index.html:330
-#: core/staticfiles/templates/footer.html:37
+#: cart/templates/cart/index.html:330 core/staticfiles/templates/footer.html:37
 #: core/staticfiles/templates/header.html:30
 msgid "Доставка"
 msgstr "Lieferung"
@@ -432,8 +430,8 @@ msgid ""
 "Минимум 3 часа после оформления заказа. Мы сообщим Вам о возможности "
 "доставки."
 msgstr ""
-"Mindestens 3 Stunden nach der Bestellung. Über die Möglichkeit der Lieferung"
-" informieren wir Sie gerne."
+"Mindestens 3 Stunden nach der Bestellung. Über die Möglichkeit der Lieferung "
+"informieren wir Sie gerne."
 
 #: cart/templates/cart/index.html:508
 msgid "Форма обращения к получателю"
@@ -553,22 +551,22 @@ msgid "Уточнить у получателя."
 msgstr "Beim Empfänger nachfragen."
 
 #: cart/templates/cart/order_confirmation.html:608
-#: core/staticfiles/templates/footer.html:14 mainpage/views.py:243
+#: core/staticfiles/templates/footer.html:14 mainpage/views.py:244
 msgid "Условия и положения"
 msgstr "AGB"
 
 #: cart/templates/cart/order_confirmation.html:608
-#: core/staticfiles/templates/footer.html:17 mainpage/views.py:249
+#: core/staticfiles/templates/footer.html:17 mainpage/views.py:250
 msgid "Политика конфиденциальности"
 msgstr "Datenschutzerklärung"
 
 #: cart/templates/cart/order_confirmation.html:611
-#: core/staticfiles/templates/footer.html:23 mainpage/views.py:261
+#: core/staticfiles/templates/footer.html:23 mainpage/views.py:262
 msgid "Условия возврата"
 msgstr "Widerrufsbelehrung"
 
 #: cart/templates/cart/order_confirmation.html:611
-#: core/staticfiles/templates/footer.html:20 mainpage/views.py:255
+#: core/staticfiles/templates/footer.html:20 mainpage/views.py:256
 msgid "Контактная информация"
 msgstr "Impressum"
 
@@ -598,22 +596,29 @@ msgstr "Status"
 #, python-format
 msgid ""
 "\n"
-"                <strong>В скором времени мы свяжемся с Вами </strong>по поводу Вашего заказа по указанной электронной почте <strong>(%(email)s)</strong>.\n"
+"                <strong>В скором времени мы свяжемся с Вами </strong>по "
+"поводу Вашего заказа по указанной электронной почте <strong>(%(email)s)</"
+"strong>.\n"
 "                "
 msgstr ""
 "\n"
-"<strong>Wir werden uns in Kürze mit Ihnen in Verbindung setzen </strong> bezüglich Ihrer Bestellung über die angegebene E-Mail-Adresse <strong>(%(email)s)</strong>."
+"<strong>Wir werden uns in Kürze mit Ihnen in Verbindung setzen </strong> "
+"bezüglich Ihrer Bestellung über die angegebene E-Mail-Adresse "
+"<strong>(%(email)s)</strong>."
 
 #: cart/templates/cart/success_order.html:44
 #, python-format
 msgid ""
 "\n"
-"                На данный момент Вам необходимо оплатить сумму <strong>%(grand_total)s%(currency_symbol)s</strong>\n"
+"                На данный момент Вам необходимо оплатить сумму "
+"<strong>%(grand_total)s%(currency_symbol)s</strong>\n"
 "                по данным реквизитам:\n"
 "                "
 msgstr ""
 "\n"
-"Derzeit müssen Sie den Betrag von <strong>%(grand_total)s%(currency_symbol)s</strong> gemäß den folgenden Zahlungsdetails begleichen:"
+"Derzeit müssen Sie den Betrag von "
+"<strong>%(grand_total)s%(currency_symbol)s</strong> gemäß den folgenden "
+"Zahlungsdetails begleichen:"
 
 #: cart/templates/cart/success_order.html:59
 msgid "Задать вопрос"
@@ -915,32 +920,33 @@ msgstr "Sie haben das Formular falsch ausgefüllt:"
 msgid "Дата создания"
 msgstr "Erstellungsdatum"
 
-#: core/base_models.py:13
+#: core/base_models.py:13 mainpage/templates/mainpage/conditions.html:32
 msgid "Дата обновления"
 msgstr "Aktualisierungsdatum"
 
 #: core/staticfiles/templates/base.html:157
-#| msgid ""
-#| "\n"
-#| "        Мы используем <span class=\"text-warning\">cookies</span> для улучшения работы сайта.\n"
-#| "        <br>\n"
-#| "        Продолжая использовать сайт, Вы соглашаетесь на использование cookies.\n"
-#| "        "
 msgid ""
 "\n"
-"        Мы используем <span class=\"text-warning\">cookies</span> для улучшения работы сайта.\n"
-"        Технические (обязательно будут установлены в cookie файлы Вашего браузера), для персонализации рекламы\n"
+"        Мы используем <span class=\"text-warning\">cookies</span> для "
+"улучшения работы сайта.\n"
+"        Технические (обязательно будут установлены в cookie файлы Вашего "
+"браузера), для персонализации рекламы\n"
 "        и для отслеживания Ваших действий на сайте.\n"
 "        <br>\n"
-"        Продолжая использовать сайт, Вы соглашаетесь на использование дополнительных cookies.\n"
+"        Продолжая использовать сайт, Вы соглашаетесь на использование "
+"дополнительных cookies.\n"
 "        "
 msgstr ""
 "\n"
-"Wir verwenden <span class=\"text-warning\">Cookies</span>, um die Funktionalität der Website zu verbessern.\n"
+"Wir verwenden <span class=\"text-warning\">Cookies</span>, um die "
+"Funktionalität der Website zu verbessern.\n"
 "<br>\n"
-"Technische Cookies (werden zwingend in die Cookie-Dateien Ihres Browsers gespeichert), für die Personalisierung von Werbung und zur Verfolgung Ihrer Aktivitäten auf der Website.  \n"
+"Technische Cookies (werden zwingend in die Cookie-Dateien Ihres Browsers "
+"gespeichert), für die Personalisierung von Werbung und zur Verfolgung Ihrer "
+"Aktivitäten auf der Website.  \n"
 "<br>  \n"
-"Indem Sie die Website weiter nutzen, stimmen Sie der Verwendung zusätzlicher Cookies zu.  "
+"Indem Sie die Website weiter nutzen, stimmen Sie der Verwendung zusätzlicher "
+"Cookies zu.  "
 
 #: core/staticfiles/templates/base.html:165
 msgid "Принять"
@@ -1059,13 +1065,16 @@ msgstr "Telefonnummer in einem beliebigen sozialen Netzwerk oder Profil-Link"
 #~ msgstr "Die Zusammensetzung des Blumenstraußes kann angepasst werden."
 
 #~ msgid "Неизвестная ошибка добавления букета в корзину."
-#~ msgstr "Unbekannter Fehler beim Hinzufügen des Blumenstraußes zum Warenkorb."
+#~ msgstr ""
+#~ "Unbekannter Fehler beim Hinzufügen des Blumenstraußes zum Warenkorb."
 
 #, python-brace-format
 #~ msgid "Букет \"{product_name}\" успешно удалён из корзины."
 #~ msgstr ""
-#~ "Der Blumenstrauß \"{product_name}“ wurde erfolgreich im Warenkorb reduziert."
+#~ "Der Blumenstrauß \"{product_name}“ wurde erfolgreich im Warenkorb "
+#~ "reduziert."
 
 #, python-brace-format
 #~ msgid "Продукт \"{product_name}\" успешно удалён из корзины."
-#~ msgstr "Das Produkt \"{product_name}“ wurde erfolgreich im Warenkorb reduziert."
+#~ msgstr ""
+#~ "Das Produkt \"{product_name}“ wurde erfolgreich im Warenkorb reduziert."

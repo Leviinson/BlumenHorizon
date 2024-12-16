@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-15 19:56+0100\n"
+"POT-Creation-Date: 2024-12-16 16:22+0100\n"
 "PO-Revision-Date: 2024-12-16 16:05+0100\n"
 "Last-Translator: None None <blumenhorizon@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +16,10 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != "
+"11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % "
+"100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || "
+"(n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
 "X-Translated-Using: django-rosetta 0.10.1\n"
 
 #: accounts/forms/user_form.py:11 accounts/models.py:35
@@ -282,8 +285,7 @@ msgstr ""
 msgid ""
 "корзина букетов, интернет-магазин букетов, доставка цветов, оформить заказ"
 msgstr ""
-"кошик букетів, інтернет-магазин букетів, доставка квітів, оформити "
-"замовлення"
+"кошик букетів, інтернет-магазин букетів, доставка квітів, оформити замовлення"
 
 #: cart/templates/cart/index.html:27
 #, python-format
@@ -332,8 +334,7 @@ msgstr "Способи оплати:"
 msgid "способ оплаты по IBAN"
 msgstr "спосіб оплати за IBAN"
 
-#: cart/templates/cart/index.html:205
-#: mainpage/templates/mainpage/index.html:48
+#: cart/templates/cart/index.html:205 mainpage/templates/mainpage/index.html:48
 #: mainpage/templates/mainpage/index.html:183
 msgid "Рекомендуемые букеты к покупке"
 msgstr "Рекомендовані букети для покупки"
@@ -347,8 +348,7 @@ msgstr "Рекомендовані подарунки до букетів"
 msgid "Резюме заказа"
 msgstr "Резюме замовлення"
 
-#: cart/templates/cart/index.html:330
-#: core/staticfiles/templates/footer.html:37
+#: cart/templates/cart/index.html:330 core/staticfiles/templates/footer.html:37
 #: core/staticfiles/templates/header.html:30
 msgid "Доставка"
 msgstr "Доставка"
@@ -552,22 +552,22 @@ msgid "Уточнить у получателя."
 msgstr "Уточнити у отримувача."
 
 #: cart/templates/cart/order_confirmation.html:608
-#: core/staticfiles/templates/footer.html:14 mainpage/views.py:243
+#: core/staticfiles/templates/footer.html:14 mainpage/views.py:244
 msgid "Условия и положения"
 msgstr "Умови та положення"
 
 #: cart/templates/cart/order_confirmation.html:608
-#: core/staticfiles/templates/footer.html:17 mainpage/views.py:249
+#: core/staticfiles/templates/footer.html:17 mainpage/views.py:250
 msgid "Политика конфиденциальности"
 msgstr "Політика конфіденційності"
 
 #: cart/templates/cart/order_confirmation.html:611
-#: core/staticfiles/templates/footer.html:23 mainpage/views.py:261
+#: core/staticfiles/templates/footer.html:23 mainpage/views.py:262
 msgid "Условия возврата"
 msgstr "Умови повернення"
 
 #: cart/templates/cart/order_confirmation.html:611
-#: core/staticfiles/templates/footer.html:20 mainpage/views.py:255
+#: core/staticfiles/templates/footer.html:20 mainpage/views.py:256
 msgid "Контактная информация"
 msgstr "Правова інформація"
 
@@ -597,22 +597,27 @@ msgstr "Статус"
 #, python-format
 msgid ""
 "\n"
-"                <strong>В скором времени мы свяжемся с Вами </strong>по поводу Вашего заказа по указанной электронной почте <strong>(%(email)s)</strong>.\n"
+"                <strong>В скором времени мы свяжемся с Вами </strong>по "
+"поводу Вашего заказа по указанной электронной почте <strong>(%(email)s)</"
+"strong>.\n"
 "                "
 msgstr ""
 "\n"
-"<strong>Незабаром ми зв'яжемося з Вами </strong> з приводу Вашого замовлення за вказаною електронною поштою <strong>(%(email)s)</strong>."
+"<strong>Незабаром ми зв'яжемося з Вами </strong> з приводу Вашого замовлення "
+"за вказаною електронною поштою <strong>(%(email)s)</strong>."
 
 #: cart/templates/cart/success_order.html:44
 #, python-format
 msgid ""
 "\n"
-"                На данный момент Вам необходимо оплатить сумму <strong>%(grand_total)s%(currency_symbol)s</strong>\n"
+"                На данный момент Вам необходимо оплатить сумму "
+"<strong>%(grand_total)s%(currency_symbol)s</strong>\n"
 "                по данным реквизитам:\n"
 "                "
 msgstr ""
 "\n"
-"На даний момент Вам необхідно сплатити суму <strong>%(grand_total)s%(currency_symbol)s</strong>\n"
+"На даний момент Вам необхідно сплатити суму "
+"<strong>%(grand_total)s%(currency_symbol)s</strong>\n"
 "за даними реквізитами:"
 
 #: cart/templates/cart/success_order.html:59
@@ -903,32 +908,32 @@ msgstr "Ви неправильно заповнили форму:"
 msgid "Дата создания"
 msgstr "Дата створення"
 
-#: core/base_models.py:13
+#: core/base_models.py:13 mainpage/templates/mainpage/conditions.html:32
 msgid "Дата обновления"
 msgstr "Дата поновлення"
 
 #: core/staticfiles/templates/base.html:157
-#| msgid ""
-#| "\n"
-#| "        Мы используем <span class=\"text-warning\">cookies</span> для улучшения работы сайта.\n"
-#| "        <br>\n"
-#| "        Продолжая использовать сайт, Вы соглашаетесь на использование cookies.\n"
-#| "        "
 msgid ""
 "\n"
-"        Мы используем <span class=\"text-warning\">cookies</span> для улучшения работы сайта.\n"
-"        Технические (обязательно будут установлены в cookie файлы Вашего браузера), для персонализации рекламы\n"
+"        Мы используем <span class=\"text-warning\">cookies</span> для "
+"улучшения работы сайта.\n"
+"        Технические (обязательно будут установлены в cookie файлы Вашего "
+"браузера), для персонализации рекламы\n"
 "        и для отслеживания Ваших действий на сайте.\n"
 "        <br>\n"
-"        Продолжая использовать сайт, Вы соглашаетесь на использование дополнительных cookies.\n"
+"        Продолжая использовать сайт, Вы соглашаетесь на использование "
+"дополнительных cookies.\n"
 "        "
 msgstr ""
 "\n"
-"Ми використовуємо <span class=\"text-warning\">cookies</span> для покращення роботи сайту.\n"
+"Ми використовуємо <span class=\"text-warning\">cookies</span> для покращення "
+"роботи сайту.\n"
 "<br>  \n"
-"Технічні cookies (обов'язково будуть збережені у файлах cookie вашого браузера), для персоналізації реклами та відстеження ваших дій на сайті.  \n"
+"Технічні cookies (обов'язково будуть збережені у файлах cookie вашого "
+"браузера), для персоналізації реклами та відстеження ваших дій на сайті.  \n"
 "<br>  \n"
-"Продовжуючи використовувати сайт, ви погоджуєтеся на використання додаткових cookies.  "
+"Продовжуючи використовувати сайт, ви погоджуєтеся на використання додаткових "
+"cookies.  "
 
 #: core/staticfiles/templates/base.html:165
 msgid "Принять"
