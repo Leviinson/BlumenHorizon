@@ -19,9 +19,4 @@ async def send_message_to_telegram_async(chat_id, text):
 
 
 def send_message_to_telegram(chat_id, text):
-    loop = asyncio.get_event_loop()
-    if loop.is_closed():
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-
     asyncio.run(send_message_to_telegram_async(chat_id, text))
