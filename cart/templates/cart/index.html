@@ -370,7 +370,15 @@
                             </div>
                             <div class="mb-3" id="email-container">
                                 <label for="email" class="form-label">{% translate 'Email' %}</label>
-                                <input name="email" type="email" class="form-control" id="email" autocomplete="email" required>
+                                <input name="email" type="email" class="form-control" id="email" autocomplete="email" required
+                                value="
+                                {% with user=view.request.user %}
+                                    {% if user.is_authenticated %}
+                                        {{ user.email }}
+                                    {% endif %}
+                                {% endwith %}
+                                "
+                                >
                                 {% if form.errors.email %}
                                 {% for error in form.errors.email %}
                                 <div class="form-text text-danger">
@@ -398,7 +406,15 @@
                             </div>
                             <div class="mb-3" id="name-container">
                                 <label for="name" class="form-label">{% translate 'Имя заказчика' %}</label>
-                                <input name="name" type="text" class="form-control" id="name" autocomplete="family-name" required>
+                                <input name="name" type="text" class="form-control" id="name" autocomplete="family-name" required
+                                value="{% spaceless %}
+                                {% with user=view.request.user %}
+                                    {% if user.is_authenticated %}
+                                        {{ user.first_name }}
+                                    {% endif %}
+                                {% endwith %}
+                                {% endspaceless %}"
+                                >
                                 {% if form.errors.name %}
                                 {% for error in form.errors.name %}
                                 <div class="form-text text-danger">
