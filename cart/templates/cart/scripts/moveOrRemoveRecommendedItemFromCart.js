@@ -172,7 +172,7 @@ document.querySelectorAll('.add-to-cart-form').forEach(function(form) {
                 <strong data-id="${productInfo.slug}Subtotal">
                     ${subtotal}
                 </strong>
-                $
+                €
             </p>
         </div>
     </div>
