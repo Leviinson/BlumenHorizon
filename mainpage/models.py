@@ -27,7 +27,7 @@ class MainPageModel(models.Model):
     )
 
     class Meta:
-        verbose_name = "Главная страница"
+        verbose_name = "1. Главная страница"
         verbose_name_plural = verbose_name
 
     def __str__(self):
@@ -44,8 +44,8 @@ class MainPageSliderImages(models.Model):
     image_alt = models.CharField(verbose_name="Описание картинки", max_length=200)
 
     class Meta:
-        verbose_name = "Фото слайдера вверху главной страницы"
-        verbose_name_plural = "Фотографии слайдера вверху главной страницы"
+        verbose_name = "2. Фото слайдера вверху главной страницы"
+        verbose_name_plural = verbose_name
 
     def __str__(self):
         return f"{self.image} - {"Активно" if self.is_active else "Неактивно"}"
@@ -102,7 +102,7 @@ class MainPageSeoBlock(TimeStampAdbstractModel, models.Model):
     image_alt = models.CharField(max_length=200, verbose_name="Описание картинки")
 
     class Meta:
-        verbose_name = "Фотография внизу главной страницы"
+        verbose_name = "3. Фотография внизу главной страницы"
         verbose_name_plural = verbose_name
 
     def __str__(self):

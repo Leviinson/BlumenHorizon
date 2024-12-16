@@ -95,11 +95,11 @@ class CatalogPageModel(models.Model):
     )
 
     class Meta:
-        verbose_name = "Страница 'Каталог'"
-        verbose_name_plural = "Страница 'Каталог'"
+        verbose_name = "Страница «Каталог»"
+        verbose_name_plural = verbose_name
 
     def __str__(self):
-        return "Страница 'Каталог'"
+        return "Страница «Каталог»"
 
 
 class CategoryAbstract(models.Model):
@@ -181,7 +181,7 @@ class ProductCategory(CategoryAbstract, TimeStampAdbstractModel, MetaDataAbstrac
 
     class Meta:
         verbose_name = "Категория продукта"
-        verbose_name_plural = "Категории продуктов"
+        verbose_name_plural = "7. Категории продуктов"
 
     def __str__(self):
         return self.name
@@ -223,7 +223,7 @@ class ProductSubcategory(
 
     class Meta:
         verbose_name = "Подкатегория продукта"
-        verbose_name_plural = "Подкатегории продуктов"
+        verbose_name_plural = "8. Подкатегории продуктов"
 
     def __str__(self):
         return self.name
@@ -332,7 +332,7 @@ class Product(ProductAbstract):
 
     class Meta:
         verbose_name = "Продукт"
-        verbose_name_plural = "Продукты"
+        verbose_name_plural = "6. Продукты"
 
     def get_absolute_url(self):
         site = Site.objects.only("domain").first()
@@ -397,7 +397,7 @@ class Color(models.Model):
 
     class Meta:
         verbose_name = "Цвет букета"
-        verbose_name_plural = "Цветовые гаммы букетов"
+        verbose_name_plural = "3. Цветовые гаммы букетов"
 
     def __str__(self):
         return f"{self.name} ({self.hex_code})"
@@ -412,7 +412,7 @@ class Flower(models.Model):
 
     class Meta:
         verbose_name = "Цветок"
-        verbose_name_plural = "Состав букетов"
+        verbose_name_plural = "2. Состав букетов"
 
     def __str__(self):
         return self.name
@@ -438,7 +438,7 @@ class BouquetCategory(CategoryAbstract, TimeStampAdbstractModel, MetaDataAbstrac
 
     class Meta:
         verbose_name = "Категория букета"
-        verbose_name_plural = "Категории букетов"
+        verbose_name_plural = "4. Категории букетов"
 
     def __str__(self):
         return self.name
@@ -480,7 +480,7 @@ class BouquetSubcategory(
 
     class Meta:
         verbose_name = "Подкатегория букета"
-        verbose_name_plural = "Подкатегории букетов"
+        verbose_name_plural = "5. Подкатегории букетов"
 
     def __str__(self):
         return self.name
@@ -535,7 +535,7 @@ class Bouquet(ProductAbstract):
 
     class Meta:
         verbose_name = "Букет"
-        verbose_name_plural = "Букеты"
+        verbose_name_plural = "1. Букеты"
 
     def __str__(self):
         return f"{self.name} ({self.diameter} см, {self.amount_of_flowers} цветов)"
