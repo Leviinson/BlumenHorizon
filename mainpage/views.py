@@ -234,7 +234,7 @@ class ConditionsViewMixin(CommonContextMixin):
         context["meta_tags"] = page.meta_tags
         context["url"] = self.url
         context["title"] = self.title
-        context["updated_at"] = self.updated_at
+        context["updated_at"] = page.updated_at
         return context
 
 
