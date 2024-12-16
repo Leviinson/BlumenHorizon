@@ -125,7 +125,7 @@ class Order(TimeStampAdbstractModel, models.Model):
 
 
 @receiver(post_save, sender=Order)
-def order_created(sender, instance: Order, created, **kwargs):
+def order_created(sender: Order, instance: Order, created, **kwargs):
     if created:
         order = instance
         text = (
