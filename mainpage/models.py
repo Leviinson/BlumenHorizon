@@ -28,7 +28,7 @@ class MainPageModel(models.Model):
 
     class Meta:
         verbose_name = "Главная страница"
-        verbose_name_plural = "Главная страница"
+        verbose_name_plural = verbose_name
 
     def __str__(self):
         return "Главная страница"
@@ -103,7 +103,7 @@ class MainPageSeoBlock(TimeStampAdbstractModel, models.Model):
 
     class Meta:
         verbose_name = "Фотография внизу главной страницы"
-        verbose_name_plural = "Фотография внизу главной страницы"
+        verbose_name_plural = verbose_name
 
     def __str__(self):
         return f"{self.image} ...... {self.image_alt}"
@@ -176,7 +176,7 @@ class AboutUsPageModel(TimeStampAdbstractModel):
 
     class Meta:
         verbose_name = "Страница «О нас»"
-        verbose_name_plural = "Страница «О нас»"
+        verbose_name_plural = verbose_name
 
 
 class DeliveryPageModel(TimeStampAdbstractModel):
@@ -273,16 +273,16 @@ class ConditionsPageModelAbstract(models.Model):
 
 class AGBPageModel(ConditionsPageModelAbstract, TimeStampAdbstractModel):
     class Meta:
-        verbose_name = "Условия и положения"
-        verbose_name_plural = "Условия и положения"
+        verbose_name = "Страница «Условия и положения»"
+        verbose_name_plural = verbose_name
 
     def __str__(self):
         return "Условия и положения"
 
 class PrivacyAndPolicyPageModel(ConditionsPageModelAbstract, TimeStampAdbstractModel):
     class Meta:
-        verbose_name = "Условия конфиденциальности и безопасности данных"
-        verbose_name_plural = "Условия конфиденциальности и безопасности данных"
+        verbose_name = "Страница «Условия конфиденциальности и безопасности данных»"
+        verbose_name_plural = verbose_name
 
     def __str__(self):
         return "Условия конфиденциальности и безопасности данных"
@@ -290,15 +290,15 @@ class PrivacyAndPolicyPageModel(ConditionsPageModelAbstract, TimeStampAdbstractM
 class ImpressumPageModel(ConditionsPageModelAbstract, TimeStampAdbstractModel):
     class Meta:
         verbose_name = "Страница «Правовая информация»"
-        verbose_name_plural = "Страница «Правовая информация»"
+        verbose_name_plural = verbose_name
 
     def __str__(self):
         return "Страница «Правовая информация»"
     
 class ReturnPolicyPageModel(ConditionsPageModelAbstract, TimeStampAdbstractModel):
     class Meta:
-        verbose_name = "Условия возврата"
-        verbose_name_plural = "Условия возврата"
+        verbose_name = "Страница «Условия возврата»"
+        verbose_name_plural = verbose_name
 
     def __str__(self):
         return "Условия возврата"
