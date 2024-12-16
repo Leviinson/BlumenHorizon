@@ -47,6 +47,8 @@
             "https://{{ domain_name }}{{ image.image.url }}"{% if not forloop.last %},{% endif %}
           {% endfor %}
         ],
+        "@id": "{{ product.get_absolute_url }}",
+        "description": "{{ product.description|striptags|escape }}",
         "category": {
             "@type": "CategoryCode",
             "name": "{{ product.subcategory.name }}",
@@ -56,7 +58,6 @@
         "sku": "{{ product.sku }}",
         "offers": {
             "@type": "Offer",
-            "url": "{{ product.get_absolute_url }}",
             "priceCurrency": "{{ currency_code }}",
             "price": "{{ product.tax_price_discounted|floatformat:'2u' }}",
             "availability": "https://schema.org/InStock",
