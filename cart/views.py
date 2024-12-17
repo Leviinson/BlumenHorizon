@@ -1,4 +1,5 @@
 from decimal import Decimal
+from pprint import pprint
 from typing import Type
 
 import stripe
@@ -7,6 +8,7 @@ from django.contrib.sites.models import Site
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMultiAlternatives
 from django.db.models.manager import BaseManager
+from django.db.models.query import QuerySet
 from django.http import HttpRequest, HttpResponseForbidden, JsonResponse
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
@@ -18,8 +20,10 @@ from django.views.generic.edit import BaseFormView, FormView
 from accounts.models import User
 from catalogue.models import Bouquet, BouquetImage, Product, ProductImage
 from core.services.dataclasses.related_model import RelatedModel
+from core.services.decorators.db.db_queries import inspect_db_queries
 from core.services.get_recommended_items import get_recommended_items_with_first_image
 from core.services.mixins.views import CommonContextMixin
+from extended_contrib_models.models import ExtendedSite
 
 from .cart import BouquetCart, ProductCart
 from .forms import OrderForm
@@ -40,8 +44,14 @@ class CartView(CommonContextMixin, FormView):
     template_name = "cart/index.html"
     form_class = OrderForm
 
+    @inspect_db_queries
     def form_valid(self, form: OrderForm):
-        site = get_current_site(self.request)
+        site = (
+            ExtendedSite.objects.select_related("site")
+            .only("site__name", "site__domain", "tax_percent", "currency_code")
+            .first()
+        )
+        domain = site.site.domain
         products_cart = ProductCart(
             session=self.request.session, session_key="products_cart"
         )
@@ -53,24 +63,27 @@ class CartView(CommonContextMixin, FormView):
             form,
             products_cart,
             bouquets_cart,
-            site.extended.tax_percent,
+            site.tax_percent,
             self.request.user,
         )
-        products_cart.clear()
-        bouquets_cart.clear()
 
-        currency = site.extended.currency_code.lower()
-        order_products: BaseManager[OrderProducts] = order.products
-        order_bouquets: BaseManager[OrderBouquets] = order.bouquets
+        currency = site.currency_code.lower()
+        (
+            order_products,
+            order_bouquets,
+            line_items,
+        ) = self.generate_line_items_and_attach_first_images(
+            order.products.select_related("product").prefetch_related(
+                "product__images",
+            ),
+            order.bouquets.select_related("product").prefetch_related(
+                "product__images",
+            ),
+            currency,
+            domain,
+        )
         checkout_session = stripe.checkout.Session.create(
-            line_items=[
-                self.create_line_item(order_product, order_product.quantity, currency)
-                for order_product in order_products.all()
-            ]
-            + [
-                self.create_line_item(order_bouquet, order_bouquet.quantity, currency)
-                for order_bouquet in order_bouquets.all()
-            ],
+            line_items=line_items,
             mode="payment",
             success_url="https://blumenhorizon.de/contact/",
             cancel_url="https://blumenhorizon.de/delivery/",
@@ -81,23 +94,58 @@ class CartView(CommonContextMixin, FormView):
 
         self.send_order_confirmation_email(
             order,
-            site,
+            order_products,
+            order_bouquets,
+            site.currency_symbol,
+            site.site.name,
+            site.site.domain,
         )
         self.add_order_in_session(self.request, order)
         self.success_url = checkout_session.url
         return super().form_valid(form)
+
+    def generate_line_items_and_attach_first_images(
+        self,
+        order_products: BaseManager[OrderProducts],
+        order_bouquets: BaseManager[OrderBouquets],
+        currency: str,
+        domain: str,
+    ) -> tuple[
+        QuerySet[OrderProducts], QuerySet[OrderBouquets], list[dict[str, str | int]]
+    ]:
+        line_items = []
+        for order_product in order_products.all():
+            order_product.product.first_image = order_product.product.images.first()
+            line_items.append(
+                self.create_line_item(
+                    order_product, order_product.quantity, currency, domain
+                )
+            )
+        for order_bouquet in order_bouquets.all():
+            order_bouquet.product.first_image = order_bouquet.product.images.first()
+            line_items.append(
+                self.create_line_item(
+                    order_bouquet, order_bouquet.quantity, currency, domain
+                )
+            )
+        pprint(line_items)
+        return order_products, order_bouquets, line_items
 
     @staticmethod
     def create_line_item(
         order_product: OrderBouquets | OrderProducts,
         quantity: int,
         currency: str,
+        domain: str,
     ) -> dict[str, str | int]:
         return {
             "price_data": {
                 "currency": currency,
                 "product_data": {
                     "name": f"{order_product.product.name}",
+                    "images": [
+                        f"https://{domain}{order_product.product.first_image.image.url}"
+                    ],
                 },
                 "unit_amount_decimal": f"{order_product.product_tax_price_discounted * 100}",
             },
@@ -107,18 +155,13 @@ class CartView(CommonContextMixin, FormView):
     @staticmethod
     def send_order_confirmation_email(
         order: Order,
-        site: Site,
+        order_products: QuerySet[OrderProducts],
+        order_bouquets: QuerySet[OrderBouquets],
+        currency_symbol: str,
+        site_name: str,
+        domain: str,
     ):
-        for order_product in order.products.all():
-            order_product.product.first_image = order_product.product.images.first()
-
-        for order_bouquet in order.bouquets.all():
-            order_bouquet.product.first_image = order_bouquet.product.images.first()
-
         # TODO: перенести в сигнал создания модели заказа
-        currency_symbol = site.extended.currency_symbol
-        site_name = site.name
-        domain = site.domain
         mail_subject = _("{site_name} | Подтверждение заказа {order_code}").format(
             site_name=site_name, order_code=order.code
         )
@@ -134,8 +177,8 @@ class CartView(CommonContextMixin, FormView):
                 ),
                 "order_code": order.code,
                 "order_date": order.created_at,
-                "order_products": order.products,
-                "order_bouquets": order.bouquets,
+                "order_products": order_products,
+                "order_bouquets": order_bouquets,
                 "recipient_name": order.recipient_name,
                 "recipient_phonenumber": order.recipient_phonenumber,
                 "country": order.country,
