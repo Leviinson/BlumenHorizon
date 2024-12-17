@@ -99,7 +99,7 @@ class CartView(CommonContextMixin, FormView):
                 "product_data": {
                     "name": f"{order_product.product.name}",
                 },
-                "unit_amount_decimal": f"{order_product.product_tax_price_discounted * 100}",
+                "unit_amount": f"{order_product.product_tax_price_discounted * 100}",
             },
             "quantity": quantity,
         }
