@@ -60,16 +60,16 @@ class CartView(CommonContextMixin, FormView):
         bouquets_cart.clear()
 
         currency = site.extended.currency_code.lower()
-        order_products: list[OrderProducts] = order.products
-        order_bouquets: list[OrderBouquets] = order.bouquets
+        order_products: BaseManager[OrderProducts] = order.products
+        order_bouquets: BaseManager[OrderBouquets] = order.bouquets
         checkout_session = stripe.checkout.Session.create(
             line_items=[
                 self.create_line_item(order_product, order_product.quantity, currency)
-                for order_product in order_products
+                for order_product in order_products.all()
             ]
             + [
                 self.create_line_item(order_bouquet, order_bouquet.quantity, currency)
-                for order_bouquet in order_bouquets
+                for order_bouquet in order_bouquets.all()
             ],
             mode="payment",
             success_url="https://blumenhorizon.de/contact/",
