@@ -1,10 +1,12 @@
 from decimal import Decimal
 from typing import Type
 
+import stripe
 from django.conf import settings
 from django.contrib.sites.models import Site
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMultiAlternatives
+from django.db.models.manager import BaseManager
 from django.http import HttpRequest, HttpResponseForbidden, JsonResponse
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
@@ -19,11 +21,9 @@ from core.services.dataclasses.related_model import RelatedModel
 from core.services.get_recommended_items import get_recommended_items_with_first_image
 from core.services.mixins.views import CommonContextMixin
 
-import stripe
-
 from .cart import BouquetCart, ProductCart
 from .forms import OrderForm
-from .models import Order
+from .models import Order, OrderBouquets, OrderProducts
 from .services.mixins import (
     CartBouquetEditMixin,
     CartEditAbstractMixin,
@@ -58,29 +58,24 @@ class CartView(CommonContextMixin, FormView):
         )
         products_cart.clear()
         bouquets_cart.clear()
+
+        currency = site.extended.currency_code.lower()
+        order_products: list[OrderProducts] = order.products
+        order_bouquets: list[OrderBouquets] = order.bouquets
         checkout_session = stripe.checkout.Session.create(
             line_items=[
-                {
-                    # Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-                    "price_data": {
-                        "currency": site.extended.currency_code.lower(),
-                        "product_data": {
-                            "name": "Пример 123",
-                            "unit_amount_decimal": "102.93",
-                        },
-                    },
-                    "quantity": 1,
-                },
+                self.create_line_item(order_product, order_product.quantity, currency)
+                for order_product in order_products
+            ]
+            + [
+                self.create_line_item(order_bouquet, order_bouquet.quantity, currency)
+                for order_bouquet in order_bouquets
             ],
             mode="payment",
             success_url="https://blumenhorizon.de/contact/",
             cancel_url="https://blumenhorizon.de/delivery/",
             metadata={
-                "test": 123,
-                "test1": 321.2,
-                "test3": [1, 2, 3],
                 "test4": "asd",
-                "test5": {"test1": 123},
             },
         )
 
@@ -91,6 +86,23 @@ class CartView(CommonContextMixin, FormView):
         self.add_order_in_session(self.request, order)
         self.success_url = checkout_session.url
         return super().form_valid(form)
+
+    @staticmethod
+    def create_line_item(
+        order_product: OrderBouquets | OrderProducts,
+        quantity: int,
+        currency: str,
+    ) -> dict[str, str | int]:
+        return {
+            "price_data": {
+                "currency": currency,
+                "product_data": {
+                    "name": f"{order_product.product.name}",
+                },
+                "unit_amount_decimal": f"{order_product.product_tax_price_discounted * 100}",
+            },
+            "quantity": quantity,
+        }
 
     @staticmethod
     def send_order_confirmation_email(
