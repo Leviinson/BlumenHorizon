@@ -14,7 +14,7 @@ import stripe.webhook
 def stripe_webhook(request: Request):
     logger = logging.getLogger("django_stripe")
     try:
-        payload = request.data
+        payload = request.body
         sig_header = request.headers.get('STRIPE_SIGNATURE')
         event = None
 
