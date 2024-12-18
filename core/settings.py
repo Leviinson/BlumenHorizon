@@ -382,9 +382,9 @@ CACHES = {
 
 CACHEOPS_REDIS = os.getenv("CACHEOPS_REDIS")
 CACHEOPS = {
-    "sites.site": {"ops": "all", "timeout": 15},
-    "extended_contrib_models.extendedsite": {"ops": "all", "timeout": 15},
-    "extended_contrib_models.social": {"ops": "all", "timeout": 15},
+    "sites.site": {"ops": "all", "timeout": 60*15},
+    "extended_contrib_models.extendedsite": {"ops": "all", "timeout": 60*15},
+    '*.*': {'timeout': 60*15},
 }
 
 # Celery
