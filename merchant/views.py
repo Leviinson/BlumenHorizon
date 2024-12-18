@@ -23,8 +23,10 @@ def stripe_webhook(request: Request):
                 payload, sig_header, os.getenv("STRIPE_WEBHOOK_SECRET")
             )
         except ValueError as e:
+            logger.debug(e)
             return Response("Invalid payload", status.HTTP_400_BAD_REQUEST)
         except stripe.error.SignatureVerificationError as e:
+            logger.debug(e)
             return Response("Invalid signature", status.HTTP_400_BAD_REQUEST)
         
         event_dict = event.serialize()
