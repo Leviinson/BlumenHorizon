@@ -376,7 +376,7 @@ LOGGING = (
             },
             "stripe": {
                 "handlers": ["stripe_debug", "stripe_info"],
-                "level": ["DEBUG", "INFO"],
+                "level": "DEBUG",
                 "propagate": False,
             },
         },
