@@ -1,17 +1,14 @@
 from decimal import Decimal
-from pprint import pprint
 from typing import Type
 
 import stripe
 from django.conf import settings
-from django.contrib.sites.models import Site
-from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMultiAlternatives
+from django.db.models import Prefetch
 from django.db.models.manager import BaseManager
 from django.db.models.query import QuerySet
 from django.http import HttpRequest, HttpResponseForbidden, JsonResponse
 from django.template.loader import render_to_string
-from django.urls import reverse_lazy
 from django.utils.html import strip_tags
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
@@ -19,6 +16,7 @@ from django.views.generic.edit import BaseFormView, FormView
 
 from accounts.models import User
 from catalogue.models import Bouquet, BouquetImage, Product, ProductImage
+from core.services.caching import set_or_get_from_cache
 from core.services.dataclasses.related_model import RelatedModel
 from core.services.decorators.db.db_queries import inspect_db_queries
 from core.services.get_recommended_items import get_recommended_items_with_first_image
@@ -48,10 +46,24 @@ class CartView(CommonContextMixin, FormView):
     def form_valid(self, form: OrderForm):
         site = (
             ExtendedSite.objects.select_related("site")
-            .only("site__name", "site__domain", "tax_percent", "currency_code")
+            .only(
+                "site__name",
+                "site__domain",
+                "tax_percent",
+                "currency_code",
+                "currency_symbol",
+            )
             .first()
         )
+        name = site.site.name
         domain = site.site.domain
+        tax_percent = set_or_get_from_cache(
+            "tax_percent",
+            60 * 15,
+        )
+        currency_code = site.currency_code.lower()
+        currency_symbol = site.currency_symbol
+
         products_cart = ProductCart(
             session=self.request.session, session_key="products_cart"
         )
@@ -63,46 +75,57 @@ class CartView(CommonContextMixin, FormView):
             form,
             products_cart,
             bouquets_cart,
-            site.tax_percent,
+            tax_percent,
             self.request.user,
         )
 
-        currency = site.currency_code.lower()
-        (
-            order_products,
-            order_bouquets,
-            line_items,
-        ) = self.generate_line_items_and_attach_first_images(
-            order.products.select_related("product").prefetch_related(
-                "product__images",
-            ),
-            order.bouquets.select_related("product").prefetch_related(
-                "product__images",
-            ),
-            currency,
-            domain,
+        order_products, order_bouquets, line_items = (
+            self.generate_line_items_and_attach_first_images(
+                order.products,
+                order.bouquets,
+                currency_code,
+                domain,
+            )
         )
+
+        # self.send_order_confirmation_email(
+        #     order,
+        #     order_products,
+        #     order_bouquets,
+        #     currency_symbol,
+        #     name,
+        #     domain,
+        # )
+        self.add_order_in_session(self.request, order)
+        self.success_url = self.generate_payment_page_url(order.email, line_items)
+        return super().form_valid(form)
+
+    @staticmethod
+    def generate_payment_page_url(
+        customer_email: str, line_items: list[dict[str, str | int]]
+    ) -> str:
         checkout_session = stripe.checkout.Session.create(
             line_items=line_items,
             mode="payment",
+            customer_email=customer_email,
             success_url="https://blumenhorizon.de/contact/",
             cancel_url="https://blumenhorizon.de/delivery/",
             metadata={
                 "test4": "asd",
             },
+            billing_address_collection="required",
+            payment_method_types=[
+                "card",
+                "giropay",
+                "ideal",
+                "klarna",
+                "sofort",
+                "paypal",
+                "revolut_pay",
+                "link",
+            ],
         )
-
-        self.send_order_confirmation_email(
-            order,
-            order_products,
-            order_bouquets,
-            site.currency_symbol,
-            site.site.name,
-            site.site.domain,
-        )
-        self.add_order_in_session(self.request, order)
-        self.success_url = checkout_session.url
-        return super().form_valid(form)
+        return checkout_session.url
 
     def generate_line_items_and_attach_first_images(
         self,
@@ -128,7 +151,6 @@ class CartView(CommonContextMixin, FormView):
                     order_bouquet, order_bouquet.quantity, currency, domain
                 )
             )
-        pprint(line_items)
         return order_products, order_bouquets, line_items
 
     @staticmethod
@@ -161,7 +183,7 @@ class CartView(CommonContextMixin, FormView):
         site_name: str,
         domain: str,
     ):
-        # TODO: перенести в сигнал создания модели заказа
+        # TODO: перенести в celery
         mail_subject = _("{site_name} | Подтверждение заказа {order_code}").format(
             site_name=site_name, order_code=order.code
         )
@@ -230,6 +252,11 @@ class CartView(CommonContextMixin, FormView):
             tax_percent=tax_percent,
             commit=True,
             user=user,
+        )
+        product_images_prefetch = Prefetch(
+            "product_images",
+            queryset=ProductImage.objects.only("id", "image", "image_alt"),
+            to_attr="prefetched_images",  # Поле для доступа к изображениям
         )
         order = (
             Order.objects.prefetch_related(
