@@ -1,10 +1,7 @@
-from django.urls import include, path
-from rest_framework.routers import DefaultRouter
-from views import stripe_webhook
+from django.urls import path
 
-router = DefaultRouter
-router.register(r"webhook/", stripe_webhook)
+from .views import stripe_webhook
 
 urlpatterns = [
-    path("", include(router.urls)),
+    path("", stripe_webhook),
 ]
