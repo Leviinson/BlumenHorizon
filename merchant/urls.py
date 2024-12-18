@@ -3,5 +3,5 @@ from django.urls import path
 from .views import stripe_webhook
 
 urlpatterns = [
-    path("", stripe_webhook),
+    path("webhook/", stripe_webhook),
 ]
