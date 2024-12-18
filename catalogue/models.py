@@ -17,6 +17,7 @@ from telegram.helpers import escape_markdown
 from tinymce.models import HTMLField
 
 from core.base_models import TimeStampAdbstractModel
+from core.services.caching import set_or_get_from_cache
 from tg_bot import send_message_to_telegram
 
 
@@ -89,10 +90,7 @@ class CatalogPageModel(models.Model):
         }
         </script>""",
     )
-    description = HTMLField(
-        verbose_name="Описание на странице 'Каталог'",
-        null=True
-    )
+    description = HTMLField(verbose_name="Описание на странице 'Каталог'", null=True)
 
     class Meta:
         verbose_name = "Страница «Каталог»"
@@ -174,10 +172,7 @@ class ProductCategory(CategoryAbstract, TimeStampAdbstractModel, MetaDataAbstrac
         default="""<title>Blumen Horizon | </title>
 <meta name="description" content="Описание">""",
     )
-    description = HTMLField(
-        verbose_name="Описание на странице категории",
-        null=True
-    )
+    description = HTMLField(verbose_name="Описание на странице категории", null=True)
 
     class Meta:
         verbose_name = "Категория продукта"
@@ -284,12 +279,11 @@ class ProductAbstract(TimeStampAdbstractModel, MetaDataAbstractModel):
             self.is_active = False
 
     def _get_tax_percent(self):
-        site = (
-            Site.objects.prefetch_related("extended")
-            .only("extended__tax_percent")
-            .first()
+        tax_percent = set_or_get_from_cache(
+            "tax_percent",
+            60 * 15,
         )
-        return Decimal(site.extended.tax_percent)
+        return Decimal(tax_percent)
 
     @property
     def discount_price(self) -> Decimal:
@@ -431,10 +425,7 @@ class BouquetCategory(CategoryAbstract, TimeStampAdbstractModel, MetaDataAbstrac
         default="""<title>Blumen Horizon | </title>
 <meta name="description" content="Описание">""",
     )
-    description = HTMLField(
-        verbose_name="Описание на странице категории",
-        null=True
-    )
+    description = HTMLField(verbose_name="Описание на странице категории", null=True)
 
     class Meta:
         verbose_name = "Категория букета"
