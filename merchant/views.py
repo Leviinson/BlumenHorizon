@@ -1,18 +1,35 @@
 import logging
-from pprint import pprint
+import os
 
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.request import Request
 from rest_framework.response import Response
+import stripe
+import stripe.error
+import stripe.webhook
 
 
 @api_view(["POST"])
 def stripe_webhook(request: Request):
+    logger = logging.getLogger("stripe")
     try:
-        pprint(request.data)
+        payload = request.data
+        sig_header = request.headers.get('STRIPE_SIGNATURE')
+        event = None
+
+        try:
+            event = stripe.Webhook.construct_event(
+                payload, sig_header, os.getenv("STRIPE_WEBHOOK_SECRET")
+            )
+        except ValueError as e:
+            return Response("Invalid payload", status.HTTP_400_BAD_REQUEST)
+        except stripe.error.SignatureVerificationError as e:
+            return Response("Invalid signature", status.HTTP_400_BAD_REQUEST)
+        
+        event_dict = event.serialize()
+        logger.info(event_dict)
     except Exception as e:
-        logger = logging.getLogger("stripe")
         logger.debug(e)
         return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     return Response(status=status.HTTP_200_OK)

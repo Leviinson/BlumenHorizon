@@ -292,10 +292,16 @@ LOGGING_HANDLERS = {
         "filename": os.path.join(BASE_DIR, "logs/telegram/bot.logs"),
         "formatter": "verbose",
     },
-    "stripe_file": {
+    "stripe_debug": {
         "level": "DEBUG",
         "class": "logging.FileHandler",
-        "filename": os.path.join(BASE_DIR, "logs/stripe/stripe.logs"),
+        "filename": os.path.join(BASE_DIR, "logs/stripe/stripe_debug.logs"),
+        "formatter": "verbose",
+    },
+    "stripe_info": {
+        "level": "DEBUG",
+        "class": "logging.FileHandler",
+        "filename": os.path.join(BASE_DIR, "logs/stripe/stripe_info.logs"),
         "formatter": "verbose",
     },
 }
@@ -369,8 +375,8 @@ LOGGING = (
                 "propagate": False,
             },
             "stripe": {
-                "handlers": ["stripe_file"],
-                "level": "DEBUG",
+                "handlers": ["stripe_debug", "stripe_info"],
+                "level": ["DEBUG", "INFO"],
                 "propagate": False,
             },
         },
