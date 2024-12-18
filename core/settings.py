@@ -299,7 +299,7 @@ LOGGING_HANDLERS = {
         "formatter": "verbose",
     },
     "stripe_info": {
-        "level": "DEBUG",
+        "level": "INFO",
         "class": "logging.FileHandler",
         "filename": os.path.join(BASE_DIR, "logs/stripe/stripe_info.logs"),
         "formatter": "verbose",
