@@ -289,19 +289,31 @@ LOGGING_HANDLERS = {
     "telegram_file": {
         "level": "ERROR",
         "class": "logging.FileHandler",
-        "filename": os.path.join(BASE_DIR, "logs/telegram/bot.logs"),
+        "filename": os.path.join(BASE_DIR, "logs/telegram/bot.log"),
         "formatter": "verbose",
     },
     "stripe_debug": {
         "level": "DEBUG",
         "class": "logging.FileHandler",
-        "filename": os.path.join(BASE_DIR, "logs/stripe/stripe_debug.logs"),
+        "filename": os.path.join(BASE_DIR, "logs/stripe/stripe_debug.log"),
         "formatter": "verbose",
     },
     "stripe_info": {
         "level": "INFO",
         "class": "logging.FileHandler",
-        "filename": os.path.join(BASE_DIR, "logs/stripe/stripe_info.logs"),
+        "filename": os.path.join(BASE_DIR, "logs/stripe/stripe_info.log"),
+        "formatter": "verbose",
+    },
+    "django_stripe_debug": {
+        "level": "DEBUG",
+        "class": "logging.FileHandler",
+        "filename": os.path.join(BASE_DIR, "logs/stripe/django_stripe_debug.log"),
+        "formatter": "verbose",
+    },
+    "django_stripe_info": {
+        "level": "INFO",
+        "class": "logging.FileHandler",
+        "filename": os.path.join(BASE_DIR, "logs/stripe/django_stripe_info.log"),
         "formatter": "verbose",
     },
 }
@@ -376,6 +388,11 @@ LOGGING = (
             },
             "stripe": {
                 "handlers": ["stripe_debug", "stripe_info"],
+                "level": "DEBUG",
+                "propagate": False,
+            },
+            "django_stripe": {
+                "handlers": ["django_stripe_debug", "django_stripe_info"],
                 "level": "DEBUG",
                 "propagate": False,
             },

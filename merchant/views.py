@@ -12,7 +12,7 @@ import stripe.webhook
 
 @api_view(["POST"])
 def stripe_webhook(request: Request):
-    logger = logging.getLogger("stripe")
+    logger = logging.getLogger("django_stripe")
     try:
         payload = request.data
         sig_header = request.headers.get('STRIPE_SIGNATURE')
