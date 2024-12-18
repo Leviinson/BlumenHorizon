@@ -9,6 +9,7 @@ logs/mysql/**
 logs/redis/**
 logs/nginx/**
 logs/telegram/**
+logs/stripe/**
 
 nginx/access.log
 nginx/error.log

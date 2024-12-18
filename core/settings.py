@@ -134,7 +134,7 @@ LOCAL_APPS = [
     "livesearch.apps.LivesearchConfig",
     "wysiwyg.apps.WysiwygConfig",
     "seo.apps.SeoConfig",
-    "merchant.apps.MerchantConfig"
+    "merchant.apps.MerchantConfig",
 ]
 
 THIRDPARTY_APPS = [
@@ -292,6 +292,12 @@ LOGGING_HANDLERS = {
         "filename": os.path.join(BASE_DIR, "logs/telegram/bot.logs"),
         "formatter": "verbose",
     },
+    "stripe_file": {
+        "level": "DEBUG",
+        "class": "logging.FileHandler",
+        "filename": os.path.join(BASE_DIR, "logs/stripe/stripe.logs"),
+        "formatter": "verbose",
+    },
 }
 LOGGING_HANDLERS = {k: v for k, v in LOGGING_HANDLERS.items() if v is not None}
 
@@ -362,6 +368,11 @@ LOGGING = (
                 "level": "ERROR",
                 "propagate": False,
             },
+            "stripe": {
+                "handlers": ["stripe_file"],
+                "level": "DEBUG",
+                "propagate": False,
+            },
         },
     }
     if not DEBUG
@@ -383,9 +394,9 @@ CACHES = {
 
 CACHEOPS_REDIS = os.getenv("CACHEOPS_REDIS")
 CACHEOPS = {
-    "sites.site": {"ops": "all", "timeout": 60*15},
-    "extended_contrib_models.extendedsite": {"ops": "all", "timeout": 60*15},
-    '*.*': {'timeout': 60*15},
+    "sites.site": {"ops": "all", "timeout": 60 * 15},
+    "extended_contrib_models.extendedsite": {"ops": "all", "timeout": 60 * 15},
+    "*.*": {"timeout": 60 * 15},
 }
 
 # Celery
