@@ -26,15 +26,16 @@ from django.views.i18n import JavaScriptCatalog, set_language
 
 service_urlpatterns = [
     path("i18n/", include("django.conf.urls.i18n")),
-    path("logout/", LogoutView.as_view(), name="logout"),
     path("i18n/setlang/", set_language, name="set_language"),
     path("", include("wysiwyg.urls")),
     path("", include("seo.urls")),
+    path("merchant/", include("merchant.urls"))
 ]
 
 i18n_urlpatterns = i18n_patterns(
     path("admin/", admin.site.urls),
     path("jsi18n/", JavaScriptCatalog.as_view(), name="javascript-catalog"),
+    path("logout/", LogoutView.as_view(), name="logout"),
     path("", include("mainpage.urls")),
     path("accounts/", include("accounts.urls")),
     path("catalog/", include("catalogue.urls")),

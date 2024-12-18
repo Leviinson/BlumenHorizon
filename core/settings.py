@@ -134,6 +134,7 @@ LOCAL_APPS = [
     "livesearch.apps.LivesearchConfig",
     "wysiwyg.apps.WysiwygConfig",
     "seo.apps.SeoConfig",
+    "merchant.apps.MerchantConfig"
 ]
 
 THIRDPARTY_APPS = [
