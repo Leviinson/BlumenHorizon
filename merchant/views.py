@@ -29,7 +29,7 @@ def stripe_webhook(request: Request):
             logger.debug(e, stack_info=True)
             return Response("Invalid signature", status.HTTP_400_BAD_REQUEST)
         
-        event_dict = event.serialize()
+        event_dict = event.to_dict()
         logger.info(event_dict)
     except Exception as e:
         logger.debug(e, stack_info=True)
