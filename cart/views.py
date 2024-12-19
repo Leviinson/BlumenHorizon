@@ -1,15 +1,11 @@
 from decimal import Decimal
-from typing import Type
+from typing import Any, Type
 
 import stripe
 from django.conf import settings
-from django.core.mail import EmailMultiAlternatives
-from django.db.models import Prefetch
 from django.db.models.manager import BaseManager
 from django.db.models.query import QuerySet
 from django.http import HttpRequest, HttpResponseForbidden, JsonResponse
-from django.template.loader import render_to_string
-from django.utils.html import strip_tags
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 from django.views.generic.edit import BaseFormView, FormView
@@ -55,14 +51,6 @@ class CartView(CommonContextMixin, FormView):
             )
             .first()
         )
-        name = site.site.name
-        domain = site.site.domain
-        tax_percent = set_or_get_from_cache(
-            "tax_percent",
-            60 * 15,
-        )
-        currency_code = site.currency_code.lower()
-        currency_symbol = site.currency_symbol
 
         products_cart = ProductCart(
             session=self.request.session, session_key="products_cart"
@@ -71,49 +59,52 @@ class CartView(CommonContextMixin, FormView):
             session=self.request.session, session_key="bouquets_cart"
         )
 
+        tax_percent = set_or_get_from_cache(
+            "tax_percent",
+            60 * 15,
+        )
         order = self.save_order_in_db(
             form,
             products_cart,
             bouquets_cart,
             tax_percent,
             self.request.user,
+            self.request.session.session_key
         )
 
-        order_products, order_bouquets, line_items = (
-            self.generate_line_items_and_attach_first_images(
-                order.products,
-                order.bouquets,
-                currency_code,
-                domain,
-            )
+        currency_code = site.currency_code.lower()
+        domain = site.site.domain
+        line_items = self.generate_line_items_and_attach_first_images(
+            order.products,
+            order.bouquets,
+            currency_code,
+            domain,
         )
 
-        # self.send_order_confirmation_email(
-        #     order,
-        #     order_products,
-        #     order_bouquets,
-        #     currency_symbol,
-        #     name,
-        #     domain,
-        # )
         self.add_order_in_session(self.request, order)
-        self.success_url = self.generate_payment_page_url(order.email, line_items)
+        self.success_url = self.generate_payment_page_url(
+            order.code,
+            customer_email=order.email,
+            line_items=line_items,
+        )
         return super().form_valid(form)
 
     @staticmethod
     def generate_payment_page_url(
-        customer_email: str, line_items: list[dict[str, str | int]]
+        order_code: str,
+        customer_email: str,
+        line_items: list[dict[str, str | int]],
     ) -> str:
         checkout_session = stripe.checkout.Session.create(
+            billing_address_collection="required",
             line_items=line_items,
             mode="payment",
             customer_email=customer_email,
             success_url="https://blumenhorizon.de/contact/",
             cancel_url="https://blumenhorizon.de/delivery/",
             metadata={
-                "test4": "asd",
+                "order_code": order_code,
             },
-            billing_address_collection="required",
             payment_method_types=[
                 "card",
                 "giropay",
@@ -151,7 +142,7 @@ class CartView(CommonContextMixin, FormView):
                     order_bouquet, order_bouquet.quantity, currency, domain
                 )
             )
-        return order_products, order_bouquets, line_items
+        return line_items
 
     @staticmethod
     def create_line_item(
@@ -175,59 +166,6 @@ class CartView(CommonContextMixin, FormView):
         }
 
     @staticmethod
-    def send_order_confirmation_email(
-        order: Order,
-        order_products: QuerySet[OrderProducts],
-        order_bouquets: QuerySet[OrderBouquets],
-        currency_symbol: str,
-        site_name: str,
-        domain: str,
-    ):
-        # TODO: перенести в celery
-        mail_subject = _("{site_name} | Подтверждение заказа {order_code}").format(
-            site_name=site_name, order_code=order.code
-        )
-        html_message = render_to_string(
-            "cart/order_confirmation.html",
-            {
-                "site_name": site_name,
-                "domain": domain,
-                "MEDIA_URL": settings.MEDIA_URL,
-                "name": order.name,
-                "address_form": dict(Order.ADDRESS_FORM_CHOICES).get(
-                    order.address_form, "Dear"
-                ),
-                "order_code": order.code,
-                "order_date": order.created_at,
-                "order_products": order_products,
-                "order_bouquets": order_bouquets,
-                "recipient_name": order.recipient_name,
-                "recipient_phonenumber": order.recipient_phonenumber,
-                "country": order.country,
-                "city": order.city,
-                "street": order.street,
-                "building": order.building,
-                "flat": order.flat,
-                "delivery_date": order.delivery_date,
-                "delivery_time": order.delivery_time,
-                "message_card": order.message_card,
-                "instructions": order.instructions,
-                "tax": order.tax,
-                "sub_total": order.sub_total,
-                "grand_total": order.grand_total,
-                "currency": currency_symbol,
-                "postal_code": order.postal_code,
-            },
-        )
-        plain_message = strip_tags(html_message)
-        email = EmailMultiAlternatives(mail_subject, plain_message, to=[order.email])
-        email.attach_alternative(html_message, "text/html")
-        if email.send():
-            pass
-        else:
-            pass
-
-    @staticmethod
     def add_order_in_session(request: HttpRequest, order: Order):
         if "orders" in request.session:
             request.session["orders"].append(order.code)
@@ -245,18 +183,15 @@ class CartView(CommonContextMixin, FormView):
         bouquets_cart: BouquetCart,
         tax_percent: int,
         user: User,
+        session_key: Any
     ) -> Order:
         order = form.save(
             products_cart=products_cart,
             bouquets_cart=bouquets_cart,
             tax_percent=tax_percent,
+            session_key=session_key,
             commit=True,
             user=user,
-        )
-        product_images_prefetch = Prefetch(
-            "product_images",
-            queryset=ProductImage.objects.only("id", "image", "image_alt"),
-            to_attr="prefetched_images",  # Поле для доступа к изображениям
         )
         order = (
             Order.objects.prefetch_related(
