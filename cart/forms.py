@@ -1,4 +1,5 @@
 from decimal import Decimal
+from typing import Any
 
 from django import forms
 from django.db import transaction
@@ -69,10 +70,12 @@ class OrderForm(forms.ModelForm):
         products_cart: ProductCart,
         bouquets_cart: BouquetCart,
         tax_percent: int,
+        session_key: Any,
         commit=True,
         user: User = None,
     ) -> Order:
         order: Order = super().save(commit=False)
+        order.session_key = session_key
         if user and user.is_authenticated:
             order.user = user
         with transaction.atomic():

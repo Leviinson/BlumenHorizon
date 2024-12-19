@@ -32,6 +32,7 @@ class Order(TimeStampAdbstractModel, models.Model):
         null=True,
         blank=False,
     )
+    session_key = models.CharField(max_length=255)
     clarify_address = models.BooleanField(default=False, verbose_name="Уточнить адрес?")
     country = models.CharField(verbose_name="Страна", max_length=40)
     city = models.CharField(verbose_name="Город", max_length=40)
@@ -122,6 +123,8 @@ class Order(TimeStampAdbstractModel, models.Model):
 
     def __str__(self):
         return f"{self.code} - {self.status}"
+    
+
 
 
 @receiver(post_save, sender=Order)
