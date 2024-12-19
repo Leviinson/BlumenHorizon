@@ -5,8 +5,6 @@ from typing import Any
 import stripe
 import stripe.error
 import stripe.webhook
-from django.contrib.sessions.backends.db import SessionStore
-
 from django.contrib.sessions.models import Session
 from django.utils import timezone
 from rest_framework import status
@@ -14,7 +12,6 @@ from rest_framework.decorators import api_view
 from rest_framework.request import Request
 from rest_framework.response import Response
 
-from cart.cart import BouquetCart, ProductCart
 from cart.models import Order
 from merchant.services import send_order_confirmation_email
 from tg_bot.main import send_message_to_telegram
