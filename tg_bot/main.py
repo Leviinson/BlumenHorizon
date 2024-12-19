@@ -19,4 +19,11 @@ async def send_message_to_telegram_async(chat_id, text):
 
 
 def send_message_to_telegram(chat_id, text):
-    asyncio.run(send_message_to_telegram_async(chat_id, text))
+    try:
+        loop = asyncio.get_event_loop()
+        if loop.is_running():
+            loop.create_task(send_message_to_telegram_async(chat_id, text))
+        else:
+            asyncio.run(send_message_to_telegram_async(chat_id, text))
+    except Exception as e:
+        logging.error(f"Error in send_message_to_telegram: {e}")
