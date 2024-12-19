@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.db.models.signals import post_save
@@ -89,8 +88,7 @@ def individual_order_created(sender, instance: IndividualOrder, created, **kwarg
             f"Вперёд за работу! 🚀"
         )
 
-        chat_id = settings.TELEGRAM_CHAT_ID
-        send_message_to_telegram(chat_id, text)
+        send_message_to_telegram(text)
 
 
 class MainPageSeoBlock(TimeStampAdbstractModel, models.Model):

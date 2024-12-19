@@ -18,7 +18,7 @@ async def send_message_to_telegram_async(chat_id, text):
         logger.error(msg=f"Error while sending message: {e}")
 
 
-def send_message_to_telegram(chat_id, text):
+def send_message_to_telegram(text: str, chat_id = settings.TELEGRAM_CHAT_ID)
     try:
         loop = asyncio.get_event_loop()
         if loop.is_running():

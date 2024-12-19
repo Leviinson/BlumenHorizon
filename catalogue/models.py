@@ -3,7 +3,6 @@ from decimal import ROUND_HALF_UP, Decimal
 from random import randint
 
 from colorfield.fields import ColorField
-from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.sites.models import Site
 from django.core.validators import MaxValueValidator, MinValueValidator
@@ -693,5 +692,4 @@ def individual_question_created(
             f"Вперёд за работу! 🚀"
         )
 
-        chat_id = settings.TELEGRAM_CHAT_ID
-        send_message_to_telegram(chat_id, text)
+        send_message_to_telegram(text)

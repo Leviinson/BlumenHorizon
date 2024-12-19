@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
@@ -140,8 +139,7 @@ def order_created(sender: Order, instance: Order, created, **kwargs):
             f"Вперёд за работу! 🚀"
         )
 
-        chat_id = settings.TELEGRAM_CHAT_ID
-        send_message_to_telegram(chat_id, text)
+        send_message_to_telegram(text)
 
 
 class OrderItem(models.Model):
