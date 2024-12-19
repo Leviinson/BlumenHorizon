@@ -18,21 +18,112 @@ from tg_bot.main import send_message_to_telegram
 
 
 class OrderNotFound(Exception):
+    """Исключение, которое генерируется при отсутствии заказа с указанным кодом."""
     pass
+
+
+def get_order_by_code(order_code: str) -> Order:
+    """
+    Возвращает заказ из базы данных по указанному коду заказа.
+
+    Параметры:
+    - order_code (str): Код заказа для поиска.
+
+    Возвращает:
+    - Order: Экземпляр модели заказа.
+
+    Исключения:
+    - Order.DoesNotExist: Если заказ с указанным кодом не найден.
+    """
+    return Order.objects.only(
+        "session_key",
+        "email",
+        "created_at",
+        "name",
+        "address_form",
+        "recipient_name",
+        "recipient_phonenumber",
+        "country",
+        "city",
+        "street",
+        "building",
+        "flat",
+        "postal_code",
+        "delivery_date",
+        "delivery_time",
+        "message_card",
+        "instructions",
+        "tax",
+        "sub_total",
+        "grand_total",
+    ).get(code=order_code)
+
+
+def update_order_status(order: Order) -> None:
+    """
+    Обновляет статус заказа на "обработан".
+
+    Параметры:
+    - order (Order): Экземпляр модели заказа, который нужно обновить.
+    """
+    order.status = order.STATUS_CHOICES[0][0]
+    order.save(update_fields=["status"])
+
+
+def clear_user_cart(session_key: str) -> None:
+    """
+    Очищает корзину пользователя по ключу сессии.
+
+    Параметры:
+    - session_key (str): Ключ сессии, связанной с корзиной.
+
+    Исключения:
+    - Session.DoesNotExist: Если сессия не найдена или истекла.
+    """
+    try:
+        session = Session.objects.filter(expire_date__lt=timezone.now()).get(
+            session_key=session_key
+        )
+        products_cart = ProductCart(True, session, session_key="products_cart")
+        bouquets_cart = BouquetCart(True, session, session_key="bouquets_cart")
+        products_cart.clear()
+        bouquets_cart.clear()
+    except Session.DoesNotExist:
+        pass
 
 
 @api_view(["POST"])
 def stripe_webhook(request: Request):
+    """
+    Обрабатывает webhook от Stripe для подтверждения платежей.
+
+    Параметры:
+    - request (Request): Объект HTTP-запроса, содержащий данные webhook от Stripe.
+
+    Действия:
+    - Проверяет подпись webhook.
+    - Извлекает код заказа из данных события.
+    - Отправляет подтверждение заказа на email пользователя.
+    - Обновляет статус заказа в базе данных.
+    - Очищает корзину пользователя.
+
+    Возвращает:
+    - Response: HTTP-ответ с кодом состояния:
+      - 200: Если webhook обработан успешно.
+      - 400: Если проверка подписи или данных не удалась.
+      - 500: Если возникла внутренняя ошибка сервера.
+
+    Исключения:
+    - OrderNotFound: Если заказ с указанным кодом не найден.
+    """
     logger = logging.getLogger("django_stripe")
     try:
-        payload = request.body
-        sig_header = request.headers.get("STRIPE_SIGNATURE")
-        event = None
-
         try:
-            event = stripe.Webhook.construct_event(
-                payload, sig_header, os.getenv("STRIPE_WEBHOOK_SECRET")
-            )
+            event_dict = stripe.Webhook.construct_event(
+                request.body,
+                request.headers.get("STRIPE_SIGNATURE"),
+                os.getenv("STRIPE_WEBHOOK_SECRET"),
+            ).to_dict()
         except ValueError as e:
             logger.debug(e, stack_info=True)
             return Response("Invalid payload", status.HTTP_400_BAD_REQUEST)
@@ -40,31 +131,10 @@ def stripe_webhook(request: Request):
             logger.debug(e, stack_info=True)
             return Response("Invalid signature", status.HTTP_400_BAD_REQUEST)
 
-        event_dict = event.to_dict()
-        order_code = event_dict["data"]["object"]["metadata"]["order_code"]
         try:
-            order = Order.objects.only(
-                "session_key",
-                "email",
-                "created_at",
-                "name",
-                "address_form",
-                "recipient_name",
-                "recipient_phonenumber",
-                "country",
-                "city",
-                "street",
-                "building",
-                "flat",
-                "postal_code",
-                "delivery_date",
-                "delivery_time",
-                "message_card",
-                "instructions",
-                "tax",
-                "sub_total",
-                "grand_total",
-            ).get(code=order_code)
+            order = get_order_by_code(
+                event_dict["data"]["object"]["metadata"]["order_code"]
+            )
         except Order.DoesNotExist:
             send_message_to_telegram(
                 "Пришла оплата на страйп с недействительным кодом заказа."
@@ -73,18 +143,8 @@ def stripe_webhook(request: Request):
                 f"Пришла оплата на страйп с недействительным кодом заказа:\n\n{event_dict}"
             )
         send_order_confirmation_email(order, order.products.all(), order.bouquets.all())
-        order.status = order.STATUS_CHOICES[0][0]
-        order.save(update_fields=["status"])
-        try:
-            session = Session.objects.filter(expire_date__lt=timezone.now()).get(
-                session_key=order.session_key
-            )
-            products_cart = ProductCart(True, session, session_key="products_cart")
-            bouquets_cart = BouquetCart(True, session, session_key="bouquets_cart")
-            products_cart.clear()
-            bouquets_cart.clear()
-        except Session.DoesNotExist:
-            pass
+        update_order_status(order)
+        clear_user_cart(order.session_key)
 
     except Exception as e:
         logger.debug(e, stack_info=True)
