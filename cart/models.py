@@ -192,7 +192,7 @@ class OrderProducts(TimeStampAdbstractModel, OrderItem):
 
     class Meta:
         verbose_name = "Продукт в заказе"
-        verbose_name_plural = "Продукты в заказах"
+        verbose_name_plural = "Продукты в заказе"
 
     def __str__(self):
         return f"{self.pk}"
@@ -208,7 +208,7 @@ class OrderBouquets(TimeStampAdbstractModel, OrderItem):
 
     class Meta:
         verbose_name = "Букет в заказе"
-        verbose_name_plural = "Букеты в заказах"
+        verbose_name_plural = "Букеты в заказе"
 
         def __str__(self):
             return f"{self.pk}"
