@@ -97,7 +97,9 @@ def clear_user_cart(session_key: str) -> None:
             products_cart.clear()
         if bouquets_cart:
             bouquets_cart.clear()
-        session.session_data = session.get_session_store_class().encode(session_dict)
+
+        session_store_class = session.get_session_store_class()
+        session.session_data = session_store_class().encode(session_dict)
         session.save(update_fields=["session_data"])
     except Session.DoesNotExist:
         pass
