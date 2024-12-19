@@ -1,10 +1,12 @@
 import logging
 import os
+from typing import Any
 
 import stripe
 import stripe.error
 import stripe.webhook
-from django.contrib.sessions.backends.base import SessionBase
+from django.contrib.sessions.backends.db import SessionStore
+
 from django.contrib.sessions.models import Session
 from django.utils import timezone
 from rest_framework import status
@@ -22,6 +24,7 @@ logger = logging.getLogger("django_stripe")
 
 class OrderNotFound(Exception):
     """Исключение, которое генерируется при отсутствии заказа с указанным кодом."""
+
     pass
 
 
@@ -84,16 +87,16 @@ def clear_user_cart(session_key: str) -> None:
     - Session.DoesNotExist: Если сессия не найдена или истекла.
     """
     try:
-        session_dict = Session.objects.filter(expire_date__gt=timezone.now()).get(
+        session = Session.objects.filter(expire_date__gt=timezone.now()).get(
             session_key=session_key
-        ).get_decoded()
-        session = SessionBase(session_key)
-        for k, v in session_dict.items():
-            session.setdefault(k, v)
-        products_cart = ProductCart(True, session, session_key="products_cart")
-        bouquets_cart = BouquetCart(True, session, session_key="bouquets_cart")
+        )
+        session_dict = session.get_decoded()
+        products_cart: dict[str, dict | Any] = session_dict["products_cart"]
+        bouquets_cart: dict[str, dict | Any] = session_dict["bouquets_cart"]
         products_cart.clear()
         bouquets_cart.clear()
+        session.session_data = session.get_session_store_class().encode(session_dict)
+        session.save(update_fields=["session_data"])
     except Session.DoesNotExist:
         pass
     except Exception as e:
