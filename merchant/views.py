@@ -92,10 +92,12 @@ def clear_user_cart(session_key: str) -> None:
         )
         session_dict = session.get_decoded()
         logger.debug(session_dict)
-        products_cart: dict[str, dict | Any] = session_dict["products_cart"]
-        bouquets_cart: dict[str, dict | Any] = session_dict["bouquets_cart"]
-        products_cart.clear()
-        bouquets_cart.clear()
+        products_cart: dict[str, dict | Any] = session_dict.get("products_cart")
+        bouquets_cart: dict[str, dict | Any] = session_dict.get("bouquets_cart")
+        if products_cart:
+            products_cart.clear()
+        if bouquets_cart:
+            bouquets_cart.clear()
         session.session_data = session.get_session_store_class().encode(session_dict)
         session.save(update_fields=["session_data"])
     except Session.DoesNotExist:
