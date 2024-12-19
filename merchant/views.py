@@ -41,7 +41,7 @@ def stripe_webhook(request: Request):
             return Response("Invalid signature", status.HTTP_400_BAD_REQUEST)
 
         event_dict = event.to_dict()
-        order_code = event_dict["data"]["object"]["meta_data"]["order_code"]
+        order_code = event_dict["data"]["object"]["metadata"]["order_code"]
         try:
             order = Order.objects.only(
                 "session_key",
@@ -64,7 +64,6 @@ def stripe_webhook(request: Request):
                 "tax",
                 "sub_total",
                 "grand_total",
-                "currency",
             ).get(code=order_code)
         except Order.DoesNotExist:
             send_message_to_telegram(
@@ -73,9 +72,11 @@ def stripe_webhook(request: Request):
             raise OrderNotFound(
                 f"Пришла оплата на страйп с недействительным кодом заказа:\n\n{event_dict}"
             )
+        send_order_confirmation_email(order, order.products.all(), order.bouquets.all())
         order.status = order.STATUS_CHOICES[0][0]
+        order.save(update_fields=["status"])
         try:
-            session = Session.objects.filter(expite_date__lt=timezone.now()).get(
+            session = Session.objects.filter(expire_date__lt=timezone.now()).get(
                 session_key=order.session_key
             )
             products_cart = ProductCart(True, session, session_key="products_cart")
@@ -84,7 +85,6 @@ def stripe_webhook(request: Request):
             bouquets_cart.clear()
         except Session.DoesNotExist:
             pass
-        send_order_confirmation_email(order, order.products, order.bouquets)
 
     except Exception as e:
         logger.debug(e, stack_info=True)
