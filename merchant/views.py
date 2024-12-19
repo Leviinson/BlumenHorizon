@@ -91,7 +91,6 @@ def clear_user_cart(session_key: str) -> None:
             session_key=session_key
         )
         session_dict = session.get_decoded()
-        logger.debug(session_dict)
         products_cart: dict[str, dict | Any] = session_dict.get("products_cart")
         bouquets_cart: dict[str, dict | Any] = session_dict.get("bouquets_cart")
         if products_cart:
