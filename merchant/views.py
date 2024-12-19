@@ -156,7 +156,15 @@ def stripe_webhook(request: Request):
             raise OrderNotFound(
                 f"Пришла оплата на страйп с недействительным кодом заказа:\n\n{event_dict}"
             )
-        send_order_confirmation_email(order, order.products.all(), order.bouquets.all())
+
+        order_products = order.products.all()
+        order_bouquets = order.bouquets.all()
+        for order_product in order_products:
+            order_product.product.first_image = order_product.product.images.first()
+        for order_bouquet in order_bouquets:
+            order_bouquet.product.first_image = order_bouquet.product.images.first()
+
+        send_order_confirmation_email(order, order_products, order_bouquets)
         update_order_status(order)
         clear_user_cart(order.session_key)
 
