@@ -16,6 +16,8 @@ from cart.models import Order
 from merchant.services import send_order_confirmation_email
 from tg_bot.main import send_message_to_telegram
 
+logger = logging.getLogger("django_stripe")
+
 
 class OrderNotFound(Exception):
     """Исключение, которое генерируется при отсутствии заказа с указанным кодом."""
@@ -83,13 +85,15 @@ def clear_user_cart(session_key: str) -> None:
     try:
         session = Session.objects.filter(expire_date__gt=timezone.now()).get(
             session_key=session_key
-        )
+        ).get_decoded()
         products_cart = ProductCart(True, session, session_key="products_cart")
         bouquets_cart = BouquetCart(True, session, session_key="bouquets_cart")
         products_cart.clear()
         bouquets_cart.clear()
     except Session.DoesNotExist:
         pass
+    except Exception as e:
+        logger.debug(e)
 
 
 @api_view(["POST"])
@@ -116,7 +120,6 @@ def stripe_webhook(request: Request):
     Исключения:
     - OrderNotFound: Если заказ с указанным кодом не найден.
     """
-    logger = logging.getLogger("django_stripe")
     try:
         try:
             event_dict = stripe.Webhook.construct_event(
