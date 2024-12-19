@@ -1,5 +1,6 @@
 from typing import Any
 
+from django.contrib.sites.models import Site
 from django.core.cache import cache
 
 from extended_contrib_models.models import ExtendedSite
@@ -50,6 +51,12 @@ def _get_value_for_key(key: str) -> Any:
     match key:
         case "tax_percent":
             return ExtendedSite.objects.only("tax_percent").first().tax_percent
+        case "currency_symbol":
+            return ExtendedSite.objects.only("currency_symbol").first().tax_percent
         # Можно добавить другие кейсы для обработки новых ключей
+        case "site_name":
+            return Site.objects.only("name").first().name
+        case "domain":
+            return Site.objects.only("domain").first().domain
         case _:
             raise ValueError(f"Unsupported cache key: {key}")
