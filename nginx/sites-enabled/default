@@ -23,6 +23,11 @@ server {
     listen 443 ssl http2;
     server_name blumenhorizon.de;
 
+    
+    if ($host !~ ^(blumenhorizon\.de|www\.blumenhorizon\.de)$) {
+        return 444;
+    }
+
     # SSL настройки
     ssl_certificate /root/ssl/blumenhorizon_de/blumenhorizon_de_chain.crt;
     ssl_certificate_key /root/ssl/blumenhorizon.key;
@@ -72,6 +77,11 @@ server {
 server {
     listen 443 ssl http2;
     server_name www.blumenhorizon.de;
+    
+    if ($host !~ ^(blumenhorizon\.de|www\.blumenhorizon\.de)$) {
+        return 444;
+    }
+    
 
     # Редирект с www на без www
     return 301 https://blumenhorizon.de$request_uri;
