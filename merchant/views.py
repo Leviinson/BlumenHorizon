@@ -11,6 +11,8 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.request import Request
 from rest_framework.response import Response
+from django.utils.translation import activate
+
 
 from cart.models import Order
 from merchant.services import send_order_confirmation_email
@@ -58,6 +60,7 @@ def get_order_by_code(order_code: str) -> Order:
         "tax",
         "sub_total",
         "grand_total",
+        "language_code",
     ).get(code=order_code)
 
 
@@ -152,7 +155,8 @@ def stripe_webhook(request: Request):
             raise OrderNotFound(
                 f"Пришла оплата на страйп с недействительным кодом заказа:\n\n{event_dict}"
             )
-
+        
+        activate(order.language_code)
         order_products = order.products.all()
         order_bouquets = order.bouquets.all()
         for order_product in order_products:
