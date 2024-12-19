@@ -115,6 +115,10 @@ class Order(TimeStampAdbstractModel, models.Model):
         verbose_name=_("Итоговая стоимость"),
         help_text="С налогом",
     )
+    language_code = models.CharField(
+        max_length=2,
+        verbose_name="Язык пользователя на сайте"
+    )
 
     class Meta:
         verbose_name = "Заказ"

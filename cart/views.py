@@ -39,40 +39,13 @@ class CartView(CommonContextMixin, FormView):
     form_class = OrderForm
 
     def form_valid(self, form: OrderForm):
-        site = (
-            ExtendedSite.objects.select_related("site")
-            .only(
-                "site__name",
-                "site__domain",
-                "tax_percent",
-                "currency_code",
-                "currency_symbol",
-            )
-            .first()
-        )
-
-        products_cart = ProductCart(
-            session=self.request.session, session_key="products_cart"
-        )
-        bouquets_cart = BouquetCart(
-            session=self.request.session, session_key="bouquets_cart"
-        )
-
-        tax_percent = set_or_get_from_cache(
-            "tax_percent",
-            60 * 15,
-        )
-        order = self.save_order_in_db(
+        order = self.save_order(
             form,
-            products_cart,
-            bouquets_cart,
-            tax_percent,
-            self.request.user,
-            self.request.session.session_key,
+            self.request,
         )
 
-        currency_code = site.currency_code.lower()
-        domain = site.site.domain
+        currency_code = set_or_get_from_cache("currency_code", 60*15)
+        domain = set_or_get_from_cache("domain", 60*15)
         line_items = self.generate_line_items_and_attach_first_images(
             order.products,
             order.bouquets,
@@ -80,7 +53,7 @@ class CartView(CommonContextMixin, FormView):
             domain,
         )
 
-        self.add_order_in_session(self.request, order)
+        self.add_order_in_session(self.request, order.code)
         self.success_url = self.generate_payment_page_url(
             domain,
             order.code,
@@ -167,15 +140,39 @@ class CartView(CommonContextMixin, FormView):
         }
 
     @staticmethod
-    def add_order_in_session(request: HttpRequest, order: Order):
+    def add_order_in_session(request: HttpRequest, order_code: str):
         if "orders" in request.session:
-            request.session["orders"].append(order.code)
+            request.session["orders"].append(order_code)
             request.session.save()
         else:
             request.session["orders"] = [
-                order.code,
+                order_code,
             ]
             request.session.save()
+
+    def save_order(self, form: OrderForm, request: HttpRequest):
+        from django.utils.translation import get_language
+
+        language_code = get_language()
+        products_cart = ProductCart(
+            session=request.session, session_key="products_cart"
+        )
+        bouquets_cart = BouquetCart(
+            session=request.session, session_key="bouquets_cart"
+        )
+        tax_percent = set_or_get_from_cache(
+            "tax_percent",
+            60 * 15,
+        )
+        return self.save_order_in_db(
+            form,
+            products_cart,
+            bouquets_cart,
+            tax_percent,
+            request.user,
+            request.session.session_key,
+            language_code
+        )
 
     @staticmethod
     def save_order_in_db(
@@ -185,13 +182,14 @@ class CartView(CommonContextMixin, FormView):
         tax_percent: int,
         user: User,
         session_key: Any,
+        language_code: str,
     ) -> Order:
         order = form.save(
             products_cart=products_cart,
             bouquets_cart=bouquets_cart,
             tax_percent=tax_percent,
             session_key=session_key,
-            commit=True,
+            language_code=language_code,
             user=user,
         )
         order = (
@@ -294,7 +292,7 @@ class CartView(CommonContextMixin, FormView):
         tax = grand_total - sub_total
         context["tax"] = tax
         context["sub_total"] = sub_total
-        context["grand_total"] = sub_total + tax
+        context["grand_total"] = grand_total
         return context
 
 

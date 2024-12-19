@@ -71,6 +71,7 @@ class OrderForm(forms.ModelForm):
         bouquets_cart: BouquetCart,
         tax_percent: int,
         session_key: Any,
+        language_code: str,
         commit=True,
         user: User = None,
     ) -> Order:
@@ -85,6 +86,7 @@ class OrderForm(forms.ModelForm):
             order.tax_percent = tax_percent
             order.grand_total = grand_total
             order.sub_total = sub_total
+            order.language_code = language_code
             order.save()
             if products := products_cart.products:
                 products: list[Product] = products
