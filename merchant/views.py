@@ -21,7 +21,6 @@ logger = logging.getLogger("django_stripe")
 
 class OrderNotFound(Exception):
     """Исключение, которое генерируется при отсутствии заказа с указанным кодом."""
-
     pass
 
 
