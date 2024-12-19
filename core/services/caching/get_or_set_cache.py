@@ -52,7 +52,7 @@ def _get_value_for_key(key: str) -> Any:
         case "tax_percent":
             return ExtendedSite.objects.only("tax_percent").first().tax_percent
         case "currency_symbol":
-            return ExtendedSite.objects.only("currency_symbol").first().tax_percent
+            return ExtendedSite.objects.only("currency_symbol").first().currency_symbol
         # Можно добавить другие кейсы для обработки новых ключей
         case "site_name":
             return Site.objects.only("name").first().name
