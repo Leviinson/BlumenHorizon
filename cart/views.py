@@ -1,6 +1,7 @@
 from decimal import Decimal
 from typing import Any, Type
 
+from django.urls import reverse_lazy
 import stripe
 from django.conf import settings
 from django.db.models.manager import BaseManager
@@ -69,7 +70,7 @@ class CartView(CommonContextMixin, FormView):
             bouquets_cart,
             tax_percent,
             self.request.user,
-            self.request.session.session_key
+            self.request.session.session_key,
         )
 
         currency_code = site.currency_code.lower()
@@ -83,6 +84,7 @@ class CartView(CommonContextMixin, FormView):
 
         self.add_order_in_session(self.request, order)
         self.success_url = self.generate_payment_page_url(
+            domain,
             order.code,
             customer_email=order.email,
             line_items=line_items,
@@ -91,6 +93,7 @@ class CartView(CommonContextMixin, FormView):
 
     @staticmethod
     def generate_payment_page_url(
+        domain: str,
         order_code: str,
         customer_email: str,
         line_items: list[dict[str, str | int]],
@@ -100,8 +103,8 @@ class CartView(CommonContextMixin, FormView):
             line_items=line_items,
             mode="payment",
             customer_email=customer_email,
-            success_url="https://blumenhorizon.de/contact/",
-            cancel_url="https://blumenhorizon.de/delivery/",
+            success_url=f"https://{domain}{reverse_lazy("cart:success-order", kwargs={"order_code": order_code})}",
+            cancel_url=f"https://{domain}{reverse_lazy("cart:show")}",
             metadata={
                 "order_code": order_code,
             },
@@ -183,7 +186,7 @@ class CartView(CommonContextMixin, FormView):
         bouquets_cart: BouquetCart,
         tax_percent: int,
         user: User,
-        session_key: Any
+        session_key: Any,
     ) -> Order:
         order = form.save(
             products_cart=products_cart,

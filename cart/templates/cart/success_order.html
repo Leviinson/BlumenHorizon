@@ -40,20 +40,6 @@
                 <strong>В скором времени мы свяжемся с Вами </strong>по поводу Вашего заказа по указанной электронной почте <strong>({{ email }})</strong>.
                 {% endblocktranslate %}
             </p>
-            <p>
-                {% blocktranslate with grand_total=order.grand_total|floatformat:"2u" currency_code=currency_code %}
-                На данный момент Вам необходимо оплатить сумму <strong>{{ grand_total }}{{ currency_symbol }}</strong>
-                по данным реквизитам:
-                {% endblocktranslate %}
-            </p>
-            <p class="d-flex flex-column">
-                <strong class="text-muted">
-                    IBAN: {{ iban}}
-                </strong>
-                <strong class="text-muted">
-                    Account: {{ account_name }}
-                </strong>
-            </p>
         </div>
     </div>
     <a href="{% url 'mainpage:offers' %}#contact-us" class="btn btn-dark-green">{% translate 'Задать вопрос' %}</a>
