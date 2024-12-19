@@ -18,6 +18,7 @@ class OrderAdminModel(admin.ModelAdmin):
     inlines = (OrderProductsTabularInline, OrderBouquetsTabularInline)
     fields = (
         "user",
+        "status",
         "sub_total",
         "tax",
         "tax_percent",
