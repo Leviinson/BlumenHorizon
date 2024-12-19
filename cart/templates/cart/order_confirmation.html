@@ -206,8 +206,11 @@
 																	</p>
 																	<p style="margin: 0; margin-bottom: 2px;">
 																		&nbsp;</p>
-																	<p style="margin: 0;">
+																	<p style="margin: 0;  margin-bottom: 2px;">
 																		{% translate 'Мы обязательно свяжемся с Вами как можно раньше, чтобы сделать настолько индивидуальным подход к Вам, насколько это возможно.' %}
+																	</p>
+																	<p style="margin: 0;">
+																		{% translate 'Ссылка для проверки статуса заказа' %}: https://{{ domain }}{% url 'cart:success-order' order_code %}
 																	</p>
 																</div>
 															</td>
