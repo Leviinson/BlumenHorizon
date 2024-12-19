@@ -4,6 +4,7 @@ import os
 import stripe
 import stripe.error
 import stripe.webhook
+from django.contrib.sessions.backends.base import SessionBase
 from django.contrib.sessions.models import Session
 from django.utils import timezone
 from rest_framework import status
@@ -83,9 +84,12 @@ def clear_user_cart(session_key: str) -> None:
     - Session.DoesNotExist: Если сессия не найдена или истекла.
     """
     try:
-        session = Session.objects.filter(expire_date__gt=timezone.now()).get(
+        session_dict = Session.objects.filter(expire_date__gt=timezone.now()).get(
             session_key=session_key
         ).get_decoded()
+        session = SessionBase(session_key)
+        for k, v in session_dict.items():
+            session.setdefault(k, v)
         products_cart = ProductCart(True, session, session_key="products_cart")
         bouquets_cart = BouquetCart(True, session, session_key="bouquets_cart")
         products_cart.clear()
