@@ -116,8 +116,7 @@ class Order(TimeStampAdbstractModel, models.Model):
         help_text="С налогом",
     )
     language_code = models.CharField(
-        max_length=2,
-        verbose_name="Язык пользователя на сайте"
+        max_length=2, verbose_name="Язык пользователя на сайте"
     )
 
     class Meta:
@@ -126,8 +125,6 @@ class Order(TimeStampAdbstractModel, models.Model):
 
     def __str__(self):
         return f"{self.code} - {self.status}"
-    
-
 
 
 @receiver(post_save, sender=Order)

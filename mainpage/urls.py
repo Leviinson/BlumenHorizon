@@ -3,14 +3,14 @@ from django.urls import path
 from .views import (
     AboutDeliveryView,
     AboutUsView,
+    AGBView,
     ContactUsView,
     FAQView,
+    ImpressumView,
     IndividualOrderView,
     MainPageView,
-    AGBView,
     PrivacyAndPolicyView,
-    ImpressumView,
-    ReturnPolicyView
+    ReturnPolicyView,
 )
 
 app_name = "mainpage"

@@ -8,11 +8,12 @@ from telegram.error import TelegramError
 TELEGRAM_BOT_TOKEN = settings.TELEGRAM_BOT_TOKEN
 bot = Bot(token=TELEGRAM_BOT_TOKEN)
 
+
 async def send_message_to_telegram_async(chat_id, text):
     await bot.send_message(chat_id, text, parse_mode="Markdown")
 
 
-def send_message_to_telegram(text: str, chat_id = settings.TELEGRAM_CHAT_ID):
+def send_message_to_telegram(text: str, chat_id=settings.TELEGRAM_CHAT_ID):
     logger = logging.getLogger("telegramBot")
 
     try:

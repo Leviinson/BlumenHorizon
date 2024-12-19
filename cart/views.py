@@ -1,12 +1,12 @@
 from decimal import Decimal
 from typing import Any, Type
 
-from django.urls import reverse_lazy
 import stripe
 from django.conf import settings
 from django.db.models.manager import BaseManager
 from django.db.models.query import QuerySet
 from django.http import HttpRequest, HttpResponseForbidden, JsonResponse
+from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 from django.views.generic.edit import BaseFormView, FormView
@@ -17,7 +17,6 @@ from core.services.caching import set_or_get_from_cache
 from core.services.dataclasses.related_model import RelatedModel
 from core.services.get_recommended_items import get_recommended_items_with_first_image
 from core.services.mixins.views import CommonContextMixin
-from extended_contrib_models.models import ExtendedSite
 
 from .cart import BouquetCart, ProductCart
 from .forms import OrderForm
@@ -44,8 +43,8 @@ class CartView(CommonContextMixin, FormView):
             self.request,
         )
 
-        currency_code = set_or_get_from_cache("currency_code", 60*15)
-        domain = set_or_get_from_cache("domain", 60*15)
+        currency_code = set_or_get_from_cache("currency_code", 60 * 15)
+        domain = set_or_get_from_cache("domain", 60 * 15)
         line_items = self.generate_line_items_and_attach_first_images(
             order.products,
             order.bouquets,
@@ -171,7 +170,7 @@ class CartView(CommonContextMixin, FormView):
             tax_percent,
             request.user,
             request.session.session_key,
-            language_code
+            language_code,
         )
 
     @staticmethod

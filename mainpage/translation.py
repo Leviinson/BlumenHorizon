@@ -82,6 +82,7 @@ class AboutUsPageModelTranslationOptions(TranslationOptions):
         "json_ld",
     )
 
+
 @register(AGBPageModel)
 class AboutUsPageModelTranslationOptions(TranslationOptions):
     fields = (
@@ -89,6 +90,7 @@ class AboutUsPageModelTranslationOptions(TranslationOptions):
         "description",
         "json_ld",
     )
+
 
 @register(PrivacyAndPolicyPageModel)
 class AGBPageModelTranslationOptions(TranslationOptions):
@@ -98,6 +100,7 @@ class AGBPageModelTranslationOptions(TranslationOptions):
         "json_ld",
     )
 
+
 @register(ImpressumPageModel)
 class ImpressumPageModelTranslationOptions(TranslationOptions):
     fields = (
@@ -105,6 +108,7 @@ class ImpressumPageModelTranslationOptions(TranslationOptions):
         "description",
         "json_ld",
     )
+
 
 @register(ReturnPolicyPageModel)
 class ReturnPolicyPageModelTranslationOptions(TranslationOptions):

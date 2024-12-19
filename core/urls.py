@@ -29,7 +29,7 @@ service_urlpatterns = [
     path("i18n/setlang/", set_language, name="set_language"),
     path("", include("wysiwyg.urls")),
     path("", include("seo.urls")),
-    path("merchant/", include("merchant.urls"))
+    path("merchant/", include("merchant.urls")),
 ]
 
 i18n_urlpatterns = i18n_patterns(

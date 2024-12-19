@@ -277,6 +277,7 @@ class AGBPageModel(ConditionsPageModelAbstract, TimeStampAdbstractModel):
     def __str__(self):
         return "Условия и положения"
 
+
 class PrivacyAndPolicyPageModel(ConditionsPageModelAbstract, TimeStampAdbstractModel):
     class Meta:
         verbose_name = "Страница «Условия конфиденциальности и безопасности данных»"
@@ -284,7 +285,8 @@ class PrivacyAndPolicyPageModel(ConditionsPageModelAbstract, TimeStampAdbstractM
 
     def __str__(self):
         return "Условия конфиденциальности и безопасности данных"
-    
+
+
 class ImpressumPageModel(ConditionsPageModelAbstract, TimeStampAdbstractModel):
     class Meta:
         verbose_name = "Страница «Правовая информация»"
@@ -292,7 +294,8 @@ class ImpressumPageModel(ConditionsPageModelAbstract, TimeStampAdbstractModel):
 
     def __str__(self):
         return "Страница «Правовая информация»"
-    
+
+
 class ReturnPolicyPageModel(ConditionsPageModelAbstract, TimeStampAdbstractModel):
     class Meta:
         verbose_name = "Страница «Условия возврата»"
