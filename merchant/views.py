@@ -81,7 +81,7 @@ def clear_user_cart(session_key: str) -> None:
     - Session.DoesNotExist: Если сессия не найдена или истекла.
     """
     try:
-        session = Session.objects.filter(expire_date__lt=timezone.now()).get(
+        session = Session.objects.filter(expire_date__gt=timezone.now()).get(
             session_key=session_key
         )
         products_cart = ProductCart(True, session, session_key="products_cart")
