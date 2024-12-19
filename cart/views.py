@@ -15,7 +15,6 @@ from accounts.models import User
 from catalogue.models import Bouquet, BouquetImage, Product, ProductImage
 from core.services.caching import set_or_get_from_cache
 from core.services.dataclasses.related_model import RelatedModel
-from core.services.decorators.db.db_queries import inspect_db_queries
 from core.services.get_recommended_items import get_recommended_items_with_first_image
 from core.services.mixins.views import CommonContextMixin
 from extended_contrib_models.models import ExtendedSite
@@ -39,7 +38,6 @@ class CartView(CommonContextMixin, FormView):
     template_name = "cart/index.html"
     form_class = OrderForm
 
-    @inspect_db_queries
     def form_valid(self, form: OrderForm):
         site = (
             ExtendedSite.objects.select_related("site")
