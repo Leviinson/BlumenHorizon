@@ -41,6 +41,7 @@ def send_order_confirmation_email(
             "street": order.street,
             "building": order.building,
             "flat": order.flat,
+            "postal_code": order.postal_code,
             "delivery_date": order.delivery_date,
             "delivery_time": order.delivery_time,
             "message_card": order.message_card,
@@ -49,7 +50,6 @@ def send_order_confirmation_email(
             "sub_total": order.sub_total,
             "grand_total": order.grand_total,
             "currency": currency_symbol,
-            "postal_code": order.postal_code,
         },
     )
     plain_message = strip_tags(html_message)
