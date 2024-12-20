@@ -49,14 +49,14 @@ server {
 
     # Статические файлы
     location /static/ {
-        alias /apps/BlumenHorizon/static/;
+        alias /var/www/blumenhorizon/static/;
         include /etc/nginx/mime.types;
         expires 30d;
         add_header Cache-Control "public";
     }
 
     location /media/ {
-        alias /apps/BlumenHorizon/media/;
+        alias /var/www/blumenhorizon/media/;
         include /etc/nginx/mime.types;
         expires 30d;
         add_header Cache-Control "public";
