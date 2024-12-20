@@ -11,8 +11,7 @@ logs/nginx/**
 logs/telegram/**
 logs/stripe/**
 
-nginx/access.log
-nginx/error.log
+core/nginx/ssl/
 
 media/**
 !media/defaults/
