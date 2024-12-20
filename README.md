@@ -56,18 +56,91 @@
     poetry install --only main
     ```
 
-    Запросите у Вашего наставника .env файл и поместите его содержимое в .env в /var/www/blumenhorizon/.env
+    Запросите у Вашего наставника .env файл и поместите его содержимое в `.env` в `/var/www/blumenhorizon/.env`
 
-## Настройка БД
+    ```bash
+    scp .env root@0.0.0.0:/var/www/blumenhorizon/.env
+    ```
 
-### Установить базе данных кодировку для поддержки эмодзи
+    Запросите у Вашего наставника папку с ssl и его сертификатами, перенесите папку чтобы в итоге получился такой результат: `/root/ssl/`
 
-`ALTER DATABASE blumenhorizon CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;`
+    ```bash
+    scp -r /путь/к/ssl root@0.0.0.0:/root/
+    ```
 
-### По-надобности сделать это для каждой таблицы
+    Перенесите конфиг системного менеджера для gunicorn и конфиги nginx в соответствующие стандартные директории на VPS:
 
-`ALTER TABLE table_name CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;`
+    ```bash
+    cp /var/www/blumenhorizon/core/systemd/gunicorn.service /etc/systemd/system/
+    cp /var/www/blumenhorizon/core/nginx/nginx.conf /etc/nginx/nginx.conf
+    rm -rf /etc/nginx/sites-enabled/
+    cp -r /var/www/blumenhorizon/core/nginx/sites-enabled /etc/nginx/sites-enabled
+    ```
 
-### Или для каждой колонки
+    Создайте директории для log-файлов:
 
-`ALTER TABLE table_name MODIFY column_name VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;`
+    ```bash
+    cd /var/www/blumenhorizon
+    mkdir logs/django logs/gunicorn logs/nginx logs/stripe logs/telegram logs/celery logs/mysql logs/redis
+    ```
+
+    Примените миграции Django:
+
+    ```bash
+    poetry shell
+    python3 manage.py migrate
+    ```
+
+    Создайте супер-пользователя:
+
+    ```bash
+    python3 manage.py createsuperuser
+    ```
+
+    Активируйте запуск nginx и gunicorn на старте:
+
+    ```bash
+    sudo systemctl daemon-reload
+    sudo systemctl enable nginx
+    sudo systemctl enable gunicorn
+    sudo service gunicorn start
+    sudo service nginx start
+    ```
+
+    Соберите статические файлы проекта:
+
+    ```bash
+    python3 manage.py collectstatic --noinput
+    ```
+
+    Перенесите все медиафайлы проекта в `/var/www/blumenhorizon/media/`, запросив их предварительно у наставника.
+
+    ```bash
+    scp -r /путь/к/ьувшф root@0.0.0.0:/var/www/blumenhorizon/
+    ```
+
+4. **Инициализация и настройка базы данных:**
+
+    ```bash
+    $ mysql
+    ```
+
+    ```mysql
+    mysql> create database (значение переменной MYSQL_NAME в .env);
+    mysql> create user '(MYSQL_USER в .env)'@'(MYSQL_HOST в .env)' identified by '(MYSQL_PASSWORD в .env)';
+    mysql> grant all privileges on (MYSQL_NAME в .env).* to '(MYSQL_USER в .env)'@'(MYSQL_HOST в .env)';
+    mysql> ALTER DATABASE (MYSQL_NAME в .env) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+    mysql> \q
+    ```
+
+    Попросите у наставника дамп базы данных, поместите его в корневую директорию таким образом: `/var/www/blumenhorizon/blumenhoirzon_dump.sql`
+
+    ```bash
+    $ mysql
+    ```
+
+    ```mysql
+    mysql> use blumenhorizon;
+    mysql> source /var/www/blumenhorizon/blumenhoirzon_dump.sql
+    mysql> \q
+    ```
