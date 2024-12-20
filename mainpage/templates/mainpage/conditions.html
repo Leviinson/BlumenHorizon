@@ -3,7 +3,6 @@
 {% load i18n %}
 
 {% block json_ld %}
-{{ json_ld|safe }}
 {% endblock %}
 
 {% block localization_meta_tags %}
@@ -29,6 +28,7 @@
 {% block body %}
 <div class="container mx-auto d-flex flex-column align-items-center">
     <h1>{{ title }}</h1>
+    <strong>{% translate 'Дата создания' %}: {{ created_at|date:"Y-m-d H:i:s" }}</strong>
     <strong>{% translate 'Дата обновления' %}: {{ updated_at|date:"Y-m-d H:i:s" }}</strong>
     <div class="mt-5">
         {{ page.description|safe }}

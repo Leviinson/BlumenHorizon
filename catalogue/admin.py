@@ -30,7 +30,6 @@ class ProductCategoryAdmin(TranslationAdmin):
                     "meta_tags",
                     "catalog_page_meta_tags",
                     "description",
-                    "json_ld",
                     "image",
                     "image_alt",
                     "amount_of_orders",
@@ -69,7 +68,6 @@ class ProductSubcategoryAdmin(TranslationAdmin):
                     "category",
                     "is_active",
                     "meta_tags",
-                    "json_ld",
                     "image",
                     "image_alt",
                     "amount_of_orders",
@@ -126,7 +124,6 @@ class ProductAdmin(TranslationAdmin):
                     "description",
                     "specs",
                     "meta_tags",
-                    "json_ld",
                 )
             },
         ),
@@ -259,7 +256,6 @@ class BouquetCategoryAdmin(TranslationAdmin):
                     "meta_tags",
                     "catalog_page_meta_tags",
                     "description",
-                    "json_ld",
                     "image",
                     "image_alt",
                     "amount_of_orders",
@@ -298,7 +294,6 @@ class BouquetSubcategoryAdmin(TranslationAdmin):
                     "category",
                     "is_active",
                     "meta_tags",
-                    "json_ld",
                     "image",
                     "image_alt",
                     "amount_of_orders",
@@ -354,7 +349,6 @@ class BouquetAdmin(TranslationAdmin):
                     "description",
                     "specs",
                     "meta_tags",
-                    "json_ld",
                 )
             },
         ),
@@ -423,7 +417,6 @@ class IndividualQuestionAdmin(admin.ModelAdmin):
 class CatalogPageAdmin(TranslationAdmin):
     fields = (
         "meta_tags",
-        "json_ld",
         "description",
     )
     list_display = ("id",)

@@ -34,7 +34,6 @@ class ProductView(
             "description",
             "specs",
             "meta_tags",
-            "json_ld",
             "images",
             "discount",
             "discount_expiration_datetime",
@@ -109,5 +108,4 @@ class ProductListView(
         context = super().get_context_data(*args, **kwargs)
         page_model = ProductsListPageModel.objects.first()
         context["meta_tags"] = page_model.meta_tags
-        context["json_ld"] = page_model.json_ld
         return context

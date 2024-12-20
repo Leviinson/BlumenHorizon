@@ -51,7 +51,6 @@ class FAQPageModelAdmin(TranslationAdmin):
         "image",
         "image_alt",
         "meta_tags",
-        "json_ld",
         "description",
     ]
     list_display = ["id"]
@@ -63,7 +62,6 @@ class ContactsPageModelAdmin(TranslationAdmin):
         "image",
         "image_alt",
         "meta_tags",
-        "json_ld",
         "description",
     ]
     list_display = ["id"]
@@ -75,7 +73,6 @@ class DeliveryPageModelAdmin(TranslationAdmin):
         "image",
         "image_alt",
         "meta_tags",
-        "json_ld",
         "description",
     ]
     list_display = ["id"]
@@ -87,7 +84,6 @@ class AboutUsPageModelAdmin(TranslationAdmin):
         "image",
         "image_alt",
         "meta_tags",
-        "json_ld",
         "description",
     ]
     list_display = ["id"]
@@ -97,7 +93,6 @@ class AboutUsPageModelAdmin(TranslationAdmin):
 class AGBPageModelAdmin(TranslationAdmin):
     fields = [
         "meta_tags",
-        "json_ld",
         "description",
     ]
     list_display = ["id"]
@@ -107,7 +102,6 @@ class AGBPageModelAdmin(TranslationAdmin):
 class PrivacyAndPolicyPageModelAdmin(TranslationAdmin):
     fields = [
         "meta_tags",
-        "json_ld",
         "description",
     ]
     list_display = ["id"]
@@ -117,7 +111,6 @@ class PrivacyAndPolicyPageModelAdmin(TranslationAdmin):
 class ImpressumPageModelAdmin(TranslationAdmin):
     fields = [
         "meta_tags",
-        "json_ld",
         "description",
     ]
     list_display = ["id"]
@@ -127,7 +120,6 @@ class ImpressumPageModelAdmin(TranslationAdmin):
 class ReturnPolicyPageModelAdmin(TranslationAdmin):
     fields = [
         "meta_tags",
-        "json_ld",
         "description",
     ]
     list_display = ["id"]

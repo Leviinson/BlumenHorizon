@@ -18,7 +18,6 @@ class DetailViewMixin:
             )
         context = super().get_context_data(*args, **kwargs)
         context["meta_tags"] = self.object.meta_tags
-        context["json_ld"] = self.object.json_ld
         context["breadcrumbs"] = [
             {
                 "name": self.object.subcategory.category.name,

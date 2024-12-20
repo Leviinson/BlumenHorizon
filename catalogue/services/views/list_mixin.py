@@ -75,7 +75,6 @@ class CategoryListViewMixin(ListViewMixin):
             },
         )
         context["meta_tags"] = self.category.meta_tags
-        context["json_ld"] = self.category.json_ld
         context["category"] = self.category
         return context
 
@@ -102,7 +101,6 @@ class SubcategoryListViewMixin(ListViewMixin):
             {"name": self.subcategory.name, "url": None},
         )
         context["meta_tags"] = self.subcategory.meta_tags
-        context["json_ld"] = self.subcategory.json_ld
         context["subcategory"] = self.subcategory
         return context
 
@@ -132,7 +130,6 @@ class ProductCategoryListViewMixin(CategoryListViewMixin):
             ProductCategory.objects.only(
                 "name",
                 "meta_tags",
-                "json_ld",
             ),
             slug=self.kwargs["category_slug"],
             is_active=True,
@@ -157,7 +154,6 @@ class ProductSubcategoryListViewMixin(SubcategoryListViewMixin):
             ProductSubcategory.objects.select_related("category").only(
                 "name",
                 "meta_tags",
-                "json_ld",
                 "category__name",
                 "category__slug",
             ),
@@ -184,7 +180,6 @@ class BouquetCategoryListViewMixin(CategoryListViewMixin):
             BouquetCategory.objects.only(
                 "name",
                 "meta_tags",
-                "json_ld",
             ),
             slug=self.kwargs["category_slug"],
             is_active=True,
@@ -209,7 +204,6 @@ class BouquetSubcategoryListViewMixin(SubcategoryListViewMixin):
             BouquetSubcategory.objects.select_related("category").only(
                 "name",
                 "meta_tags",
-                "json_ld",
                 "category__name",
                 "category__slug",
             ),

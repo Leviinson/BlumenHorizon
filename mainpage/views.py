@@ -163,7 +163,6 @@ class AboutUsView(CommonContextMixin, TemplateView):
         page = AboutUsPageModel.objects.first()
         context["page"] = page
         context["meta_tags"] = page.meta_tags
-        context["json_ld"] = page.json_ld
         context["url"] = reverse_lazy("mainpage:about")
         return context
 
@@ -179,7 +178,6 @@ class AboutDeliveryView(CommonContextMixin, TemplateView):
         page = DeliveryPageModel.objects.first()
         context["page"] = page
         context["meta_tags"] = page.meta_tags
-        context["json_ld"] = page.json_ld
         context["url"] = reverse_lazy("mainpage:delivery")
         return context
 
@@ -195,7 +193,6 @@ class ContactUsView(CommonContextMixin, TemplateView):
         page = ContactsPageModel.objects.first()
         context["page"] = page
         context["meta_tags"] = page.meta_tags
-        context["json_ld"] = page.json_ld
         context["url"] = reverse_lazy("mainpage:contact")
         return context
 
@@ -210,7 +207,6 @@ class FAQView(CommonContextMixin, TemplateView):
         context = super().get_context_data(*args, **kwargs)
         page = FAQPageModel.objects.first()
         context["page"] = page
-        context["json_ld"] = page.json_ld
         context["meta_tags"] = page.meta_tags
         context["url"] = reverse_lazy("mainpage:faq")
         return context
@@ -230,10 +226,10 @@ class ConditionsViewMixin(CommonContextMixin):
         PageModel = self.page_model
         page = PageModel.objects.first()
         context["page"] = page
-        context["json_ld"] = page.json_ld
         context["meta_tags"] = page.meta_tags
         context["url"] = self.url
         context["title"] = self.title
+        context["created_at"] = page.created_at
         context["updated_at"] = page.updated_at
         return context
 

@@ -86,7 +86,6 @@ class BouquetView(
             "description",
             "specs",
             "meta_tags",
-            "json_ld",
             "images",
             "discount",
             "discount_expiration_datetime",
@@ -164,5 +163,4 @@ class BouquetListView(
         context["flowers"] = Flower.objects.only("name").all()
         page_model = BouquetsListPageModel.objects.first()
         context["meta_tags"] = page_model.meta_tags
-        context["json_ld"] = page_model.json_ld
         return context

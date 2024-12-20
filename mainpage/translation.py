@@ -57,7 +57,6 @@ class ContactsPageModelTranslationOptions(TranslationOptions):
         "image",
         "meta_tags",
         "description",
-        "json_ld",
     )
 
 
@@ -68,7 +67,6 @@ class DeliveryPageModelTranslationOptions(TranslationOptions):
         "image",
         "meta_tags",
         "description",
-        "json_ld",
     )
 
 
@@ -79,7 +77,6 @@ class AboutUsPageModelTranslationOptions(TranslationOptions):
         "image",
         "meta_tags",
         "description",
-        "json_ld",
     )
 
 
@@ -88,7 +85,6 @@ class AboutUsPageModelTranslationOptions(TranslationOptions):
     fields = (
         "meta_tags",
         "description",
-        "json_ld",
     )
 
 
@@ -97,7 +93,6 @@ class AGBPageModelTranslationOptions(TranslationOptions):
     fields = (
         "meta_tags",
         "description",
-        "json_ld",
     )
 
 
@@ -106,7 +101,6 @@ class ImpressumPageModelTranslationOptions(TranslationOptions):
     fields = (
         "meta_tags",
         "description",
-        "json_ld",
     )
 
 
@@ -115,5 +109,4 @@ class ReturnPolicyPageModelTranslationOptions(TranslationOptions):
     fields = (
         "meta_tags",
         "description",
-        "json_ld",
     )

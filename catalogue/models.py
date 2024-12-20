@@ -57,16 +57,6 @@ class MetaDataAbstractModel(models.Model):
         default="""<title>Blumen Horizon | </title>
 <meta name="description" content="Описание">""",
     )
-    json_ld = models.TextField(
-        verbose_name="JSON-LD",
-        max_length=4000,
-        default="""<script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "WebPage"
-        }
-        </script>""",
-    )
 
     class Meta:
         abstract = True
@@ -78,16 +68,6 @@ class CatalogPageModel(models.Model):
         max_length=1000,
         default="""<title>Blumen Horizon | </title>
 <meta name="description" content="Описание">""",
-    )
-    json_ld = models.TextField(
-        verbose_name="JSON-LD",
-        max_length=4000,
-        default="""<script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "WebPage"
-        }
-        </script>""",
     )
     description = HTMLField(verbose_name="Описание на странице 'Каталог'", null=True)
 
@@ -113,16 +93,6 @@ class ProductsListPageModel(models.Model):
         default="""<title>Blumen Horizon | </title>
 <meta name="description" content="Описание">""",
     )
-    json_ld = models.TextField(
-        verbose_name="JSON-LD",
-        max_length=4000,
-        default="""<script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "WebPage"
-        }
-        </script>""",
-    )
 
     class Meta:
         verbose_name = "Мета-тег списка всех продуктов"
@@ -138,16 +108,6 @@ class BouquetsListPageModel(models.Model):
         max_length=1000,
         default="""<title>Blumen Horizon | </title>
 <meta name="description" content="Описание">""",
-    )
-    json_ld = models.TextField(
-        verbose_name="JSON-LD",
-        max_length=4000,
-        default="""<script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "WebPage"
-        }
-        </script>""",
     )
 
     class Meta:

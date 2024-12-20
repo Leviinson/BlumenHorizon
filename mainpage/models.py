@@ -123,16 +123,6 @@ class FAQPageModel(TimeStampAdbstractModel):
         max_length=1000,
         default="<title>Blumen Horizon | </title>",
     )
-    json_ld = models.TextField(
-        verbose_name="JSON-LD",
-        max_length=4000,
-        default="""<script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "WebPage"
-        }
-</script>""",
-    )
 
     def __str__(self):
         return "Страница «Частозадаваемые вопросы»"
@@ -157,16 +147,6 @@ class AboutUsPageModel(TimeStampAdbstractModel):
         verbose_name="Мета-теги",
         max_length=1000,
         default="<title>Blumen Horizon | </title>",
-    )
-    json_ld = models.TextField(
-        verbose_name="JSON-LD",
-        max_length=4000,
-        default="""<script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "WebPage"
-        }
-</script>""",
     )
 
     def __str__(self):
@@ -193,16 +173,6 @@ class DeliveryPageModel(TimeStampAdbstractModel):
         max_length=1000,
         default="<title>Blumen Horizon | </title>",
     )
-    json_ld = models.TextField(
-        verbose_name="JSON-LD",
-        max_length=4000,
-        default="""<script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "WebPage"
-        }
-</script>""",
-    )
 
     def __str__(self):
         return "Страница о условиях доставки"
@@ -228,16 +198,6 @@ class ContactsPageModel(TimeStampAdbstractModel):
         max_length=1000,
         default="<title>Blumen Horizon | </title>",
     )
-    json_ld = models.TextField(
-        verbose_name="JSON-LD",
-        max_length=4000,
-        default="""<script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "WebPage"
-        }
-</script>""",
-    )
 
     def __str__(self):
         return "Страница с контактами"
@@ -254,15 +214,6 @@ class ConditionsPageModelAbstract(models.Model):
     meta_tags = models.TextField(
         verbose_name="Мета-теги",
         default="<title>Blumen Horizon | </title>",
-    )
-    json_ld = models.TextField(
-        verbose_name="JSON-LD",
-        default="""<script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "WebPage"
-        }
-</script>""",
     )
 
     class Meta:
