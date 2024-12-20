@@ -103,6 +103,7 @@
     sudo systemctl daemon-reload
     sudo systemctl enable nginx
     sudo systemctl enable gunicorn
+    sudo systemctl enable redis-server
     sudo service gunicorn start
     sudo service nginx start
     ```
