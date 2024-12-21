@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 
 from catalogue.models import Bouquet, BouquetImage, Product, ProductImage
 
-from .dataclasses.related_model import RelatedModel
+from ..dataclasses.related_model import RelatedModel
 
 
 def get_recommended_items_with_first_image(
@@ -26,10 +26,10 @@ def get_recommended_items_with_first_image(
                         For example, {"subcategory": ["slug"], "subcategory__category": ["slug"]}.
     :param filter_field: The field to bind the subquery to (e.g., 'bouquet' for BouquetImage).
     :param order_fields: A list of fields to order the result by.
+    :param limit: Amount of items, that will be returned.
     :return: A queryset with annotated objects.
     """
     from django.utils.translation import get_language
-
     language = get_language()
 
     first_image_subquery = (
