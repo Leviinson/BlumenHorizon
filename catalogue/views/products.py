@@ -45,7 +45,7 @@ class ProductView(
     )
     context_object_name = "product"
     slug_url_kwarg = "product_slug"
-    template_name = "products/base_detail.html"
+    template_name = "catalog/base_detail.html"
     detail_url_name = "product-details"
     category_url_name = "products-category"
     subcategory_url_name = "products-subcategory"
@@ -99,7 +99,7 @@ class ProductListView(
     )
     ordering = ("name",)
     context_object_name = "products"
-    template_name = "products/base_list.html"
+    template_name = "catalog/base_list.html"
     filterset_class = ProductFilter
     image_model = ProductImage
     image_model_related_name = "product"

@@ -29,7 +29,7 @@ msgstr "%s эл."
 #: cart/templates/cart/scripts/clearCart.js:34
 #: cart/templates/cart/scripts/increaseOrDecreaseProduct.js:29
 #: cart/templates/cart/scripts/removeProduct.js:35
-#: catalogue/templates/products/scripts/individualQuestion.js:28
+#: catalogue/templates/catalog/scripts/individualQuestion.js:28
 #: core/staticfiles/scripts/cartButton.js:38
 #: mainpage/templates/mainpage/scripts/individualOrder.js:28
 msgid "Произошла ошибка. Повторите попытку позже."

@@ -100,7 +100,7 @@ class BouquetView(
     )
     context_object_name = "product"
     slug_url_kwarg = "bouquet_slug"
-    template_name = "products/bouquets/bouquet_detail.html"
+    template_name = "catalog/bouquets/bouquet_detail.html"
     detail_url_name = "bouquet-details"
     category_url_name = "bouquets-category"
     subcategory_url_name = "bouquets-subcategory"
@@ -152,7 +152,7 @@ class BouquetListView(
         "flowers__name",
     )
     context_object_name = "products"
-    template_name = "products/bouquets/bouquet_list.html"
+    template_name = "catalog/bouquets/bouquet_list.html"
     filterset_class = BouquetFilter
     image_model = BouquetImage
     image_model_related_name = "bouquet"

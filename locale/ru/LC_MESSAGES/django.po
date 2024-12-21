@@ -296,10 +296,10 @@ msgstr ""
 #: cart/templates/cart/index.html:46 cart/templates/cart/index.html:91
 #: cart/templates/cart/index.html:218 cart/templates/cart/index.html:222
 #: cart/templates/cart/index.html:267 cart/templates/cart/index.html:271
-#: catalogue/templates/products/base_detail.html:141
-#: catalogue/templates/products/base_detail.html:317
-#: catalogue/templates/products/base_detail.html:321
-#: catalogue/templates/products/base_list.html:160
+#: catalogue/templates/catalog/base_detail.html:141
+#: catalogue/templates/catalog/base_detail.html:317
+#: catalogue/templates/catalog/base_detail.html:321
+#: catalogue/templates/catalog/base_list.html:160
 #: mainpage/templates/mainpage/index.html:200
 #: mainpage/templates/mainpage/index.html:204
 #: mainpage/templates/mainpage/index.html:266
@@ -314,7 +314,7 @@ msgid "Количество"
 msgstr "Количество"
 
 #: cart/templates/cart/index.html:128
-#: catalogue/templates/products/base_list.html:198
+#: catalogue/templates/catalog/base_list.html:198
 msgid "Отсутствие продуктов"
 msgstr "Отсутствие продуктов"
 
@@ -519,12 +519,12 @@ msgstr "ИТОГО"
 
 #: cart/templates/cart/order_confirmation.html:306
 #: cart/templates/cart/order_confirmation.html:410
-#: catalogue/templates/products/base_list.html:115
+#: catalogue/templates/catalog/base_list.html:115
 msgid "Цена"
 msgstr "Цена"
 
 #: cart/templates/cart/order_confirmation.html:312
-#: catalogue/templates/products/bouquets/bouquet_list.html:38
+#: catalogue/templates/catalog/bouquets/bouquet_list.html:38
 msgid "Цветовая гамма"
 msgstr "Цветовая гамма"
 
@@ -682,8 +682,8 @@ msgid "Цветовая гамма букета"
 msgstr "Цветовая гамма букета"
 
 #: catalogue/filters/bouquets.py:17
-#: catalogue/templates/products/bouquets/bouquet_detail.html:18
-#: catalogue/templates/products/bouquets/bouquet_list.html:63
+#: catalogue/templates/catalog/bouquets/bouquet_detail.html:18
+#: catalogue/templates/catalog/bouquets/bouquet_list.html:63
 msgid "Состав"
 msgstr "Состав"
 
@@ -728,154 +728,154 @@ msgstr "По алфавиту"
 msgid "Со скидкой"
 msgstr "Со скидкой"
 
-#: catalogue/templates/products/base_detail.html:111
-#: catalogue/templates/products/base_list.html:71
+#: catalogue/templates/catalog/base_detail.html:111
+#: catalogue/templates/catalog/base_list.html:71
 msgid "Главная страница"
 msgstr "Главная страница"
 
-#: catalogue/templates/products/base_detail.html:154
+#: catalogue/templates/catalog/base_detail.html:154
 msgid "Предыдущее фото букета"
 msgstr "Предыдущее фото букета"
 
-#: catalogue/templates/products/base_detail.html:158
+#: catalogue/templates/catalog/base_detail.html:158
 msgid "Следующее фото букета"
 msgstr "Следующее фото букета"
 
-#: catalogue/templates/products/base_detail.html:180
+#: catalogue/templates/catalog/base_detail.html:180
 #: mainpage/templates/mainpage/index.html:169
 msgid "Состав букета можно менять"
 msgstr "Состав букета можно менять"
 
-#: catalogue/templates/products/base_detail.html:185
+#: catalogue/templates/catalog/base_detail.html:185
 msgid "Связь на каждом этапе"
 msgstr "Связь на каждом этапе"
 
-#: catalogue/templates/products/base_detail.html:189
+#: catalogue/templates/catalog/base_detail.html:189
 #: mainpage/templates/mainpage/index.html:179
 msgid "Анонимная доставка"
 msgstr "Анонимная доставка"
 
-#: catalogue/templates/products/base_detail.html:200
+#: catalogue/templates/catalog/base_detail.html:200
 msgid "Необходимо индивидуальное решение?"
 msgstr "Необходимо индивидуальное решение?"
 
-#: catalogue/templates/products/base_detail.html:205
+#: catalogue/templates/catalog/base_detail.html:205
 msgid "Тел. номер в соц.сети или ссылка профиля"
 msgstr "Тел. номер в соц.сети или ссылка профиля"
 
-#: catalogue/templates/products/base_detail.html:211
+#: catalogue/templates/catalog/base_detail.html:211
 msgid "Предложим решение в течении 10 минут"
 msgstr "Предложим решение в течении 10 минут"
 
-#: catalogue/templates/products/base_detail.html:218
+#: catalogue/templates/catalog/base_detail.html:218
 #: mainpage/templates/mainpage/index.html:354
 msgid "Разрешаю мне перезвонить"
 msgstr "Разрешаю мне перезвонить"
 
-#: catalogue/templates/products/base_detail.html:222
+#: catalogue/templates/catalog/base_detail.html:222
 #: mainpage/templates/mainpage/index.html:359
 msgid "Связаться"
 msgstr "Связаться"
 
-#: catalogue/templates/products/base_detail.html:230
+#: catalogue/templates/catalog/base_detail.html:230
 msgid "Артикул"
 msgstr "Артикул"
 
-#: catalogue/templates/products/base_detail.html:234
+#: catalogue/templates/catalog/base_detail.html:234
 msgid "Есть в наличии"
 msgstr "Есть в наличии"
 
-#: catalogue/templates/products/base_detail.html:250
+#: catalogue/templates/catalog/base_detail.html:250
 #| msgid "Включая НДС"
 msgid "Включая НДС и доставку"
 msgstr "Включая НДС и доставку"
 
-#: catalogue/templates/products/base_detail.html:275
+#: catalogue/templates/catalog/base_detail.html:275
 msgid "Купить"
 msgstr "Купить"
 
-#: catalogue/templates/products/base_detail.html:286 mainpage/models.py:25
+#: catalogue/templates/catalog/base_detail.html:286 mainpage/models.py:25
 #: mainpage/models.py:119 mainpage/models.py:154 mainpage/models.py:189
 #: mainpage/models.py:224 mainpage/models.py:252
 msgid "Описание"
 msgstr "Описание"
 
-#: catalogue/templates/products/base_detail.html:295
+#: catalogue/templates/catalog/base_detail.html:295
 msgid "Характеристики"
 msgstr "Характеристики"
 
-#: catalogue/templates/products/base_detail.html:301
+#: catalogue/templates/catalog/base_detail.html:301
 msgid "Рекомендуемые продукты к покупке"
 msgstr "Рекомендуемые продукты к покупке"
 
-#: catalogue/templates/products/base_detail.html:357
+#: catalogue/templates/catalog/base_detail.html:357
 #: mainpage/templates/mainpage/index.html:240
 msgid "Предыдущий слайд букетов"
 msgstr "Предыдущий слайд букетов"
 
-#: catalogue/templates/products/base_detail.html:362
+#: catalogue/templates/catalog/base_detail.html:362
 #: mainpage/templates/mainpage/index.html:245
 msgid "Следующий слайд букетов"
 msgstr "Следующий слайд букетов"
 
-#: catalogue/templates/products/base_list.html:91
+#: catalogue/templates/catalog/base_list.html:91
 msgid "Сортировка"
 msgstr "Сортировка"
 
-#: catalogue/templates/products/base_list.html:105
+#: catalogue/templates/catalog/base_list.html:105
 msgid "Фильтры"
 msgstr "Фильтры"
 
-#: catalogue/templates/products/base_list.html:258
+#: catalogue/templates/catalog/base_list.html:258
 msgid "К сожалению не нашлось продуктов по заданным фильтрам."
 msgstr "К сожалению не нашлось продуктов по заданным фильтрам."
 
-#: catalogue/templates/products/base_list.html:267
+#: catalogue/templates/catalog/base_list.html:267
 #: mainpage/templates/mainpage/index.html:153
 msgid "Назад"
 msgstr "Назад"
 
-#: catalogue/templates/products/base_list.html:294
+#: catalogue/templates/catalog/base_list.html:294
 msgid "Предыдущая страница букетов"
 msgstr "Предыдущая страница букетов"
 
-#: catalogue/templates/products/base_list.html:300
+#: catalogue/templates/catalog/base_list.html:300
 msgid "Следующая страница букетов"
 msgstr "Следующая страница букетов"
 
-#: catalogue/templates/products/bouquets/bouquet_detail.html:10
+#: catalogue/templates/catalog/bouquets/bouquet_detail.html:10
 msgid "Количество цветов"
 msgstr "Количество цветов"
 
-#: catalogue/templates/products/bouquets/bouquet_detail.html:13
+#: catalogue/templates/catalog/bouquets/bouquet_detail.html:13
 msgid "Диаметр"
 msgstr "Диаметр"
 
-#: catalogue/templates/products/bouquets/bouquet_detail.html:13
+#: catalogue/templates/catalog/bouquets/bouquet_detail.html:13
 msgid "см"
 msgstr "см"
 
-#: catalogue/templates/products/bouquets/bouquet_detail.html:28
+#: catalogue/templates/catalog/bouquets/bouquet_detail.html:28
 msgid "Цвет"
 msgstr "Цвет"
 
-#: catalogue/templates/products/bouquets/bouquet_detail.html:44
+#: catalogue/templates/catalog/bouquets/bouquet_detail.html:44
 msgid "Размеры"
 msgstr "Размеры"
 
-#: catalogue/templates/products/bouquets/bouquet_detail.html:50
+#: catalogue/templates/catalog/bouquets/bouquet_detail.html:50
 msgid "шт."
 msgstr "шт."
 
-#: catalogue/templates/products/bouquets/bouquet_list.html:6
+#: catalogue/templates/catalog/bouquets/bouquet_list.html:6
 msgid "Диаметр букета"
 msgstr "Диаметр букета"
 
-#: catalogue/templates/products/bouquets/bouquet_list.html:20
+#: catalogue/templates/catalog/bouquets/bouquet_list.html:20
 msgid "Количество цветов в букете"
 msgstr "Количество цветов в букете"
 
-#: catalogue/templates/products/catalog.html:35
+#: catalogue/templates/catalog/catalog.html:35
 msgid "Каталог букетов и подарков"
 msgstr "Каталог букетов и подарков"
 

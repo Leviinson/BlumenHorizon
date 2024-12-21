@@ -31,7 +31,7 @@ msgstr "%s ел."
 #: cart/templates/cart/scripts/increaseOrDecreaseProduct.js:30
 #: cart/templates/cart/scripts/moveOrRemoveRecommendedItemFromCart.js:37
 #: cart/templates/cart/scripts/removeProduct.js:40
-#: catalogue/templates/products/scripts/individualQuestion.js:28
+#: catalogue/templates/catalog/scripts/individualQuestion.js:28
 #: core/staticfiles/scripts/cartButton.js:34
 #: mainpage/templates/mainpage/scripts/individualOrder.js:28
 msgid "Произошла ошибка. Повторите попытку позже."

@@ -31,7 +31,7 @@ from .products import ProductListView
 
 
 class CatalogView(CommonContextMixin, TemplateView):
-    template_name = "products/catalog.html"
+    template_name = "catalog/catalog.html"
     http_method_names = ["get"]
 
     def get_context_data(self, *args, **kwargs):
@@ -85,7 +85,7 @@ class CatalogView(CommonContextMixin, TemplateView):
 
 
 class CategoryView(CommonContextMixin, TemplateView):
-    template_name = "products/category.html"
+    template_name = "catalog/category.html"
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
