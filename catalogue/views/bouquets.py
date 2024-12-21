@@ -10,8 +10,8 @@ from rest_framework.views import APIView
 
 from cart.cart import BouquetCart
 from core.services.dataclasses import RelatedModel
-from core.services.get_recommended_items import get_recommended_items_with_first_image
 from core.services.mixins.views import CommonContextMixin
+from core.services.utils import get_recommended_items_with_first_image
 
 from ..filters import BouquetFilter
 from ..models import (

@@ -5,8 +5,8 @@ from django_filters.views import FilterView
 
 from cart.cart import ProductCart
 from core.services.dataclasses import RelatedModel
-from core.services.get_recommended_items import get_recommended_items_with_first_image
 from core.services.mixins.views import CommonContextMixin
+from core.services.utils import get_recommended_items_with_first_image
 
 from ..filters import ProductFilter
 from ..models import Product, ProductImage, ProductsListPageModel
