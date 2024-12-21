@@ -41,20 +41,17 @@ class MainPageView(CommonContextMixin, TemplateView):
             is_active=True
         ).all()
 
-        base_context["recommended_bouquets"],
-        base_context["recommended_products"] = self.get_recommended_items()
+        base_context["recommended_bouquets"], base_context["recommended_products"] = self.get_recommended_items()
 
-        base_context["products_cart"],
-        base_context["bouquets_cart"] = get_carts(self.request.session)
+        base_context["products_cart"], base_context["bouquets_cart"] = get_carts(self.request.session)
 
-        base_context["products_categories"],
-        base_context["bouquets_categories"] = self.get_categories_tuple()
+        base_context["products_categories"], base_context["bouquets_categories"] = self.get_categories_tuple()
 
         base_context["individual_order_form"] = IndividualOrderForm()
         base_context["seo_block"] = MainPageSeoBlock.objects.first()
-        base_context["description"] = page_model.description
 
         page_model = MainPageModel.objects.first()
+        base_context["description"] = page_model.description
         base_context["meta_tags"] = page_model.meta_tags
         base_context["json_ld_description"] = page_model.json_ld_description
         return base_context

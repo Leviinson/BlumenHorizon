@@ -18,7 +18,7 @@ def get_recommended_items_with_first_image(
     limit: int = 12,
 ) -> BaseManager[Product] | BaseManager[Bouquet]:
     """
-    A function to retrieve recommended products/bouquets with an annotated first image.
+    A function to retrieve recommended products or bouquets with an annotated first image.
 
     :param model: The model for which the query is executed (e.g., Bouquet or Product).
     :param image_model: The image model that will be used for the subquery (e.g., BouquetImage or ProductImage).
