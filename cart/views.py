@@ -15,13 +15,13 @@ from accounts.models import User
 from catalogue.models import Bouquet, BouquetImage, Product, ProductImage
 from core.services.caching import set_or_get_from_cache
 from core.services.dataclasses.related_model import RelatedModel
-from core.services.get_recommended_items import get_recommended_items_with_first_image
 from core.services.mixins.views import CommonContextMixin
+from core.services.utils import get_recommended_items_with_first_image
 
 from .cart import BouquetCart, ProductCart
 from .forms import OrderForm
 from .models import Order, OrderBouquets, OrderProducts
-from .services.mixins import (
+from .services.mixins.edit import (
     CartBouquetEditMixin,
     CartEditAbstractMixin,
     CartItemAddMixin,
