@@ -147,6 +147,7 @@ class IndividualOrderView(CreateView):
     Форма на странице продукта называется "Индивидуальный вопрос", она
     дополнительно прикрепляет продукт, о котором идёт речь, соответствующей модели.
     """
+
     form_class = IndividualOrderForm
     http_method_names = ["post"]
 
