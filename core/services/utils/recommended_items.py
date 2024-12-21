@@ -30,6 +30,7 @@ def get_recommended_items_with_first_image(
     :return: A queryset with annotated objects.
     """
     from django.utils.translation import get_language
+
     language = get_language()
 
     first_image_subquery = (
