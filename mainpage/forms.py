@@ -31,6 +31,13 @@ class IndividualOrderForm(forms.ModelForm):
         }
 
     def save(self, commit=False, user: User = None):
+        """
+        Прикрепляет зарегистрированного пользователя к
+        записи индивидуального заказа.
+
+        :param user: Аутентифицированный пользователь, который будет закреплён
+        за данным индивидуальным
+        """
         order: IndividualOrder = super().save(commit=False)
         if user and user.is_authenticated:
             order.user = user
