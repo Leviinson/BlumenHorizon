@@ -54,7 +54,7 @@ class MetaDataAbstractModel(models.Model):
     meta_tags = models.TextField(
         verbose_name="Мета-теги",
         max_length=4000,
-        default="""<title>Blumen Horizon | </title>
+        default="""<title> | BlumenHorizon</title>
 <meta name="description" content="Описание">""",
     )
 
@@ -66,7 +66,7 @@ class CatalogPageModel(models.Model):
     meta_tags = models.TextField(
         verbose_name="Мета-теги",
         max_length=1000,
-        default="""<title>Blumen Horizon | </title>
+        default="""<title> | BlumenHorizon</title>
 <meta name="description" content="Описание">""",
     )
     description = HTMLField(verbose_name="Описание на странице 'Каталог'", null=True)
@@ -90,7 +90,7 @@ class ProductsListPageModel(models.Model):
     meta_tags = models.TextField(
         verbose_name="Мета-теги",
         max_length=1000,
-        default="""<title>Blumen Horizon | </title>
+        default="""<title> | BlumenHorizon</title>
 <meta name="description" content="Описание">""",
     )
 
@@ -106,7 +106,7 @@ class BouquetsListPageModel(models.Model):
     meta_tags = models.TextField(
         verbose_name="Мета-теги",
         max_length=1000,
-        default="""<title>Blumen Horizon | </title>
+        default="""<title> | BlumenHorizon</title>
 <meta name="description" content="Описание">""",
     )
 
@@ -128,7 +128,7 @@ class ProductCategory(CategoryAbstract, TimeStampAdbstractModel, MetaDataAbstrac
     catalog_page_meta_tags = models.TextField(
         verbose_name="Мета-теги на странице категории со списком подкатегорий",
         max_length=4000,
-        default="""<title>Blumen Horizon | </title>
+        default="""<title> | BlumenHorizon</title>
 <meta name="description" content="Описание">""",
     )
     description = HTMLField(verbose_name="Описание на странице категории", null=True)
@@ -381,7 +381,7 @@ class BouquetCategory(CategoryAbstract, TimeStampAdbstractModel, MetaDataAbstrac
     catalog_page_meta_tags = models.TextField(
         verbose_name="Мета-теги на странице категории со списком подкатегорий",
         max_length=4000,
-        default="""<title>Blumen Horizon | </title>
+        default="""<title> | BlumenHorizon</title>
 <meta name="description" content="Описание">""",
     )
     description = HTMLField(verbose_name="Описание на странице категории", null=True)

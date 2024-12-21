@@ -1,15 +1,23 @@
-from typing import Any
+from typing import Any, Literal
 
 from django.http import Http404
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
+from cart.cart import BouquetCart, ProductCart
 from catalogue.forms import IndividualQuestionForm
+from catalogue.models import Bouquet, BouquetImage, Product, ProductImage
+from core.services.dataclasses import RelatedModel
+from core.services.utils import get_recommended_items_with_first_image
 
 
 class DetailViewMixin:
-    category_url_name = None
-    subcategory_url_name = None
+    category_url_name: str
+    subcategory_url_name: str
+    cart: ProductCart | BouquetCart
+    model: Product | Bouquet
+    image_model: ProductImage | BouquetImage
+    image_filter_field: Literal["product", "bouquet"]
 
     def get_context_data(self, *args, **kwargs) -> dict[str, Any]:
         if not (self.category_url_name and self.subcategory_url_name):
@@ -41,6 +49,23 @@ class DetailViewMixin:
             {"name": self.object.name, "url": None},
         ]
         context["individual_question_form"] = IndividualQuestionForm()
+        context["cart"] = self.cart(
+            session=self.request.session, session_key="products_cart"
+        )
+        related_models = [
+            RelatedModel(model="subcategory", attributes=["slug", "name"]),
+            RelatedModel(model="subcategory__category", attributes=["slug"]),
+        ]
+        context["recommended_products"] = get_recommended_items_with_first_image(
+            model=self.model,
+            image_model=self.image_model,
+            related_models=related_models,
+            image_filter_field=self.image_filter_field,
+            order_fields=[
+                "-amount_of_orders",
+                "-amount_of_savings",
+            ],
+        )
         return context
 
     def get_queryset(self):

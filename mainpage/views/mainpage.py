@@ -41,12 +41,18 @@ class MainPageView(CommonContextMixin, TemplateView):
             is_active=True
         ).all()
 
-        base_context["recommended_bouquets"], base_context["recommended_products"] = self.get_recommended_items()
+        base_context["recommended_bouquets"], base_context["recommended_products"] = (
+            self.get_recommended_items()
+        )
+        base_context["products_cart"], base_context["bouquets_cart"] = get_carts(
+            self.request.session
+        )
+        base_context["products_categories"], base_context["bouquets_categories"] = (
+            self.get_categories_tuple()
+        )
 
-        base_context["products_cart"], base_context["bouquets_cart"] = get_carts(self.request.session)
-
-        base_context["products_categories"], base_context["bouquets_categories"] = self.get_categories_tuple()
-
+        # Форма определяется отдельно, так как отправка происходит
+        # посредством AJAX-запроса
         base_context["individual_order_form"] = IndividualOrderForm()
         base_context["seo_block"] = MainPageSeoBlock.objects.first()
 

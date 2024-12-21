@@ -257,7 +257,7 @@
                         class="w-100 me-2"
                         data-add-url="{% if product.is_bouquet %}{% url 'cart:bouquet-add' %}{% else %}{% url 'cart:product-add' %}{% endif %}"
                         data-remove-url="{% if product.is_bouquet %}{% url 'cart:bouquet-remove' %}{% else %}{% url 'cart:product-remove' %}{% endif %}"
-                        data-is-in-cart="{% if product in products_cart  %}true{% else %}false{% endif %}"
+                        data-is-in-cart="{% if item in cart  %}true{% else %}false{% endif %}"
                     >
                         {% csrf_token %}
                         <input type="hidden" name="product_slug" value="{{ product.slug }}">
@@ -334,7 +334,7 @@
                         </p>
                         <form method="post" class="add-to-cart-form w-100 me-2" data-add-url="{% url 'cart:bouquet-add' %}"
                         data-remove-url="{% url 'cart:bouquet-remove' %}"
-                        data-is-in-cart="{% if recommended_product in products_cart %}true{% else %}false{% endif %}">
+                        data-is-in-cart="{% if recommended_item in cart %}true{% else %}false{% endif %}">
                         {% csrf_token %}
                         <input type="hidden" name="product_slug" value="{{ recommended_product.slug }}">
                         {% include 'templates/cartButton.html' %}
