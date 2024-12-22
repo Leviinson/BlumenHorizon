@@ -120,7 +120,6 @@ class MainPageView(CommonContextMixin, TemplateView):
             model=Bouquet,
             image_model=BouquetImage,
             related_models=related_models,
-            image_filter_field="bouquet",
             order_fields=[
                 "-amount_of_orders",
                 "-amount_of_savings",
@@ -130,7 +129,6 @@ class MainPageView(CommonContextMixin, TemplateView):
             model=Product,
             image_model=ProductImage,
             related_models=related_models,
-            image_filter_field="product",
             order_fields=[
                 "-amount_of_orders",
                 "-amount_of_savings",
