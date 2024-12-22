@@ -154,10 +154,10 @@ class CartView(CommonContextMixin, FormView):
 
         language_code = get_language()
         products_cart = ProductCart(
-            session=request.session, session_key="products_cart"
+            session=request.session, session_key=ProductCart.session_key
         )
         bouquets_cart = BouquetCart(
-            session=request.session, session_key="bouquets_cart"
+            session=request.session, session_key=BouquetCart.session_key
         )
         tax_percent = set_or_get_from_cache(
             "tax_percent",
@@ -253,10 +253,10 @@ class CartView(CommonContextMixin, FormView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context["products_cart"] = ProductCart(
-            True, self.request.session, session_key="products_cart"
+            True, self.request.session, session_key=ProductCart.session_key
         )
         context["bouquets_cart"] = BouquetCart(
-            True, self.request.session, session_key="bouquets_cart"
+            True, self.request.session, session_key=BouquetCart.session_key
         )
         related_models = [
             RelatedModel(model="subcategory", attributes=["slug", "name"]),
@@ -266,7 +266,6 @@ class CartView(CommonContextMixin, FormView):
             model=Product,
             image_model=ProductImage,
             related_models=related_models,
-            image_filter_field="product",
             order_fields=[
                 "-amount_of_orders",
                 "-amount_of_savings",
@@ -277,7 +276,6 @@ class CartView(CommonContextMixin, FormView):
             model=Bouquet,
             image_model=BouquetImage,
             related_models=related_models,
-            image_filter_field="bouquet",
             order_fields=[
                 "-amount_of_orders",
                 "-amount_of_savings",
@@ -387,8 +385,12 @@ class CartProductRemoveSingleView(
 
 def cart_clear(request: HttpRequest) -> Type[JsonResponse]:
     if request.method == "POST":
-        product_cart = ProductCart(session=request.session, session_key="products_cart")
-        bouquet_cart = BouquetCart(session=request.session, session_key="bouquets_cart")
+        product_cart = ProductCart(
+            session=request.session, session_key=ProductCart.session_key
+        )
+        bouquet_cart = BouquetCart(
+            session=request.session, session_key=BouquetCart.session_key
+        )
         for cart in (product_cart, bouquet_cart):
             cart.clear()
         return JsonResponse(

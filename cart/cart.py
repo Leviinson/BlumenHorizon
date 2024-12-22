@@ -6,7 +6,7 @@ from .services.mixins.base import CartMixin
 
 class ProductCart(CartMixin, Cart):
     image_model = ProductImage
-    image_model_related_name = "product"
+    session_key = "products_cart"
 
     def get_product_model(self):
         return Product
@@ -14,7 +14,7 @@ class ProductCart(CartMixin, Cart):
 
 class BouquetCart(CartMixin, Cart):
     image_model = BouquetImage
-    image_model_related_name = "bouquet"
+    session_key = "bouquets_cart"
 
     def get_product_model(self):
         return Bouquet

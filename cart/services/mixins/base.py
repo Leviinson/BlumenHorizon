@@ -6,8 +6,7 @@ from catalogue.models import Bouquet, BouquetImage, Product, ProductImage
 
 
 class CartMixin:
-    image_model: ProductImage | BouquetImage = None
-    image_model_related_name: str = ""
+    image_model: ProductImage | BouquetImage
 
     def __init__(
         self,
@@ -41,7 +40,7 @@ class CartMixin:
         if self.with_images:
             first_image_subquery = self.image_model.objects.filter(
                 **{
-                    self.image_model_related_name: OuterRef("pk"),
+                    self.image_model.image_related_model_field: OuterRef("pk"),
                 }
             ).order_by("id")[:1]
             optimized_queryset = optimized_queryset.annotate(
