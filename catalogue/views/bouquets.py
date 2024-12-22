@@ -20,7 +20,8 @@ from ..models import (
     Color,
     Flower,
 )
-from ..services.views import BouquetListViewMixin, DetailViewMixin, ListViewMixin
+from ..services.mixins.views.details_mixin import DetailViewMixin
+from ..services.mixins.views.list_mixin import BouquetListViewMixin, ListViewMixin
 from .serializers import BouquetSizeSerializer
 
 
@@ -99,13 +100,11 @@ class BouquetView(
     context_object_name = "product"
     slug_url_kwarg = "bouquet_slug"
     template_name = "catalog/bouquets/bouquet_detail.html"
-    detail_url_name = "bouquet-details"
     category_url_name = "bouquets-category"
     subcategory_url_name = "bouquets-subcategory"
     cart = BouquetCart
     model = Bouquet
     image_model = BouquetImage
-    image_filter_field = "bouquet"
 
 
 class BouquetListView(
@@ -114,7 +113,6 @@ class BouquetListView(
     CommonContextMixin,
     FilterView,
     TemplateResponseMixin,
-    ContextMixin,
 ):
     model = Bouquet
     queryset = Bouquet.objects.select_related(
@@ -136,12 +134,10 @@ class BouquetListView(
     template_name = "catalog/bouquets/bouquet_list.html"
     filterset_class = BouquetFilter
     image_model = BouquetImage
-    image_model_related_name = "bouquet"
+    page_model = BouquetsListPageModel
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context["colors"] = Color.objects.only("name", "hex_code").all()
         context["flowers"] = Flower.objects.only("name").all()
-        page_model = BouquetsListPageModel.objects.first()
-        context["meta_tags"] = page_model.meta_tags
         return context

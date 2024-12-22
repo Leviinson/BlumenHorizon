@@ -1,5 +1,5 @@
 from django.utils.translation import gettext_lazy as _
-from django.views.generic.base import ContextMixin, TemplateResponseMixin
+from django.views.generic.base import TemplateResponseMixin
 from django.views.generic.detail import DetailView
 from django_filters.views import FilterView
 
@@ -8,7 +8,8 @@ from core.services.mixins.views import CommonContextMixin
 
 from ..filters import ProductFilter
 from ..models import Product, ProductImage, ProductsListPageModel
-from ..services.views import DetailViewMixin, ListViewMixin, ProductListViewMixin
+from ..services.mixins.views.details_mixin import DetailViewMixin
+from ..services.mixins.views.list_mixin import ListViewMixin, ProductListViewMixin
 
 
 class ProductView(
@@ -50,7 +51,6 @@ class ProductView(
     cart = ProductCart
     model = Product
     image_model = ProductImage
-    image_filter_field = "product"
 
 
 class ProductListView(
@@ -59,7 +59,6 @@ class ProductListView(
     CommonContextMixin,
     FilterView,
     TemplateResponseMixin,
-    ContextMixin,
 ):
     model = Product
     queryset = (
@@ -83,10 +82,4 @@ class ProductListView(
     template_name = "catalog/base_list.html"
     filterset_class = ProductFilter
     image_model = ProductImage
-    image_model_related_name = "product"
-
-    def get_context_data(self, *args, **kwargs):
-        context = super().get_context_data(*args, **kwargs)
-        page_model = ProductsListPageModel.objects.first()
-        context["meta_tags"] = page_model.meta_tags
-        return context
+    page_model = ProductsListPageModel

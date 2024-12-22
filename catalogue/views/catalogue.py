@@ -20,10 +20,12 @@ from ..models import (
     ProductCategory,
     ProductSubcategory,
 )
-from ..services.views import (
+from ..services.mixins.views.category import (
     BouquetCategoryListViewMixin,
-    BouquetSubcategoryListViewMixin,
     ProductCategoryListViewMixin,
+)
+from ..services.mixins.views.subcategory import (
+    BouquetSubcategoryListViewMixin,
     ProductSubcategoryListViewMixin,
 )
 from .bouquets import BouquetListView
@@ -140,11 +142,9 @@ class BuyItemView(FormView):
         if is_bouquet:
             model_class = Bouquet
             cart_class = BouquetCart
-            cart_session_key = "bouquets_cart"
         else:
             model_class = Product
             cart_class = ProductCart
-            cart_session_key = "products_cart"
 
         try:
             item = (
@@ -166,7 +166,7 @@ class BuyItemView(FormView):
                 )
             )
             cart = cart_class(
-                session=self.request.session, session_key=cart_session_key
+                session=self.request.session, session_key=cart_class.session_key
             )
             if item not in cart.products:
                 with transaction.atomic():

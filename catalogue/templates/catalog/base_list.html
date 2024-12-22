@@ -177,9 +177,9 @@
                                         {% endif %}
                                     </p>
                                     <form method="post" class="add-to-cart-form w-100 me-2"
-                                        data-add-url="{% if product.is_bouquet %}{% url 'cart:bouquet-add' %}{% else %}{% url 'cart:product-add' %}{% endif %}"
-                                        data-remove-url="{% if product.is_bouquet %}{% url 'cart:bouquet-remove' %}{% else %}{% url 'cart:product-remove' %}{% endif %}"
-                                        data-is-in-cart="{% if product in products_cart or product in bouquets_cart %}true{% else %}false{% endif %}">
+                                        data-add-url="{{ add_to_cart_uri }}"
+                                        data-remove-url="{{ remove_from_cart_uri }}"
+                                        data-is-in-cart="{% if product in cart %}true{% else %}false{% endif %}">
                                         {% csrf_token %}
                                         <input type="hidden" name="product_slug" value="{{ product.slug }}">
                                         {% include 'templates/cartButton.html' %}

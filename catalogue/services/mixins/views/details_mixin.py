@@ -1,4 +1,4 @@
-from typing import Any, Literal
+from typing import Any
 
 from django.http import Http404
 from django.urls import reverse_lazy
@@ -12,12 +12,30 @@ from core.services.utils import get_recommended_items_with_first_image
 
 
 class DetailViewMixin:
+    """
+    Миксин для отображения страниц «стандартных продуктов» или букетов.
+
+    Применяется для BouquetView и ProductView.
+
+    :param category_url_name: название path() в urls.py для контроллера, который
+    отображает список продуктов в категории продукта. Используется для
+    построения хлебных крошек
+    :param subcategory_url_name: название path() в urls.py для контроллера, который
+    отображает список продуктов в подкатегории продукта. Используется для
+    построения хлебных крошек
+    :param cart: Класс корзины, которая хранит этот тип продукта. ProductCart для
+    стандартных продуктов, BouquetCart для букетов.
+    :param model: Модель, которая представляет собой тип продукта. Product для
+    стандартных продуктов, Bouquet для букетов.
+    :param image_model: Модель, которая хранит фотографии для данного типа продукта.
+    ProductImage для стандартных продуктов, BouquetImage для букетов.
+    """
+
     category_url_name: str
     subcategory_url_name: str
     cart: ProductCart | BouquetCart
     model: Product | Bouquet
     image_model: ProductImage | BouquetImage
-    image_filter_field: Literal["product", "bouquet"]
 
     def get_context_data(self, *args, **kwargs) -> dict[str, Any]:
         if not (self.category_url_name and self.subcategory_url_name):
@@ -50,7 +68,7 @@ class DetailViewMixin:
         ]
         context["individual_question_form"] = IndividualQuestionForm()
         context["cart"] = self.cart(
-            session=self.request.session, session_key="products_cart"
+            session=self.request.session, session_key=self.cart.session_key
         )
         related_models = [
             RelatedModel(model="subcategory", attributes=["slug", "name"]),
@@ -60,7 +78,6 @@ class DetailViewMixin:
             model=self.model,
             image_model=self.image_model,
             related_models=related_models,
-            image_filter_field=self.image_filter_field,
             order_fields=[
                 "-amount_of_orders",
                 "-amount_of_savings",
