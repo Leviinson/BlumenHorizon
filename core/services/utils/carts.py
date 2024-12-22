@@ -14,6 +14,6 @@ def get_carts(session: SessionBase) -> tuple[ProductCart, BouquetCart]:
 
     :param session: сессия из запроса пользователя (self.request.session)
     """
-    products_cart = ProductCart(session=session, session_key="products_cart")
-    bouquets_cart = BouquetCart(session=session, session_key="bouquets_cart")
+    products_cart = ProductCart(session=session, session_key=ProductCart.session_key)
+    bouquets_cart = BouquetCart(session=session, session_key=BouquetCart.session_key)
     return products_cart, bouquets_cart

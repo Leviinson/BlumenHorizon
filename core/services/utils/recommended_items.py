@@ -13,7 +13,6 @@ def get_recommended_items_with_first_image(
     model: Product | Bouquet,
     image_model: ProductImage | BouquetImage,
     related_models: list[RelatedModel],
-    image_filter_field: Literal["product"] | Literal["bouquet"],
     order_fields: list[str],
     limit: int = 12,
 ) -> BaseManager[Product] | BaseManager[Bouquet]:
@@ -24,7 +23,6 @@ def get_recommended_items_with_first_image(
     :param image_model: The image model that will be used for the subquery (e.g., BouquetImage or ProductImage).
     :param related_models: A dictionary where the key is the related model and the value is a list of attributes for that model.
                         For example, {"subcategory": ["slug"], "subcategory__category": ["slug"]}.
-    :param filter_field: The field to bind the subquery to (e.g., 'bouquet' for BouquetImage).
     :param order_fields: A list of fields to order the result by.
     :param limit: Amount of items, that will be returned.
     :return: A queryset with annotated objects.
@@ -34,7 +32,9 @@ def get_recommended_items_with_first_image(
     language = get_language()
 
     first_image_subquery = (
-        image_model.objects.filter(**{image_filter_field: OuterRef("pk")})
+        image_model.objects.filter(
+            **{image_model.image_related_model_field: OuterRef("pk")}
+        )
         .order_by("id")[:1]
         .values("image")
     )
