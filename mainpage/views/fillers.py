@@ -35,6 +35,8 @@ class FillerViewMixin:
         page = self.page_model.objects.first()
         context["description"] = page.description
         context["meta_tags"] = page.meta_tags
+        context["image_url"] = page.image.url
+        context["image_alt"] = page.image_alt
         context["url"] = self.url
         return context
 
