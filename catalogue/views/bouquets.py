@@ -4,6 +4,7 @@ from django.views.generic.detail import DetailView
 from django_filters.views import FilterView
 from rest_framework import status
 from rest_framework.exceptions import NotFound
+from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -24,8 +25,39 @@ from ..services.mixins.views.list_mixin import BouquetListViewMixin, ListViewMix
 from .serializers import BouquetSizeSerializer
 
 
-class GetBouquetSizes(APIView):
-    def get(self, request, category_slug, subcategory_slug, bouquet_slug):
+class GetBouquetSizesView(APIView):
+    """
+    API-вью для получения доступных размеров конкретного букета.
+
+    Этот эндпоинт позволяет пользователям получить размеры букета,
+    идентифицируемого с помощью slug категории, подкатегории и самого букета.
+    Букет и связанные объекты должны быть активными для успешного получения данных.
+    """
+
+    def get(
+        self,
+        request: Request,
+        category_slug: str,
+        subcategory_slug: str,
+        bouquet_slug: str,
+    ):
+        """
+        Обрабатывает GET-запрос для получения размеров букета.
+
+        Аргументы:
+            request (Request): HTTP-запрос.
+            category_slug (str): Slug категории букета.
+            subcategory_slug (str): Slug подкатегории букета.
+            bouquet_slug (str): Slug букета.
+
+        Возвращает:
+            Response: JSON-ответ с сериализованными размерами букета,
+            если они найдены, или соответствующее сообщение об ошибке.
+
+        Исключения:
+            NotFound: Если не найден активный букет или доступные размеры букета,
+            соответствующие переданным slug.
+        """
         bouquet = get_object_or_404(
             Bouquet.objects.select_related("subcategory__category").only(
                 "id",
