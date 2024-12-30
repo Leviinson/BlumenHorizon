@@ -1,4 +1,5 @@
 from decimal import Decimal
+
 from django.contrib.sessions.backends.base import SessionBase
 from django.db.models import OuterRef, Subquery
 from django.db.models.manager import BaseManager

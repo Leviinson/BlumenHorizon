@@ -127,7 +127,9 @@ class CartView(CommonContextMixin, FormView):
         currency: str,
         domain: str,
     ) -> tuple[
-        QuerySet[OrderProducts], QuerySet[OrderBouquets], list[dict[str, Collection[str]]]
+        QuerySet[OrderProducts],
+        QuerySet[OrderBouquets],
+        list[dict[str, Collection[str]]],
     ]:
         """
         Генерирует список элементов для Stripe и прикрепляет первое изображение продукта.
