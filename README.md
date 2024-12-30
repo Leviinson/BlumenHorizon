@@ -12,7 +12,7 @@
 2. **Установка необходимых пакетов:**
 
     ```bash
-    sudo apt install -y htop tree wget nginx mysql-server neovim zsh python3-dev default-libmysqlclient-dev build-essential pkg-config
+    sudo apt install -y htop tree wget nginx mysql-server neovim zsh python3-dev default-libmysqlclient-dev build-essential pkg-config gettext
 
     # Oh My Zsh (можете добавить свою конфигурацию в ~/.zshrc config. файл)
     sh -c "$(wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
@@ -121,10 +121,6 @@
 
 4. **Инициализация и настройка базы данных:**
 
-    ```bash
-    $ mysql
-    ```
-
     ```mysql
     mysql> create database (значение переменной MYSQL_NAME в .env);
     mysql> create user '(MYSQL_USER в .env)'@'(MYSQL_HOST в .env)' identified by '(MYSQL_PASSWORD в .env)';
@@ -136,11 +132,5 @@
     Попросите у наставника дамп базы данных, поместите его в корневую директорию таким образом: `/var/www/blumenhorizon/blumenhoirzon_dump.sql`
 
     ```bash
-    $ mysql
-    ```
-
-    ```mysql
-    mysql> use blumenhorizon;
-    mysql> source /var/www/blumenhorizon/blumenhoirzon_dump.sql
-    mysql> \q
+    mysql -u root -p blumenhorizon < /var/www/blumenhorizon/blumenhoirzon_dump.sql
     ```
