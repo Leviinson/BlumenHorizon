@@ -1,6 +1,5 @@
 from django.shortcuts import get_object_or_404
-from django.utils.translation import gettext_lazy as _
-from django.views.generic.base import ContextMixin, TemplateResponseMixin
+from django.views.generic.base import TemplateResponseMixin
 from django.views.generic.detail import DetailView
 from django_filters.views import FilterView
 from rest_framework import status
@@ -9,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from cart.cart import BouquetCart
-from core.services.mixins.views import CommonContextMixin
+from core.services.mixins import CommonContextMixin
 
 from ..filters import BouquetFilter
 from ..models import (

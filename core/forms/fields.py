@@ -1,5 +1,4 @@
 from django.forms import ChoiceField
-from django.utils.translation import gettext_lazy as _
 from phonenumber_field.formfields import REGION_CODE_TO_COUNTRY_CODE
 
 

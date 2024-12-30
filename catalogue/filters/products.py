@@ -1,4 +1,3 @@
-from django.utils.translation import gettext_lazy as _
 
 from ..models import Product
 from .base_filter import BaseFilter

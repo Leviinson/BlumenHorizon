@@ -3,7 +3,6 @@ from abc import ABC, abstractmethod
 from decimal import ROUND_HALF_UP, Decimal
 from typing import Type
 
-from django.contrib.sites.models import Site
 from django.db import transaction
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
@@ -13,6 +12,7 @@ from cart.cart import BouquetCart, ProductCart
 from cart.forms import CartForm
 from cart.services.dataclasses import CartAction
 from catalogue.models import Bouquet, Product
+from core.services.repositories import SiteRepository
 
 
 class CartEditAbstractMixin(ABC):
@@ -68,19 +68,14 @@ class CartEditAbstractMixin(ABC):
                 cart.remove_single(product)
             case _:
                 logger = logging.getLogger("django.request")
-                logger.error(msg="Wrong cart action selected.")
+                logger.error(msg="Wrong cart action selected.", stack_info=True)
                 return self._error_response(
                     _(
                         "Ой-ой, мы неправильно обработали Вашу корзину. Скоро администрация это исправит!"
                     )
                 )
 
-        site = (
-            Site.objects.prefetch_related("extended")
-            .only("extended__tax_percent")
-            .first()
-        )
-        tax_percent = site.extended.tax_percent
+        tax_percent = SiteRepository.get_tax_percent()
         cart_grand_total = cart.total + remaining_cart.total
         cart_sub_total = (cart_grand_total / Decimal(1 + tax_percent / 100)).quantize(
             Decimal("0.01"), rounding=ROUND_HALF_UP

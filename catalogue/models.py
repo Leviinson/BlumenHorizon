@@ -4,19 +4,17 @@ from random import randint
 
 from colorfield.fields import ColorField
 from django.contrib.auth import get_user_model
-from django.contrib.sites.models import Site
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.urls import reverse_lazy
 from django.utils import timezone
-from django.utils.translation import gettext_lazy as _
 from telegram.helpers import escape_markdown
 from tinymce.models import HTMLField
 
 from core.base_models import TimeStampAdbstractModel
-from core.services.caching import set_or_get_from_cache
+from core.services.repositories import SiteRepository
 from tg_bot import send_message_to_telegram
 
 
@@ -141,14 +139,14 @@ class ProductCategory(CategoryAbstract, TimeStampAdbstractModel, MetaDataAbstrac
         return self.name
 
     def get_absolute_url(self):
-        site = Site.objects.only("domain").first()
+        domain = SiteRepository.get_domain()
         relative_url = reverse_lazy(
             "catalogue:products-category",
             kwargs={
                 "category_slug": self.slug,
             },
         )
-        return f"https://{site.domain}{relative_url}"
+        return f"https://{domain}{relative_url}"
 
     def get_relative_url(self):
         return reverse_lazy(
@@ -183,12 +181,12 @@ class ProductSubcategory(
         return self.name
 
     def get_absolute_url(self):
-        site = Site.objects.only("domain").first()
+        domain = SiteRepository.get_domain()
         relative_url = reverse_lazy(
             "catalogue:products-subcategory",
             kwargs={"category_slug": self.category.slug, "subcategory_slug": self.slug},
         )
-        return f"https://{site.domain}{relative_url}"
+        return f"https://{domain}{relative_url}"
 
     def get_relative_url(self):
         return reverse_lazy(
@@ -237,11 +235,8 @@ class ProductAbstract(TimeStampAdbstractModel, MetaDataAbstractModel):
         if self.subcategory is None:
             self.is_active = False
 
-    def _get_tax_percent(self):
-        tax_percent = set_or_get_from_cache(
-            "tax_percent",
-            60 * 15,
-        )
+    def _get_tax_percent(self) -> Decimal:
+        tax_percent = SiteRepository.get_tax_percent()
         return Decimal(tax_percent)
 
     @property
@@ -288,7 +283,7 @@ class Product(ProductAbstract):
         verbose_name_plural = "6. Продукты"
 
     def get_absolute_url(self):
-        site = Site.objects.only("domain").first()
+        domain = SiteRepository.get_domain()
         relative_url = reverse_lazy(
             "catalogue:product-details",
             kwargs={
@@ -297,7 +292,7 @@ class Product(ProductAbstract):
                 "product_slug": self.slug,
             },
         )
-        return f"https://{site.domain}{relative_url}"
+        return f"https://{domain}{relative_url}"
 
     def get_relative_url(self):
         return reverse_lazy(
@@ -395,14 +390,14 @@ class BouquetCategory(CategoryAbstract, TimeStampAdbstractModel, MetaDataAbstrac
         return self.name
 
     def get_absolute_url(self):
-        site = Site.objects.only("domain").first()
+        domain = SiteRepository.get_domain()
         relative_url = reverse_lazy(
             "catalogue:bouquets-category",
             kwargs={
                 "category_slug": self.slug,
             },
         )
-        return f"https://{site.domain}{relative_url}"
+        return f"https://{domain}{relative_url}"
 
     def get_relative_url(self):
         return reverse_lazy(
@@ -437,7 +432,7 @@ class BouquetSubcategory(
         return self.name
 
     def get_absolute_url(self):
-        site = Site.objects.only("domain").first()
+        domain = SiteRepository.get_domain()
         relative_url = reverse_lazy(
             "catalogue:bouquets-subcategory",
             kwargs={
@@ -445,7 +440,7 @@ class BouquetSubcategory(
                 "subcategory_slug": self.slug,
             },
         )
-        return f"https://{site.domain}{relative_url}"
+        return f"https://{domain}{relative_url}"
 
     def get_relative_url(self):
         return reverse_lazy(
@@ -492,7 +487,7 @@ class Bouquet(ProductAbstract):
         return f"{self.name} ({self.diameter} см, {self.amount_of_flowers} цветов)"
 
     def get_absolute_url(self):
-        site = Site.objects.only("domain").first()
+        domain = SiteRepository.get_domain()
         relative_url = reverse_lazy(
             "catalogue:bouquet-details",
             kwargs={
@@ -501,7 +496,7 @@ class Bouquet(ProductAbstract):
                 "bouquet_slug": self.slug,
             },
         )
-        return f"https://{site.domain}{relative_url}"
+        return f"https://{domain}{relative_url}"
 
     def get_relative_url(self):
         return reverse_lazy(

@@ -1,8 +1,5 @@
-from typing import Literal
-
 from django.db.models import OuterRef, Subquery
 from django.db.models.manager import BaseManager
-from django.utils.translation import gettext_lazy as _
 
 from catalogue.models import Bouquet, BouquetImage, Product, ProductImage
 

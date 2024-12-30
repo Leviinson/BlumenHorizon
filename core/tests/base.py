@@ -1,9 +1,7 @@
 import os
 from dataclasses import asdict
 
-from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.contrib.auth.hashers import make_password
 from django.contrib.sites.models import Site
 from django.test import TestCase
 from django.urls import reverse_lazy

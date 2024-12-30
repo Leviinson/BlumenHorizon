@@ -98,7 +98,7 @@ class Cart(object):
         if product in self.products:
             self._items_dict[product.pk].quantity += quantity
         else:
-            if price == None:
+            if not price:
                 raise ValueError("Missing price when adding to cart")
             self._items_dict[product.pk] = CartItem(product, quantity, price)
         self.update_session()

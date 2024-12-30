@@ -1,8 +1,7 @@
 from django.urls import reverse_lazy
-from django.utils.translation import gettext_lazy as _
 from django.views.generic.base import TemplateView
 
-from core.services.mixins.views import CommonContextMixin
+from core.services.mixins import CommonContextMixin
 
 from ..models import (
     AboutUsPageModel,
@@ -23,18 +22,18 @@ class FillerViewMixin:
 
     template_name = "mainpage/filler.html"
     http_method_names = ["get"]
-    page_model = None
+    page_model: (
+        AboutUsPageModel | DeliveryPageModel | ContactsPageModel | FAQPageModel
+    ) = None
     url = None
 
     def get_context_data(self, *args, **kwargs):
         if not any((self.page_model, self.url)):
-            raise AttributeError(
-                "Attributes “page_model” or “template_name” are not specified."
-            )
+            raise AttributeError("Attributes “page_model” or “url” are not specified.")
 
         context = super().get_context_data(*args, **kwargs)
         page = self.page_model.objects.first()
-        context["page"] = page
+        context["description"] = page.description
         context["meta_tags"] = page.meta_tags
         context["url"] = self.url
         return context

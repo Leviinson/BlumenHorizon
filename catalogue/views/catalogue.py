@@ -8,7 +8,7 @@ from django.views.generic.edit import CreateView, FormView
 
 from cart.cart import BouquetCart, ProductCart
 from catalogue.forms import IndividualQuestionForm
-from core.services.mixins.views import CommonContextMixin
+from core.services.mixins import CommonContextMixin
 
 from ..forms import BuyItemForm
 from ..models import (

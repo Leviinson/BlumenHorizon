@@ -15,7 +15,7 @@ from catalogue.models import (
     ProductImage,
 )
 from core.services.dataclasses.related_model import RelatedModel
-from core.services.mixins.views import CommonContextMixin
+from core.services.mixins import CommonContextMixin
 from core.services.utils import get_carts, get_recommended_items_with_first_image
 
 from ..forms import IndividualOrderForm
