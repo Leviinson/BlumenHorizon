@@ -8,7 +8,6 @@ from .sitemaps import (
     BouquetSubcategorySitemap,
     ContactSitemap,
     DeliverySitemap,
-    FAQSitemap,
     MainpageSitemap,
 )
 from .views import robots_txt

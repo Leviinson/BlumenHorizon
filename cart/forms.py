@@ -1,11 +1,11 @@
 from decimal import Decimal
-from typing import Any
+from typing import Any, Optional
 
 from django import forms
+from django.contrib.auth.models import AnonymousUser
 from django.db import transaction
 
 from accounts.models import User
-from catalogue.models import Bouquet, Product
 
 from .cart import BouquetCart, ProductCart
 from .models import Order, OrderBouquets, OrderProducts
@@ -72,54 +72,129 @@ class OrderForm(forms.ModelForm):
         tax_percent: int,
         session_key: Any,
         language_code: str,
+        user: User | AnonymousUser,
         commit=True,
-        user: User = None,
     ) -> Order:
-        order: Order = super().save(commit=False)
+        """
+        Сохраняет заказ с расчётами налогов, сумм и связывает продукты и букеты с заказом.
+
+        Параметры:
+        products_cart (ProductCart): Корзина с продуктами пользователя.
+        bouquets_cart (BouquetCart): Корзина с букетами пользователя.
+        tax_percent (int): Процент налога для расчёта.
+        session_key (Any): Ключ сессии пользователя.
+        language_code (str): Код языка для локализации заказа.
+        commit (bool): Флаг для немедленного сохранения заказа в базу.
+        user (User, optional): Пользователь, сделавший заказ (если аутентифицирован).
+
+        Возвращает:
+        Order: Сохранённый объект заказа.
+        """
+        order = self._initialize_order(session_key, user, language_code)
+
+        with transaction.atomic():
+            self._calculate_and_save_totals(
+                order, products_cart, bouquets_cart, tax_percent
+            )
+            self._save_order_products(order, products_cart)
+            self._save_order_bouquets(order, bouquets_cart)
+
+        return order
+
+    def _initialize_order(
+        self, session_key: Any, user: Optional[User], language_code: str
+    ) -> Order:
+        """
+        Инициализирует заказ с необходимыми аттрибутами, без его сохранения.
+
+        Параметры:
+        session_key (Any): Ключ сессии пользователя.
+        user (Optional[User]): Пользователь, если аутентифицирован.
+        language_code (str): Код языка для локализации.
+
+        Возвращает:
+        Order: Новый объект заказа.
+        """
+        order = super().save(commit=False)
         order.session_key = session_key
         if user and user.is_authenticated:
             order.user = user
-        with transaction.atomic():
-            grand_total = products_cart.total + bouquets_cart.total
-            sub_total = sub_total = grand_total / Decimal(1 + tax_percent / 100)
-            order.tax = grand_total - sub_total
-            order.tax_percent = tax_percent
-            order.grand_total = grand_total
-            order.sub_total = sub_total
-            order.language_code = language_code
-            order.save()
-            if products := products_cart.products:
-                products: list[Product] = products
-                OrderProducts.objects.bulk_create(
-                    [
-                        OrderProducts(
-                            order=order,
-                            product=product,
-                            product_price=product.price,
-                            product_discount=product.discount,
-                            product_discount_price=product.discount_price,
-                            product_tax_price=product.tax_price,
-                            product_tax_price_discounted=product.tax_price_discounted,
-                            quantity=products_cart.get_quantity(product),
-                        )
-                        for product in products
-                    ]
-                )
-            if bouquets := bouquets_cart.products:
-                bouquets: list[Bouquet] = bouquets
-                OrderBouquets.objects.bulk_create(
-                    [
-                        OrderBouquets(
-                            order=order,
-                            product=bouquet,
-                            product_price=bouquet.price,
-                            product_discount=bouquet.discount,
-                            product_discount_price=bouquet.discount_price,
-                            product_tax_price=bouquet.tax_price,
-                            product_tax_price_discounted=bouquet.tax_price_discounted,
-                            quantity=bouquets_cart.get_quantity(bouquet),
-                        )
-                        for bouquet in bouquets
-                    ]
-                )
+        order.language_code = language_code
         return order
+
+    def _calculate_and_save_totals(
+        self,
+        order: Order,
+        products_cart: ProductCart,
+        bouquets_cart: BouquetCart,
+        tax_percent: int,
+    ):
+        """
+        Рассчитывает налог, сумму без налога, общую сумму заказа,
+        присваивает значения заказу и сохраняет его.
+
+        Параметры:
+        order (Order): Объект заказа, в котором будут сохранены вычисленные значения.
+        products_cart (ProductCart): Корзина с продуктами.
+        bouquets_cart (BouquetCart): Корзина с букетами.
+        tax_percent (int): Процент налога для расчёта.
+        """
+        grand_total = products_cart.total + bouquets_cart.total
+        sub_total = grand_total / Decimal(1 + tax_percent / 100)
+        tax = grand_total - sub_total
+
+        order.tax = tax
+        order.tax_percent = tax_percent
+        order.grand_total = grand_total
+        order.sub_total = sub_total
+        order.save()
+
+    def _save_order_products(self, order: Order, products_cart: ProductCart):
+        """
+        Сохраняет товары из корзины продуктов в таблицу OrderProducts.
+
+        Параметры:
+        order (Order): Объект заказа.
+        products_cart (ProductCart): Корзина с продуктами.
+        """
+        if products := products_cart.products:
+            OrderProducts.objects.bulk_create(
+                [
+                    OrderProducts(
+                        order=order,
+                        product=product,
+                        product_price=product.price,
+                        product_discount=product.discount,
+                        product_discount_price=product.discount_price,
+                        product_tax_price=product.tax_price,
+                        product_tax_price_discounted=product.tax_price_discounted,
+                        quantity=products_cart.get_quantity(product),
+                    )
+                    for product in products
+                ]
+            )
+
+    def _save_order_bouquets(self, order: Order, bouquets_cart: BouquetCart):
+        """
+        Сохраняет товары из корзины букетов в таблицу OrderBouquets.
+
+        Параметры:
+        order (Order): Объект заказа.
+        bouquets_cart (BouquetCart): Корзина с букетами.
+        """
+        if bouquets := bouquets_cart.products:
+            OrderBouquets.objects.bulk_create(
+                [
+                    OrderBouquets(
+                        order=order,
+                        product=bouquet,
+                        product_price=bouquet.price,
+                        product_discount=bouquet.discount,
+                        product_discount_price=bouquet.discount_price,
+                        product_tax_price=bouquet.tax_price,
+                        product_tax_price_discounted=bouquet.tax_price_discounted,
+                        quantity=bouquets_cart.get_quantity(bouquet),
+                    )
+                    for bouquet in bouquets
+                ]
+            )

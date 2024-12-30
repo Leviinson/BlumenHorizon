@@ -1,4 +1,3 @@
-
 from ..models import Product
 from .base_filter import BaseFilter
 

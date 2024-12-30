@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from django.contrib.sessions.backends.base import SessionBase
 from django.db.models import OuterRef, Subquery
 from django.db.models.manager import BaseManager
@@ -20,7 +22,7 @@ class CartMixin:
         self.with_images = with_images
         return super().__init__(session, session_key, *args, **kwargs)
 
-    def get_quantity(self, product: Product | Bouquet):
+    def get_quantity(self, product: Product | Bouquet) -> int:
         """
         Возвращает кол-во продукта в корзине.
 
@@ -29,7 +31,7 @@ class CartMixin:
         if product in self.products:
             return self._items_dict[product.pk].quantity
 
-    def get_subtotal(self, product: Product | Bouquet):
+    def get_subtotal(self, product: Product | Bouquet) -> Decimal:
         """
         Возвращает стоимость продукта в корзине (учитывая его кол-во).
 
@@ -97,9 +99,7 @@ class CartMixin:
         модели queryset через select/prefetch_related.
         :param language: Выбранный язык для image alternate среди зарегистрированных.
         """
-        first_image_subquery = self.get_subquery_of_first_image(
-            self.image_model, self.image_model.image_related_model_field
-        )
+        first_image_subquery = self.get_subquery_of_first_image(self.image_model)
         optimized_queryset = optimized_queryset.annotate(
             first_image_uri=Subquery(first_image_subquery.values("image")[:1]),
             first_image_alt=Subquery(
@@ -111,7 +111,6 @@ class CartMixin:
     def get_subquery_of_first_image(
         self,
         image_model: ProductImage | BouquetImage,
-        image_related_model_field_name: str,
     ) -> BaseManager[Product | Bouquet]:
         """
         Этот метод используется для конструкции запроса ORM,
@@ -120,14 +119,10 @@ class CartMixin:
         Параметры:
         :param image_model: Модель, которая отвечает за сбережение \
         путей фотографий конкретной модели товара (ProductImage или BouquetImage)
-        :param image_related_model_field_name: Название поля у модели изображения, \
-        которое ссылается на модель продукта.
         """
-        first_image_subquery = image_model.objects.filter(
-            **{
-                image_related_model_field_name: OuterRef("pk"),
-            }
-        ).order_by("id")[:1]
+        first_image_subquery = image_model.objects.filter(item=OuterRef("pk")).order_by(
+            "id"
+        )[:1]
         return first_image_subquery
 
     def fetch_required_fields_from_optimized_queryset(

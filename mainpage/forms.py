@@ -1,3 +1,5 @@
+from typing import Optional
+
 from django import forms
 
 from accounts.models import User
@@ -29,7 +31,7 @@ class IndividualOrderForm(forms.ModelForm):
             ),
         }
 
-    def save(self, commit=False, user: User = None):
+    def save(self, commit=False, user: Optional[User] = None):
         """
         Прикрепляет зарегистрированного пользователя к
         записи индивидуального заказа.

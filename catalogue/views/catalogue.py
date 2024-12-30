@@ -1,5 +1,6 @@
 from django.db import transaction
 from django.db.models import Prefetch
+from django.db.models.manager import BaseManager
 from django.http import Http404, JsonResponse
 from django.shortcuts import redirect
 from django.utils.translation import gettext_lazy as _
@@ -33,12 +34,63 @@ from .products import ProductListView
 
 
 class CatalogView(CommonContextMixin, TemplateView):
+    """
+    Представление каталога, отображающее список категорий и их подкатегорий
+      для букетов и продуктов.
+
+    Этот класс:
+    - Загружает и отображает активные категории букетов и продуктов.
+    - Формирует данные для контекста, включая информацию о подкатегориях
+    и html мета-тегах страницы.
+    - Использует методы для извлечения категорий и подкатегорий,а также
+    для получения html мета-информации страницы.
+
+    Атрибуты:
+        template_name (str): Имя шаблона, который используется для рендеринга страницы каталога.
+        http_method_names (list): Список разрешённых HTTP-методов для этого представления.
+        В данном случае только "get".
+    """
+
     template_name = "catalog/catalog.html"
     http_method_names = ["get"]
 
     def get_context_data(self, *args, **kwargs):
+        """
+        Собирает данные контекста для страницы каталога.
+
+        Этот метод:
+        - Извлекает категории букетов и продуктов.
+        - Загружает мета-теги и описание страницы каталога.
+        - Формирует словарь данных для рендеринга страницы.
+
+        Аргументы:
+            *args, **kwargs: Дополнительные аргументы и параметры, передаваемые в родительский метод.
+
+        Возвращает:
+            dict: Контекст для рендеринга страницы.
+        """
         context = super().get_context_data(*args, **kwargs)
-        context["bouquets_categories"] = (
+        context["bouquets_categories"] = self.get_bouquet_categories()
+        context["products_categories"] = self.get_product_categories()
+
+        page_model = self.get_page_model()
+        context["meta_tags"] = page_model.meta_tags
+        context["description"] = page_model.description
+
+        return context
+
+    def get_bouquet_categories(self) -> BaseManager[BouquetCategory]:
+        """
+        Извлекает активные категории букетов с подкатегориями.
+
+        Этот метод:
+        - Загружает категории букетов с активными подкатегориями.
+        - Использует Prefetch для предварительной загрузки подкатегорий.
+
+        Возвращает:
+            QuerySet: Список активных категорий букетов с подкатегориями.
+        """
+        return (
             BouquetCategory.objects.prefetch_related(
                 Prefetch(
                     "subcategories",
@@ -55,11 +107,21 @@ class CatalogView(CommonContextMixin, TemplateView):
                 "subcategories__image",
                 "subcategories__image_alt",
             )
-            .filter(
-                is_active=True,
-            )
+            .filter(is_active=True)
         )
-        context["products_categories"] = (
+
+    def get_product_categories(self) -> BaseManager[ProductCategory]:
+        """
+        Извлекает активные категории продуктов с подкатегориями.
+
+        Этот метод:
+        - Загружает категории продуктов с активными подкатегориями.
+        - Использует Prefetch для предварительной загрузки подкатегорий.
+
+        Возвращает:
+            QuerySet: Список активных категорий продуктов с подкатегориями.
+        """
+        return (
             ProductCategory.objects.prefetch_related(
                 Prefetch(
                     "subcategories",
@@ -76,14 +138,20 @@ class CatalogView(CommonContextMixin, TemplateView):
                 "subcategories__image",
                 "subcategories__image_alt",
             )
-            .filter(
-                is_active=True,
-            )
+            .filter(is_active=True)
         )
-        page_model = CatalogPageModel.objects.first()
-        context["meta_tags"] = page_model.meta_tags
-        context["description"] = page_model.description
-        return context
+
+    def get_page_model(self) -> CatalogPageModel | None:
+        """
+        Извлекает первый объект модели `CatalogPageModel`.
+
+        Этот метод:
+        - Загружает первый объект модели `CatalogPageModel`.
+
+        Возвращает:
+            CatalogPageModel: Первый объект модели `CatalogPageModel`.
+        """
+        return CatalogPageModel.objects.first()
 
 
 class CategoryView(CommonContextMixin, TemplateView):
@@ -131,6 +199,13 @@ class CategoryView(CommonContextMixin, TemplateView):
 
 
 class BuyItemView(FormView):
+    """
+    Контроллер для добавления продукта в корзину
+    и перенаправления пользователя на страницу оформления
+    заказа при нажатии на кнопку "Купить" на странице
+    товара.
+    """
+
     form_class = BuyItemForm
 
     def form_valid(self, form):
@@ -195,7 +270,7 @@ class CategoryProductsListView(ProductCategoryListViewMixin, ProductListView):
 
 
 class SubcategoryProductsListView(ProductSubcategoryListViewMixin, ProductListView):
-    category_url_name = "products-category"
+    pass
 
 
 class CategoryBouquetListView(BouquetCategoryListViewMixin, BouquetListView):
@@ -203,7 +278,7 @@ class CategoryBouquetListView(BouquetCategoryListViewMixin, BouquetListView):
 
 
 class SubcategoryBouquetListView(BouquetSubcategoryListViewMixin, BouquetListView):
-    category_url_name = "bouquets-category"
+    pass
 
 
 class IndividualQuestionView(CreateView):
