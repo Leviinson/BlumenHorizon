@@ -102,9 +102,7 @@ class ListViewMixin:
         language: str,
     ) -> QuerySet[Bouquet | Product]:
         first_image_subquery = image_model.objects.filter(
-            **{
-                image_model.image_related_model_field: OuterRef("pk"),
-            }
+            item = OuterRef("pk")
         ).order_by("id")[:1]
         queryset = queryset.annotate(
             first_image_uri=Subquery(first_image_subquery.values("image")[:1]),

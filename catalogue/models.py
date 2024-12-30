@@ -310,7 +310,7 @@ class Product(ProductAbstract):
 
 
 class ProductImage(models.Model):
-    product = models.ForeignKey(
+    item = models.ForeignKey(
         Product,
         related_name="images",
         on_delete=models.CASCADE,
@@ -322,7 +322,6 @@ class ProductImage(models.Model):
         verbose_name="Изображение продукта",
     )
     image_alt = models.CharField(verbose_name="Описание картинки", max_length=200)
-    image_related_model_field = "product"
 
     class Meta:
         verbose_name = "Изображение продукта"
@@ -553,7 +552,7 @@ class BouquetSize(models.Model):
 
 
 class BouquetImage(models.Model):
-    bouquet = models.ForeignKey(
+    item = models.ForeignKey(
         Bouquet,
         related_name="images",
         on_delete=models.CASCADE,
@@ -565,7 +564,6 @@ class BouquetImage(models.Model):
         default="defaults/no-image.webp",
     )
     image_alt = models.CharField(verbose_name="Описание картинки", max_length=200)
-    image_related_model_field = "bouquet"
 
     class Meta:
         verbose_name = "Изображение букета"

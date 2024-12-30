@@ -30,7 +30,7 @@ def get_recommended_items_with_first_image(
 
     first_image_subquery = (
         image_model.objects.filter(
-            **{image_model.image_related_model_field: OuterRef("pk")}
+            item=OuterRef("pk")
         )
         .order_by("id")[:1]
         .values("image")

@@ -98,7 +98,7 @@ class CartMixin:
         :param language: Выбранный язык для image alternate среди зарегистрированных.
         """
         first_image_subquery = self.get_subquery_of_first_image(
-            self.image_model, self.image_model.image_related_model_field
+            self.image_model
         )
         optimized_queryset = optimized_queryset.annotate(
             first_image_uri=Subquery(first_image_subquery.values("image")[:1]),
@@ -111,7 +111,6 @@ class CartMixin:
     def get_subquery_of_first_image(
         self,
         image_model: ProductImage | BouquetImage,
-        image_related_model_field_name: str,
     ) -> BaseManager[Product | Bouquet]:
         """
         Этот метод используется для конструкции запроса ORM,
@@ -120,13 +119,9 @@ class CartMixin:
         Параметры:
         :param image_model: Модель, которая отвечает за сбережение \
         путей фотографий конкретной модели товара (ProductImage или BouquetImage)
-        :param image_related_model_field_name: Название поля у модели изображения, \
-        которое ссылается на модель продукта.
         """
         first_image_subquery = image_model.objects.filter(
-            **{
-                image_related_model_field_name: OuterRef("pk"),
-            }
+            item = OuterRef("pk")
         ).order_by("id")[:1]
         return first_image_subquery
 
