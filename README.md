@@ -50,7 +50,7 @@
     Для Metadata только чтение.
 
     ```bash
-    git remote add origin https://(вставить сюда выданный PAT TOKEN без скобочек)>@github.com/Leviinson/BlumenHorizon.git
+    git remote add origin https://(вставить сюда выданный PAT TOKEN без скобочек)@github.com/Leviinson/BlumenHorizon.git
     git pull origin main
     poetry shell
     poetry install --only main
