@@ -31,7 +31,7 @@
     <strong>{% translate 'Дата создания' %}: {{ created_at|date:"Y-m-d H:i:s" }}</strong>
     <strong>{% translate 'Дата обновления' %}: {{ updated_at|date:"Y-m-d H:i:s" }}</strong>
     <div class="mt-5">
-        {{ page.description|safe }}
+        {{ description|safe }}
     </div>
 </div>
 {% endblock %}

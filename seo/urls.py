@@ -1,4 +1,3 @@
-from django.contrib import sitemaps
 from django.contrib.sitemaps.views import sitemap
 from django.urls import path
 
@@ -11,9 +10,6 @@ from .sitemaps import (
     DeliverySitemap,
     FAQSitemap,
     MainpageSitemap,
-    ProductCategorySitemap,
-    ProductDetailSitemap,
-    ProductSubcategorySitemap,
 )
 from .views import robots_txt
 
@@ -27,7 +23,7 @@ sitemaps = {
     "bouquets-category": BouquetCategorySitemap,
     "bouquets-subcategory": BouquetSubcategorySitemap,
     "bouquet-details": BouquetDetailSitemap,
-    "faq": FAQSitemap,
+    # "faq": FAQSitemap,
     "delivery": DeliverySitemap,
     "contacts": ContactSitemap,
     "about-us": AboutUsSitemap,

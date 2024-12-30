@@ -1,10 +1,9 @@
-from django.utils.translation import gettext_lazy as _
 from django.views.generic.base import TemplateResponseMixin
 from django.views.generic.detail import DetailView
 from django_filters.views import FilterView
 
 from cart.cart import ProductCart
-from core.services.mixins.views import CommonContextMixin
+from core.services.mixins import CommonContextMixin
 
 from ..filters import ProductFilter
 from ..models import Product, ProductImage, ProductsListPageModel

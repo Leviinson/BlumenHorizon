@@ -1,12 +1,9 @@
 import logging
 import os
-from typing import Any
 
 import stripe
 import stripe.error
 import stripe.webhook
-from django.contrib.sessions.models import Session
-from django.utils import timezone
 from django.utils.translation import activate
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -14,8 +11,10 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 
 from cart.models import Order
-from merchant.services import send_order_confirmation_email
+from core.services.utils.carts import clear_user_cart
 from tg_bot.main import send_message_to_telegram
+
+from .services import OrderRepository, send_order_confirmation_email
 
 logger = logging.getLogger("django_stripe")
 
@@ -75,37 +74,6 @@ def update_order_status(order: Order) -> None:
     order.save(update_fields=["status"])
 
 
-def clear_user_cart(session_key: str) -> None:
-    """
-    Очищает корзину пользователя по ключу сессии.
-
-    Параметры:
-    - session_key (str): Ключ сессии, связанной с корзиной.
-
-    Исключения:
-    - Session.DoesNotExist: Если сессия не найдена или истекла.
-    """
-    try:
-        session = Session.objects.filter(expire_date__gt=timezone.now()).get(
-            session_key=session_key
-        )
-        session_dict = session.get_decoded()
-        products_cart: dict[str, dict | Any] = session_dict.get("products_cart")
-        bouquets_cart: dict[str, dict | Any] = session_dict.get("bouquets_cart")
-        if products_cart:
-            products_cart.clear()
-        if bouquets_cart:
-            bouquets_cart.clear()
-
-        session_store_class = session.get_session_store_class()
-        session.session_data = session_store_class().encode(session_dict)
-        session.save(update_fields=["session_data"])
-    except Session.DoesNotExist:
-        pass
-    except Exception as e:
-        logger.debug(e)
-
-
 @api_view(["POST"])
 def stripe_webhook(request: Request):
     """
@@ -145,9 +113,8 @@ def stripe_webhook(request: Request):
             return Response("Invalid signature", status.HTTP_400_BAD_REQUEST)
 
         try:
-            order = get_order_by_code(
-                event_dict["data"]["object"]["metadata"]["order_code"]
-            )
+            order_code = OrderRepository.get_order_code(event_dict)
+            order = get_order_by_code(order_code)
         except Order.DoesNotExist:
             send_message_to_telegram(
                 "Пришла оплата на страйп с недействительным кодом заказа."
@@ -166,7 +133,11 @@ def stripe_webhook(request: Request):
 
         send_order_confirmation_email(order, order_products, order_bouquets)
         update_order_status(order)
-        clear_user_cart(order.session_key)
+
+        try:
+            clear_user_cart(order.session_key)
+        except Exception as e:
+            logger.debug(e)
 
     except Exception as e:
         logger.debug(e, stack_info=True)

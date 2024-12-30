@@ -81,7 +81,7 @@ class AboutUsPageModelTranslationOptions(TranslationOptions):
 
 
 @register(AGBPageModel)
-class AboutUsPageModelTranslationOptions(TranslationOptions):
+class AGBPageModelTranslationOptions(TranslationOptions):
     fields = (
         "meta_tags",
         "description",
@@ -89,7 +89,7 @@ class AboutUsPageModelTranslationOptions(TranslationOptions):
 
 
 @register(PrivacyAndPolicyPageModel)
-class AGBPageModelTranslationOptions(TranslationOptions):
+class PrivacyAndPolicyPageModelTranslationOptions(TranslationOptions):
     fields = (
         "meta_tags",
         "description",

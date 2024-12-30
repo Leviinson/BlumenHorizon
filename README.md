@@ -81,13 +81,12 @@
 
     ```bash
     cd /var/www/blumenhorizon
-    mkdir logs/django logs/gunicorn logs/nginx logs/stripe logs/telegram logs/celery logs/mysql logs/redis
+    mkdir logs logs/django logs/gunicorn logs/nginx logs/stripe logs/telegram logs/celery logs/mysql logs/redis
     ```
 
     Примените миграции Django:
 
     ```bash
-    poetry shell
     python3 manage.py migrate
     ```
 

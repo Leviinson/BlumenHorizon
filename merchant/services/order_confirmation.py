@@ -6,7 +6,7 @@ from django.utils.html import strip_tags
 from django.utils.translation import gettext_lazy as _
 
 from cart.models import Order, OrderBouquets, OrderProducts
-from core.services.caching import set_or_get_from_cache
+from core.services.repositories import SiteRepository
 
 
 def send_order_confirmation_email(
@@ -14,9 +14,9 @@ def send_order_confirmation_email(
     order_products: QuerySet[OrderProducts],
     order_bouquets: QuerySet[OrderBouquets],
 ):
-    currency_symbol = set_or_get_from_cache("currency_symbol", 60 * 15)
-    site_name = set_or_get_from_cache("site_name", 60 * 15)
-    domain = set_or_get_from_cache("domain", 60 * 15)
+    currency_symbol = SiteRepository.get_currency_symbol()
+    site_name = SiteRepository.get_name()
+    domain = SiteRepository.get_domain()
     mail_subject = _("{site_name} | Подтверждение заказа {order_code}").format(
         site_name=site_name, order_code=order.code
     )

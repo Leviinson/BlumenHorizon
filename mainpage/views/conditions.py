@@ -2,7 +2,7 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views.generic.base import TemplateView
 
-from core.services.mixins.views import CommonContextMixin
+from core.services.mixins import CommonContextMixin
 
 from ..models import (
     AGBPageModel,
@@ -26,14 +26,23 @@ class ConditionsViewMixin(CommonContextMixin):
         "get",
     ]
     url = None
-    page_model = None
+    page_model: (
+        AGBPageModel
+        | PrivacyAndPolicyPageModel
+        | ImpressumPageModel
+        | ReturnPolicyPageModel
+    ) = None
     title: str | None = None
 
     def get_context_data(self, *args, **kwargs):
+        if not any((self.page_model, self.url, self.title)):
+            raise AttributeError(
+                "Attributes “page_model” or “template_name” or “title” are not specified."
+            )
         context = super().get_context_data(*args, **kwargs)
         PageModel = self.page_model
         page = PageModel.objects.first()
-        context["page"] = page
+        context["description"] = page.description
         context["meta_tags"] = page.meta_tags
         context["url"] = self.url
         context["title"] = self.title

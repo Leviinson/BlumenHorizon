@@ -57,7 +57,7 @@ def _get_value_for_key(key: str) -> Any:
             return ExtendedSite.objects.only("currency_code").first().currency_code
         case "site_name":
             return Site.objects.only("name").first().name
-        case "domain":
+        case "site_domain":
             return Site.objects.only("domain").first().domain
         case _:
             raise ValueError(f"Unsupported cache key: {key}")

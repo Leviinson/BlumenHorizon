@@ -6,7 +6,7 @@ from django.views.generic.base import ContextMixin, TemplateResponseMixin
 from django.views.generic.detail import BaseDetailView
 from django.views.generic.edit import FormMixin
 
-from core.services.mixins.views import CommonContextMixin
+from core.services.mixins import CommonContextMixin
 
 from ..forms.user_form import UserForm
 

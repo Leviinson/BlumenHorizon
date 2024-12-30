@@ -4,7 +4,6 @@ from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.tokens import default_token_generator
-from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
 from django.db import transaction
 from django.http import HttpRequest, HttpResponseRedirect
@@ -17,9 +16,11 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic import CreateView
 from django.views.generic.base import ContextMixin
 
-from core.services.mixins.views import CommonContextMixin, NotAuthenticatedMixin
+from core.services.mixins import CommonContextMixin
+from core.services.repositories import SiteRepository
 
 from ..forms import UserSignUpForm
+from ..services.mixins import NotAuthenticatedMixin
 
 
 class UserSignUpView(
@@ -53,7 +54,7 @@ class UserSignUpView(
         to_email: str,
     ):
         mail_subject = _("{site_name} | Подтвердите Ваш Email").format(
-            site_name=get_current_site(request).name
+            site_name=SiteRepository.get_name()
         )
 
         message = render_to_string(
@@ -61,7 +62,7 @@ class UserSignUpView(
             {
                 "first_name": first_name,
                 "last_name": last_name,
-                "domain": get_current_site(request).domain,
+                "domain": SiteRepository.get_domain(),
                 "uid": urlsafe_base64_encode(force_bytes(user.pk)),
                 "token": default_token_generator.make_token(user),
                 "protocol": "https" if request.is_secure() else "http",

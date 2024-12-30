@@ -1,6 +1,5 @@
 from django import forms
 from django.forms.widgets import Select
-from django.utils.translation import gettext_lazy as _
 from phonenumber_field.formfields import SplitPhoneNumberField
 
 from .fields import CountryCodePrefixChoiceField
