@@ -1,3 +1,13 @@
+"""
+Модели для расширенных данных о сайте и социальных сетях.
+
+Модуль содержит две основные модели: 
+1. `ExtendedSite` — хранит расширенную информацию о сайте, включая данные о валюте, стране, городе, налогах и банковских реквизитах.
+2. `Social` — хранит информацию о социальных сетях, включая ссылки, цвета и иконки.
+
+Также имеется сигнал, который создает объект `ExtendedSite` для каждого нового сайта.
+"""
+
 from colorfield.fields import ColorField
 from django.contrib.sites.models import Site
 from django.core.validators import MaxValueValidator, MinValueValidator
@@ -8,6 +18,14 @@ from django.utils.translation import gettext_lazy as _
 
 
 class ExtendedSite(models.Model):
+    """
+    Модель для хранения расширенной информации о сайте.
+
+    Связан с моделью `django.contrib.sites.models.Site` через One-to-One связь и содержит различные поля,
+    такие как код валюты, символ валюты, страна, город, НДС, банковские реквизиты и
+    текстовое уведомление для отображения на сайте.
+    """
+
     site = models.OneToOneField(Site, related_name="extended", on_delete=models.PROTECT)
     currency_code = models.CharField(
         max_length=5, verbose_name="Код валюты", unique=True
@@ -37,6 +55,11 @@ class ExtendedSite(models.Model):
     )
 
     def __str__(self):
+        """
+        Строковое представление модели `ExtendedSite`.
+
+        Возвращает строку с именем сайта и его доменом.
+        """
         return f"{self.site.name} | {self.site.domain}"
 
     class Meta:
@@ -45,6 +68,13 @@ class ExtendedSite(models.Model):
 
 
 class Social(models.Model):
+    """
+    Модель для хранения информации о социальных сетях.
+
+    Связана с моделью `ExtendedSite` и хранит данные о ссылке на соц. сеть, цвета иконки и фона,
+    а также иконку в формате Bootstrap.
+    """
+
     absolute_url = models.URLField(verbose_name="Ссылка на соц. сеть", unique=True)
     outline_hex_code = ColorField(
         verbose_name="HEX код цвета обводки (#f4678a к примеру)",
@@ -74,11 +104,22 @@ class Social(models.Model):
         verbose_name_plural = "Соц. сети"
 
     def __str__(self):
+        """
+        Строковое представление модели `Social`.
+
+        Возвращает строку с классом иконки и ссылкой на соц. сеть.
+        """
         return f"{self.bootstrap_icon} - {self.absolute_url}"
 
 
 @receiver(post_save, sender=Site)
 def create_extended_site(sender, instance, created, **kwargs):
+    """
+    Сигнал для создания объекта `ExtendedSite` при создании нового сайта.
+
+    Если для сайта не существует объекта `ExtendedSite`, он создается с предустановленными
+    значениями для валюты, страны и города.
+    """
     if not ExtendedSite.objects.filter(site=instance).exists():
         ExtendedSite.objects.create(
             site=instance,
