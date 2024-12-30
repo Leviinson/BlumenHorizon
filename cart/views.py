@@ -1,8 +1,9 @@
 from decimal import Decimal
-from typing import Any, Type
+from typing import Any, Collection, Type
 
 import stripe
 from django.conf import settings
+from django.contrib.auth.models import AnonymousUser
 from django.db.models.manager import BaseManager
 from django.db.models.query import QuerySet
 from django.http import HttpRequest, HttpResponseForbidden, JsonResponse
@@ -38,17 +39,29 @@ class CartView(CommonContextMixin, FormView):
     form_class = OrderForm
 
     def form_valid(self, form: OrderForm):
+        """
+        Обрабатывает успешную отправку формы оформления заказа, генерирует список товаров
+        для страницы оплаты Stripe и перенаправляет пользователя на страницу оплаты.
+
+        После успешного оформления заказа сохраняет заказ, генерирует элементы для Stripe,
+        добавляет код заказа в сессию пользователя и формирует URL для страницы оплаты Stripe.
+
+        Параметры:
+        form (OrderForm): Форма, содержащая данные о заказе (продукты, букеты и т. д.).
+
+        Возвращает:
+        HttpResponseRedirect: Перенаправление пользователя на страницу оплаты Stripe.
+        """
         order = self.save_order(
             form,
             self.request,
         )
 
-        currency_code = SiteRepository.get_currency_code()
         domain = SiteRepository.get_domain()
         line_items = self.generate_line_items_and_attach_first_images(
             order.products,
             order.bouquets,
-            currency_code,
+            SiteRepository.get_currency_code(),
             domain,
         )
 
@@ -67,7 +80,23 @@ class CartView(CommonContextMixin, FormView):
         order_code: str,
         customer_email: str,
         line_items: list[dict[str, str | int]],
-    ) -> str:
+    ) -> str | None:
+        """
+        Генерирует URL для страницы оплаты Stripe с учётом переданных данных.
+
+        Эта функция создаёт сессию оплаты в Stripe с указанными товарами, email клиента,
+        и генерирует URL для успешной и отменённой оплаты. Возвращает URL страницы оплаты,
+        которая будет использована для перенаправления клиента.
+
+        Параметры:
+        domain (str): Домен сайта, на котором будет размещена страница оплаты.
+        order_code (str): Код заказа, который используется в URL успешной оплаты и метаданных.
+        customer_email (str): Электронная почта клиента, для которой создается сессия оплаты.
+        line_items (list[dict]): Список товаров, которые будут отображаться на странице оплаты.
+
+        Возвращает:
+        str: URL страницы для завершения оплаты в Stripe.
+        """
         checkout_session = stripe.checkout.Session.create(
             billing_address_collection="required",
             line_items=line_items,
@@ -98,8 +127,27 @@ class CartView(CommonContextMixin, FormView):
         currency: str,
         domain: str,
     ) -> tuple[
-        QuerySet[OrderProducts], QuerySet[OrderBouquets], list[dict[str, str | int]]
+        QuerySet[OrderProducts], QuerySet[OrderBouquets], list[dict[str, Collection[str]]]
     ]:
+        """
+        Генерирует список элементов для Stripe и прикрепляет первое изображение продукта.
+
+        Эта функция проходит по всем продуктам и букетам в заказе, прикрепляет первое изображение
+        каждого продукта и генерирует элементы для Stripe (line items), которые будут использоваться
+        при создании сессии оплаты.
+
+        Параметры:
+        order_products (BaseManager[OrderProducts]): Менеджер для получения продуктов из заказа.
+        order_bouquets (BaseManager[OrderBouquets]): Менеджер для получения букетов из заказа.
+        currency (str): Валюта, которая будет использована для отображения в Stripe.
+        domain (str): Домен сайта для формирования ссылок на изображения.
+
+        Возвращает:
+        tuple: Кортеж, содержащий:
+            - Список элементов заказа для продуктов (QuerySet[OrderProducts]).
+            - Список элементов заказа для букетов (QuerySet[OrderBouquets]).
+            - Список line items для Stripe (list[dict[str, str | int]]).
+        """
         line_items = []
         for order_product in order_products.all():
             order_product.product.first_image = order_product.product.images.first()
@@ -123,7 +171,23 @@ class CartView(CommonContextMixin, FormView):
         quantity: int,
         currency: str,
         domain: str,
-    ) -> dict[str, str | int]:
+    ) -> dict[str, Collection[str]]:
+        """
+        Создаёт элемент для Stripe (line item) на основе данных о продукте или букете.
+
+        Функция формирует словарь, который будет использоваться в сессии Stripe для
+        представления одного товара или букета, включая информацию о его цене,
+        названии, изображении и количестве.
+
+        Параметры:
+        order_product (OrderBouquets | OrderProducts): Объект продукта или букета из заказа.
+        quantity (int): Количество товара или букета в заказе.
+        currency (str): Валюта, используемая для расчётов в Stripe.
+        domain (str): Домен сайта, необходимый для формирования корректных URL изображений.
+
+        Возвращает:
+        dict: Словарь, представляющий элемент заказа для Stripe с ценой, названием, изображением и количеством.
+        """
         return {
             "price_data": {
                 "currency": currency,
@@ -140,6 +204,20 @@ class CartView(CommonContextMixin, FormView):
 
     @staticmethod
     def add_order_in_user_session(request: HttpRequest, order_code: str):
+        """
+        Добавляет код заказа в сессию пользователя.
+
+        Эта функция добавляет код нового заказа в сессию пользователя. Если в сессии уже существует
+        список заказов, она добавляет код нового заказа в этот список. Если заказов в сессии нет,
+        создаётся новый список с кодом заказа.
+
+        Параметры:
+        request (HttpRequest): Объект запроса, содержащий сессию пользователя.
+        order_code (str): Код нового заказа, который должен быть добавлен в сессию.
+
+        Возвращает:
+        None
+        """
         if "orders" in request.session:
             request.session["orders"].append(order_code)
             request.session.save()
@@ -150,6 +228,20 @@ class CartView(CommonContextMixin, FormView):
             request.session.save()
 
     def save_order(self, form: OrderForm, request: HttpRequest):
+        """
+        Сохраняет заказ в базе данных, делегируя процесс сохранения в отдельную функцию.
+
+        Эта функция извлекает корзины продуктов и букетов из сессии пользователя, получает процент НДС
+        из репозитория общих данных сайта и язык из текущих настроек, а затем передаёт все данные в метод
+        save_order_in_db, который выполняет сохранение заказа в базе данных и извлечение связанных данных.
+
+        Параметры:
+        form (OrderForm): Форма, содержащая информацию о заказе.
+        request (HttpRequest): Объект запроса, содержащий информацию о сессии и пользователе.
+
+        Возвращает:
+        Order: Объект заказа, сохранённый в базе данных, с дополнительными связанными данными.
+        """
         from django.utils.translation import get_language
 
         products_cart = ProductCart(
@@ -176,10 +268,29 @@ class CartView(CommonContextMixin, FormView):
         products_cart: ProductCart,
         bouquets_cart: BouquetCart,
         tax_percent: int,
-        user: User,
+        user: User | AnonymousUser,
         session_key: Any,
         language_code: str,
     ) -> Order:
+        """
+        Сохраняет заказ в базе данных и извлекает дополнительные данные о заказе.
+
+        Эта функция сохраняет заказ в базе данных, используя данные из формы, корзины продуктов и букетов,
+        а также налоговый процент, сессионный ключ, язык и пользователя. После сохранения заказа в базу,
+        она извлекает и возвращает заказ с предзагруженными и оптимизированными связанными данными для дальнейшего использования.
+
+        Параметры:
+        form (OrderForm): Форма, содержащая информацию о заказе.
+        products_cart (ProductCart): Корзина продуктов для заказа.
+        bouquets_cart (BouquetCart): Корзина букетов для заказа.
+        tax_percent (int): Процент налога, который будет применяться к заказу.
+        user (User): Пользователь, совершивший заказ.
+        session_key (Any): Сессионный ключ, связанный с текущим заказом.
+        language_code (str): Код языка, используемый для оформления заказа.
+
+        Возвращает:
+        Order: Сохранённый объект заказа с предзагруженными и оптимизированными связанными данными.
+        """
         order = form.save(
             products_cart=products_cart,
             bouquets_cart=bouquets_cart,
@@ -248,6 +359,29 @@ class CartView(CommonContextMixin, FormView):
         return order
 
     def get_context_data(self, *args, **kwargs):
+        """
+        Формирует контекст для страницы корзины, включая информацию о товарах в корзине,
+        рекомендуемых товарах и букетах, а также расчетах налогов и итоговой суммы.
+
+        Эта функция извлекает данные о корзине пользователя
+        (как для продуктов, так и для букетов), рассчитывает налог,
+        итоговую и предварительную сумму заказа, а также получает
+        рекомендуемые товары и букеты на основе различных критериев.
+
+        Параметры:
+        *args: Дополнительные позиционные аргументы.
+        **kwargs: Дополнительные именованные аргументы.
+
+        Возвращает:
+        dict: Контекст, содержащий:
+            - "products_cart": Объект корзины с продуктами для текущего пользователя.
+            - "bouquets_cart": Объект корзины с букетами для текущего пользователя.
+            - "recommended_products": Список рекомендованных товаров для пользователя.
+            - "recommended_bouquets": Список рекомендованных букетов для пользователя.
+            - "tax": Сумма налога для текущего заказа.
+            - "sub_total": Сумма заказа без налога.
+            - "grand_total": Итоговая сумма заказа с учетом налога.
+        """
         context = super().get_context_data(*args, **kwargs)
         context["products_cart"] = ProductCart(
             True, self.request.session, session_key=ProductCart.session_key
@@ -380,7 +514,7 @@ class CartProductRemoveSingleView(
         return _("Ошибка уменьшения количества продукта в корзине.")
 
 
-def cart_clear(request: HttpRequest) -> Type[JsonResponse]:
+def cart_clear(request: HttpRequest) -> JsonResponse:
     if request.method == "POST":
         product_cart = ProductCart(
             session=request.session, session_key=ProductCart.session_key

@@ -17,8 +17,8 @@ from catalogue.models import (
 class ListViewMixin:
     allow_empty = True
     paginate_by = 8
-    image_model: ProductImage | BouquetImage
-    page_model: ProductsListPageModel | BouquetsListPageModel
+    image_model: type[ProductImage] | type[BouquetImage]
+    page_model: type[ProductsListPageModel] | type[BouquetsListPageModel]
 
     SORT_OPTIONS = [
         {"name": _("Цена по убыванию"), "value": "pd"},
@@ -101,9 +101,9 @@ class ListViewMixin:
         image_model: ProductImage | BouquetImage,
         language: str,
     ) -> QuerySet[Bouquet | Product]:
-        first_image_subquery = image_model.objects.filter(
-            item = OuterRef("pk")
-        ).order_by("id")[:1]
+        first_image_subquery = image_model.objects.filter(item=OuterRef("pk")).order_by(
+            "id"
+        )[:1]
         queryset = queryset.annotate(
             first_image_uri=Subquery(first_image_subquery.values("image")[:1]),
             first_image_alt=Subquery(

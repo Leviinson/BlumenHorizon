@@ -109,12 +109,12 @@ class CartEditAbstractMixin(ABC):
         self,
         detail: str,
         status: int,
-        cart_grand_total: float,
-        product_grand_total: float,
+        cart_grand_total: Decimal,
+        product_grand_total: Decimal,
         product_quantity: int,
-        cart_sub_total: float,
+        cart_sub_total: Decimal,
         total_quantity: int,
-        taxes: float,
+        taxes: Decimal,
     ) -> JsonResponse:
         return JsonResponse(
             {

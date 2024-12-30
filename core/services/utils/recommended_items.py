@@ -29,9 +29,7 @@ def get_recommended_items_with_first_image(
     language = get_language()
 
     first_image_subquery = (
-        image_model.objects.filter(
-            item=OuterRef("pk")
-        )
+        image_model.objects.filter(item=OuterRef("pk"))
         .order_by("id")[:1]
         .values("image")
     )

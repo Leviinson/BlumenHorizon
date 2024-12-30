@@ -33,9 +33,9 @@ class DetailViewMixin:
 
     category_url_name: str
     subcategory_url_name: str
-    cart: ProductCart | BouquetCart
-    model: Product | Bouquet
-    image_model: ProductImage | BouquetImage
+    cart: type[ProductCart] | type[BouquetCart]
+    model: type[Product] | type[Bouquet]
+    image_model: type[ProductImage] | type[BouquetImage]
 
     def get_context_data(self, *args, **kwargs) -> dict[str, Any]:
         if not (self.category_url_name and self.subcategory_url_name):

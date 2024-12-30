@@ -27,7 +27,7 @@ class CartItem(object):
         }
 
     @property
-    def subtotal(self):
+    def subtotal(self) -> Decimal:
         """
         Subtotal for the cart item.
         """
