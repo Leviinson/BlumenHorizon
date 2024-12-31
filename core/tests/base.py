@@ -33,7 +33,7 @@ class BaseTestCase(TestCase):
             first_name="Vitalii",
             last_name="Melnykov",
         )
-        cls.user = User(**asdict(cls.test_user_data), is_active=True)
-        cls.user.set_password(cls.test_user_password)
-        cls.user.save()
-        super().setUpClass()
+        user = User(**asdict(cls.test_user_data), is_active=True)
+        user.set_password(cls.test_user_password)
+        user.save()
+        cls.user = User.objects.get(email=user.email)

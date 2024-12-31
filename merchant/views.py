@@ -1,14 +1,12 @@
 import logging
 import os
 
-import stripe
-import stripe.error
-import stripe.webhook
 from django.utils.translation import activate
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.request import Request
 from rest_framework.response import Response
+from stripe import SignatureVerificationError, Webhook
 
 from cart.models import Order
 from core.services.utils.carts import clear_user_cart
@@ -100,7 +98,7 @@ def stripe_webhook(request: Request):
     """
     try:
         try:
-            event_dict = stripe.Webhook.construct_event(
+            event_dict = Webhook.construct_event(
                 request.body,
                 request.headers.get("STRIPE_SIGNATURE"),
                 os.getenv("STRIPE_WEBHOOK_SECRET"),
@@ -108,7 +106,7 @@ def stripe_webhook(request: Request):
         except ValueError as e:
             logger.debug(e, stack_info=True)
             return Response("Invalid payload", status.HTTP_400_BAD_REQUEST)
-        except stripe.error.SignatureVerificationError as e:
+        except SignatureVerificationError as e:
             logger.debug(e, stack_info=True)
             return Response("Invalid signature", status.HTTP_400_BAD_REQUEST)
 

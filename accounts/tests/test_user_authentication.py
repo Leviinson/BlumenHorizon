@@ -12,7 +12,8 @@ class UserAuthenticationTest(BaseTestCase):
     def test_user_authentication_with_email(self):
         self.__test_user_authenticatinon(
             self.TestUserAuthenticationData(
-                username=self.test_user_data.email, password=self.test_user_password
+                username=self.test_user_data.email,
+                password=self.test_user_password,
             )
         )
 
