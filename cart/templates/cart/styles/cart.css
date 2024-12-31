@@ -5,3 +5,16 @@
     word-wrap: break-word;
     max-width: 100%;
 }
+
+.payment-options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.payment-options img {
+    max-height: 60px;
+    max-width: 100px;
+    object-fit: contain;
+}

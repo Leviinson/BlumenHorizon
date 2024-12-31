@@ -193,11 +193,16 @@
                     <div class="card-header">
                         <h3 class="fs-6 mt-2">{% translate 'Способы оплаты:' %}</h3>
                     </div>
-                    <div class="card-body">
-                        <img class="me-2"
-                             width="90px"
-                             alt="{% translate 'способ оплаты по IBAN' %}"
-                             src="{% static 'defaults/iban.png' %}"/>
+                    <div class="card-body payment-options">
+                        <img alt="{% translate 'способ оплаты по IBAN' %}" src="{% static 'defaults/iban.png' %}" />
+                        <img alt="{% translate 'visa логотип' %}" src="{% static 'defaults/visa-logo.png' %}" />
+                        <img alt="{% translate 'mastercard логотип' %}" src="{% static 'defaults/mc-logo.png' %}" />
+                        <img alt="{% translate 'american express логотип' %}" src="{% static 'defaults/amex-logo.png' %}" />
+                        <img alt="{% translate 'jcb логотип' %}" src="{% static 'defaults/jcb-logo.png' %}" />
+                        <img alt="{% translate 'paypal логотип' %}" src="{% static 'defaults/paypal-logo.png' %}" />
+                        <img alt="{% translate 'klarna логотип' %}" src="{% static 'defaults/klarna-logo.webp' %}"
+                             style="border-radius: 25%;"/>
+                        <img alt="{% translate 'revolut логотип' %}" src="{% static 'defaults/revolut-logo.png' %}"/>
                     </div>
                 </div>
                 <div class="card cards-container mb-4 mb-lg-4">
