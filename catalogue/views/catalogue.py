@@ -298,7 +298,7 @@ class IndividualQuestionView(CreateView):
     def form_invalid(self, form):
         return JsonResponse(
             {
-                "detail": _("Вы неправильно заполнили форму:"),
+                "detail": _("Ошибка:"),
                 "errors": form.errors.as_json(),
                 "status": 400,
             },
