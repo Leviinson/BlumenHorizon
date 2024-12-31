@@ -122,11 +122,11 @@
 4. **Инициализация и настройка базы данных:**
 
     ```mysql
-    mysql> CREATE DATABASE (значение переменной MYSQL_NAME в .env);
-    mysql> CREATE USER '(MYSQL_USER в .env)'@'(MYSQL_HOST в .env)' IDENTIFIED BY '(MYSQL_PASSWORD в .env)';
-    mysql> GRANT ALL PRIVILEGES ON (MYSQL_NAME в .env).* TO '(MYSQL_USER в .env)'@'(MYSQL_HOST в .env)';
-    mysql> ALTER DATABASE (MYSQL_NAME в .env) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-    mysql> \q
+    CREATE DATABASE (значение переменной MYSQL_NAME в .env);
+    CREATE USER '(MYSQL_USER в .env)'@'(MYSQL_HOST в .env)' IDENTIFIED BY '(MYSQL_PASSWORD в .env)';
+    GRANT ALL PRIVILEGES ON (MYSQL_NAME в .env).* TO '(MYSQL_USER в .env)'@'(MYSQL_HOST в .env)';
+    ALTER DATABASE (MYSQL_NAME в .env) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+    \q
     ```
 
     Попросите у наставника дамп базы данных, поместите его в корневую директорию таким образом:
