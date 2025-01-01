@@ -1,5 +1,5 @@
 from decimal import Decimal
-from typing import Any, Collection, Type
+from typing import Any, Collection
 
 import stripe
 from django.conf import settings

@@ -39,9 +39,9 @@ addopts = "-v"
 log_level = "INFO"
 
 [tool.pytest_env]
-ENV="no-test"
+ENV="test"
 SITE_NAME="BlumenHorizon"
-SITE_DOMAIN="0.0.0.0:8000"
+SITE_DOMAIN="127.0.0.1:8000"
 
 [build-system]
 requires = ["poetry-core"]

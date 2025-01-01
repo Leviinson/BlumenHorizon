@@ -1,8 +1,9 @@
 import os
 
+import pytest
 from django.contrib.auth import get_user_model
 from django.contrib.sites.models import Site
-import pytest
+
 from accounts.models import User
 from core.tests.types.urls import UrlsDataclass
 from core.tests.types.user import UserCredentials, UserPassword

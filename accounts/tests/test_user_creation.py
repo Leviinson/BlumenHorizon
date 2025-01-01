@@ -4,7 +4,7 @@ from django.test import Client
 from django.urls import reverse_lazy
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
-from pytest_django.asserts import assertRedirects, assertFormError
+from pytest_django.asserts import assertFormError, assertRedirects
 
 from accounts.models import User
 from core.tests.types.urls import UrlsDataclass

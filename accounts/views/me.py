@@ -1,5 +1,6 @@
 from dataclasses import dataclass, field
 from typing import TypedDict
+
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
