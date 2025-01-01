@@ -9,7 +9,7 @@ from tinymce.models import HTMLField
 
 from core.base_models import TimeStampAdbstractModel
 from core.services.repositories.site import SiteRepository
-from core.services.types.urls import AbsoluteUri
+from core.services.types import AbsoluteUri
 
 
 def generate_sku():

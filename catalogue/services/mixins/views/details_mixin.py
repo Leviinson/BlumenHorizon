@@ -129,8 +129,8 @@ class DetailViewMixin:
         :return: список рекомендованных продуктов.
         """
         related_models = [
-            RelatedModel(model="subcategory", attributes=["slug", "name"]),
-            RelatedModel(model="subcategory__category", attributes=["slug"]),
+            RelatedModel(model="subcategory", fields=["slug", "name"]),
+            RelatedModel(model="subcategory__category", fields=["slug"]),
         ]
         return get_recommended_items_with_first_image(
             model=self.model,
@@ -173,8 +173,8 @@ class DetailViewMixin:
             session=self.request.session, session_key=self.cart.session_key
         )
         related_models = [
-            RelatedModel(model="subcategory", attributes=["slug", "name"]),
-            RelatedModel(model="subcategory__category", attributes=["slug"]),
+            RelatedModel(model="subcategory", fields=["slug", "name"]),
+            RelatedModel(model="subcategory__category", fields=["slug"]),
         ]
         context["recommended_products"] = get_recommended_items_with_first_image(
             model=self.model,

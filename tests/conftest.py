@@ -4,13 +4,11 @@ import pytest
 from django.contrib.auth import get_user_model
 from django.contrib.sites.models import Site
 
-from accounts.models import User
-from core.tests.types.urls import UrlsDataclass
-from core.tests.types.user import UserCredentials, UserPassword
+from .types import UrlsDataclass, UserCredentials, UserData
 
 
 @pytest.fixture
-def user_data(db) -> tuple[User, UserPassword]:
+def user_data(transactional_db) -> UserData:
     User = get_user_model()
     test_user_data = UserCredentials(
         email="secret@gmail.com",

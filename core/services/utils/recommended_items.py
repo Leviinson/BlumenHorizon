@@ -14,15 +14,24 @@ def get_recommended_items_with_first_image(
     limit: int = 12,
 ) -> BaseManager[Product] | BaseManager[Bouquet]:
     """
-    A function to retrieve recommended products or bouquets with an annotated first image.
+    Функция для получения рекомендованных продуктов или букетов с аннотированным первым изображением.
 
-    :param model: The model for which the query is executed (e.g., Bouquet or Product).
-    :param image_model: The image model that will be used for the subquery (e.g., BouquetImage or ProductImage).
-    :param related_models: A dictionary where the key is the related model and the value is a list of attributes for that model.
-                        For example, {"subcategory": ["slug"], "subcategory__category": ["slug"]}.
-    :param order_fields: A list of fields to order the result by.
-    :param limit: Amount of items, that will be returned.
-    :return: A queryset with annotated objects.
+    Эта функция выполняет запрос к базе данных, извлекая рекомендованные продукты или букеты с
+    первым изображением. Изображения аннотируются с помощью подзапроса, который выбирает первое
+    изображение для каждого продукта или букета. Результаты сортируются по заданным полям.
+
+    :param model: Модель, для которой выполняется запрос (например, Bouquet или Product).
+    :param image_model: Модель изображения, которая будет использоваться для подзапроса
+                        (например, BouquetImage или ProductImage).
+    :param related_models: Список связанных моделей с аттрибутами для выборки.
+                        Например, >>> {"subcategory": ["slug"], "subcategory__category": ["slug"]}.
+    :param order_fields: Список полей, по которым будет выполняться сортировка результата.
+    :param limit: Количество элементов, которые будут возвращены. По умолчанию 12.
+    :return: Менеджер запросов (BaseManager) с аннотированными объектами.
+
+    Функция возвращает менеджер запросов с объектами, которые включают аннотированные данные о первом
+    изображении каждого продукта или букета. Эти объекты можно использовать для дальнейшего извлечения
+    данных или их отображения в интерфейсе пользователя.
     """
     from django.utils.translation import get_language
 
@@ -33,10 +42,7 @@ def get_recommended_items_with_first_image(
         .order_by("id")[:1]
         .values("image")
     )
-    select_related_fields = []
-    for related_model in related_models:
-        for attr in related_model.attributes:
-            select_related_fields.append(f"{related_model.model}__{attr}")
+    related_fields = __get_related_fields(related_models)
 
     queryset = (
         model.objects.select_related(*[rm.model for rm in related_models])
@@ -48,7 +54,7 @@ def get_recommended_items_with_first_image(
             "discount",
             "description",
             "discount_expiration_datetime",
-            *select_related_fields,
+            *related_fields,
         )
         .annotate(
             first_image_uri=Subquery(
@@ -61,3 +67,11 @@ def get_recommended_items_with_first_image(
         .order_by(*order_fields)[:limit]
     )
     return queryset
+
+
+def __get_related_fields(related_models: list[RelatedModel]) -> list[str]:
+    result = []
+    for related_model in related_models:
+        for field in related_model.fields:
+            result.append(f"{related_model.model}__{field}")
+    return result

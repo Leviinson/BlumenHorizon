@@ -4,7 +4,7 @@ from django.conf import settings
 
 from core.services.repositories import SiteRepository
 
-from ..types.urls import AbsoluteUri, RelativeUri
+from ..types import AbsoluteUri, RelativeUri
 
 logger = logging.getLogger("django.request")
 

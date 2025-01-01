@@ -5,8 +5,8 @@ from django.test import Client
 from pytest_django.asserts import assertRedirects
 
 from accounts.models import User
-from core.tests.types.urls import UrlsDataclass
-from core.tests.types.user import UserPassword
+
+from ..types import UrlsDataclass, UserData, UserPassword
 
 
 class TestUserAuthentication:
@@ -34,7 +34,7 @@ class TestUserAuthentication:
     def test_user_authentication_with_email(
         self,
         client: Client,
-        user_data: tuple[User, UserPassword],
+        user_data: UserData,
         site: Site,
         urls: UrlsDataclass,
         db,

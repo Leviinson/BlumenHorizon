@@ -126,11 +126,7 @@ class CartView(CommonContextMixin, FormView):
         order_bouquets: BaseManager[OrderBouquets],
         currency: str,
         domain: str,
-    ) -> tuple[
-        QuerySet[OrderProducts],
-        QuerySet[OrderBouquets],
-        list[dict[str, Collection[str]]],
-    ]:
+    ) -> list[dict[str, Any]]:
         """
         Генерирует список элементов для Stripe и прикрепляет первое изображение продукта.
 
@@ -392,8 +388,8 @@ class CartView(CommonContextMixin, FormView):
             True, self.request.session, session_key=BouquetCart.session_key
         )
         related_models = [
-            RelatedModel(model="subcategory", attributes=["slug", "name"]),
-            RelatedModel(model="subcategory__category", attributes=["slug"]),
+            RelatedModel(model="subcategory", fields=["slug", "name"]),
+            RelatedModel(model="subcategory__category", fields=["slug"]),
         ]
         context["recommended_products"] = get_recommended_items_with_first_image(
             model=Product,

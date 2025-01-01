@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Callable
 
 from django.db.models.manager import BaseManager
 from django.http import JsonResponse
@@ -16,10 +16,12 @@ from catalogue.models import (
 )
 from core.services.dataclasses.related_model import RelatedModel
 from core.services.mixins import CommonContextMixin
+from core.services.types import Limit, OrderedModelField
 from core.services.utils import get_carts, get_recommended_items_with_first_image
 
 from ..forms import IndividualOrderForm
 from ..models import MainPageModel, MainPageSeoBlock, MainPageSliderImages
+from .types import Categories, RecommendedItems
 
 
 class MainPageView(CommonContextMixin, TemplateView):
@@ -42,7 +44,9 @@ class MainPageView(CommonContextMixin, TemplateView):
         ).all()
 
         base_context["recommended_bouquets"], base_context["recommended_products"] = (
-            self.get_recommended_items()
+            self.get_recommended_items_tuple(
+                processor=get_recommended_items_with_first_image,
+            )
         )
         base_context["products_cart"], base_context["bouquets_cart"] = get_carts(
             self.request.session
@@ -63,9 +67,7 @@ class MainPageView(CommonContextMixin, TemplateView):
         return base_context
 
     @staticmethod
-    def get_categories_tuple() -> (
-        tuple[BaseManager[ProductCategory], BaseManager[BouquetCategory]]
-    ):
+    def get_categories_tuple() -> Categories:
         """
         Возвращает категории букетов и стандартных продуктов из Базы Данных.
 
@@ -99,24 +101,39 @@ class MainPageView(CommonContextMixin, TemplateView):
         return products_categories, bouquets_categories
 
     @staticmethod
-    def get_recommended_items() -> tuple[
-        BaseManager[Product] | BaseManager[Bouquet],
-        BaseManager[Product] | BaseManager[Bouquet],
-    ]:
+    def get_recommended_items_tuple(
+        processor: Callable[
+            [
+                Product | Bouquet,
+                ProductImage | BouquetImage,
+                list[RelatedModel],
+                list[OrderedModelField],
+                Limit,
+            ],
+            RecommendedItems,
+        ],
+    ) -> RecommendedItems:
         """
-        Возвращает рекомендованные букеты и продукты используя функцию,
-        выполняющую роль фабрики.
+        Возвращает рекомендованные букеты и продукты, используя переданную функцию процессора.
 
-        Используется для слайдеров «Рекомендованные букеты к покупке» и
-        «Рекомендуемые подарки к букетам» на главной странице, а так-же
-        для секций «Рекомендуемые букеты к покупке» и
-        «Рекомендуемые подарки к букетам» на странице корзины пользователя."
+        Данная функция используется для получения рекомендованных товаров (букетов и продуктов)
+        для различных слайдеров и секций на страницах (например, «Рекомендованные букеты к покупке» и
+        «Рекомендуемые подарки к букетам» на главной странице и в корзине пользователя).
+
+        Вызов processor с передачей параметров для моделей Product и Bouquet позволяет получить
+        результат с аннотированными изображениями, отсортированный по полям в order_fields, и ограниченный
+        параметром limit.
+
+        :param processor: Функция, которая принимает модель, модель изображения, связанные модели,
+                            список полей сортировки и лимит, и возвращает рекомендованные товары или букеты
+                            с аннотированными изображениями.
+        :return: NamedTuple `RecommendedItems`, содержащий два списка: рекомендованные букеты и рекомендованные продукты.
         """
         related_models = [
-            RelatedModel(model="subcategory", attributes=["slug", "name"]),
-            RelatedModel(model="subcategory__category", attributes=["slug"]),
+            RelatedModel(model="subcategory", fields=["slug", "name"]),
+            RelatedModel(model="subcategory__category", fields=["slug"]),
         ]
-        recommended_bouquets = get_recommended_items_with_first_image(
+        recommended_bouquets = processor(
             model=Bouquet,
             image_model=BouquetImage,
             related_models=related_models,
@@ -125,7 +142,7 @@ class MainPageView(CommonContextMixin, TemplateView):
                 "-amount_of_savings",
             ],
         )
-        recommended_products = get_recommended_items_with_first_image(
+        recommended_products = processor(
             model=Product,
             image_model=ProductImage,
             related_models=related_models,

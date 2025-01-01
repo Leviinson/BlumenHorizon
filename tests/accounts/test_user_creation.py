@@ -9,8 +9,8 @@ from django.utils.http import urlsafe_base64_encode
 from pytest_django.asserts import assertFormError
 
 from accounts.models import User
-from core.tests.types.urls import UrlsDataclass
-from core.tests.types.user import UserSignUpCredentials
+
+from ..types import UrlsDataclass, UserSignUpCredentials
 
 
 class TestUserCreation:
@@ -134,7 +134,9 @@ class TestUserCreation:
         """
         assert not user.is_active
 
-    def _activate_user_via_email(self, response: HttpResponse, user: User) -> HttpResponse:
+    def _activate_user_via_email(
+        self, response: HttpResponse, user: User
+    ) -> HttpResponse:
         """
         Активация пользователя через email ссылку.
 
@@ -165,6 +167,8 @@ class TestUserCreation:
         user.refresh_from_db()
         assert user.is_active, "User wasn't activated after email confirmation by link"
 
+
+class TestDuplicatedUserCreation:
     def test_user_creation_with_duplicated_phonenumber(
         self, client: Client, urls: UrlsDataclass, site: Site, db
     ):
@@ -216,7 +220,6 @@ class TestUserCreation:
         client: Client,
         urls: UrlsDataclass,
         site: Site,
-        db,
     ):
         """
         Тестирование создания пользователя с дублирующимся email.
@@ -230,7 +233,6 @@ class TestUserCreation:
             site (Site): Модель сайта, которая будет использоваться в тестируемом коде. \
                   Необходимо наличие её записи и модели с расширенными данными, чтобы \
                   тестируемый endpoint работал.
-            db: Доступ к базе данных для выполнения операций в тестах.
         """
         signup_data_1 = UserSignUpCredentials(
             email="melnykov.vitalii197@gmail.com",
