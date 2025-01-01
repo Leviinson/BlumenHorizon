@@ -11,9 +11,9 @@
 {% endblock %}
 
 {% block body %}
-<div class="container mb-5 authentication-form">
+<div class="container mb-5 authentication-form" style="max-width: 600px;">
   <div class="row">
-    <div class="col-10 mx-auto mt-5">
+    <div class="col-10 mx-auto">
       <h1>{{ title }}</h1>
       <form method="post">
         {% csrf_token %}

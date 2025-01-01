@@ -18,7 +18,7 @@
             <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
                 {% for tab_key, tab in tabs.items %}
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link {% if request.path == tab.url and not tab.disabled %}active{% endif %} {% if tab.disabled %} disabled {% endif %}"
+                    <a class="nav-link {% if request.path == tab.url and not tab.is_disabled %}active{% endif %} {% if tab.is_disabled %} disabled {% endif %}"
                         id="{{ tab_key }}-tab" type="button" role="tab" aria-controls="{{ tab_key }}-tab-pane"
                         aria-selected="true" href="{{ tab.url }}">{{ tab.name }}</a>
                 </li>
