@@ -18,5 +18,7 @@
         "**/.DS_Store": false,
         "**/**/.DS_Store": true
     },
-    "html.validate.styles": false
+    "html.validate.styles": false,
+    "black-formatter.importStrategy": "fromEnvironment",
+    "isort.importStrategy": "useBundled"
 }
