@@ -47,13 +47,13 @@
             "https://{{ domain_name }}{{ image.image.url }}"{% if not forloop.last %},{% endif %}
           {% endfor %}
         ],
-        "@id": "{{ product.get_absolute_url }}",
+        "@id": "{{ product.absolute_uri }}",
         "description": "{{ product.description|striptags|escape }}",
         "category": {
             "@type": "CategoryCode",
             "name": "{{ product.subcategory.name }}",
             "codeValue": "{{ product.subcategory.code_value }}",
-            "url": "{{ product.subcategory.get_absolute_url }}"
+            "url": "{{ product.subcategory.absolute_uri }}"
         },
         "sku": "{{ product.sku }}",
         "offers": {

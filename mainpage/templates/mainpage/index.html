@@ -51,8 +51,8 @@
         {
           "@type": "Product",
           "name": "{{ recommended_product.name }}",
-          "image": "https://{{ domain_name }}{{ MEDIA_URL }}{{ recommended_bouquet.first_image_uri }}",
-          "@id": "{{ recommended_product.get_absolute_url }}",
+          "image": "https://{{ domain_name }}{{ MEDIA_URL }}{{ recommended_product.first_image_uri }}",
+          "@id": "{{ recommended_product.absolute_uri }}",
           "description": "{{ recommended_product.description|striptags|escape }}",
           "offers": {
             "@type": "Offer",
