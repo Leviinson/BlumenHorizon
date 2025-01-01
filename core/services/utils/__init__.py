@@ -9,3 +9,4 @@
 
 from .carts import get_carts
 from .recommended_items import get_recommended_items_with_first_image
+from .urls import build_absolute_uri

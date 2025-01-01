@@ -1,5 +1,7 @@
 from rest_framework import serializers
 
+from core.services.utils import build_absolute_uri
+
 from ..models import BouquetSize, BouquetSizeImage
 
 
@@ -9,7 +11,7 @@ class BouquetSizeImageSerializer(serializers.ModelSerializer):
         fields = ("image",)
 
     def to_representation(self, instance):
-        return self.context["request"].build_absolute_uri(instance.image.url)
+        return build_absolute_uri(instance.image.url)
 
 
 class BouquetSizeSerializer(serializers.ModelSerializer):
