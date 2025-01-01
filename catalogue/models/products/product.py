@@ -3,7 +3,6 @@ from django.urls import reverse_lazy
 from tinymce.models import HTMLField
 
 from core.base_models import TimeStampAdbstractModel
-from core.services.repositories.site import SiteRepository
 
 from ..services import (
     CategoryAbstractModel,
@@ -53,16 +52,6 @@ class ProductCategory(
     def __str__(self):
         return self.name
 
-    def get_absolute_url(self):
-        domain = SiteRepository.get_domain()
-        relative_url = reverse_lazy(
-            "catalogue:products-category",
-            kwargs={
-                "category_slug": self.slug,
-            },
-        )
-        return f"https://{domain}{relative_url}"
-
     def get_relative_url(self):
         return reverse_lazy(
             "catalogue:products-category",
@@ -95,14 +84,6 @@ class ProductSubcategory(
     def __str__(self):
         return self.name
 
-    def get_absolute_url(self):
-        domain = SiteRepository.get_domain()
-        relative_url = reverse_lazy(
-            "catalogue:products-subcategory",
-            kwargs={"category_slug": self.category.slug, "subcategory_slug": self.slug},
-        )
-        return f"https://{domain}{relative_url}"
-
     def get_relative_url(self):
         return reverse_lazy(
             "catalogue:products-subcategory",
@@ -126,18 +107,6 @@ class Product(ProductAbstractModel):
     class Meta:
         verbose_name = "Продукт"
         verbose_name_plural = "6. Продукты"
-
-    def get_absolute_url(self):
-        domain = SiteRepository.get_domain()
-        relative_url = reverse_lazy(
-            "catalogue:product-details",
-            kwargs={
-                "category_slug": self.subcategory.category.slug,
-                "subcategory_slug": self.subcategory.slug,
-                "product_slug": self.slug,
-            },
-        )
-        return f"https://{domain}{relative_url}"
 
     def get_relative_url(self):
         return reverse_lazy(

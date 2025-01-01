@@ -8,7 +8,6 @@ from django.utils import timezone
 from tinymce.models import HTMLField
 
 from core.base_models import TimeStampAdbstractModel
-from core.services.repositories import SiteRepository
 
 from ..services import (
     CategoryAbstractModel,
@@ -93,16 +92,6 @@ class BouquetCategory(
     def __str__(self):
         return self.name
 
-    def get_absolute_url(self):
-        domain = SiteRepository.get_domain()
-        relative_url = reverse_lazy(
-            "catalogue:bouquets-category",
-            kwargs={
-                "category_slug": self.slug,
-            },
-        )
-        return f"https://{domain}{relative_url}"
-
     def get_relative_url(self):
         return reverse_lazy(
             "catalogue:bouquets-category",
@@ -134,17 +123,6 @@ class BouquetSubcategory(
 
     def __str__(self):
         return self.name
-
-    def get_absolute_url(self):
-        domain = SiteRepository.get_domain()
-        relative_url = reverse_lazy(
-            "catalogue:bouquets-subcategory",
-            kwargs={
-                "category_slug": self.category.slug,
-                "subcategory_slug": self.slug,
-            },
-        )
-        return f"https://{domain}{relative_url}"
 
     def get_relative_url(self):
         return reverse_lazy(
@@ -189,18 +167,6 @@ class Bouquet(ProductAbstractModel):
 
     def __str__(self):
         return f"{self.name} ({self.diameter} см, {self.amount_of_flowers} цветов)"
-
-    def get_absolute_url(self):
-        domain = SiteRepository.get_domain()
-        relative_url = reverse_lazy(
-            "catalogue:bouquet-details",
-            kwargs={
-                "category_slug": self.subcategory.category.slug,
-                "subcategory_slug": self.subcategory.slug,
-                "bouquet_slug": self.slug,
-            },
-        )
-        return f"https://{domain}{relative_url}"
 
     def get_relative_url(self):
         return reverse_lazy(
