@@ -54,6 +54,12 @@ class ExtendedSite(models.Model):
         verbose_name="Текст для красного уведомления под хедером, белый текст на красном фоне во всю ширину строки.",
     )
 
+    email = models.CharField(
+        "Email компании",
+        max_length=50,
+        default="service@blumenhorizon.de",
+    )
+
     def __str__(self):
         """
         Строковое представление модели `ExtendedSite`.

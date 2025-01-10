@@ -32,6 +32,7 @@ class ExtendedSiteAdmin(TranslationAdmin):
         "currency_symbol",
         "country",
         "city",
+        "email",
         "iban",
         "account_name",
     )
