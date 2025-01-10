@@ -13,7 +13,7 @@ class CommonContextMixin:
         if not context.get("site_name"):
             context["site_name"] = current_site.name
             context["domain_name"] = current_site.domain
-            context["company_email"] = settings.EMAIL_HOST_USER
+            context["company_email"] = site_extended.email
         context["currency_symbol"] = site_extended.currency_symbol
         context["currency_code"] = site_extended.currency_code
         context["country"] = site_extended.country
