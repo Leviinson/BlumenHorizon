@@ -1,11 +1,10 @@
 from django.conf import settings
 from django.contrib.sites.models import Site
+from django.db.models.query import QuerySet
 from django.template import Context
 from django.test import Client
-from django.db.models.query import QuerySet
 
 from extended_contrib_models.models import ExtendedSite, Social
-
 
 from ..types import UrlsDataclass
 from .conftest import EXPECTED_SOCIALS

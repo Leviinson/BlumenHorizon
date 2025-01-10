@@ -3,6 +3,9 @@ import os
 import pytest
 from django.contrib.auth import get_user_model
 from django.contrib.sites.models import Site
+from django.db.models.query import QuerySet
+
+from catalogue.models import Bouquet
 
 from .types import UrlsDataclass, UserCredentials, UserData
 
@@ -42,3 +45,30 @@ def site(db) -> Site:
 @pytest.fixture(scope="session")
 def urls() -> UrlsDataclass:
     return UrlsDataclass()
+
+
+@pytest.fixture
+def bouquet_categories(db):
+    pass
+
+@pytest.fixture
+def product_categories(db):
+    pass
+
+@pytest.fixture
+def bouquet_subcategories(bouquet_categories):
+    pass
+
+@pytest.fixture
+def product_subcategories(product_categories):
+    pass
+
+@pytest.fixture
+def products(product_subcategories):
+    pass
+
+
+
+@pytest.fixture
+def recommended_bouquets(db) -> QuerySet[Bouquet]:
+    pass
