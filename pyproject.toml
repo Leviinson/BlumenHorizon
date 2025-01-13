@@ -36,7 +36,7 @@ exclude=[".venv", "migrations"]
 
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "core.settings"
-addopts = "-v"
+addopts = "-v --reuse-db"
 log_level = "INFO"
 
 [tool.pytest_env]
