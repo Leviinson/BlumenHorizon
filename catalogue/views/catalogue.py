@@ -207,12 +207,16 @@ class BuyItemView(FormView):
     """
 
     form_class = BuyItemForm
+    http_method_names = [
+        "post",
+    ]
 
     def form_valid(self, form):
         category_slug = form.cleaned_data["category_slug"]
         subcategory_slug = form.cleaned_data["subcategory_slug"]
         item_slug = form.cleaned_data["item_slug"]
-        is_bouquet = form.cleaned_data["is_bouquet"]
+        is_bouquet = form.cleaned_data["is_bouquet"]  # TODO: УЯЗВИМОСТЬ: 500 ошибка
+        # в зависимости от запроса
 
         if is_bouquet:
             model_class = Bouquet
