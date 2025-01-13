@@ -9,7 +9,7 @@ from tinymce.models import HTMLField
 
 from core.base_models import TimeStampAdbstractModel
 from core.services.repositories.site import SiteRepository
-from core.services.types import AbsoluteUri
+from core.services.types import AbsoluteUrl
 
 
 def generate_sku():
@@ -53,16 +53,15 @@ class MetaDataAbstractModel(models.Model):
     class Meta:
         abstract = True
 
-    @property
-    def absolute_uri(self) -> AbsoluteUri:
-        from core.services.utils import build_absolute_uri
+    def get_absolute_url(self) -> AbsoluteUrl:
+        from core.services.utils.urls import build_absolute_url
 
         if not getattr(self, "get_relative_url"):
             raise AttributeError(
                 f"У ресурса {self.__class__.__name__} нереализован "
                 f"метод «get_relative_url»"
             )
-        return build_absolute_uri(self.get_relative_url())
+        return build_absolute_url(self.get_relative_url())
 
 
 class CategoryAbstractModel(models.Model):

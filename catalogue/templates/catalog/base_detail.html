@@ -44,16 +44,16 @@
         "name": "{{ product.name }}",
         "image": [
           {% for image in product.images.all %}
-            "https://{{ domain_name }}{{ image.image.url }}"{% if not forloop.last %},{% endif %}
+            {{ image.absolute_url }}{% if not forloop.last %},{% endif %}
           {% endfor %}
         ],
-        "@id": "{{ product.absolute_uri }}",
+        "@id": "{{ product.get_absolute_url }}",
         "description": "{{ product.description|striptags|escape }}",
         "category": {
             "@type": "CategoryCode",
             "name": "{{ product.subcategory.name }}",
             "codeValue": "{{ product.subcategory.code_value }}",
-            "url": "{{ product.subcategory.absolute_uri }}"
+            "url": "{{ product.subcategory.get_absolute_url }}"
         },
         "sku": "{{ product.sku }}",
         "offers": {
@@ -312,14 +312,9 @@
                     {% if recommended_product.has_discount %}
                     <span class="badge bg-dark-green m-2 p-2 fs-5 product-discount-badge">-{{ recommended_product.discount }}%</span>
                     {% endif %}
-                    {% if recommended_product.first_image_uri %}
-                    <img src="{{ MEDIA_URL }}{{ recommended_product.first_image_uri }}" class="card-img-top square-image"
-                        alt="{% if recommended_product.first_image_alt %}{{ recommended_product.first_image_alt }}{% else %}{% translate 'Изображение продукта временно отсутствует.' %}{% endif %}"
+                    <img src="{{ recommended_product.first_image_url }}" class="card-img-top square-image"
+                        alt="{{ recommended_product.first_image_alt }}"
                         loading="lazy">
-                    {% else %}
-                    <img src="{% static 'defaults/no-image.webp' %}" class="card-img-top square-image"
-                        alt="{% translate 'Изображение продукта временно отсутствует.' %}" loading="lazy">
-                    {% endif %}
                     </div>
                     <div class="card-body d-flex flex-column">
                     <span class="card-title fw-bold">{{ recommended_product.name }}</span>

@@ -16,7 +16,8 @@
   {% get_available_languages as LANGUAGES %}
   {% get_current_language as CURRENT_LANGUAGE_CODE %}
 
-  {% for lang_code, lang_name in LANGUAGES %}
+  <!-- TODO: убрать, так как дублирует 4 запроса и неудобно и фигня -->
+  {% for lang_code, lang_name in LANGUAGES %} 
     {% language lang_code %}
       {% if forloop.first %}
         {% if is_category_list %}
@@ -150,14 +151,9 @@
                                     -{{ product.discount }}%
                                 </span>
                                 {% endif %}
-                                {% if product.first_image_uri %}
-                                <img src="{{ MEDIA_URL }}{{ product.first_image_uri }}"
+                                <img src="{{ product.first_image_url }}"
                                     class="card-img-top square-image" alt="{{ product.first_image_alt }}"
                                     loading="lazy">
-                                {% else %}
-                                <img src="{% static 'defaults/no-image.webp' %}" class="card-img-top square-image"
-                                    alt="{% translate 'Изображение продукта временно отсутствует.' %}" loading="lazy">
-                                {% endif %}
                             </div>
                             <div class="card-body d-flex flex-column">
                                 <strong class="card-title">{{ product.name }}</strong>

@@ -1,11 +1,12 @@
 from decimal import Decimal
 
 from django.contrib.sessions.backends.base import SessionBase
-from django.db.models import OuterRef, Subquery
+from django.db.models import OuterRef
 from django.db.models.manager import BaseManager
 from django.db.models.query import QuerySet
 
 from catalogue.models import Bouquet, BouquetImage, Product, ProductImage
+from core.services.utils.first_image_attaching import annotate_first_image_and_alt
 
 
 class CartMixin:
@@ -60,7 +61,7 @@ class CartMixin:
         base_queryset = super().filter_products(queryset)
         optimized_queryset: QuerySet = self.get_optimized_queryset(base_queryset)
         if self.with_images:
-            optimized_queryset = self.attach_first_image_of_each_item(
+            optimized_queryset = self.attach_first_image_to_each_item(
                 optimized_queryset, language
             )
 
@@ -84,7 +85,7 @@ class CartMixin:
         )
         return optimized_queryset
 
-    def attach_first_image_of_each_item(
+    def attach_first_image_to_each_item(
         self, optimized_queryset: QuerySet[Product | Bouquet], language: str
     ) -> QuerySet[Product | Bouquet]:
         """
@@ -99,14 +100,9 @@ class CartMixin:
         модели queryset через select/prefetch_related.
         :param language: Выбранный язык для image alternate среди зарегистрированных.
         """
-        first_image_subquery = self.get_subquery_of_first_image(self.image_model)
-        optimized_queryset = optimized_queryset.annotate(
-            first_image_uri=Subquery(first_image_subquery.values("image")[:1]),
-            first_image_alt=Subquery(
-                first_image_subquery.values(f"image_alt_{language}")[:1]
-            ),
+        return annotate_first_image_and_alt(
+            optimized_queryset, self.image_model, language
         )
-        return optimized_queryset
 
     def get_subquery_of_first_image(
         self,

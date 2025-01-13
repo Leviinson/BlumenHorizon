@@ -12,6 +12,7 @@ from catalogue.models import (
     ProductImage,
     ProductsListPageModel,
 )
+from core.services.utils.first_image_attaching import annotate_first_image_and_alt
 
 
 class ListViewMixin:
@@ -212,16 +213,7 @@ class ListViewMixin:
         :returns: Обновлённый queryset с добавленными изображениями.
         :rtype: QuerySet[Bouquet | Product]
         """
-        first_image_subquery = image_model.objects.filter(item=OuterRef("pk")).order_by(
-            "id"
-        )[:1]
-        queryset = queryset.annotate(
-            first_image_uri=Subquery(first_image_subquery.values("image")[:1]),
-            first_image_alt=Subquery(
-                first_image_subquery.values(f"image_alt_{language}")[:1]
-            ),
-        )
-        return queryset
+        return annotate_first_image_and_alt(queryset, image_model, language)
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)

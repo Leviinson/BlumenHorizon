@@ -41,9 +41,9 @@
                             <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
                                 <div class="bg-image hover-overlay ripple image-wrapper">
                                     <a href="{{ item.product.get_relative_url }}" class="w-100">
-                                        <img src="{% if item.product.first_image_uri %}{{ MEDIA_URL }}{{ item.product.first_image_uri }}{% else %}{% static 'defaults/no-image.webp' %}{% endif %}"
+                                        <img src="{{ item.product.first_image_url }}"
                                             class="square-image rounded img-thumbnail"
-                                            alt="{% if item.product.first_image_alt %}{{ item.product.first_image_alt }}{% else %}{% translate 'Изображение продукта временно отсутствует.' %}{% endif %}" />
+                                            alt="{{ item.product.first_image_alt }}" />
                                     </a>
                                 </div>
                             </div>
@@ -76,48 +76,48 @@
                         {% endfor %}
                         <!-- Single item -->
                         {% for item in products_cart.items %}
-                        {% if bouquets_cart.items %}
-                        <hr data-id="{{ item.product.slug }}Hr">
-                        {% endif %}
-                        {% if not bouquets_cart.items and not forloop.first %}
-                        <hr data-id="{{ item.product.slug }}Hr">
-                        {% endif %}
-                        <div class="row product-container" data-id="{{ item.product.slug }}">
-                            <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
-                                <div class="bg-image image-wrapper">
-                                    <a href="{{ item.product.get_relative_url }}" class="w-100">
-                                        <img src="{% if item.product.first_image_uri %}{{ MEDIA_URL }}{{ item.product.first_image_uri }}{% else %}{% static 'defaults/no-image.webp' %}{% endif %}"
-                                            class="square-image rounded img-thumbnail"
-                                            alt="{% if item.product.first_image_alt %}{{ item.product.first_image_alt }}{% else %}{% translate 'Изображение продукта временно отсутствует.' %}{% endif %}" />
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
-                                <a href="{{ item.product.get_relative_url }}"
-                                    class="text-decoration-none text-dark product-name">{{ item.product.name }}</a>
-                                {% include 'cart/removeItemFromCart.html' %}
-                            </div>
-                            <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
-                                <div class="d-flex mb-4 mx-l-auto mx-auto">
-                                    {% include 'cart/decreaseItemInCart.html' %}
-                                    <div class="form-outline text-center">
-                                        <input data-id="{{ item.product.slug }}QuantityInput" min="1" name="quantity"
-                                            value="{{ item.quantity }}" type="number" class="form-control" disabled />
-                                        <label class="form-label m-0" for="{{ item.product.slug }}QuantityInput">
-                                            {% translate 'Количество' %}
-                                        </label>
+                            {% if bouquets_cart.items %}
+                                <hr data-id="{{ item.product.slug }}Hr">
+                            {% endif %}
+                            {% if not bouquets_cart.items and not forloop.first %}
+                                <hr data-id="{{ item.product.slug }}Hr">
+                            {% endif %}
+                            <div class="row product-container" data-id="{{ item.product.slug }}">
+                                <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
+                                    <div class="bg-image image-wrapper">
+                                        <a href="{{ item.product.get_relative_url }}" class="w-100">
+                                            <img src="{{ item.product.first_image_url }}"
+                                                class="square-image rounded img-thumbnail"
+                                                alt="{{ item.product.first_image_alt }}" />
+                                        </a>
                                     </div>
-                                    {% include 'cart/increaseItemInCart.html' %}
                                 </div>
+                                <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                                    <a href="{{ item.product.get_relative_url }}"
+                                        class="text-decoration-none text-dark product-name">{{ item.product.name }}</a>
+                                    {% include 'cart/removeItemFromCart.html' %}
+                                </div>
+                                <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                                    <div class="d-flex mb-4 mx-l-auto mx-auto">
+                                        {% include 'cart/decreaseItemInCart.html' %}
+                                        <div class="form-outline text-center">
+                                            <input data-id="{{ item.product.slug }}QuantityInput" min="1" name="quantity"
+                                                value="{{ item.quantity }}" type="number" class="form-control" disabled />
+                                            <label class="form-label m-0" for="{{ item.product.slug }}QuantityInput">
+                                                {% translate 'Количество' %}
+                                            </label>
+                                        </div>
+                                        {% include 'cart/increaseItemInCart.html' %}
+                                    </div>
 
-                                <p class="text-center text-md-center">
-                                    <strong data-id="{{ item.product.slug }}Subtotal">
-                                        {{ item.subtotal|floatformat:"2u"}}
-                                    </strong>
-                                    {{ currency_symbol }}
-                                </p>
+                                    <p class="text-center text-md-center">
+                                        <strong data-id="{{ item.product.slug }}Subtotal">
+                                            {{ item.subtotal|floatformat:"2u"}}
+                                        </strong>
+                                        {{ currency_symbol }}
+                                    </p>
+                                </div>
                             </div>
-                        </div>
                         {% endfor %}
                         <!-- Single item -->
                         <div id="no-image-container"
@@ -219,14 +219,9 @@
                                     {% if recommended_product.has_discount %}
                                         <span class="badge bg-dark-green m-2 p-2 fs-5 product-discount-badge">-{{ recommended_product.discount }}%</span>
                                     {% endif %}
-                                    {% if recommended_product.first_image_uri %}
-                                        <img src="{{ MEDIA_URL }}{{ recommended_product.first_image_uri }}" class="card-img-top square-image"
-                                            alt="{% if recommended_product.first_image_alt %}{{ recommended_product.first_image_alt }}{% else %}{% translate 'Изображение продукта временно отсутствует.' %}{% endif %}"
-                                            loading="lazy">
-                                    {% else %}
-                                        <img src="{% static 'defaults/no-image.webp' %}" class="card-img-top square-image"
-                                            alt="{% translate 'Изображение продукта временно отсутствует.' %}" loading="lazy">
-                                    {% endif %}
+                                    <img src="{{ recommended_product.first_image_url }}" class="card-img-top square-image"
+                                        alt="{{ recommended_product.first_image_alt }}"
+                                        loading="lazy">
                                     </div>
                                 </a>
                                 <div class="card-body d-flex flex-column">
@@ -268,14 +263,9 @@
                                     {% if recommended_product.has_discount %}
                                         <span class="badge bg-dark-green m-2 p-2 fs-5 product-discount-badge">-{{ recommended_product.discount }}%</span>
                                     {% endif %}
-                                    {% if recommended_product.first_image_uri %}
-                                        <img src="{{ MEDIA_URL }}{{ recommended_product.first_image_uri }}" class="card-img-top square-image"
-                                            alt="{% if recommended_product.first_image_alt %}{{ recommended_product.first_image_alt }}{% else %}{% translate 'Изображение продукта временно отсутствует.' %}{% endif %}"
-                                            loading="lazy">
-                                    {% else %}
-                                        <img src="{% static 'defaults/no-image.webp' %}" class="card-img-top square-image"
-                                            alt="{% translate 'Изображение продукта временно отсутствует.' %}" loading="lazy">
-                                    {% endif %}
+                                    <img src="{{ recommended_product.first_image_url }}" class="card-img-top square-image"
+                                        alt="{{ recommended_product.first_image_alt }}"
+                                        loading="lazy">
                                     </div>
                                 </a>
                                 <div class="card-body d-flex flex-column">

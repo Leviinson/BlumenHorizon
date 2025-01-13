@@ -2,11 +2,13 @@ from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from django.db.models.query import QuerySet
 from django.template.loader import render_to_string
+from django.urls import reverse_lazy
 from django.utils.html import strip_tags
 from django.utils.translation import gettext_lazy as _
 
 from cart.models import Order, OrderBouquets, OrderProducts
 from core.services.repositories import SiteRepository
+from core.services.utils.urls import build_absolute_url
 
 
 def send_order_confirmation_email(
@@ -50,6 +52,21 @@ def send_order_confirmation_email(
             "sub_total": order.sub_total,
             "grand_total": order.grand_total,
             "currency": currency_symbol,
+            "mainpage_url": build_absolute_url(reverse_lazy("mainpage:offers")),
+            "agb_url": build_absolute_url(reverse_lazy("mainpage:agb")),
+            "policy_url": build_absolute_url(
+                reverse_lazy("mainpage:privacy-and-policy")
+            ),
+            "return_policy_url": build_absolute_url(
+                reverse_lazy("mainpage:return-policy")
+            ),
+            "impressum_url": build_absolute_url(reverse_lazy("mainpage:impressum")),
+            "check_order_status_url": build_absolute_url(
+                reverse_lazy(
+                    "cart:success-order",
+                    kwargs={"order_code": order.code},
+                )
+            ),
         },
     )
     plain_message = strip_tags(html_message)

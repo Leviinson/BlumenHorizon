@@ -5,7 +5,6 @@ import stripe
 from django.conf import settings
 from django.contrib.auth.models import AnonymousUser
 from django.db.models.manager import BaseManager
-from django.db.models.query import QuerySet
 from django.http import HttpRequest, HttpResponseForbidden, JsonResponse
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
@@ -17,7 +16,7 @@ from catalogue.models import Bouquet, BouquetImage, Product, ProductImage
 from core.services.dataclasses.related_model import RelatedModel
 from core.services.mixins import CommonContextMixin
 from core.services.repositories import SiteRepository
-from core.services.utils import get_recommended_items_with_first_image
+from core.services.utils.recommended_items import get_recommended_items_with_first_image
 
 from .cart import BouquetCart, ProductCart
 from .forms import OrderForm
@@ -191,9 +190,7 @@ class CartView(CommonContextMixin, FormView):
                 "currency": currency,
                 "product_data": {
                     "name": f"{order_product.product.name}",
-                    "images": [
-                        f"https://{domain}{order_product.product.first_image.image.url}"
-                    ],
+                    "images": [order_product.product.first_image.absolute_url],
                 },
                 "unit_amount_decimal": f"{order_product.product_tax_price_discounted * 100}",
             },

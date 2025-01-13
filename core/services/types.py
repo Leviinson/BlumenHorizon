@@ -1,7 +1,7 @@
 from typing import NewType
 
-RelativeUri = NewType("RelativeUri", str)
-AbsoluteUri = NewType("AbsoluteUri", str)
+RelativeUrl = NewType("RelativeUrl", str)
+AbsoluteUrl = NewType("AbsoluteUrl", str)
 
 # По какому полю сортировать queryset
 OrderedModelField = NewType("OrderedModelField", str)

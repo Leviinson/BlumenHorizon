@@ -1,7 +1,7 @@
-from django.db.models import OuterRef, Subquery
 from django.db.models.manager import BaseManager
 
 from catalogue.models import Bouquet, BouquetImage, Product, ProductImage
+from core.services.utils.first_image_attaching import annotate_first_image_and_alt
 
 from ..dataclasses.related_model import RelatedModel
 
@@ -36,37 +36,22 @@ def get_recommended_items_with_first_image(
     from django.utils.translation import get_language
 
     language = get_language()
-
-    first_image_subquery = (
-        image_model.objects.filter(item=OuterRef("pk"))
-        .order_by("id")[:1]
-        .values("image")
-    )
     related_fields = __get_related_fields(related_models)
 
-    queryset = (
-        model.objects.select_related(*[rm.model for rm in related_models])
-        .only(
-            "name",
-            "price",
-            "slug",
-            "sku",
-            "discount",
-            "description",
-            "discount_expiration_datetime",
-            *related_fields,
-        )
-        .annotate(
-            first_image_uri=Subquery(
-                first_image_subquery,
-            ),
-            first_image_alt=Subquery(
-                first_image_subquery.values(f"image_alt_{language}")[:1],
-            ),
-        )
-        .order_by(*order_fields)[:limit]
+    queryset = model.objects.select_related(*[rm.model for rm in related_models]).only(
+        "name",
+        "price",
+        "slug",
+        "sku",
+        "discount",
+        "description",
+        "discount_expiration_datetime",
+        *related_fields,
     )
-    return queryset
+    queryset_with_atteched_first_images = annotate_first_image_and_alt(
+        queryset, image_model, language
+    )
+    return queryset_with_atteched_first_images.order_by(*order_fields)[:limit]
 
 
 def __get_related_fields(related_models: list[RelatedModel]) -> list[str]:

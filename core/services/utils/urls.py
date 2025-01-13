@@ -4,28 +4,35 @@ from django.conf import settings
 
 from core.services.repositories import SiteRepository
 
-from ..types import AbsoluteUri, RelativeUri
+from ..types import AbsoluteUrl, RelativeUrl
 
 logger = logging.getLogger("django.request")
 
 
-def build_absolute_uri(
-    relative_uri: RelativeUri, is_media: bool = False, is_static: bool = False
-) -> AbsoluteUri:
+def build_absolute_url(
+    relative_url: RelativeUrl, is_media: bool = False, is_static: bool = False
+) -> AbsoluteUrl:
+    """
+    Генерирует абсолютный URL на основе переданных аргументов.
+
+    :param relative_url: Относительный URL, который будет дополнен до абсолютного.
+    :param is_media: Флаг, указывающий на необходимость использования MEDIA_URL.
+    :param is_static: Флаг, указывающий на необходимость использования STATIC_URL.
+    :return: Абсолютный URL.
+    :raises ValueError: Если одновременно установлены is_media и is_static.
+    """
+    if is_media and is_static:
+        raise ValueError(
+            "Аргументы is_media и is_static не могут быть одновременно True."
+        )
+
     domain = SiteRepository.get_domain()
     protocol = "https" if settings.SECURE_SSL_REDIRECT else "http"
-    match is_media, is_static:
-        case True, False:
-            pass
-        case False, True:
-            media_url = settings.MEDIA_URL
-            return f"{protocol}://{domain}{media_url}{relative_uri}"
-        case False, False:
-            return f"{protocol}://{domain}{relative_uri}"
-        case _:
-            logger.error(
-                f"В утилите {build_absolute_uri.__module__}.{build_absolute_uri.__name__} "
-                f"неправильно переданы аргументы is_media ({is_media}) "
-                f"и is_static ({is_static})."
-            )
-            raise ValueError("Ошибка значения аргументов is_media & is_static")
+
+    if is_media:
+        return f"{protocol}://{domain}{settings.MEDIA_URL}{relative_url}"
+
+    if is_static:
+        return f"{protocol}://{domain}{settings.STATIC_URL}{relative_url}"
+
+    return f"{protocol}://{domain}{relative_url}"

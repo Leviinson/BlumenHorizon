@@ -1,5 +1,7 @@
 from django.db import models
 
+from core.services.utils.urls import build_absolute_url
+
 from .product import Product
 
 
@@ -22,4 +24,11 @@ class ProductImage(models.Model):
         verbose_name_plural = "Изображения продуктов"
 
     def __str__(self):
-        return f"{self.product.name} - Image"
+        return f"{self.item.name} - Image"
+
+    @property
+    def absolute_url(self):
+        return build_absolute_url(
+            relative_url=self.image.url,
+            is_media=True,
+        )

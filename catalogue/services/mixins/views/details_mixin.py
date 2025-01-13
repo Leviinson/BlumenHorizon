@@ -9,7 +9,7 @@ from cart.cart import BouquetCart, ProductCart
 from catalogue.forms import IndividualQuestionForm
 from catalogue.models import Bouquet, BouquetImage, Product, ProductImage
 from core.services.dataclasses import RelatedModel
-from core.services.utils import get_recommended_items_with_first_image
+from core.services.utils.recommended_items import get_recommended_items_with_first_image
 
 
 class DetailViewMixin:
