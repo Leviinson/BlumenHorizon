@@ -37,7 +37,7 @@ class TestMainPage:
             context["json_ld_description"]
             == "Blumen Horizon интернет-магазин цветов и подарков в Берлине"
         )
-        assert context["company_email"] == settings.EMAIL_HOST_USER
+        assert context["company_email"] == site_extended.email
 
         assert len(context["socials_right_bottom"]) == 3
         socials: QuerySet[Social] = context["socials_right_bottom"]

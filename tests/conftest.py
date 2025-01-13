@@ -51,22 +51,25 @@ def urls() -> UrlsDataclass:
 def bouquet_categories(db):
     pass
 
+
 @pytest.fixture
 def product_categories(db):
     pass
+
 
 @pytest.fixture
 def bouquet_subcategories(bouquet_categories):
     pass
 
+
 @pytest.fixture
 def product_subcategories(product_categories):
     pass
 
+
 @pytest.fixture
 def products(product_subcategories):
     pass
-
 
 
 @pytest.fixture

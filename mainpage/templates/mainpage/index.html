@@ -2,7 +2,6 @@
 {% load static %}
 {% load i18n %}
 {% load chunk_filters %}
-{% load extract_meta_tags %}
 
 {% block localization_meta_tags %}
   {% get_available_languages as LANGUAGES %}
@@ -51,8 +50,8 @@
         {
           "@type": "Product",
           "name": "{{ recommended_product.name }}",
-          "image": "https://{{ domain_name }}{{ MEDIA_URL }}{{ recommended_product.first_image_uri }}",
-          "@id": "{{ recommended_product.absolute_uri }}",
+          "image": "https://{{ domain_name }}{{ recommended_product.first_image_url }}",
+          "@id": "{{ recommended_product.get_absolute_url }}",
           "description": "{{ recommended_product.description|striptags|escape }}",
           "offers": {
             "@type": "Offer",
@@ -195,14 +194,9 @@
                   {% if recommended_bouquet.has_discount %}
                   <span class="badge bg-dark-green m-2 p-2 fs-5 product-discount-badge fw-bold">-{{ recommended_bouquet.discount }}%</span>
                   {% endif %}
-                  {% if recommended_bouquet.first_image_uri %}
-                  <img src="{{ MEDIA_URL }}{{ recommended_bouquet.first_image_uri }}" class="card-img-top square-image"
-                    alt="{% if recommended_bouquet.first_image_alt %}{{ recommended_bouquet.first_image_alt }}{% else %}{% translate 'Изображение продукта временно отсутствует.' %}{% endif %}"
+                  <img src="{{ recommended_bouquet.first_image_url }}" class="card-img-top square-image"
+                    alt="{{ recommended_bouquet.first_image_alt }}"
                     loading="lazy">
-                  {% else %}
-                  <img src="{% static 'defaults/no-image.webp' %}" class="card-img-top square-image"
-                    alt="{% translate 'Изображение продукта временно отсутствует.' %}" loading="lazy">
-                  {% endif %}
                 </div>
                 <div class="card-body d-flex flex-column">
                   <span class="card-title fw-bold">{{ recommended_bouquet.name }}</span>
@@ -261,14 +255,9 @@
                   {% if recommended_product.has_discount %}
                   <span class="badge bg-dark-green m-2 p-2 fs-5 product-discount-badge">-{{ recommended_product.discount }}%</span>
                   {% endif %}
-                  {% if recommended_product.first_image_uri %}
-                  <img src="{{ MEDIA_URL }}{{ recommended_product.first_image_uri }}" class="card-img-top square-image"
-                    alt="{% if recommended_product.first_image_alt %}{{ recommended_product.first_image_alt }}{% else %}{% translate 'Изображение продукта временно отсутствует.' %}{% endif %}"
+                  <img src="{{ recommended_product.first_image_url }}" class="card-img-top square-image"
+                    alt="{{ recommended_product.first_image_alt }}"
                     loading="lazy">
-                  {% else %}
-                  <img src="{% static 'defaults/no-image.webp' %}" class="card-img-top square-image"
-                    alt="{% translate 'Изображение продукта временно отсутствует.' %}" loading="lazy">
-                  {% endif %}
                 </div>
                 <div class="card-body d-flex flex-column">
                   <span class="card-title fw-bold">{{ recommended_product.name }}</span>

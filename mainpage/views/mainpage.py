@@ -17,7 +17,8 @@ from catalogue.models import (
 from core.services.dataclasses.related_model import RelatedModel
 from core.services.mixins import CommonContextMixin
 from core.services.types import Limit, OrderedModelField
-from core.services.utils import get_carts, get_recommended_items_with_first_image
+from core.services.utils.carts import get_carts
+from core.services.utils.recommended_items import get_recommended_items_with_first_image
 
 from ..forms import IndividualOrderForm
 from ..models import MainPageModel, MainPageSeoBlock, MainPageSliderImages

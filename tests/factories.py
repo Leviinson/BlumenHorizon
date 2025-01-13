@@ -23,7 +23,6 @@ class MetaDataAbstractModelFactory(factory.django.DjangoModelFactory):
     amount_of_orders = factory.Faker("random_int", min=0, max=50)
     amount_of_savings = factory.Faker("random_int", min=0, max=50)
     meta_tags = factory.Faker("paragraph", nb_sentences=10)
-    
 
     class Meta:
         model = MetaDataAbstractModel
@@ -104,7 +103,7 @@ class BouquetFactory(
             for flower in extracted:
                 self.flowers.add(flower)
         else:
-            self.flowers.add(flower)
+            self.flowers.add(FlowerFactory())
 
 
 class BouquetImage(MetaDataAbstractModelFactory):
