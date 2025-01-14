@@ -9,7 +9,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from cart.cart import BouquetCart
-from core.services.mixins import CommonContextMixin
+from core.services.mixins import CommonContextMixin, CanonicalsContextMixin
+from core.services.mixins.canonicals import CanonicalLinksMixin
 
 from ..filters import BouquetFilter
 from ..models import (
@@ -92,7 +93,9 @@ class GetBouquetSizesView(APIView):
 class BouquetView(
     DetailViewMixin,
     CommonContextMixin,
+    CanonicalsContextMixin,
     DetailView,
+    CanonicalLinksMixin,
 ):
     model = Bouquet
     queryset = (
@@ -142,6 +145,7 @@ class BouquetListView(
     ListViewMixin,
     BouquetListViewMixin,
     CommonContextMixin,
+    CanonicalsContextMixin,
     FilterView,
     TemplateResponseMixin,
 ):

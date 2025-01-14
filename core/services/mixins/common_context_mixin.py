@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.contrib.sites.shortcuts import get_current_site
+from django.utils.translation import get_language
 
 from extended_contrib_models.models import ExtendedSite
 
@@ -22,4 +23,22 @@ class CommonContextMixin:
         context["socials_right_bottom"] = site_extended.socials.all()
         context["MEDIA_URL"] = settings.MEDIA_URL
         context["alert"] = site_extended.header_alert_message
+        return context
+
+
+class CanonicalsContextMixin:
+    def get_context_data(self, *args, **kwargs):
+        """
+        Наследуется каждым контроллером, который требует
+        генерации canonical/alternate/x-default ссылок.
+        """
+        context = super().get_context_data(*args, **kwargs)
+
+        current_lang_code = get_language()
+        context["canonical_link"] = self.get_canonical_link(current_lang_code)
+        context["alternate_links"] = self.get_alternate_links(
+            current_lang_code,
+            settings.LANGUAGES,
+        )
+        context["xdefault_link"] = self.get_xdefault_link(settings.LANGUAGES[0][0])
         return context

@@ -1,1 +1,1 @@
-from .common_context_mixin import CommonContextMixin
+from .common_context_mixin import CanonicalsContextMixin, CommonContextMixin

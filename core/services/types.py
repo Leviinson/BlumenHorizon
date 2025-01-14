@@ -1,4 +1,4 @@
-from typing import NewType
+from typing import NamedTuple, NewType, TypedDict
 
 RelativeUrl = NewType("RelativeUrl", str)
 AbsoluteUrl = NewType("AbsoluteUrl", str)
@@ -7,3 +7,21 @@ AbsoluteUrl = NewType("AbsoluteUrl", str)
 OrderedModelField = NewType("OrderedModelField", str)
 
 Limit = NewType("Limit", int)
+
+
+class CanonicalLink(TypedDict):
+    rel: str
+    href: str
+
+
+class AlternateLink(CanonicalLink):
+    hreflang: str
+
+
+class XDefaultLink(AlternateLink):
+    pass
+
+
+class AvailableLanguage(NamedTuple):
+    lang_code: str
+    lang_name: str

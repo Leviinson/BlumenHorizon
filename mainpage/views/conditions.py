@@ -3,6 +3,7 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic.base import TemplateView
 
 from core.services.mixins import CommonContextMixin
+from core.services.mixins.canonicals import CanonicalLinksMixin
 
 from ..models import (
     AGBPageModel,
@@ -50,8 +51,16 @@ class ConditionsViewMixin(CommonContextMixin):
         context["updated_at"] = page.updated_at
         return context
 
+    @property
+    def relative_url(self):
+        return self.url
 
-class AGBView(ConditionsViewMixin, TemplateView):
+
+class AGBView(
+    ConditionsViewMixin,
+    TemplateView,
+    CanonicalLinksMixin,
+):
     """
     Контроллер который показывает страницу «Условия и положения»
     """
@@ -61,7 +70,11 @@ class AGBView(ConditionsViewMixin, TemplateView):
     title = _("Условия и положения")
 
 
-class PrivacyAndPolicyView(ConditionsViewMixin, TemplateView):
+class PrivacyAndPolicyView(
+    ConditionsViewMixin,
+    TemplateView,
+    CanonicalLinksMixin,
+):
     """
     Контроллер который показывает страницу «Политика конфиденциальности»
     """
@@ -71,7 +84,11 @@ class PrivacyAndPolicyView(ConditionsViewMixin, TemplateView):
     title = _("Политика конфиденциальности")
 
 
-class ImpressumView(ConditionsViewMixin, TemplateView):
+class ImpressumView(
+    ConditionsViewMixin,
+    TemplateView,
+    CanonicalLinksMixin,
+):
     """
     Контроллер который показывает страницу «Условия и положения»
     """
@@ -81,7 +98,11 @@ class ImpressumView(ConditionsViewMixin, TemplateView):
     title = _("Контактная информация")
 
 
-class ReturnPolicyView(ConditionsViewMixin, TemplateView):
+class ReturnPolicyView(
+    ConditionsViewMixin,
+    TemplateView,
+    CanonicalLinksMixin,
+):
     """
     Контроллер который показывает страницу «Условия возврата»
     """

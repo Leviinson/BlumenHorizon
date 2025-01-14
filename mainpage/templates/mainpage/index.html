@@ -4,20 +4,11 @@
 {% load chunk_filters %}
 
 {% block localization_meta_tags %}
-  {% get_available_languages as LANGUAGES %}
-  {% get_current_language as CURRENT_LANGUAGE_CODE %}
-
-  {% for lang_code, lang_name in LANGUAGES %}
-    {% language lang_code %}
-      {% if forloop.first %}
-        <link rel="canonical" href="https://{{ domain_name }}/">
-        <link rel="alternate" hreflang="{{ lang_code }}" href="https://{{ domain_name }}/">
-        <link rel="x-default" hreflang="{{ lang_code }}" href="https://{{ domain_name }}/">
-      {% else %}
-      <link rel="alternate" hreflang="{{ lang_code }}" href="https://{{ domain_name }}{% url 'mainpage:offers' %}">
-      {% endif %}
-    {% endlanguage %}
-  {% endfor %}
+    <link rel="{{ canonical_link.rel }}" href="{{ canonical_link.href }}">
+    {% for alternate_link in alternate_links %}
+        <link rel="{{ alternate_link.rel }}" hreflang="{{ alternate_link.hreflang }}" href="{{ alternate_link.href }}">
+    {% endfor %}
+    <link rel="{{ xdefault_link.rel }}" hreflang="{{ xdefault_link.hreflang }}" href="{{ xdefault_link.href }}">
 {% endblock %}
 
 {% block json_ld %}

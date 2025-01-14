@@ -3,6 +3,7 @@ from django.urls import reverse_lazy
 
 from catalogue.models import BouquetSubcategory, ProductSubcategory
 from catalogue.services.mixins.views.list_mixin import ListViewMixin
+from core.services.mixins.canonicals import CanonicalLinksMixin
 
 
 class SubcategoryListViewMixin(ListViewMixin):
@@ -61,7 +62,10 @@ class SubcategoryListViewMixin(ListViewMixin):
         return context
 
 
-class BouquetSubcategoryListViewMixin(SubcategoryListViewMixin):
+class BouquetSubcategoryListViewMixin(
+    SubcategoryListViewMixin,
+    CanonicalLinksMixin,
+):
     """
     Миксин для представления списка букетов в подкатегории.
 
@@ -95,6 +99,7 @@ class BouquetSubcategoryListViewMixin(SubcategoryListViewMixin):
                 "meta_tags",
                 "category__name",
                 "category__slug",
+                "slug",
             ),
             slug=self.kwargs["subcategory_slug"],
             category__slug=self.kwargs["category_slug"],
@@ -114,8 +119,21 @@ class BouquetSubcategoryListViewMixin(SubcategoryListViewMixin):
         context["is_bouquet_subcategory"] = True
         return context
 
+    @property
+    def relative_url(self):
+        return reverse_lazy(
+            "catalogue:bouquets-subcategory",
+            kwargs={
+                "category_slug": self.subcategory.category.slug,
+                "subcategory_slug": self.subcategory.slug,
+            },
+        )
 
-class ProductSubcategoryListViewMixin(SubcategoryListViewMixin):
+
+class ProductSubcategoryListViewMixin(
+    SubcategoryListViewMixin,
+    CanonicalLinksMixin,
+):
     """
     Миксин для представления списка продуктов в подкатегории.
 
@@ -154,6 +172,7 @@ class ProductSubcategoryListViewMixin(SubcategoryListViewMixin):
                 "meta_tags",
                 "category__name",
                 "category__slug",
+                "slug"
             ),
             slug=self.kwargs["subcategory_slug"],
             category__slug=self.kwargs["category_slug"],
@@ -168,3 +187,13 @@ class ProductSubcategoryListViewMixin(SubcategoryListViewMixin):
         context["is_subcategory_list"] = True
         context["is_product_subcategory"] = True
         return context
+
+    @property
+    def relative_url(self):
+        return reverse_lazy(
+            "catalogue:products-subcategory",
+            kwargs={
+                "category_slug": self.subcategory.category.slug,
+                "subcategory_slug": self.subcategory.slug,
+            },
+        )

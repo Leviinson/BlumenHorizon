@@ -210,3 +210,7 @@ class DetailViewMixin:
                 % {"verbose_name": queryset.model._meta.verbose_name}
             )
         return obj
+    
+    @property
+    def relative_url(self):
+        return self.object.get_relative_url()

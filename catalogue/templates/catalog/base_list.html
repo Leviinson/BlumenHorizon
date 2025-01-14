@@ -13,51 +13,11 @@
 {% endblock %}
 
 {% block localization_meta_tags %}
-  {% get_available_languages as LANGUAGES %}
-  {% get_current_language as CURRENT_LANGUAGE_CODE %}
-
-  <!-- TODO: убрать, так как дублирует 4 запроса и неудобно и фигня -->
-  {% for lang_code, lang_name in LANGUAGES %} 
-    {% language lang_code %}
-      {% if forloop.first %}
-        {% if is_category_list %}
-            {% if is_product_category %}
-                <link rel="canonical" href="https://{{ domain_name }}{% url 'catalogue:products-category' category.slug %}">
-                <link rel="alternate" hreflang="{{ lang_code }}" href="https://{{ domain_name }}{% url 'catalogue:products-category' category.slug %}">
-                <link rel="x-default" hreflang="{{ lang_code }}" href="https://{{ domain_name }}{% url 'catalogue:products-category' category.slug %}">
-            {% elif is_bouquet_category %}
-                <link rel="canonical" href="https://{{ domain_name }}{% url 'catalogue:bouquets-category' category.slug %}">
-                <link rel="alternate" hreflang="{{ lang_code }}" href="https://{{ domain_name }}{% url 'catalogue:bouquets-category' category.slug %}">
-                <link rel="x-default" hreflang="{{ lang_code }}" href="https://{{ domain_name }}{% url 'catalogue:bouquets-category' category.slug %}">
-            {% endif %}
-        {% elif is_subcategory_list %}
-            {% if is_product_subcategory %}
-                <link rel="canonical" href="https://{{ domain_name }}{% url 'catalogue:products-subcategory' subcategory.category.slug subcategory.slug %}">
-                <link rel="alternate" hreflang="{{ lang_code }}" href="https://{{ domain_name }}{% url 'catalogue:products-subcategory' subcategory.category.slug subcategory.slug %}">
-                <link rel="x-default" hreflang="{{ lang_code }}" href="https://{{ domain_name }}{% url 'catalogue:products-subcategory' subcategory.category.slug subcategory.slug %}">
-            {% elif is_bouquet_subcategory %}
-                <link rel="canonical" href="https://{{ domain_name }}{% url 'catalogue:bouquets-subcategory' subcategory.category.slug subcategory.slug %}">
-                <link rel="alternate" hreflang="{{ lang_code }}" href="https://{{ domain_name }}{% url 'catalogue:bouquets-subcategory' subcategory.category.slug subcategory.slug %}">
-                <link rel="x-default" hreflang="{{ lang_code }}" href="https://{{ domain_name }}{% url 'catalogue:bouquets-subcategory' subcategory.category.slug subcategory.slug %}">
-            {% endif %}
-        {% endif %}
-      {% else %}
-        {% if is_category_list %}
-            {% if is_product_category %}
-                <link rel="alternate" hreflang="{{ lang_code }}" href="https://{{ domain_name }}{% url 'catalogue:products-category' category.slug %}">
-            {% elif is_bouquet_category %}
-                <link rel="alternate" hreflang="{{ lang_code }}" href="https://{{ domain_name }}{% url 'catalogue:bouquets-category' category.slug %}">
-            {% endif %}
-        {% elif is_subcategory_list %}
-            {% if is_product_subcategory %}
-                <link rel="alternate" hreflang="{{ lang_code }}" href="https://{{ domain_name }}{% url 'catalogue:products-subcategory' subcategory.category.slug subcategory.slug %}">
-            {% elif is_bouquet_subcategory %}
-                <link rel="alternate" hreflang="{{ lang_code }}" href="https://{{ domain_name }}{% url 'catalogue:bouquets-subcategory' subcategory.category.slug subcategory.slug %}">
-            {% endif %}
-        {% endif %}
-      {% endif %}
-    {% endlanguage %}
-  {% endfor %}
+    <link rel="{{ canonical_link.rel }}" href="{{ canonical_link.href }}">
+    {% for alternate_link in alternate_links %}
+        <link rel="{{ alternate_link.rel }}" hreflang="{{ alternate_link.hreflang }}" href="{{ alternate_link.href }}">
+    {% endfor %}
+    <link rel="{{ xdefault_link.rel }}" hreflang="{{ xdefault_link.hreflang }}" href="{{ xdefault_link.href }}">
 {% endblock %}
 
 {% block body %}

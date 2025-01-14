@@ -1,16 +1,17 @@
-from typing import Tuple, Union
 from django.db import transaction
 from django.db.models import Prefetch
 from django.db.models.manager import BaseManager
 from django.http import Http404, HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect
+from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, FormView
 
 from cart.cart import BouquetCart, ProductCart
 from catalogue.forms import IndividualQuestionForm
-from core.services.mixins import CommonContextMixin
+from core.services.mixins import CanonicalsContextMixin, CommonContextMixin
+from core.services.mixins.canonicals import CanonicalLinksMixin
 
 from ..forms import BuyItemForm
 from ..models import (
@@ -34,7 +35,12 @@ from .bouquets import BouquetListView
 from .products import ProductListView
 
 
-class CatalogView(CommonContextMixin, TemplateView):
+class CatalogView(
+    CommonContextMixin,
+    CanonicalsContextMixin,
+    CanonicalLinksMixin,
+    TemplateView,
+):
     """
     Представление каталога, отображающее список категорий и их подкатегорий
       для букетов и продуктов.
@@ -77,8 +83,19 @@ class CatalogView(CommonContextMixin, TemplateView):
         page_model = self.get_page_model()
         context["meta_tags"] = page_model.meta_tags
         context["description"] = page_model.description
-
         return context
+
+    def get_page_model(self) -> CatalogPageModel | None:
+        """
+        Извлекает первый объект модели `CatalogPageModel`.
+
+        Этот метод:
+        - Загружает первый объект модели `CatalogPageModel`.
+
+        Возвращает:
+            CatalogPageModel: Первый объект модели `CatalogPageModel`.
+        """
+        return CatalogPageModel.objects.first()
 
     def get_bouquet_categories(self) -> BaseManager[BouquetCategory]:
         """
@@ -142,31 +159,27 @@ class CatalogView(CommonContextMixin, TemplateView):
             .filter(is_active=True)
         )
 
-    def get_page_model(self) -> CatalogPageModel | None:
-        """
-        Извлекает первый объект модели `CatalogPageModel`.
-
-        Этот метод:
-        - Загружает первый объект модели `CatalogPageModel`.
-
-        Возвращает:
-            CatalogPageModel: Первый объект модели `CatalogPageModel`.
-        """
-        return CatalogPageModel.objects.first()
+    @property
+    def relative_url(self) -> str:
+        return reverse_lazy("catalogue:catalog")
 
 
-class CategoryView(CommonContextMixin, TemplateView):
+class CategoryView(
+    CommonContextMixin,
+    CanonicalLinksMixin,
+    CanonicalsContextMixin,
+    TemplateView,
+):
     template_name = "catalog/category.html"
 
-    def get_context_data(self, *args, **kwargs):
-        context = super().get_context_data(*args, **kwargs)
+    def get_context_data(self, *args, **context):
         models = (
             (BouquetCategory, BouquetSubcategory),
             (ProductCategory, ProductSubcategory),
         )
         for CategoryModel, SubcategoryModel in models:
             try:
-                context["category"] = (
+                self.object = context["category"] = (
                     CategoryModel.objects.prefetch_related(
                         Prefetch(
                             "subcategories",
@@ -196,7 +209,16 @@ class CategoryView(CommonContextMixin, TemplateView):
             raise Http404()
         context["meta_tags"] = context["category"].catalog_page_meta_tags
         context["description"] = context["category"].description
-        return context
+        return super().get_context_data(*args, **context)
+
+    @property
+    def relative_url(self):
+        return reverse_lazy(
+            "catalogue:category",
+            kwargs={
+                "category_slug": self.object.slug,
+            },
+        )
 
 
 class BuyItemView(FormView):
@@ -330,11 +352,11 @@ class SubcategoryProductsListView(ProductSubcategoryListViewMixin, ProductListVi
     pass
 
 
-class CategoryBouquetListView(BouquetCategoryListViewMixin, BouquetListView):
+class CategoryBouquetsListView(BouquetCategoryListViewMixin, BouquetListView):
     pass
 
 
-class SubcategoryBouquetListView(BouquetSubcategoryListViewMixin, BouquetListView):
+class SubcategoryBouquetsListView(BouquetSubcategoryListViewMixin, BouquetListView):
     pass
 
 

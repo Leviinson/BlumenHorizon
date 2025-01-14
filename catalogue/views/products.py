@@ -3,7 +3,8 @@ from django.views.generic.detail import DetailView
 from django_filters.views import FilterView
 
 from cart.cart import ProductCart
-from core.services.mixins import CommonContextMixin
+from core.services.mixins import CanonicalsContextMixin, CommonContextMixin
+from core.services.mixins.canonicals import CanonicalLinksMixin
 
 from ..filters import ProductFilter
 from ..models import Product, ProductImage, ProductsListPageModel
@@ -14,7 +15,9 @@ from ..services.mixins.views.list_mixin import ListViewMixin, ProductListViewMix
 class ProductView(
     DetailViewMixin,
     CommonContextMixin,
+    CanonicalsContextMixin,
     DetailView,
+    CanonicalLinksMixin,
 ):
     model = Product
     queryset = (
@@ -56,6 +59,7 @@ class ProductListView(
     ListViewMixin,
     ProductListViewMixin,
     CommonContextMixin,
+    CanonicalsContextMixin,
     FilterView,
     TemplateResponseMixin,
 ):
