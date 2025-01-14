@@ -2,10 +2,10 @@ from .bouquets import BouquetListView, BouquetView, GetBouquetSizesView
 from .catalogue import (
     BuyItemView,
     CatalogView,
-    CategoryBouquetListView,
+    CategoryBouquetsListView,
     CategoryProductsListView,
     CategoryView,
-    SubcategoryBouquetListView,
+    SubcategoryBouquetsListView,
     SubcategoryProductsListView,
 )
 from .products import ProductListView, ProductView

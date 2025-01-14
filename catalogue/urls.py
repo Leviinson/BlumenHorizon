@@ -6,11 +6,11 @@ from .views import (
     BouquetView,
     BuyItemView,
     CatalogView,
-    CategoryBouquetListView,
+    CategoryBouquetsListView,
     CategoryProductsListView,
     CategoryView,
     ProductView,
-    SubcategoryBouquetListView,
+    SubcategoryBouquetsListView,
     SubcategoryProductsListView,
 )
 
@@ -59,12 +59,12 @@ urlpatterns = [
     # ),
     path(
         "bouquets/<slug:category_slug>/",
-        CategoryBouquetListView.as_view(),
+        CategoryBouquetsListView.as_view(),
         name="bouquets-category",
     ),
     path(
         "bouquets/<slug:category_slug>/<slug:subcategory_slug>/",
-        SubcategoryBouquetListView.as_view(),
+        SubcategoryBouquetsListView.as_view(),
         name="bouquets-subcategory",
     ),
     path(

@@ -21,7 +21,7 @@
     Обрабатывает запросы для отображения страницы конкретной категории.
     На странице отображается список подкатегорий данной категории и её текстовое описание.
 
-- `CategoryProductsListView` | `SubcategoryProductsListView` | `CategoryBouquetListView` | `SubcategoryBouquetListView`:
+- `CategoryProductsListView` | `SubcategoryProductsListView` | `CategoryBouquetsListView` | `SubcategoryBouquetsListView`:
     Обрабатывает запросы для отображения каталога товаров в категории или подкатегории.
     Поддерживает фильтрацию, сортировку и другие параметры отображения.
 
