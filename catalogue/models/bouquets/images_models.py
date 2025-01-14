@@ -30,7 +30,6 @@ class BouquetImage(models.Model):
     def absolute_url(self):
         return build_absolute_url(
             relative_url=self.image.url,
-            is_media=True,
         )
 
 
@@ -56,5 +55,4 @@ class BouquetSizeImage(models.Model):
     def absolute_url(self):
         return build_absolute_url(
             relative_url=self.image.url,
-            is_media=True,
         )

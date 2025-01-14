@@ -10,27 +10,18 @@ logger = logging.getLogger("django.request")
 
 
 def build_absolute_url(
-    relative_url: RelativeUrl, is_media: bool = False, is_static: bool = False
+    relative_url: RelativeUrl, is_static: bool = False
 ) -> AbsoluteUrl:
     """
     Генерирует абсолютный URL на основе переданных аргументов.
 
     :param relative_url: Относительный URL, который будет дополнен до абсолютного.
-    :param is_media: Флаг, указывающий на необходимость использования MEDIA_URL.
     :param is_static: Флаг, указывающий на необходимость использования STATIC_URL.
     :return: Абсолютный URL.
-    :raises ValueError: Если одновременно установлены is_media и is_static.
     """
-    if is_media and is_static:
-        raise ValueError(
-            "Аргументы is_media и is_static не могут быть одновременно True."
-        )
 
     domain = SiteRepository.get_domain()
     protocol = "https" if settings.SECURE_SSL_REDIRECT else "http"
-
-    if is_media:
-        return f"{protocol}://{domain}{settings.MEDIA_URL}{relative_url}"
 
     if is_static:
         return f"{protocol}://{domain}{settings.STATIC_URL}{relative_url}"

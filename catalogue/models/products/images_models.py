@@ -30,5 +30,4 @@ class ProductImage(models.Model):
     def absolute_url(self):
         return build_absolute_url(
             relative_url=self.image.url,
-            is_media=True,
         )
