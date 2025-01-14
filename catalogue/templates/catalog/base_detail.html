@@ -268,9 +268,6 @@
                         <input type="hidden" name="category_slug" value="{{ view.kwargs.category_slug }}">
                         <input type="hidden" name="subcategory_slug" value="{{ view.kwargs.subcategory_slug }}">
                         <input type="hidden" name="item_slug" value="{% if product.is_bouquet %}{{ view.kwargs.bouquet_slug }}{% else %}{{ view.kwargs.product_slug }}{% endif %}">
-                        {% if product.is_bouquet %}
-                        <input type="hidden" name="is_bouquet" value="true">
-                        {% endif %}
                         <button type="submit" class="btn btn-success w-100 px-0 py-1">
                             <i class="fas fa-money-bill-wave fa-fade me-3 my-2" style="color: #ffffff; --fa-animation-duration: 2s; --fa-fade-opacity: 0.6;"></i>{% translate 'Купить' %}
                         </button>

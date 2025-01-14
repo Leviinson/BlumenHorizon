@@ -1,7 +1,8 @@
+from typing import Tuple, Union
 from django.db import transaction
 from django.db.models import Prefetch
 from django.db.models.manager import BaseManager
-from django.http import Http404, JsonResponse
+from django.http import Http404, HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect
 from django.utils.translation import gettext_lazy as _
 from django.views.generic.base import TemplateView
@@ -211,52 +212,104 @@ class BuyItemView(FormView):
         "post",
     ]
 
-    def form_valid(self, form):
+    def _get_model_and_cart_classes(
+        self,
+        item_slug: str,
+    ) -> tuple[Product | Bouquet, ProductCart | BouquetCart]:
+        """
+        Определяет модель и класс корзины по слагу продукта.
+
+        :param item_slug: Слаг продукта.
+        :return: Кортеж (model_class, cart_class).
+        :raises Http404: Если продукт не найден.
+        """
+        if Bouquet.objects.filter(slug=item_slug).exists():
+            return Bouquet, BouquetCart
+        elif Product.objects.filter(slug=item_slug).exists():
+            return Product, ProductCart
+        raise Http404(
+            _("Данный продукт был недавно удалён из каталога нашими администраторами")
+        )
+
+    def _get_item(
+        self,
+        model_class: Product | Bouquet,
+        category_slug: str,
+        subcategory_slug: str,
+        item_slug: str,
+    ) -> Product | Bouquet:
+        """
+        Получает объект продукта из базы данных.
+
+        :param model_class: Класс модели продукта (Bouquet или Product).
+        :param category_slug: Слаг категории продукта.
+        :param subcategory_slug: Слаг подкатегории продукта.
+        :param item_slug: Слаг продукта.
+        :return: Объект продукта.
+        :raises model_class.DoesNotExist: Если продукт не найден.
+        """
+        return (
+            model_class.objects.select_related("subcategory", "subcategory__category")
+            .only(
+                "price",
+                "discount",
+                "amount_of_savings",
+                "subcategory__amount_of_savings",
+                "subcategory__category__amount_of_savings",
+            )
+            .get(
+                slug=item_slug,
+                is_active=True,
+                subcategory__slug=subcategory_slug,
+                subcategory__category__slug=category_slug,
+            )
+        )
+
+    def _update_savings(self, item: Product | Bouquet) -> None:
+        """
+        Обновляет счётчики сохранений в корзине для
+        продукта, подкатегории и категории.
+
+        :param item: Объект продукта.
+        """
+        with transaction.atomic():
+            item.amount_of_savings += 1
+            item.subcategory.amount_of_savings += 1
+            item.subcategory.category.amount_of_savings += 1
+            item.save(update_fields=["amount_of_savings"])
+            item.subcategory.save(update_fields=["amount_of_savings"])
+            item.subcategory.category.save(update_fields=["amount_of_savings"])
+
+    def _add_item_to_cart(
+        self, cart: ProductCart | BouquetCart, item: Product | Bouquet
+    ) -> None:
+        """
+        Добавляет продукт в корзину, если его ещё нет.
+
+        :param cart: Экземпляр корзины.
+        :param item: Объект продукта.
+        """
+        if item not in cart.products:
+            cart.add(item, item.tax_price_discounted)
+
+    def form_valid(self, form) -> HttpResponseRedirect:
+        """
+        Обрабатывает данные формы для добавления продукта в корзину.
+
+        :param form: Валидированная форма.
+        :return: Перенаправление на страницу корзины.
+        """
         category_slug = form.cleaned_data["category_slug"]
         subcategory_slug = form.cleaned_data["subcategory_slug"]
         item_slug = form.cleaned_data["item_slug"]
-        is_bouquet = form.cleaned_data["is_bouquet"]  # TODO: УЯЗВИМОСТЬ: 500 ошибка
-        # в зависимости от запроса
 
-        if is_bouquet:
-            model_class = Bouquet
-            cart_class = BouquetCart
-        else:
-            model_class = Product
-            cart_class = ProductCart
-
+        ItemModel, Cart = self._get_model_and_cart_classes(item_slug)
         try:
-            item = (
-                model_class.objects.select_related(
-                    "subcategory", "subcategory__category"
-                )
-                .only(
-                    "price",
-                    "discount",
-                    "amount_of_savings",
-                    "subcategory__amount_of_savings",
-                    "subcategory__category__amount_of_savings",
-                )
-                .get(
-                    slug=item_slug,
-                    is_active=True,
-                    subcategory__slug=subcategory_slug,
-                    subcategory__category__slug=category_slug,
-                )
-            )
-            cart = cart_class(
-                session=self.request.session, session_key=cart_class.session_key
-            )
-            if item not in cart.products:
-                with transaction.atomic():
-                    cart.add(item, item.tax_price_discounted)
-                    item.amount_of_savings += 1
-                    item.subcategory.amount_of_savings += 1
-                    item.subcategory.save(update_fields=["amount_of_savings"])
-                    item.subcategory.category.amount_of_savings += 1
-                    item.subcategory.category.save(update_fields=["amount_of_savings"])
-                    item.save(update_fields=["amount_of_savings"])
-        except model_class.DoesNotExist:
+            item = self._get_item(ItemModel, category_slug, subcategory_slug, item_slug)
+            cart = Cart(session=self.request.session, session_key=Cart.session_key)
+            self._add_item_to_cart(cart, item)
+            self._update_savings(item)
+        except ItemModel.DoesNotExist:
             raise Http404(
                 _(
                     "Данный продукт был недавно удалён из каталога нашими администраторами"

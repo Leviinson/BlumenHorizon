@@ -8,7 +8,6 @@ class BuyItemForm(forms.Form):
     category_slug = forms.SlugField()
     subcategory_slug = forms.SlugField()
     item_slug = forms.SlugField()
-    is_bouquet = forms.BooleanField(required=False)
 
 
 class IndividualQuestionForm(forms.ModelForm):
