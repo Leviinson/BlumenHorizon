@@ -4,13 +4,14 @@ from catalogue.models import Bouquet, BouquetImage, Product, ProductImage
 from core.services.utils.first_image_attaching import annotate_first_image_and_alt
 
 from ..dataclasses.related_model import RelatedModel
+from ..types import OrderedModelField
 
 
 def get_recommended_items_with_first_image(
     model: Product | Bouquet,
     image_model: ProductImage | BouquetImage,
     related_models: list[RelatedModel],
-    order_fields: list[str],
+    order_fields: list[OrderedModelField],
     limit: int = 12,
 ) -> BaseManager[Product] | BaseManager[Bouquet]:
     """
