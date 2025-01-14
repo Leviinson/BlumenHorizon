@@ -1,7 +1,7 @@
 from typing import Any, Callable
 
-from django.db.models.manager import BaseManager
 from django.http import JsonResponse
+from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView
@@ -16,6 +16,7 @@ from catalogue.models import (
 )
 from core.services.dataclasses.related_model import RelatedModel
 from core.services.mixins import CommonContextMixin
+from core.services.mixins.canonicals import CanonicalLinksMixin
 from core.services.types import Limit, OrderedModelField
 from core.services.utils.carts import get_carts
 from core.services.utils.recommended_items import get_recommended_items_with_first_image
@@ -25,7 +26,7 @@ from ..models import MainPageModel, MainPageSeoBlock, MainPageSliderImages
 from .types import Categories, RecommendedItems
 
 
-class MainPageView(CommonContextMixin, TemplateView):
+class MainPageView(CommonContextMixin, TemplateView, CanonicalLinksMixin):
     template_name = "mainpage/index.html"
     http_method_names = ["get"]
 
@@ -153,6 +154,10 @@ class MainPageView(CommonContextMixin, TemplateView):
             ],
         )
         return recommended_bouquets, recommended_products
+
+    @property
+    def relative_url(self):
+        return reverse_lazy("mainpage:offers")
 
 
 class IndividualOrderView(CreateView):

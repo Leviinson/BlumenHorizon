@@ -2,6 +2,7 @@ from django.urls import reverse_lazy
 from django.views.generic.base import TemplateView
 
 from core.services.mixins import CommonContextMixin
+from core.services.mixins.canonicals import CanonicalLinksMixin
 
 from ..models import (
     AboutUsPageModel,
@@ -39,9 +40,18 @@ class FillerViewMixin:
         context["image_alt"] = page.image_alt
         context["url"] = self.url
         return context
+    
+    @property
+    def relative_url(self):
+        return self.url
 
 
-class AboutUsView(FillerViewMixin, CommonContextMixin, TemplateView):
+class AboutUsView(
+    FillerViewMixin,
+    CommonContextMixin,
+    TemplateView,
+    CanonicalLinksMixin,
+):
     """
     Контроллер который показывает страницу «О нас»
     """
@@ -50,7 +60,12 @@ class AboutUsView(FillerViewMixin, CommonContextMixin, TemplateView):
     url = reverse_lazy("mainpage:about")
 
 
-class AboutDeliveryView(FillerViewMixin, CommonContextMixin, TemplateView):
+class AboutDeliveryView(
+    FillerViewMixin,
+    CommonContextMixin,
+    TemplateView,
+    CanonicalLinksMixin,
+):
     """
     Контроллер который показывает страницу «Доставка»
     """
@@ -59,7 +74,12 @@ class AboutDeliveryView(FillerViewMixin, CommonContextMixin, TemplateView):
     url = reverse_lazy("mainpage:delivery")
 
 
-class ContactUsView(FillerViewMixin, CommonContextMixin, TemplateView):
+class ContactUsView(
+    FillerViewMixin,
+    CommonContextMixin,
+    TemplateView,
+    CanonicalLinksMixin,
+):
     """
     Контроллер который показывает страницу «Контакты»
     """
@@ -68,7 +88,12 @@ class ContactUsView(FillerViewMixin, CommonContextMixin, TemplateView):
     url = reverse_lazy("mainpage:contact")
 
 
-class FAQView(FillerViewMixin, CommonContextMixin, TemplateView):
+class FAQView(
+    FillerViewMixin,
+    CommonContextMixin,
+    TemplateView,
+    CanonicalLinksMixin,
+):
     """
     Контроллер который показывает страницу «Часто задаваемые вопросы».
 
