@@ -108,13 +108,15 @@ class CartView(CommonContextMixin, FormView):
             },
             payment_method_types=[
                 "card",
-                "giropay",
                 "ideal",
                 "klarna",
-                "sofort",
+                "blik",
                 "paypal",
                 "revolut_pay",
                 "link",
+                "bancontact",
+                "eps",
+                "p24",
             ],
         )
         return checkout_session.url
