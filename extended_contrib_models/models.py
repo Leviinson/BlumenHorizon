@@ -42,8 +42,6 @@ class ExtendedSite(models.Model):
         null=True,
         default=0,
     )
-    iban = models.CharField(verbose_name="IBAN для оплаты", max_length=100)
-    account_name = models.CharField(verbose_name="Название счёта", max_length=100)
     country_iso_3166_1_alpha_2 = models.CharField(
         max_length=2,
         verbose_name="Код страны ISO 3166-1 alpha-2",

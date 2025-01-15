@@ -33,8 +33,7 @@ class ExtendedSiteAdmin(TranslationAdmin):
         "country",
         "city",
         "email",
-        "iban",
-        "account_name",
+        "header_alert_message"
     )
     search_fields = (
         "site__domain",
