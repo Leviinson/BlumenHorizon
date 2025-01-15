@@ -1,3 +1,4 @@
+import logging
 from decimal import Decimal
 from typing import Any, Collection
 
@@ -10,6 +11,9 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 from django.views.generic.edit import BaseFormView, FormView
+from stripe import InvalidRequestError
+from django.templatetags.static import static
+
 
 from accounts.models import User
 from catalogue.models import Bouquet, BouquetImage, Product, ProductImage
@@ -17,6 +21,7 @@ from core.services.dataclasses.related_model import RelatedModel
 from core.services.mixins import CommonContextMixin
 from core.services.repositories import SiteRepository
 from core.services.utils.recommended_items import get_recommended_items_with_first_image
+from core.services.utils.urls import build_absolute_url
 
 from .cart import BouquetCart, ProductCart
 from .forms import OrderForm
@@ -29,6 +34,7 @@ from .services.mixins.edit import (
     CartItemRemoveSingleMixin,
     CartProductEditMixin,
 )
+
 
 stripe.api_key = settings.STRIPE_API_KEY
 
@@ -51,6 +57,7 @@ class CartView(CommonContextMixin, FormView):
         Возвращает:
         HttpResponseRedirect: Перенаправление пользователя на страницу оплаты Stripe.
         """
+        logger = logging.getLogger("django_stripe")
         order = self.save_order(
             form,
             self.request,
@@ -65,12 +72,19 @@ class CartView(CommonContextMixin, FormView):
         )
 
         self.add_order_in_user_session(self.request, order.code)
-        self.success_url = self.generate_payment_page_url(
-            domain,
-            order.code,
-            customer_email=order.email,
-            line_items=line_items,
-        )
+        try:
+            self.success_url = self.generate_payment_page_url(
+                domain,
+                order.code,
+                customer_email=order.email,
+                line_items=line_items,
+            )
+        except InvalidRequestError as e:
+            print(e.user_message)
+            logger.debug(
+                "Ошибка в генерации ссылки для оплаты, возможно введён некорректный метод оплаты.",
+                stack_info=True,
+            )
         return super().form_valid(form)
 
     @staticmethod
@@ -100,6 +114,7 @@ class CartView(CommonContextMixin, FormView):
             billing_address_collection="required",
             line_items=line_items,
             mode="payment",
+            automatic_tax={"enabled": True},
             customer_email=customer_email,
             success_url=f"https://{domain}{reverse_lazy("cart:success-order", kwargs={"order_code": order_code})}",
             cancel_url=f"https://{domain}{reverse_lazy("cart:show")}",
@@ -149,14 +164,25 @@ class CartView(CommonContextMixin, FormView):
         """
         line_items = []
         for order_product in order_products.all():
-            order_product.product.first_image = order_product.product.images.first()
+            if ProductImage := order_product.product.images.first():
+                order_product.product.first_image_url = ProductImage.image.url
+            else:
+                order_product.product.first_image_url = build_absolute_url(
+                    static("defaults/no-image.webp")
+                )
             line_items.append(
                 self.create_line_item(
                     order_product, order_product.quantity, currency, domain
                 )
             )
         for order_bouquet in order_bouquets.all():
-            order_bouquet.product.first_image = order_bouquet.product.images.first()
+            if BouquetImage := order_bouquet.product.images.first():
+                order_bouquet.product.first_image_url = BouquetImage.image.url
+            else:
+                order_bouquet.product.first_image_url = build_absolute_url(
+                    static("defaults/no-image.webp")
+                )
+
             line_items.append(
                 self.create_line_item(
                     order_bouquet, order_bouquet.quantity, currency, domain
@@ -192,7 +218,7 @@ class CartView(CommonContextMixin, FormView):
                 "currency": currency,
                 "product_data": {
                     "name": f"{order_product.product.name}",
-                    "images": [order_product.product.first_image.absolute_url],
+                    "images": [order_product.product.first_image_url],
                 },
                 "unit_amount_decimal": f"{order_product.product_tax_price_discounted * 100}",
             },
