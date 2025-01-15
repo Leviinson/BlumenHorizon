@@ -80,7 +80,6 @@ class CartView(CommonContextMixin, FormView):
                 line_items=line_items,
             )
         except InvalidRequestError as e:
-            print(e.user_message)
             logger.debug(
                 "Ошибка в генерации ссылки для оплаты, возможно введён некорректный метод оплаты.",
                 stack_info=True,
@@ -165,7 +164,7 @@ class CartView(CommonContextMixin, FormView):
         line_items = []
         for order_product in order_products.all():
             if ProductImage := order_product.product.images.first():
-                order_product.product.first_image_url = ProductImage.image.url
+                order_product.product.first_image_url = ProductImage.image.absolute_url
             else:
                 order_product.product.first_image_url = build_absolute_url(
                     static("defaults/no-image.webp")
@@ -177,7 +176,7 @@ class CartView(CommonContextMixin, FormView):
             )
         for order_bouquet in order_bouquets.all():
             if BouquetImage := order_bouquet.product.images.first():
-                order_bouquet.product.first_image_url = BouquetImage.image.url
+                order_bouquet.product.first_image_url = BouquetImage.image.absolute_url
             else:
                 order_bouquet.product.first_image_url = build_absolute_url(
                     static("defaults/no-image.webp")
