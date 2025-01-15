@@ -197,7 +197,7 @@ body {
 
 .carousel-control-prev-icon, .carousel-control-next-icon {
   background-color: rgba(203, 203, 203, 0.8);
-  border-radius: 50%;
+  border-radius: 25%;
   width: 30px;
   height: 30px;
 }
