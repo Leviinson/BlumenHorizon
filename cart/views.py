@@ -65,6 +65,7 @@ class CartView(CommonContextMixin, FormView):
             order.products,
             order.bouquets,
             SiteRepository.get_currency_code(),
+            SiteRepository.get_tax_percent()
         )
 
         self.add_order_in_user_session(self.request, order.code)
@@ -140,6 +141,7 @@ class CartView(CommonContextMixin, FormView):
         order_products: BaseManager[OrderProducts],
         order_bouquets: BaseManager[OrderBouquets],
         currency: str,
+        vat_percentage: int,
     ) -> list[dict[str, Any]]:
         """
         Генерирует список элементов для Stripe и прикрепляет первое изображение продукта.
@@ -165,7 +167,7 @@ class CartView(CommonContextMixin, FormView):
             display_name=_("НДС"),
             description=_("НДС Германия"),
             inclusive=True,
-            percentage=7,
+            percentage=vat_percentage,
             active=True,
             country=SiteRepository.get_country_code(),
             jurisdiction=SiteRepository.get_country_code(),
