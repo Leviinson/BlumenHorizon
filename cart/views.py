@@ -218,8 +218,10 @@ class CartView(CommonContextMixin, FormView):
                 "product_data": {
                     "name": f"{order_product.product.name}",
                     "images": [order_product.product.first_image_url],
+                    "tax_code": "txcd_99999999"
                 },
                 "unit_amount_decimal": f"{order_product.product_tax_price_discounted * 100}",
+                "tax_behavior": "inclusive"
             },
             "quantity": quantity,
         }
