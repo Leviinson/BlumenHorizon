@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-01-16 23:57+0100\n"
-"PO-Revision-Date: 2025-01-16 23:58+0100\n"
+"PO-Revision-Date: 2025-01-17 00:02+0100\n"
 "Last-Translator: None None <blumenhorizon@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -296,7 +296,6 @@ msgid "Предупреждение:"
 msgstr "Warning:"
 
 #: cart/templates/cart/index.html:198
-#, fuzzy
 #| msgid ""
 #| "\n"
 #| "                        <strong>Обратите внимание:</strong> Внешний вид букета может незначительно отличаться от изображения из-за сезонности или наличия цветов.\n"
