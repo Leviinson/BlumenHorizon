@@ -23,7 +23,7 @@
         "name": "{{ product.name }}",
         "image": [
           {% for image in product.images.all %}
-            {{ image.absolute_url }}{% if not forloop.last %},{% endif %}
+            "{{ image.absolute_url }}"{% if not forloop.last %},{% endif %}
           {% endfor %}
         ],
         "@id": "{{ product.get_absolute_url }}",
