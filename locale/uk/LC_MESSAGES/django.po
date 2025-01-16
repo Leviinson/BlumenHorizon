@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-16 19:15+0100\n"
-"PO-Revision-Date: 2025-01-16 23:46+0100\n"
+"POT-Creation-Date: 2025-01-16 23:57+0100\n"
+"PO-Revision-Date: 2025-01-16 23:58+0100\n"
 "Last-Translator: None None <blumenhorizon@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -199,21 +199,21 @@ msgstr "У доставці"
 msgid "Доставлен"
 msgstr "Доставлено"
 
-#: cart/models.py:23 cart/templates/cart/index.html:392
-#: cart/templates/cart/index.html:525
+#: cart/models.py:23 cart/templates/cart/index.html:405
+#: cart/templates/cart/index.html:538
 msgid "Уважаемый"
 msgstr "Шановний"
 
-#: cart/models.py:24 cart/templates/cart/index.html:393
-#: cart/templates/cart/index.html:526
+#: cart/models.py:24 cart/templates/cart/index.html:406
+#: cart/templates/cart/index.html:539
 msgid "Уважаемая"
 msgstr "Шановна"
 
-#: cart/models.py:94 cart/templates/cart/index.html:307
+#: cart/models.py:94 cart/templates/cart/index.html:320
 msgid "Чистая стоимость"
 msgstr "Чиста вартість"
 
-#: cart/models.py:100 cart/templates/cart/index.html:317
+#: cart/models.py:100 cart/templates/cart/index.html:330
 msgid "Налоговая стоимость"
 msgstr "Податкова вартість"
 
@@ -221,7 +221,7 @@ msgstr "Податкова вартість"
 msgid "НДС"
 msgstr "ПДВ"
 
-#: cart/models.py:115 cart/templates/cart/index.html:332
+#: cart/models.py:115 cart/templates/cart/index.html:345
 msgid "Итоговая стоимость"
 msgstr "Підсумкова вартість"
 
@@ -293,141 +293,162 @@ msgid "К сожалению, корзина пуста."
 msgstr "На жаль, кошик порожній."
 
 #: cart/templates/cart/index.html:194
+msgid "Предупреждение:"
+msgstr "Попередження:"
+
+#: cart/templates/cart/index.html:198
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "                        <strong>Обратите внимание:</strong> Внешний вид букета может незначительно отличаться от изображения из-за сезонности или наличия цветов.\n"
+#| "                        О любых изменениях мы сообщим Вам лично 🌸\n"
+#| "                        "
+msgid ""
+"\n"
+"                            <strong>Обратите внимание:</strong> Внешний вид букета может незначительно отличаться от изображения из-за сезонности или наличия цветов.\n"
+"                            О любых изменениях мы сообщим Вам лично 🌸\n"
+"                            "
+msgstr ""
+"\n"
+"<strong>Зверніть увагу:</strong> Зовнішній вигляд букета може незначно відрізнятися від зображення через сезонність. Таке припущення є законним відповідно до § 434 BGB.  \n"
+"Про будь-які зміни ми повідомимо Вас особисто перед складанням букета 🌸"
+
+#: cart/templates/cart/index.html:207
 msgid "Способы оплаты:"
 msgstr "Способи оплати:"
 
-#: cart/templates/cart/index.html:197
+#: cart/templates/cart/index.html:210
 msgid "способ оплаты по IBAN"
 msgstr "спосіб оплати за IBAN"
 
-#: cart/templates/cart/index.html:198
+#: cart/templates/cart/index.html:211
 msgid "visa логотип"
 msgstr "visa логотип"
 
-#: cart/templates/cart/index.html:199
+#: cart/templates/cart/index.html:212
 msgid "mastercard логотип"
 msgstr "mastercard логотип"
 
-#: cart/templates/cart/index.html:200
+#: cart/templates/cart/index.html:213
 msgid "american express логотип"
 msgstr "american express логотип"
 
-#: cart/templates/cart/index.html:201
+#: cart/templates/cart/index.html:214
 msgid "jcb логотип"
 msgstr "jcb логотип"
 
-#: cart/templates/cart/index.html:202
+#: cart/templates/cart/index.html:215
 msgid "paypal логотип"
 msgstr "paypal логотип"
 
-#: cart/templates/cart/index.html:203
+#: cart/templates/cart/index.html:216
 msgid "klarna логотип"
 msgstr "klarna логотип"
 
-#: cart/templates/cart/index.html:205
+#: cart/templates/cart/index.html:218
 msgid "revolut логотип"
 msgstr "revolut логотип"
 
-#: cart/templates/cart/index.html:206
+#: cart/templates/cart/index.html:219
 msgid "stripe логотип"
 msgstr "stripe логотип"
 
-#: cart/templates/cart/index.html:211
+#: cart/templates/cart/index.html:224
 #: mainpage/templates/mainpage/index.html:38
 #: mainpage/templates/mainpage/index.html:174
 msgid "Рекомендуемые букеты к покупке"
 msgstr "Рекомендовані букети для покупки"
 
-#: cart/templates/cart/index.html:255
+#: cart/templates/cart/index.html:268
 #: mainpage/templates/mainpage/index.html:235
 msgid "Рекомендуемые подарки к букетам"
 msgstr "Рекомендовані подарунки до букетів"
 
-#: cart/templates/cart/index.html:301
+#: cart/templates/cart/index.html:314
 msgid "Резюме заказа"
 msgstr "Резюме замовлення"
 
-#: cart/templates/cart/index.html:326
+#: cart/templates/cart/index.html:339
 #: core/staticfiles/templates/footer.html:37
 #: core/staticfiles/templates/header.html:30
 msgid "Доставка"
 msgstr "Доставка"
 
-#: cart/templates/cart/index.html:327
+#: cart/templates/cart/index.html:340
 msgid "Бесплатно"
 msgstr "Безкоштовно"
 
-#: cart/templates/cart/index.html:334
+#: cart/templates/cart/index.html:347
 msgid "Включая НДС"
 msgstr "Включно з ПДВ"
 
-#: cart/templates/cart/index.html:349
+#: cart/templates/cart/index.html:362
 msgid "Адрес доставки"
 msgstr "Адреса доставки"
 
-#: cart/templates/cart/index.html:357
+#: cart/templates/cart/index.html:370
 msgid "Уточнить адрес у получателя?"
 msgstr "Уточнити адресу одержувача?"
 
-#: cart/templates/cart/index.html:368
+#: cart/templates/cart/index.html:381
 msgid "Email"
 msgstr "Email"
 
-#: cart/templates/cart/index.html:387
+#: cart/templates/cart/index.html:400
 msgid "Форма обращения"
 msgstr "Форма звернення"
 
-#: cart/templates/cart/index.html:391 cart/templates/cart/index.html:524
+#: cart/templates/cart/index.html:404 cart/templates/cart/index.html:537
 msgid "Выберите форму обращения"
 msgstr "Виберіть форму звернення"
 
-#: cart/templates/cart/index.html:404
+#: cart/templates/cart/index.html:417
 msgid "Имя заказчика"
 msgstr "Ім'я замовника"
 
-#: cart/templates/cart/index.html:423
+#: cart/templates/cart/index.html:436
 #: cart/templates/cart/order_confirmation.html:529
 msgid "Страна"
 msgstr "Країна"
 
-#: cart/templates/cart/index.html:437
+#: cart/templates/cart/index.html:450
 #: cart/templates/cart/order_confirmation.html:532
 msgid "Город"
 msgstr "Місто"
 
-#: cart/templates/cart/index.html:451
+#: cart/templates/cart/index.html:464
 #: cart/templates/cart/order_confirmation.html:535
 msgid "Почтовый индекс"
 msgstr "Поштовий індекс"
 
-#: cart/templates/cart/index.html:462
+#: cart/templates/cart/index.html:475
 #: cart/templates/cart/order_confirmation.html:542
 msgid "Улица"
 msgstr "Вулиця"
 
-#: cart/templates/cart/index.html:473
+#: cart/templates/cart/index.html:486
 #: cart/templates/cart/order_confirmation.html:549
 msgid "Номер здания"
 msgstr "Номер будівлі"
 
-#: cart/templates/cart/index.html:484
+#: cart/templates/cart/index.html:497
 #: cart/templates/cart/order_confirmation.html:556
 msgid "Номер квартиры/офиса"
 msgstr "Номер квартири/офісу"
 
-#: cart/templates/cart/index.html:495
+#: cart/templates/cart/index.html:508
 #: cart/templates/cart/order_confirmation.html:563
 #: cart/templates/cart/success_order.html:28
 msgid "Дата доставки"
 msgstr "Дата доставки"
 
-#: cart/templates/cart/index.html:506
+#: cart/templates/cart/index.html:519
 #: cart/templates/cart/order_confirmation.html:566
 #: cart/templates/cart/success_order.html:31
 msgid "Время доставки"
 msgstr "Час доставки"
 
-#: cart/templates/cart/index.html:516
+#: cart/templates/cart/index.html:529
 msgid ""
 "Минимум 3 часа после оформления заказа. Мы сообщим Вам о возможности "
 "доставки."
@@ -435,46 +456,46 @@ msgstr ""
 "Щонайменше 3 години після оформлення замовлення. Ми повідомимо Вас про "
 "можливість доставки."
 
-#: cart/templates/cart/index.html:520
+#: cart/templates/cart/index.html:533
 msgid "Форма обращения к получателю"
 msgstr "Форма звернення до одержувача"
 
-#: cart/templates/cart/index.html:537
+#: cart/templates/cart/index.html:550
 #: cart/templates/cart/order_confirmation.html:570
 msgid "Имя получателя"
 msgstr "Імʼя отримувача"
 
-#: cart/templates/cart/index.html:549
+#: cart/templates/cart/index.html:562
 #: cart/templates/cart/order_confirmation.html:574
 msgid "Номер телефона получателя"
 msgstr "Номер телефону одержувача"
 
-#: cart/templates/cart/index.html:563
+#: cart/templates/cart/index.html:576
 msgid "Получатель - заказчик?"
 msgstr "Одержувач – замовник?"
 
-#: cart/templates/cart/index.html:576
+#: cart/templates/cart/index.html:589
 msgid "Сюрприз до последнего!"
 msgstr "Сюрприз до останнього!"
 
-#: cart/templates/cart/index.html:577
+#: cart/templates/cart/index.html:590
 msgid ""
 "Мы не раскроем тайну вашего подарка, чтобы сделать момент ещё более "
 "волшебным."
 msgstr ""
 "Ми не розкриємо таємницю вашого подарунка, щоб зробити момент ще чарівнішим."
 
-#: cart/templates/cart/index.html:589
+#: cart/templates/cart/index.html:602
 #: cart/templates/cart/order_confirmation.html:578
 msgid "Записка получателю"
 msgstr "Записка одержувачу"
 
-#: cart/templates/cart/index.html:593
+#: cart/templates/cart/index.html:606
 #: cart/templates/cart/order_confirmation.html:582
 msgid "Что нам стоит учесть?"
 msgstr "Що нам варто врахувати?"
 
-#: cart/templates/cart/index.html:596
+#: cart/templates/cart/index.html:609
 msgid "Оформить заказ"
 msgstr "Оформити замовлення"
 
@@ -761,7 +782,7 @@ msgid ""
 "                        "
 msgstr ""
 "\n"
-"<strong>Зверніть увагу:</strong> Зовнішній вигляд букета може незначно відрізнятися від зображення через сезонність. Таке припущення є законним відповідно до § 434 BGB та § 446 BGB.  \n"
+"<strong>Зверніть увагу:</strong> Зовнішній вигляд букета може незначно відрізнятися від зображення через сезонність. Таке припущення є законним відповідно до § 434 BGB.  \n"
 "Про будь-які зміни ми повідомимо Вас особисто перед складанням букета 🌸"
 
 #: catalogue/templates/catalog/base_detail.html:169
