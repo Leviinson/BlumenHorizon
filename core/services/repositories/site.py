@@ -31,7 +31,7 @@ class SiteRepository:
 
     @classmethod
     def get_country_code(cls):
-        pass
+        return set_or_get_from_cache("country_code", 60 * 15)
 
     @classmethod
     def get_city(cls):

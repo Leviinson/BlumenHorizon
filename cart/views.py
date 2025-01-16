@@ -7,13 +7,12 @@ from django.conf import settings
 from django.contrib.auth.models import AnonymousUser
 from django.db.models.manager import BaseManager
 from django.http import HttpRequest, HttpResponseForbidden, JsonResponse
+from django.templatetags.static import static
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 from django.views.generic.edit import BaseFormView, FormView
-from stripe import InvalidRequestError
-from django.templatetags.static import static
-
+from stripe import InvalidRequestError, TaxRate
 
 from accounts.models import User
 from catalogue.models import Bouquet, BouquetImage, Product, ProductImage
@@ -34,7 +33,6 @@ from .services.mixins.edit import (
     CartItemRemoveSingleMixin,
     CartProductEditMixin,
 )
-
 
 stripe.api_key = settings.STRIPE_API_KEY
 
@@ -63,23 +61,21 @@ class CartView(CommonContextMixin, FormView):
             self.request,
         )
 
-        domain = SiteRepository.get_domain()
         line_items = self.generate_line_items_and_attach_first_images(
             order.products,
             order.bouquets,
             SiteRepository.get_currency_code(),
-            domain,
         )
 
         self.add_order_in_user_session(self.request, order.code)
         try:
             self.success_url = self.generate_payment_page_url(
-                domain,
                 order.code,
                 customer_email=order.email,
                 line_items=line_items,
             )
         except InvalidRequestError as e:
+            print(e)
             logger.debug(
                 "Ошибка в генерации ссылки для оплаты, возможно введён некорректный метод оплаты.",
                 stack_info=True,
@@ -88,7 +84,6 @@ class CartView(CommonContextMixin, FormView):
 
     @staticmethod
     def generate_payment_page_url(
-        domain: str,
         order_code: str,
         customer_email: str,
         line_items: list[dict[str, str | int]],
@@ -113,10 +108,16 @@ class CartView(CommonContextMixin, FormView):
             billing_address_collection="required",
             line_items=line_items,
             mode="payment",
-            automatic_tax={"enabled": True},
             customer_email=customer_email,
-            success_url=f"https://{domain}{reverse_lazy("cart:success-order", kwargs={"order_code": order_code})}",
-            cancel_url=f"https://{domain}{reverse_lazy("cart:show")}",
+            success_url=build_absolute_url(
+                reverse_lazy(
+                    "cart:success-order",
+                    kwargs={"order_code": order_code},
+                )
+            ),
+            cancel_url=build_absolute_url(
+                reverse_lazy("cart:show"),
+            ),
             metadata={
                 "order_code": order_code,
             },
@@ -124,7 +125,6 @@ class CartView(CommonContextMixin, FormView):
                 "card",
                 "ideal",
                 "klarna",
-                "blik",
                 "paypal",
                 "revolut_pay",
                 "link",
@@ -140,7 +140,6 @@ class CartView(CommonContextMixin, FormView):
         order_products: BaseManager[OrderProducts],
         order_bouquets: BaseManager[OrderBouquets],
         currency: str,
-        domain: str,
     ) -> list[dict[str, Any]]:
         """
         Генерирует список элементов для Stripe и прикрепляет первое изображение продукта.
@@ -162,6 +161,16 @@ class CartView(CommonContextMixin, FormView):
             - Список line items для Stripe (list[dict[str, str | int]]).
         """
         line_items = []
+        tax_rate = TaxRate.create(
+            display_name=_("НДС"),
+            description=_("НДС Германия"),
+            inclusive=True,
+            percentage=7,
+            active=True,
+            country=SiteRepository.get_country_code(),
+            jurisdiction=SiteRepository.get_country_code(),
+        )
+        tax_rate_id = tax_rate.id
         for order_product in order_products.all():
             if ProductImage := order_product.product.images.first():
                 order_product.product.first_image_url = ProductImage.absolute_url
@@ -171,7 +180,7 @@ class CartView(CommonContextMixin, FormView):
                 )
             line_items.append(
                 self.create_line_item(
-                    order_product, order_product.quantity, currency, domain
+                    order_product, order_product.quantity, currency, tax_rate_id
                 )
             )
         for order_bouquet in order_bouquets.all():
@@ -184,7 +193,7 @@ class CartView(CommonContextMixin, FormView):
 
             line_items.append(
                 self.create_line_item(
-                    order_bouquet, order_bouquet.quantity, currency, domain
+                    order_bouquet, order_bouquet.quantity, currency, tax_rate_id
                 )
             )
         return line_items
@@ -194,7 +203,7 @@ class CartView(CommonContextMixin, FormView):
         order_product: OrderBouquets | OrderProducts,
         quantity: int,
         currency: str,
-        domain: str,
+        tax_rate_id: str,
     ) -> dict[str, Collection[str]]:
         """
         Создаёт элемент для Stripe (line item) на основе данных о продукте или букете.
@@ -218,12 +227,15 @@ class CartView(CommonContextMixin, FormView):
                 "product_data": {
                     "name": f"{order_product.product.name}",
                     "images": [order_product.product.first_image_url],
-                    "tax_code": "txcd_99999999"
+                    "tax_code": "txcd_99999999",
                 },
                 "unit_amount_decimal": f"{order_product.product_tax_price_discounted * 100}",
-                "tax_behavior": "inclusive"
+                "tax_behavior": "inclusive",
             },
             "quantity": quantity,
+            "tax_rates": [
+                tax_rate_id,
+            ],
         }
 
     @staticmethod
