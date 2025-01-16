@@ -17,6 +17,7 @@ from catalogue.models import (
 from core.services.dataclasses.related_model import RelatedModel
 from core.services.mixins import CommonContextMixin
 from core.services.mixins.canonicals import CanonicalLinksMixin
+from core.services.mixins.common_context_mixin import CanonicalsContextMixin
 from core.services.types import Limit, OrderedModelField
 from core.services.utils.carts import get_carts
 from core.services.utils.recommended_items import get_recommended_items_with_first_image
@@ -26,7 +27,12 @@ from ..models import MainPageModel, MainPageSeoBlock, MainPageSliderImages
 from .types import Categories, RecommendedItems
 
 
-class MainPageView(CommonContextMixin, TemplateView, CanonicalLinksMixin):
+class MainPageView(
+    CommonContextMixin,
+    CanonicalLinksMixin,
+    CanonicalsContextMixin,
+    TemplateView,
+):
     template_name = "mainpage/index.html"
     http_method_names = ["get"]
 
