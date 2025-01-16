@@ -40,7 +40,7 @@ class FillerViewMixin:
         context["image_alt"] = page.image_alt
         context["url"] = self.url
         return context
-    
+
     @property
     def relative_url(self):
         return self.url

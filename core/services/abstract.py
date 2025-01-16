@@ -71,7 +71,7 @@ class CanonicalLinksAbstract(ABC):
         если его не реализовать на контроллере.
         """
         pass
-    
+
     @property
     @abstractmethod
     def relative_url(self) -> str:

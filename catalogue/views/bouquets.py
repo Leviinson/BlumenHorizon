@@ -9,7 +9,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from cart.cart import BouquetCart
-from core.services.mixins import CommonContextMixin, CanonicalsContextMixin
+from core.services.mixins import CanonicalsContextMixin, CommonContextMixin
 from core.services.mixins.canonicals import CanonicalLinksMixin
 
 from ..filters import BouquetFilter

@@ -51,7 +51,7 @@ class ExtendedSite(models.Model):
         max_length=174,
         verbose_name="Текст для красного уведомления под хедером, белый текст на красном фоне во всю ширину строки.",
         null=True,
-        blank=True
+        blank=True,
     )
 
     email = models.CharField(

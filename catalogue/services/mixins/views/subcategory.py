@@ -168,11 +168,7 @@ class ProductSubcategoryListViewMixin(
         qs = super().get_queryset()
         self.subcategory = get_object_or_404(
             ProductSubcategory.objects.select_related("category").only(
-                "name",
-                "meta_tags",
-                "category__name",
-                "category__slug",
-                "slug"
+                "name", "meta_tags", "category__name", "category__slug", "slug"
             ),
             slug=self.kwargs["subcategory_slug"],
             category__slug=self.kwargs["category_slug"],
