@@ -164,7 +164,7 @@ class CartView(CommonContextMixin, FormView):
         line_items = []
         for order_product in order_products.all():
             if ProductImage := order_product.product.images.first():
-                order_product.product.first_image_url = ProductImage.image.absolute_url
+                order_product.product.first_image_url = ProductImage.absolute_url
             else:
                 order_product.product.first_image_url = build_absolute_url(
                     static("defaults/no-image.webp")
@@ -176,7 +176,7 @@ class CartView(CommonContextMixin, FormView):
             )
         for order_bouquet in order_bouquets.all():
             if BouquetImage := order_bouquet.product.images.first():
-                order_bouquet.product.first_image_url = BouquetImage.image.absolute_url
+                order_bouquet.product.first_image_url = BouquetImage.absolute_url
             else:
                 order_bouquet.product.first_image_url = build_absolute_url(
                     static("defaults/no-image.webp")
