@@ -139,7 +139,11 @@ def order_created(sender: Order, instance: Order, created, **kwargs):
             f"*ID заказа*: `{order.id}`\n"
             f"*Стоимость*: `{order.grand_total} EUR`\n"
             f"*Страна*: `{escape_markdown(order.country)}`\n"
-            f"*Город*: `{escape_markdown(order.city)}`\n\n"
+            f"*Город*: `{escape_markdown(order.city)}`\n"
+            f"*Имя заказчика*: `{escape_markdown(order.name)}`\n"
+            f"*Email заказчика*: `{escape_markdown(order.email)}`\n"
+            f"*Имя получателя*: `{escape_markdown(order.recipient_name)}`\n"
+            f"*Телефон получателя*: `{escape_markdown(order.recipient_phonenumber)}`\n\n"
             f"Вперёд за работу! 🚀"
         )
 
