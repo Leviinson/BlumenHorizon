@@ -216,7 +216,7 @@
                             <div class="w-80">
                                 {% translate 'Так-же можно задать вопрос о продукте готовым текстом:' %}
                             </div>
-                            <div class="d-flex gap-3 ms-3 w-20 justify-content-between">
+                            <div class="d-flex gap-3 ms-3 w-20 justify-content-between align-items-center">
                                 {% for social in socials_right_bottom %}
                                     <a class="link-body-emphasis"
                                        href="{{ social.absolute_url }}?&text={% blocktranslate with product_name=product.name %}Здравствуйте! У меня есть вопрос по поводу “{{ product_name }}” {% endblocktranslate %}">
