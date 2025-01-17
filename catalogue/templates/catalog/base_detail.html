@@ -229,7 +229,7 @@
                     </div>
                 </div>                
                 <div id="bottom-level-information" class="d-flex justify-content-between">
-                    <ul class="list-unstyled product-attributes-list">
+                    <ul class="list-unstyled product-attributes-list w-50">
                         <li class="p-0">
                             <span>{% translate 'Артикул' %}:</span>
                             <br>
@@ -238,7 +238,7 @@
                         <li class="text-success p-0">{% translate 'Есть в наличии' %}</li>
                     </ul>
 
-                    <div class="mb-3 d-flex flex-column align-items-end">
+                    <div class="mb-3 d-flex flex-column align-items-end" style="width: 40%;">
                         {% if product.has_discount %}
                             <span class="text-danger mb-0 fw-bold" style="font-size: x-large;">
                                 {{ product.tax_price_discounted|floatformat:"2u" }} {{ currency_symbol }}
