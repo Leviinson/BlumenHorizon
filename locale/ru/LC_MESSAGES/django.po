@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-01-18 00:00+0100\n"
-"PO-Revision-Date: 2025-01-18 00:02+0100\n"
+"PO-Revision-Date: 2025-01-18 00:08+0100\n"
 "Last-Translator: None None <blumenhorizon@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -839,7 +839,7 @@ msgstr "Так-же можно задать вопрос о продукте г�
 #: catalogue/templates/catalog/base_detail.html:222
 #, python-format
 msgid "Здравствуйте! У меня есть вопрос по поводу “%(product_name)s” "
-msgstr ""
+msgstr "Здравствуйте! У меня есть вопрос по поводу “%(product_name)s”"
 
 #: catalogue/templates/catalog/base_detail.html:234
 msgid "Артикул"
