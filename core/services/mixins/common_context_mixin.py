@@ -1,3 +1,4 @@
+import os
 from django.conf import settings
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.translation import get_language
@@ -15,6 +16,8 @@ class CommonContextMixin:
             context["site_name"] = current_site.name
             context["domain_name"] = current_site.domain
             context["company_email"] = site_extended.email
+        context["gtag_id"] = os.getenv("GTAG_ID")
+        context["merchant_id"] = os.getenv("MERCHANT_ID")
         context["currency_symbol"] = site_extended.currency_symbol
         context["currency_code"] = site_extended.currency_code
         context["country"] = site_extended.country

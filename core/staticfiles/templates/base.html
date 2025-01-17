@@ -6,7 +6,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KWXBK65TXT"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ gtag_id }}"></script>
     <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -19,17 +19,24 @@
             'analytics_storage': 'denied'
         });
 
-    gtag('config', 'G-KWXBK65TXT');
+    gtag('config', '{{ gtag_id }}');
     </script>
-    <script src="https://apis.google.com/js/platform.js?onload=renderBadge" async defer></script>
+    <script src="https://apis.google.com/js/platform.js?onload=renderBadge"
+        async defer>
+    </script>
+    
     <script>
-      window.renderBadge = function() {
+        window.renderBadge = function() {
         var ratingBadgeContainer = document.createElement("div");
-        document.body.appendChild(ratingBadgeContainer);
-        window.gapi.load('ratingbadge', function() {
-          window.gapi.ratingbadge.render(ratingBadgeContainer, {"merchant_id": 5505979176});
+            document.body.appendChild(ratingBadgeContainer);
+            window.gapi.load('ratingbadge', function() {
+            window.gapi.ratingbadge.render(
+                ratingBadgeContainer, {
+                "merchant_id": {{ merchant_id }},
+                "position": "BOTTOM_LEFT"
+                });           
         });
-      }
+        }
     </script>
     <script>
         function setCookie(name, value, days) {
