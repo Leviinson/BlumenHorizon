@@ -240,14 +240,14 @@
 
                     <div class="mb-3 d-flex flex-column align-items-end" style="width: 40%;">
                         {% if product.has_discount %}
-                            <span class="text-danger mb-0 fw-bold" style="font-size: x-large;">
+                            <span class="text-dark-green mb-0 fw-bold" style="font-size: x-large;">
                                 {{ product.tax_price_discounted|floatformat:"2u" }} {{ currency_symbol }}
                             </span>
                             <span class="text-muted text-decoration-line-through mb-0" style="font-size: 1.25em;">
                                 {{ product.tax_price|floatformat:"2u" }} {{ currency_symbol }}
                             </span>
                         {% else %}
-                            <span class="mb-0 text-danger fw-bold fs-3" style="white-space: nowrap;">
+                            <span class="mb-0 text-dark-green fw-bold fs-3" style="white-space: nowrap;">
                                 {{ product.tax_price|floatformat:"2u" }} {{ currency_symbol }}
                             </span>
                         {% endif %}
