@@ -3,7 +3,6 @@
 {% get_current_language as LANGUAGE_CODE %}
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}">
-
 <head>
     <meta charset="UTF-8">
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ gtag_id }}"></script>
@@ -11,7 +10,6 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
     gtag('consent', 'default', {
             'ad_storage': 'denied',
             'ad_user_data': 'denied',
@@ -24,7 +22,6 @@
     <script src="https://apis.google.com/js/platform.js?onload=renderBadge"
         async defer>
     </script>
-    
     <script>
         window.renderBadge = function() {
         var ratingBadgeContainer = document.createElement("div");

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-17 02:09+0100\n"
-"PO-Revision-Date: 2025-01-17 02:11+0100\n"
+"POT-Creation-Date: 2025-01-18 00:00+0100\n"
+"PO-Revision-Date: 2025-01-18 00:01+0100\n"
 "Last-Translator: None None <blumenhorizon@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -839,42 +839,52 @@ msgstr "Ich erlaube Ihnen, mich zurückzurufen"
 msgid "Связаться"
 msgstr "Kontaktieren"
 
-#: catalogue/templates/catalog/base_detail.html:219
+#: catalogue/templates/catalog/base_detail.html:217
+msgid "Так-же можно задать вопрос о продукте готовым текстом:"
+msgstr ""
+"Man kann auch eine Frage zum Produkt mit einem vorgefertigten Text stellen:"
+
+#: catalogue/templates/catalog/base_detail.html:222
+#, python-format
+msgid "Здравствуйте! У меня есть вопрос по поводу “%(product_name)s” "
+msgstr ""
+
+#: catalogue/templates/catalog/base_detail.html:234
 msgid "Артикул"
 msgstr "Artikel"
 
-#: catalogue/templates/catalog/base_detail.html:223
+#: catalogue/templates/catalog/base_detail.html:238
 msgid "Есть в наличии"
 msgstr "Ist verfügbar"
 
-#: catalogue/templates/catalog/base_detail.html:239
+#: catalogue/templates/catalog/base_detail.html:254
 msgid "Включая НДС и доставку"
 msgstr "Inklusive Mehrwertsteuer und Versand"
 
-#: catalogue/templates/catalog/base_detail.html:261
+#: catalogue/templates/catalog/base_detail.html:276
 msgid "Купить"
 msgstr "Kaufen"
 
-#: catalogue/templates/catalog/base_detail.html:272 mainpage/models.py:25
+#: catalogue/templates/catalog/base_detail.html:287 mainpage/models.py:25
 #: mainpage/models.py:119 mainpage/models.py:144 mainpage/models.py:169
 #: mainpage/models.py:194 mainpage/models.py:212
 msgid "Описание"
 msgstr "Beschreibung"
 
-#: catalogue/templates/catalog/base_detail.html:281
+#: catalogue/templates/catalog/base_detail.html:296
 msgid "Характеристики"
 msgstr "Eigenschaften"
 
-#: catalogue/templates/catalog/base_detail.html:287
+#: catalogue/templates/catalog/base_detail.html:302
 msgid "Рекомендуемые продукты к покупке"
 msgstr "Empfohlene Produkte zum Kauf"
 
-#: catalogue/templates/catalog/base_detail.html:338
+#: catalogue/templates/catalog/base_detail.html:353
 #: mainpage/templates/mainpage/index.html:225
 msgid "Предыдущий слайд букетов"
 msgstr "Vorheriger Blumenstrauß-Slide"
 
-#: catalogue/templates/catalog/base_detail.html:343
+#: catalogue/templates/catalog/base_detail.html:358
 #: mainpage/templates/mainpage/index.html:230
 msgid "Следующий слайд букетов"
 msgstr "Nächster Blumenstrauß-Slide"
@@ -968,7 +978,7 @@ msgstr "Aktualisierungsdatum"
 msgid "Изображение продукта временно недоступно."
 msgstr "Produktbild vorübergehend nicht verfügbar."
 
-#: core/staticfiles/templates/base.html:157
+#: core/staticfiles/templates/base.html:171
 msgid ""
 "\n"
 "        Мы используем <span class=\"text-warning\">cookies</span> для улучшения работы сайта.\n"
@@ -985,11 +995,11 @@ msgstr ""
 "<br>  \n"
 "Indem Sie die Website weiter nutzen, stimmen Sie der Verwendung zusätzlicher Cookies zu.  "
 
-#: core/staticfiles/templates/base.html:165
+#: core/staticfiles/templates/base.html:179
 msgid "Принять"
 msgstr "Akzeptieren"
 
-#: core/staticfiles/templates/base.html:166
+#: core/staticfiles/templates/base.html:180
 msgid "Отклонить"
 msgstr "Ablehnen"
 
