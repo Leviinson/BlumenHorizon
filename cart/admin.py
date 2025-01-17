@@ -42,6 +42,7 @@ class OrderAdminModel(admin.ModelAdmin):
         "recipient_phonenumber",
         "is_recipient",
         "is_surprise",
+        "is_agreement_accepted",
         "code",
         "created_at",
         "updated_at",

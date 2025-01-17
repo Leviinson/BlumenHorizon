@@ -79,6 +79,9 @@ class Order(TimeStampAdbstractModel, models.Model):
     is_surprise = models.BooleanField(
         default=False, verbose_name="Доставка с сюрпризом?"
     )
+    is_agreement_accepted = models.BooleanField(
+        default=False, verbose_name="Соглашение с AGB и Datenschutz"
+    )
     code = models.CharField(
         max_length=60, verbose_name="Код заказа", default=generate_sku
     )

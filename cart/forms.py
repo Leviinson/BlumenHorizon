@@ -3,6 +3,7 @@ from typing import Any, Optional
 
 from django import forms
 from django.contrib.auth.models import AnonymousUser
+from django.utils.translation import gettext_lazy as _
 from django.db import transaction
 
 from accounts.models import User
@@ -63,6 +64,7 @@ class OrderForm(forms.ModelForm):
             "recipient_phonenumber",
             "is_recipient",
             "is_surprise",
+            "is_agreement_accepted",
         ]
 
     def save(
@@ -198,3 +200,12 @@ class OrderForm(forms.ModelForm):
                     for bouquet in bouquets
                 ]
             )
+
+
+    def clean_is_agreement_accepted(self):
+        agreement = self.cleaned_data["is_agreement_accepted"]
+        if not agreement:
+            raise forms.ValidationError(
+                _("Вы должны согласиться с данными правилами."),
+            )
+        return agreement

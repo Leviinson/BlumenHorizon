@@ -35,6 +35,10 @@ body {
     color: var(--dark-green-color) !important;
 }
 
+.text-soft-turquoise {
+    color: var(--turquoise-color) !important;
+}
+
 .btn-outline-dark-green{
     --bs-btn-color: rgba(var(--bs-light-rgb),var(--bs-text-opacity))!important;
     --bs-btn-border-color: var(--dark-green-color);

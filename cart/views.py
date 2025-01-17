@@ -65,7 +65,7 @@ class CartView(CommonContextMixin, FormView):
             order.products,
             order.bouquets,
             SiteRepository.get_currency_code(),
-            SiteRepository.get_tax_percent()
+            SiteRepository.get_tax_percent(),
         )
 
         self.add_order_in_user_session(self.request, order.code)
@@ -451,6 +451,8 @@ class CartView(CommonContextMixin, FormView):
             ],
             limit=6,
         )
+        context["agb_url"] = reverse_lazy("mainpage:agb")
+        context["privacy_policy_url"] = reverse_lazy("mainpage:privacy-and-policy")
 
         tax_percent = SiteRepository.get_tax_percent()
         grand_total = context["products_cart"].total + context["bouquets_cart"].total

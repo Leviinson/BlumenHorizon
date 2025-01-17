@@ -365,7 +365,7 @@
                         <form id="order-form" method="POST">
                             {% csrf_token %}
                             <div class="mb-3 form-check">
-                                <input name="clarify_address" type="checkbox" class="form-check-input" id="confirm-address">
+                                <input name="clarify_address" type="checkbox" class="form-check-input checkbox-dark" id="confirm-address">
                                 <label class="form-check-label" for="confirm-address">
                                     {% translate 'Уточнить адрес у получателя?' %}
                                 </label>
@@ -525,7 +525,7 @@
                                 </div>
                                 {% endfor %}
                                 {% endif %}
-                                <div class="form-text text-danger">
+                                <div class="form-text text-success">
                                     {% translate 'Минимум 3 часа после оформления заказа. Мы сообщим Вам о возможности доставки.' %}
                                 </div>
                             </div>
@@ -571,7 +571,7 @@
                                 {% endif %}
                             </div>
                             <div class="mb-3 form-check">
-                                <input name="is_recipient" type="checkbox" class="form-check-input" id="recipient-is-customer">
+                                <input name="is_recipient" type="checkbox" class="form-check-input checkbox-dark" id="recipient-is-customer">
                                 <label class="form-check-label" for="recipient-is-customer">
                                     {% translate 'Получатель - заказчик?' %}
                                 </label>
@@ -584,7 +584,7 @@
                                 {% endif %}
                             </div>
                             <div class="mb-3 form-check">
-                                <input name="is_surprise" type="checkbox" class="form-check-input" id="surprise-delivery">
+                                <input name="is_surprise" type="checkbox" class="form-check-input checkbox-dark" id="surprise-delivery">
                                 <label class="form-check-label" for="surprise-delivery">
                                     <strong>{% translate 'Сюрприз до последнего!' %}</strong>
                                     {% translate 'Мы не раскроем тайну вашего подарка, чтобы сделать момент ещё более волшебным.'%}
@@ -604,6 +604,23 @@
                             <div class="mb-3 form-floating">
                                 <textarea class="form-control" name="instructions" id="instructions" resize="vertical" style="height: 100px;"></textarea>
                                 <label for="message_card">{% translate 'Что нам стоит учесть?' %}</label>
+                            </div>
+                            <div class="mb-3 form-check">
+                                <input name="is_agreement_accepted" type="checkbox" class="form-check-input checkbox-dark" id="agreement-accepting">
+                                <label class="form-check-label" for="agreement-accepting">
+                                    {% blocktranslate %}
+                                    Я согласен(-а) с <a href="{{ agb_url }}" class="link-opacity-75">общими условиями и положениями</a> и
+                                    <a href="{{ privacy_policy_url }}" class="link-opacity-75">политикой конфиденциальности и безопасности данных</a> 
+                                    {{ site_name }}.
+                                    {% endblocktranslate %}
+                                </label>
+                                {% if form.errors.is_agreement_accepted %}
+                                {% for error in form.errors.is_agreement_accepted %}
+                                <div class="form-text text-danger">
+                                    {{ error|striptags }}
+                                </div>
+                                {% endfor %}
+                                {% endif %}
                             </div>
                             <button type="submit" class="btn btn-dark-green" id="btn-checkout">
                                 {% translate 'Оформить заказ' %}
