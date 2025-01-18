@@ -4,8 +4,6 @@
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}">
 <head>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KWXBK65TXT"></script>
-    </script>
     <script>
         function setCookie(name, value, days) {
             var expires = "";
@@ -142,7 +140,7 @@
         {% endblocktranslate %}
         </p>
         <button id="acceptCookies" class="btn btn-dark-green fw-bold" onclick="consentGrantedAdStorage()">{% translate 'Принять' %}</button>
-        <button id="declineCookies" class="btn btn-dark-green fw-bold" onclick="this.parentNode.style.display = 'none';">{% translate 'Отклонить' %}</button>
+        <button id="declineCookies" class="btn btn-dark-green fw-bold" onclick="consentDeclined()">{% translate 'Отклонить' %}</button>
     </div>
   
   <!-- Google Analytics (will be loaded dynamically after accepting "consent cookies") -->
