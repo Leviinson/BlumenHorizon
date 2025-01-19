@@ -1,6 +1,7 @@
 :root {
     --turquoise-color: rgb(87, 123, 128);
-    --dark-green-color: rgb(44, 73, 75);
+    --dark-green-color: #2c494b;
+    --strong-green-color: #273e40;
     --light-green-color: rgb(55, 92, 94);
 }
 
@@ -29,6 +30,10 @@ body {
 
 .bg-dark-green {
     background-color: var(--dark-green-color) !important;
+}
+
+.bg-strong-green {
+    background-color: var(--strong-green-color) !important;
 }
 
 .text-dark-green {
