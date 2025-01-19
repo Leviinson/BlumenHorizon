@@ -460,8 +460,7 @@
                                 <label for="country" class="form-label">{% translate 'Страна' %}</label>
                                 <input name="country" type="text" class="form-control"
                                        id="country" autocomplete="country"
-                                       required 
-                                       style="background-color: var(--bs-secondary-bg); opacity: 1;">
+                                       required>
                                 {% if form.errors.country %}
                                 {% for error in form.errors.country %}
                                 <div class="form-text text-danger">
@@ -474,8 +473,7 @@
                                 <label for="city" class="form-label">{% translate 'Город' %}</label>
                                 <input name="city" type="text" class="form-control"
                                        id="city" autocomplete="address-level2"
-                                       required
-                                       style="background-color: var(--bs-secondary-bg); opacity: 1;">
+                                       required>
                                 {% if form.errors.city %}
                                 {% for error in form.errors.city %}
                                 <div class="form-text text-danger">
