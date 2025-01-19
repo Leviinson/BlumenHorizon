@@ -611,6 +611,4 @@ class SuccessOrderView(CommonContextMixin, TemplateView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context["order"] = self.order
-        context["iban"] = self.current_site.extended.iban
-        context["account_name"] = self.current_site.extended.account_name
         return context
