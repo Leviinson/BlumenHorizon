@@ -20,9 +20,6 @@ class CommonContextMixin:
         context["merchant_id"] = os.getenv("MERCHANT_ID")
         context["currency_symbol"] = site_extended.currency_symbol
         context["currency_code"] = site_extended.currency_code
-        context["country"] = site_extended.country
-        context["country_code"] = site_extended.country_iso_3166_1_alpha_2
-        context["city"] = site_extended.city
         context["socials_right_bottom"] = site_extended.socials.all()
         context["MEDIA_URL"] = settings.MEDIA_URL
         context["alert"] = site_extended.header_alert_message

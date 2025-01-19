@@ -6,7 +6,5 @@ from .models import ExtendedSite
 @register(ExtendedSite)
 class SiteExtensionsTranslationOptions(TranslationOptions):
     fields = (
-        "country",
-        "city",
         "header_alert_message",
     )

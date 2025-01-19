@@ -19,7 +19,7 @@ class MainPageModel(models.Model):
     json_ld_description = models.CharField(
         verbose_name="Description в JSON LD для OnlineStore",
         max_length=500,
-        default="Blumen Horizon интернет-магазин цветов и подарков в Берлине",
+        default="Blumen Horizon интернет-магазин цветов и подарков",
     )
     description = HTMLField(
         verbose_name=_("Описание"),

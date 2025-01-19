@@ -56,10 +56,6 @@
                 "value": 0,
                 "currency": "{{ currency_code }}"
               },
-              "shippingDestination": {
-                "@type": "DefinedRegion",
-                "addressCountry": "{{ country_code|upper }}"
-              },
               "deliveryTime": {
                 "@type": "ShippingDeliveryTime",
                 "handlingTime": {
@@ -78,7 +74,7 @@
             },
             "hasMerchantReturnPolicy": {
               "@type": "MerchantReturnPolicy",
-              "applicableCountry": "{{ country_code|upper }}",
+              "applicableCountry": "DE",
               "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"
             }
           }

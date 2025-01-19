@@ -30,8 +30,6 @@ class ExtendedSiteAdmin(TranslationAdmin):
         "currency_code",
         "tax_percent",
         "currency_symbol",
-        "country",
-        "city",
         "email",
         "header_alert_message",
     )
@@ -39,7 +37,5 @@ class ExtendedSiteAdmin(TranslationAdmin):
         "site__domain",
         "currency_code",
         "currency_symbol",
-        "country",
-        "city",
     )
     inlines = [SocialInline]

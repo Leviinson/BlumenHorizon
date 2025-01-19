@@ -459,8 +459,8 @@
                             <div class="mb-3" id="country-container">
                                 <label for="country" class="form-label">{% translate 'Страна' %}</label>
                                 <input name="country" type="text" class="form-control"
-                                       id="country" value="{{ country }}" autocomplete="country"
-                                       required readonly 
+                                       id="country" autocomplete="country"
+                                       required 
                                        style="background-color: var(--bs-secondary-bg); opacity: 1;">
                                 {% if form.errors.country %}
                                 {% for error in form.errors.country %}
@@ -473,8 +473,8 @@
                             <div class="mb-3" id="city-container">
                                 <label for="city" class="form-label">{% translate 'Город' %}</label>
                                 <input name="city" type="text" class="form-control"
-                                       id="city" value="{{ city }}" autocomplete="address-level2"
-                                       required readonly
+                                       id="city" autocomplete="address-level2"
+                                       required
                                        style="background-color: var(--bs-secondary-bg); opacity: 1;">
                                 {% if form.errors.city %}
                                 {% for error in form.errors.city %}

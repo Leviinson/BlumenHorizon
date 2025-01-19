@@ -135,11 +135,9 @@ def order_created(sender: Order, instance: Order, created, **kwargs):
     if created:
         order = instance
         text = (
-            f"*Новый заказ оформлен!* 🎉\n\n"
+            f"*Новый заказ в общем регионе оформлен!* 🎉\n\n"
             f"*ID заказа*: `{order.id}`\n"
             f"*Стоимость*: `{order.grand_total} EUR`\n"
-            f"*Страна*: `{escape_markdown(order.country)}`\n"
-            f"*Город*: `{escape_markdown(order.city)}`\n"
             f"*Имя заказчика*: `{escape_markdown(order.name)}`\n"
             f"*Email заказчика*: `{escape_markdown(order.email)}`\n"
             f"*Имя получателя*: `{escape_markdown(order.recipient_name)}`\n"
