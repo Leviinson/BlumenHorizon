@@ -1,5 +1,6 @@
 .card-title {
   min-height: 3rem;
+  word-wrap: normal;
 }
 
 #mainpage-slider {
