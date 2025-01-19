@@ -322,7 +322,7 @@
                     <div class="d-flex flex-column justify-content-center mt-auto">
                         <p class="card-text">
                         {% if recommended_product.has_discount %}
-                        <span class="text-danger mb-0 me-2 fw-bold">{{ recommended_product.tax_price_discounted|floatformat:"2u" }} {{ currency_symbol }}</span>
+                        <span class="text-danger mb-0 fw-bold">{{ recommended_product.tax_price_discounted|floatformat:"2u" }} {{ currency_symbol }}</span>
                         <span class="text-muted text-decoration-line-through mb-0 fw-bold">{{ recommended_product.tax_price|floatformat:"2u" }} {{ currency_symbol }}</span>
                         {% else %}
                         <span class="fw-bold">{{ recommended_product.tax_price|floatformat:"2u" }} {{ currency_symbol }}</span>
