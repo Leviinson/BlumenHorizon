@@ -117,19 +117,25 @@
                             </div>
                             <div class="card-body d-flex flex-column">
                                 <strong class="card-title">{{ product.name }}</strong>
-                                <div class="d-flex flex-column justify-content-center mt-auto">
-                                    <p class="card-text d-flex flex-column align-items-center">
+                                <div class="mt-auto">
+                                    <p class="card-text d-flex flex-column">
                                         {% if product.has_discount %}
-                                            <span class="text-danger mb-0 fw-bold">
-                                                {{ product.tax_price_discounted|floatformat:"2u" }} {{ currency_symbol }}
-                                            </span>
-                                            <span class="text-muted text-decoration-line-through mb-0">
-                                                {{ product.tax_price|floatformat:"2u" }} {{ currency_symbol }}
-                                            </span>
+                                            <div class="d-flex justify-content-center">
+                                                <span class="text-danger mb-0 product-discounted-price fw-bold">
+                                                    {{ product.tax_price_discounted|floatformat:"2u" }} {{ currency_symbol }}
+                                                </span>
+                                            </div>
+                                            <div class="d-flex justify-content-center">
+                                                <span class="text-muted text-decoration-line-through mb-0 product-old-price fw-bold">
+                                                    {{ product.tax_price|floatformat:"2u" }} {{ currency_symbol }}
+                                                </span>
+                                            </div>
                                         {% else %}
-                                            <span class="fw-bold">
+                                        <div class="d-flex justify-content-center">
+                                            <span class="product-price fw-bold">
                                                 {{ product.tax_price|floatformat:"2u" }} {{ currency_symbol }}
                                             </span>
+                                        </div>
                                         {% endif %}
                                     </p>
                                     <form method="post" class="add-to-cart-form w-100 me-2"

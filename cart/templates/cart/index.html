@@ -239,14 +239,26 @@
                                 </a>
                                 <div class="card-body d-flex flex-column">
                                     <span class="card-title">{{ recommended_product.name }}</span>
-                                    <div class="d-flex flex-column justify-content-center mt-auto">
-                                        <p class="card-text d-flex flex-column align-items-center">
-                                        {% if recommended_product.has_discount %}
-                                        <span class="text-danger mb-0 product-discounted-price fw-bold">{{ recommended_product.tax_price_discounted|floatformat:"2u" }}</span><span class="me-2 text-danger fw-bold">{{ currency_symbol }}</span>
-                                        <span class="text-muted text-decoration-line-through mb-0 product-old-price fw-bold">{{ recommended_product.tax_price|floatformat:"2u" }}</span><span class="text-muted text-decoration-line-through fw-bold">{{ currency_symbol }}</span>
-                                        {% else %}
-                                        <span class="product-price fw-bold">{{ recommended_product.tax_price|floatformat:"2u" }}</span><span>{{ currency_symbol }}</span>
-                                        {% endif %}
+                                    <div class="mt-auto">
+                                        <p class="card-text d-flex flex-column">
+                                            {% if recommended_product.has_discount %}
+                                                <div class="d-flex justify-content-center">
+                                                    <span class="text-danger mb-0 product-discounted-price fw-bold">
+                                                        {{ recommended_product.tax_price_discounted|floatformat:"2u" }} {{ currency_symbol }}
+                                                    </span>
+                                                </div>
+                                                <div class="d-flex justify-content-center">
+                                                    <span class="text-muted text-decoration-line-through mb-0 product-old-price fw-bold">
+                                                        {{ recommended_product.tax_price|floatformat:"2u" }} {{ currency_symbol }}
+                                                    </span>
+                                                </div>
+                                            {% else %}
+                                            <div class="d-flex justify-content-center">
+                                                <span class="product-price fw-bold">
+                                                    {{ recommended_product.tax_price|floatformat:"2u" }} {{ currency_symbol }}
+                                                </span>
+                                            </div>
+                                            {% endif %}
                                         </p>
                                         <form data-id="{{ recommended_product.slug }}AddForm" method="post" class="add-to-cart-form w-100 me-2" data-add-url="{% url 'cart:bouquet-add' %}"
                                         data-remove-url="{% url 'cart:bouquet-remove' %}"
@@ -283,14 +295,26 @@
                                 </a>
                                 <div class="card-body d-flex flex-column">
                                     <h5 class="card-title">{{ recommended_product.name }}</h5>
-                                    <div class="d-flex flex-column justify-content-center mt-auto">
-                                        <p class="card-text d-flex flex-column align-items-center">
-                                        {% if recommended_product.has_discount %}
-                                        <strong class="text-danger mb-0 product-discounted-price">{{ recommended_product.tax_price_discounted|floatformat:"2u" }}</strong><strong class="me-2 text-danger">{{ currency_symbol }}</strong>
-                                        <strong class="text-muted text-decoration-line-through mb-0 product-old-price">{{ recommended_product.tax_price|floatformat:"2u" }}</strong><strong class="text-muted text-decoration-line-through">{{ currency_symbol }}</strong>
-                                        {% else %}
-                                        <strong class="product-price">{{ recommended_product.tax_price|floatformat:"2u" }}</strong><strong>{{ currency_symbol }}</strong>
-                                        {% endif %}
+                                    <div class="mt-auto">
+                                        <p class="card-text d-flex flex-column">
+                                            {% if recommended_product.has_discount %}
+                                                <div class="d-flex justify-content-center">
+                                                    <span class="text-danger mb-0 product-discounted-price fw-bold">
+                                                        {{ recommended_product.tax_price_discounted|floatformat:"2u" }} {{ currency_symbol }}
+                                                    </span>
+                                                </div>
+                                                <div class="d-flex justify-content-center">
+                                                    <span class="text-muted text-decoration-line-through mb-0 product-old-price fw-bold">
+                                                        {{ recommended_product.tax_price|floatformat:"2u" }} {{ currency_symbol }}
+                                                    </span>
+                                                </div>
+                                            {% else %}
+                                            <div class="d-flex justify-content-center">
+                                                <span class="product-price fw-bold">
+                                                    {{ recommended_product.tax_price|floatformat:"2u" }} {{ currency_symbol }}
+                                                </span>
+                                            </div>
+                                            {% endif %}
                                         </p>
                                         <form data-id="{{ recommended_product.slug }}AddForm" method="post" class="add-to-cart-form w-100 me-2" data-add-url="{% url 'cart:product-add' %}"
                                         data-remove-url="{% url 'cart:product-remove' %}"
