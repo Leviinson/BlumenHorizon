@@ -242,7 +242,7 @@
                                     <div class="d-flex flex-column justify-content-center mt-auto">
                                         <p class="card-text d-flex flex-column align-items-center">
                                         {% if recommended_product.has_discount %}
-                                        <span class="text-danger mb-0 product-discounted-price fw-bold">{{ recommended_product.tax_price_discounted|floatformat:"2u" }}</span><span class="me-2 text-danger fw-bold">{{ currency_symbol }}</span><br>
+                                        <span class="text-danger mb-0 product-discounted-price fw-bold">{{ recommended_product.tax_price_discounted|floatformat:"2u" }}</span><span class="me-2 text-danger fw-bold">{{ currency_symbol }}</span>
                                         <span class="text-muted text-decoration-line-through mb-0 product-old-price fw-bold">{{ recommended_product.tax_price|floatformat:"2u" }}</span><span class="text-muted text-decoration-line-through fw-bold">{{ currency_symbol }}</span>
                                         {% else %}
                                         <span class="product-price fw-bold">{{ recommended_product.tax_price|floatformat:"2u" }}</span><span>{{ currency_symbol }}</span>
