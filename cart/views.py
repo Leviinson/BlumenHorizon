@@ -589,7 +589,7 @@ class SuccessOrderView(CommonContextMixin, TemplateView):
     ]
 
     def get(self, request, *args, **kwargs):
-        self.order_code = self.kwargs["order_code"]
+        order_code = self.kwargs["order_code"]
         try:
             self.order = Order.objects.only(
                 "created_at",
@@ -599,14 +599,11 @@ class SuccessOrderView(CommonContextMixin, TemplateView):
                 "status",
                 "delivery_date",
                 "delivery_time",
-            ).get(code=self.order_code)
+            ).get(code=order_code)
         except Order.DoesNotExist:
             return HttpResponseForbidden()
 
-        if (orders := request.session.get("orders")) and self.order_code in orders:
-            return super().get(request, *args, **kwargs)
-        else:
-            return HttpResponseForbidden()
+        return super().get(request, *args, **kwargs)
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
