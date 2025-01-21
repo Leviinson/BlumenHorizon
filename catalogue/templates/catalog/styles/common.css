@@ -75,3 +75,7 @@
     max-width: 100%;
     line-height: 1.2; 
 }
+
+.category-container {
+    min-width: min-content;
+}
