@@ -126,7 +126,7 @@ body {
 }
 
 .img-thumbnail {
-    background-color: var(--turquoise-color);
+    background-color: var(--dark-green-color);
 }
 
 .badge-color {
@@ -295,4 +295,16 @@ body {
     position: absolute; 
     top: 0; 
     right: 0;
+}
+
+#header-logo, #footer-logo {
+    width: 72px;
+    height: 72px;
+}
+
+@media(max-width: 425px) {
+    #header-logo, #footer-logo {
+        width: 72px;
+        height: 72px;
+    }
 }
