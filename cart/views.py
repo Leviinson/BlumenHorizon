@@ -165,7 +165,6 @@ class CartView(CommonContextMixin, FormView):
         line_items = []
         tax_rate = TaxRate.create(
             display_name=_("НДС"),
-            description=_("НДС Германия"),
             inclusive=True,
             percentage=vat_percentage,
             active=True,
