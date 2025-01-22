@@ -13,7 +13,6 @@ from core.services.utils.carts import clear_user_cart
 
 from .services import OrderRepository, send_order_confirmation_email
 
-
 class OrderNotFound(Exception):
     """Исключение, которое генерируется при отсутствии заказа с указанным кодом."""
 
