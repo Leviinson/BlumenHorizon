@@ -5,20 +5,6 @@
 <html lang="{{ LANGUAGE_CODE }}">
 <head>
     <meta charset="UTF-8">
-    <script async src="https://www.googletagmanager.com/gtag/js?id={{ gtag_id }}"></script>
-    <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('consent', 'default', {
-            'ad_storage': 'denied',
-            'ad_user_data': 'denied',
-            'ad_personalization': 'denied',
-            'analytics_storage': 'denied'
-        });
-
-    gtag('config', '{{ gtag_id }}');
-    </script>
     <script>
         function setCookie(name, value, days) {
             var expires = "";
@@ -42,12 +28,6 @@
         }
 
         function consentGrantedAdStorage() {
-            gtag('consent', 'update', {
-                    'ad_storage': 'granted',
-                    'ad_user_data': 'granted',
-                    'ad_personalization': 'granted',
-                    'analytics_storage': 'granted'
-            });
             document.getElementById('cookieConsentBanner').style.display = 'none';
             setCookie('cookies_accepted', 'yes', 365);
         };
@@ -60,14 +40,7 @@
         document.addEventListener("DOMContentLoaded", function (){
             if (!(getCookie('cookies_accepted') === 'yes')) {
                 document.getElementById('cookieConsentBanner').style.display = 'block';
-            } else if (getCookie('cookies_accepted') === 'yes') {
-                gtag('consent', 'update', {
-                    'ad_storage': 'granted',
-                    'ad_user_data': 'granted',
-                    'ad_personalization': 'granted',
-                    'analytics_storage': 'granted'
-                });
-            }
+            };
         });
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -163,7 +136,7 @@
         {% endblocktranslate %}
         </p>
         <button id="acceptCookies" class="btn btn-dark-green fw-bold" onclick="consentGrantedAdStorage()">{% translate 'Принять' %}</button>
-        <button id="declineCookies" class="btn btn-dark-green fw-bold" onclick="this.parentNode.style.display = 'none';">{% translate 'Отклонить' %}</button>
+        <button id="declineCookies" class="btn btn-dark-green fw-bold" onclick="consentDeclined()">{% translate 'Отклонить' %}</button>
     </div>
   
   <!-- Google Analytics (will be loaded dynamically after accepting "consent cookies") -->

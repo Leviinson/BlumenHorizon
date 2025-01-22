@@ -105,9 +105,9 @@ document.querySelectorAll('.add-to-cart-form').forEach(function(form) {
         let decreaseProductLink;
         let increaseProductLink;
         if (langValue === "de") {
-            removeProductLink = productInfo.isBouquet ? `/cart/bouquet/remove/` : `/cart/product/remove/`
-            decreaseProductLink = productInfo.isBouquet ? `/cart/bouquet/decrease/` : `/cart/product/decrease/`
-            increaseProductLink = productInfo.isBouquet ? `/cart/bouquet/increase/` : `/cart/product/increase/`
+            removeProductLink = productInfo.isBouquet ? `/athens/cart/bouquet/remove/` : `/athens/cart/product/remove/`
+            decreaseProductLink = productInfo.isBouquet ? `/athens/cart/bouquet/decrease/` : `/athens/cart/product/decrease/`
+            increaseProductLink = productInfo.isBouquet ? `/athens/cart/bouquet/increase/` : `/athens/cart/product/increase/`
         } else {
             removeProductLink = productInfo.isBouquet ? `/${langValue}/cart/bouquet/remove/` : `/${langValue}/cart/product/remove/`
             decreaseProductLink = productInfo.isBouquet ? `/${langValue}/cart/bouquet/decrease/` : `/${langValue}/cart/product/decrease/`
