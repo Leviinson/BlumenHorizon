@@ -109,9 +109,9 @@ document.querySelectorAll('.add-to-cart-form').forEach(function(form) {
             decreaseProductLink = productInfo.isBouquet ? `/athens/cart/bouquet/decrease/` : `/athens/cart/product/decrease/`
             increaseProductLink = productInfo.isBouquet ? `/athens/cart/bouquet/increase/` : `/athens/cart/product/increase/`
         } else {
-            removeProductLink = productInfo.isBouquet ? `/${langValue}/cart/bouquet/remove/` : `/${langValue}/cart/product/remove/`
-            decreaseProductLink = productInfo.isBouquet ? `/${langValue}/cart/bouquet/decrease/` : `/${langValue}/cart/product/decrease/`
-            increaseProductLink = productInfo.isBouquet ? `/${langValue}/cart/bouquet/increase/` : `/${langValue}/cart/product/increase/`
+            removeProductLink = productInfo.isBouquet ? `/athens/${langValue}/cart/bouquet/remove/` : `/athens/${langValue}/cart/product/remove/`
+            decreaseProductLink = productInfo.isBouquet ? `/athens/${langValue}/cart/bouquet/decrease/` : `/athens/${langValue}/cart/product/decrease/`
+            increaseProductLink = productInfo.isBouquet ? `/athens/${langValue}/cart/bouquet/increase/` : `/athens/${langValue}/cart/product/increase/`
         }
 
         let needsHr = true;
