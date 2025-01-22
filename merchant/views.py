@@ -10,7 +10,6 @@ from stripe import SignatureVerificationError, Webhook
 
 from cart.models import Order
 from core.services.utils.carts import clear_user_cart
-from tg_bot.main import send_message_to_telegram
 
 from .services import OrderRepository, send_order_confirmation_email
 
