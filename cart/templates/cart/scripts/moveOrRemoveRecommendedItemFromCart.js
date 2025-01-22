@@ -107,7 +107,7 @@ document.querySelectorAll('.add-to-cart-form').forEach(function(form) {
         if (langValue === "de") {
             removeProductLink = productInfo.isBouquet ? `/europe/cart/bouquet/remove/` : `/europe/cart/product/remove/`
             decreaseProductLink = productInfo.isBouquet ? `/europe/cart/bouquet/decrease/` : `/europe/cart/product/decrease/`
-            increaseProductLink = productInfo.isBouquet ? `/europe/cart/bouquet/increase/` : `v/cart/product/increase/`
+            increaseProductLink = productInfo.isBouquet ? `/europe/cart/bouquet/increase/` : `/europe/cart/product/increase/`
         } else {
             removeProductLink = productInfo.isBouquet ? `/europe/${langValue}/cart/bouquet/remove/` : `/europe/${langValue}/cart/product/remove/`
             decreaseProductLink = productInfo.isBouquet ? `/europe/${langValue}/cart/bouquet/decrease/` : `/europe/${langValue}/cart/product/decrease/`
