@@ -18,6 +18,7 @@ from mainpage.models import (
     FAQPageModel,
     MainPageSeoBlock,
 )
+from datetime import datetime
 
 
 class FixedSitemapMixin(Sitemap):
@@ -84,7 +85,10 @@ class MainpageSitemap(FixedSitemapMixin):
             .aggregate(Max("updated_at"))["updated_at__max"]
         )
 
-        return max(seo_block_lastmod, bouquet_lastmod, product_lastmod)
+        return max(
+            filter(None, [seo_block_lastmod, bouquet_lastmod, product_lastmod]),
+            default=datetime.min,
+        )
 
 
 # class ProductListSitemap(FixedSitemapMixin):
