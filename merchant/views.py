@@ -10,12 +10,8 @@ from stripe import SignatureVerificationError, Webhook
 
 from cart.models import Order
 from core.services.utils.carts import clear_user_cart
-from tg_bot.main import send_message_to_telegram
 
 from .services import OrderRepository, send_order_confirmation_email
-
-logger = logging.getLogger("django_stripe")
-
 
 class OrderNotFound(Exception):
     """Исключение, которое генерируется при отсутствии заказа с указанным кодом."""
@@ -96,6 +92,8 @@ def stripe_webhook(request: Request):
     Исключения:
     - OrderNotFound: Если заказ с указанным кодом не найден.
     """
+    logger = logging.getLogger("django_stripe")
+
     try:
         try:
             event_dict = Webhook.construct_event(
@@ -114,9 +112,6 @@ def stripe_webhook(request: Request):
             order_code = OrderRepository.get_order_code(event_dict)
             order = get_order_by_code(order_code)
         except Order.DoesNotExist:
-            send_message_to_telegram(
-                "Пришла оплата на страйп с недействительным кодом заказа."
-            )
             raise OrderNotFound(
                 f"Пришла оплата на страйп с недействительным кодом заказа:\n\n{event_dict}"
             )
