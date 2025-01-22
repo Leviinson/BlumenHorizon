@@ -219,6 +219,7 @@
                         <img alt="{% translate 'stripe логотип' %}" src="{% static 'defaults/stripe-logo.svg' %}"/>
                     </div>
                 </div>
+                {% if recommended_bouquets %}
                 <div class="card cards-container mb-4 mb-lg-4">
                     <div class="card-header">
                         <h2 class="text-center mt-2">{% translate 'Рекомендуемые букеты к покупке' %}</h2>
@@ -275,6 +276,8 @@
                         {% endfor %}
                     </div>
                 </div>
+                {% endif %}
+                {% if recommended_products %}
                 <div class="card cards-container mb-4 mb-lg-4">
                     <div class="card-header">
                         <h2 class="text-center mt-2">{% translate 'Рекомендуемые подарки к букетам' %}</h2>
@@ -319,6 +322,7 @@
                         {% endfor %}
                     </div>
                 </div>
+                {% endif %}
             </div>
             <div class="col-md-4">
                 <div class="card mb-4">
