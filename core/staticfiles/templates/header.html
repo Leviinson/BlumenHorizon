@@ -7,9 +7,8 @@
       <a href="{% url 'mainpage:offers' %}"
          class="navbar-brand fs-2 text-light fw-bold d-flex align-items-center">
         <img id="header-logo" src="{% static 'defaults/logo.png' %}" alt="{{ site_name }} logo" class="me-2">
-        {{ site_name }}
       </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+      <button id="menu-button-right" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
         aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>

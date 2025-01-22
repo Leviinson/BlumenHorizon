@@ -298,13 +298,21 @@ body {
 }
 
 #header-logo, #footer-logo {
-    width: 72px;
-    height: 72px;
+    width: 340.9px;
+    height: 60px;
 }
 
-@media(max-width: 425px) {
+#header-logo {
+    margin-bottom: .75rem !important;
+}
+
+@media(max-width: 428px) {
     #header-logo, #footer-logo {
-        width: 50px;
+        width: 284px;
         height: 50px;
     }
+    #menu-button-right {
+        margin-left: auto;
+    }
 }
+
