@@ -129,8 +129,14 @@ class DetailViewMixin:
         :return: список рекомендованных продуктов.
         """
         related_models = [
-            RelatedModel(model="subcategory", fields=["slug", "name"]),
-            RelatedModel(model="subcategory__category", fields=["slug"]),
+            RelatedModel(
+                model="subcategory",
+                fields=["slug", "name", "is_active"],
+            ),
+            RelatedModel(
+                model="subcategory__category",
+                fields=["slug", "is_active"],
+            ),
         ]
         return get_recommended_items_with_first_image(
             model=self.model,

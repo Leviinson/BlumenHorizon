@@ -48,7 +48,7 @@ def get_recommended_items_with_first_image(
         "description",
         "discount_expiration_datetime",
         *related_fields,
-    )
+    ).filter(subcategory__is_active=True, subcategory__category__is_active=True)
     queryset_with_atteched_first_images = annotate_first_image_and_alt(
         queryset, image_model, language
     )

@@ -33,7 +33,7 @@
         "{{ social.absolute_url }}"{% if not forloop.last %},{% endif %}
       {% endfor %}
     ],
-    "hasOfferCatalog": {
+    {% if recommended_bouquets %}"hasOfferCatalog": {
       "@type": "OfferCatalog",
       "name": "{% translate 'Рекомендуемые букеты к покупке' %}",
       "itemListElement": [
@@ -84,7 +84,7 @@
           }
         }{% if not forloop.last %},{% endif %}{% endfor %}
       ]
-    }
+    }{% endif %}
   }
 </script>
 {% endblock %}
@@ -171,6 +171,7 @@
     </div>
   </div>
 
+  {% if recommended_bouquets %}
   <h3 class="text-center fs-2 my-4">{% translate 'Рекомендуемые букеты к покупке' %}</h2>
   <div id="bouquetCarousel" class="carousel slide w-100" data-bs-ride="carousel">
     <div class="carousel-inner cards-container">
@@ -243,7 +244,9 @@
     </button>
     {% endif %}
   </div>
+  {% endif %}
 
+  {% if recommended_products %}
   <h3 class="text-center fs-2 my-4">{% translate 'Рекомендуемые подарки к букетам' %}</h2>
   <div id="productCarousel" class="carousel slide w-100" data-bs-ride="carousel">
     <div class="carousel-inner cards-container">
@@ -315,6 +318,7 @@
       </button>
     {% endif %}
   </div>
+  {% endif %}
 
   <div class="card mt-4 mb-5">
     <form id="individual-order-form"
