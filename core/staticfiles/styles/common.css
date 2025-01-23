@@ -316,3 +316,10 @@ body {
     }
 }
 
+@media(max-width: 371px) {
+    #header-logo {
+        width: 255.6px;
+        height: 45px;
+    }
+}
+
