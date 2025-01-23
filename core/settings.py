@@ -109,8 +109,8 @@ else:
     CORS_ALLOWED_ORIGINS = [
         f'https://{os.getenv("DOMAIN")}',
     ]
-FORCE_SCRIPT_NAME = '/madrid'
-CACHE_MIDDLEWARE_KEY_PREFIX = 'madrid:'
+FORCE_SCRIPT_NAME = '/limassol'
+CACHE_MIDDLEWARE_KEY_PREFIX = 'limassol:'
 
 # Application definition
 
