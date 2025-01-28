@@ -1,6 +1,7 @@
 {% extends "templates/base.html" %}
 {% load static %}
 {% load i18n %}
+{% load chunk_filters %}
 
 {% block localization_meta_tags %}
     <link rel="{{ canonical_link.rel }}" href="{{ canonical_link.href }}">
