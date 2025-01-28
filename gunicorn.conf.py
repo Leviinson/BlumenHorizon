@@ -6,9 +6,9 @@ from dotenv import load_dotenv
 load_dotenv(override=True)
 
 bind = os.getenv("GUNICORN_DOMAIN")
-workers = multiprocessing.cpu_count() * 2 + 1
-threads = 20
-timeout = 120
+workers = 2
+threads = 3
+timeout = 30
 
 reload = False
 wsgi_app = "core.wsgi:application"
