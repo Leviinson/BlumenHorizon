@@ -39,16 +39,20 @@ def get_recommended_items_with_first_image(
     language = get_language()
     related_fields = __get_related_fields(related_models)
 
-    queryset = model.objects.select_related(*[rm.model for rm in related_models]).only(
-        "name",
-        "price",
-        "slug",
-        "sku",
-        "discount",
-        "description",
-        "discount_expiration_datetime",
-        *related_fields,
-    ).filter(subcategory__is_active=True, subcategory__category__is_active=True)
+    queryset = (
+        model.objects.select_related(*[rm.model for rm in related_models])
+        .only(
+            "name",
+            "price",
+            "slug",
+            "sku",
+            "discount",
+            "description",
+            "discount_expiration_datetime",
+            *related_fields,
+        )
+        .filter(subcategory__is_active=True, subcategory__category__is_active=True)
+    )
     queryset_with_atteched_first_images = annotate_first_image_and_alt(
         queryset, image_model, language
     )

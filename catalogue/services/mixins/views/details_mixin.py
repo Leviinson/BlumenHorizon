@@ -1,10 +1,10 @@
+from math import floor
 from typing import Any
 
 from django.db.models.manager import BaseManager
 from django.http import Http404
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
-from math import floor
 
 from cart.cart import BouquetCart, ProductCart
 from catalogue.forms import IndividualQuestionForm

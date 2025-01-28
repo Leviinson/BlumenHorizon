@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.contrib.sitemaps import Sitemap
 from django.db.models import Max
 from django.urls import reverse_lazy
@@ -18,7 +20,6 @@ from mainpage.models import (
     FAQPageModel,
     MainPageSeoBlock,
 )
-from datetime import datetime
 
 
 class FixedSitemapMixin(Sitemap):
