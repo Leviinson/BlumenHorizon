@@ -3,4 +3,5 @@ from .abstract_models import (
     MetaDataAbstractModel,
     ProductAbstractModel,
     generate_sku,
+    ItemReview
 )

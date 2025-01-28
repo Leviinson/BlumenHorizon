@@ -3,14 +3,20 @@ from decimal import ROUND_HALF_UP, Decimal
 from colorfield.fields import ColorField
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.urls import reverse_lazy
 from django.utils import timezone
+from telegram.helpers import escape_markdown
 from tinymce.models import HTMLField
 
 from core.base_models import TimeStampAdbstractModel
+from core.services.repositories import SiteRepository
+from tg_bot import send_message_to_telegram
 
 from ..services import (
     CategoryAbstractModel,
+    ItemReview,
     MetaDataAbstractModel,
     ProductAbstractModel,
     generate_sku,
@@ -181,6 +187,38 @@ class Bouquet(ProductAbstractModel):
     @property
     def is_bouquet(self) -> bool:
         return True
+
+
+class BouquetReview(ItemReview):
+    item = models.ForeignKey(
+        Bouquet,
+        on_delete=models.CASCADE,
+        related_name="reviews",
+        verbose_name="Букет",
+    )
+
+
+@receiver(post_save, sender=BouquetReview)
+def order_created(
+    sender: BouquetReview,
+    instance: BouquetReview,
+    created,
+    **kwargs,
+):
+    country = SiteRepository.get_country()
+    city = SiteRepository.get_city()
+    if created:
+        review = instance
+        text = (
+            f"*Новый отзыв на букет оформлен!* 🎉\n\n"
+            f"*ID отзыва*: `{review.pk}`\n"
+            f"*Страна*: `{escape_markdown(country)}`\n"
+            f"*Город*: `{escape_markdown(city)}`\n"
+            f"*Имя автора*: `{escape_markdown(review.author_name)}`\n"
+            f"*Email автора*: `{escape_markdown(review.email)}`\n"
+            f"Вперёд за модерацию! 🚀"
+        )
+        send_message_to_telegram(text)
 
 
 class BouquetSize(models.Model):
