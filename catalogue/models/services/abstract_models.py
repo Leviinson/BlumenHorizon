@@ -158,11 +158,15 @@ class ItemReview(TimeStampAdbstractModel):
     class Meta:
         verbose_name = "Отзыв"
         verbose_name_plural = "Отзывы"
-        ordering = ['-created_at']
+        ordering = ["-created_at"]
         abstract = True
 
     def short_description(self):
-        return self.description[:100] + ' ...' if len(self.description) > 100 else self.description
+        return (
+            self.description[:100] + " ..."
+            if len(self.description) > 100
+            else self.description
+        )
 
     def __str__(self):
         return f"{self.author_name} — {self.rate}"

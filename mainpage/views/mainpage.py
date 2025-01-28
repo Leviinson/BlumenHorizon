@@ -1,13 +1,12 @@
 from typing import Any, Callable
 
+import requests
+from django.core.cache import cache
 from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView
-from django.core.cache import cache
-import requests
-
 
 from catalogue.models import (
     Bouquet,
@@ -168,7 +167,7 @@ class MainPageView(
     @property
     def relative_url(self):
         return reverse_lazy("mainpage:offers")
-    
+
     def get_elfsight_widget_js(self) -> None:
         cache_key = "elfsight_widget_result"
         cached_result = cache.get(cache_key)
