@@ -59,11 +59,28 @@ def _get_value_for_key(key: str) -> Any:
             return Site.objects.only("name").first().name
         case "site_domain":
             return Site.objects.only("domain").first().domain
+        case "site_email":
+            return ExtendedSite.objects.only("email").first().email
         case "country_code":
             return (
                 ExtendedSite.objects.only("country_iso_3166_1_alpha_2")
                 .first()
                 .country_iso_3166_1_alpha_2
+            )
+        case "country_name":
+            return ExtendedSite.objects.only("country").first().country
+        case "city_name":
+            return ExtendedSite.objects.only("city").first().city
+        case "socials":
+            socials = (
+                ExtendedSite.objects.prefetch_related("socials").first().socials.all()
+            )
+            return [social.to_dict() for social in socials]
+        case "header_alert_message":
+            return (
+                ExtendedSite.objects.only("header_alert_message")
+                .first()
+                .header_alert_message
             )
         case _:
             raise ValueError(f"Unsupported cache key: {key}")
