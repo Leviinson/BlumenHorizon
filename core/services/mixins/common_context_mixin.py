@@ -1,8 +1,10 @@
 import os
+
 from django.conf import settings
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.translation import get_language
 
+from core.services.repositories import SiteRepository
 from extended_contrib_models.models import ExtendedSite
 
 
@@ -10,22 +12,20 @@ class CommonContextMixin:
     def get_context_data(self, *args, **kwargs):
         "Must be implemented and inherited by every view"
         context = super().get_context_data(*args, **kwargs)
-        current_site = self.current_site = get_current_site(self.request)
-        site_extended: ExtendedSite = self.current_site.extended
         if not context.get("site_name"):
-            context["site_name"] = current_site.name
-            context["domain_name"] = current_site.domain
-            context["company_email"] = site_extended.email
+            context["site_name"] = SiteRepository.get_name()
+            context["domain_name"] = SiteRepository.get_domain()
+            context["company_email"] = SiteRepository.get_email()
         context["gtag_id"] = os.getenv("GTAG_ID")
         context["merchant_id"] = os.getenv("MERCHANT_ID")
-        context["currency_symbol"] = site_extended.currency_symbol
-        context["currency_code"] = site_extended.currency_code
-        context["country"] = site_extended.country
-        context["country_code"] = site_extended.country_iso_3166_1_alpha_2
-        context["city"] = site_extended.city
-        context["socials_right_bottom"] = site_extended.socials.all()
+        context["currency_symbol"] = SiteRepository.get_currency_symbol()
+        context["currency_code"] = SiteRepository.get_currency_code()
+        context["country"] = SiteRepository.get_country()
+        context["country_code"] = SiteRepository.get_country_code()
+        context["city"] = SiteRepository.get_city()
+        context["socials_right_bottom"] = SiteRepository.get_socials()
         context["MEDIA_URL"] = settings.MEDIA_URL
-        context["alert"] = site_extended.header_alert_message
+        context["alert"] = SiteRepository.get_alert_message()
         return context
 
 

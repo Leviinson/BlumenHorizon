@@ -117,6 +117,16 @@ class Social(models.Model):
         """
         return f"{self.bootstrap_icon} - {self.absolute_url}"
 
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "absolute_url": self.absolute_url,
+            "outline_hex_code": self.outline_hex_code,
+            "background_hex_code": self.background_hex_code,
+            "icon_hex_code": self.icon_hex_code,
+            "bootstrap_icon": self.bootstrap_icon,
+        }
+
 
 @receiver(post_save, sender=Site)
 def create_extended_site(sender, instance, created, **kwargs):
