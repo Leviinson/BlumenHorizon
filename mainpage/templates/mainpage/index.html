@@ -1,7 +1,6 @@
 {% extends "templates/base.html" %}
 {% load static %}
 {% load i18n %}
-{% load chunk_filters %}
 
 {% block localization_meta_tags %}
     <link rel="{{ canonical_link.rel }}" href="{{ canonical_link.href }}">
@@ -94,7 +93,8 @@
 {% endblock %}
 
 {% block body %}
-<div class="container mx-auto text-center d-flex flex-column align-items-center">
+<div class="container mx-auto text-center d-flex flex-column align-items-center"
+     style="max-width: 1320px;">
   <h1 class="mb-5">
     {% blocktranslate %}
     Цветочный интернет-магазин {{ site_name }}
@@ -320,7 +320,7 @@
   </div>
   {% endif %}
 
-  <div class="card mt-4 mb-5">
+  <div class="card mt-4">
     <form id="individual-order-form"
           class="d-flex w-100 flex-column justify-content-start align-items-start text-start card-body"
           action="{% url 'mainpage:individual-order-negotiate' %}"
@@ -361,8 +361,25 @@
         <button type="submit" class="btn btn-dark-green">{% translate 'Связаться' %}</button>
     </form>
   </div>
+  
+  <div class="map-container my-5">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d310844.36294885783!2d13.09509552232806!3d52.50680416162511!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x769c88fd894eb71%3A0xea2c10ad4089e2b0!2sBlumenHorizon!5e0!3m2!1sen!2sde!4v1738005377623!5m2!1sen!2sde"
+      allowfullscreen=""
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+  </div>
 
-  <div id="mainpage-description" class="text-start">
+  <div id="elfsight-widget">
+    <script async>
+      {{ elfsight_widget|safe }}
+    </script>
+    <div class="elfsight-app-65cfd0c4-f86e-49bd-a496-929b0a8c2b4e" data-elfsight-app-lazy>
+    </div>
+  </div>
+
+  <div id="mainpage-description" class="text-start mb-4">
     {{ description|safe }}
   </div>
 

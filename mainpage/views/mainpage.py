@@ -5,6 +5,9 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView
+from django.core.cache import cache
+import requests
+
 
 from catalogue.models import (
     Bouquet,
@@ -72,6 +75,7 @@ class MainPageView(
         base_context["description"] = page_model.description
         base_context["meta_tags"] = page_model.meta_tags
         base_context["json_ld_description"] = page_model.json_ld_description
+        base_context["elfsight_widget"] = self.get_elfsight_widget_js()
         return base_context
 
     @staticmethod
@@ -164,6 +168,16 @@ class MainPageView(
     @property
     def relative_url(self):
         return reverse_lazy("mainpage:offers")
+    
+    def get_elfsight_widget_js(self) -> None:
+        cache_key = "elfsight_widget_result"
+        cached_result = cache.get(cache_key)
+        if cached_result is None:
+            response = requests.get("https://static.elfsight.com/platform/platform.js")
+            if response.status_code == 200:
+                cached_result = response.text
+                cache.set(cache_key, cached_result, 60 * 60 * 6)
+        return cached_result
 
 
 class IndividualOrderView(CreateView):
