@@ -1,11 +1,17 @@
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.urls import reverse_lazy
+from telegram.helpers import escape_markdown
 from tinymce.models import HTMLField
 
 from core.base_models import TimeStampAdbstractModel
+from core.services.repositories import SiteRepository
+from tg_bot import send_message_to_telegram
 
 from ..services import (
     CategoryAbstractModel,
+    ItemReview,
     MetaDataAbstractModel,
     ProductAbstractModel,
     generate_sku,
@@ -121,3 +127,35 @@ class Product(ProductAbstractModel):
     @property
     def is_bouquet(self) -> bool:
         return False
+
+
+class ProductReview(ItemReview):
+    item = models.ForeignKey(
+        Product,
+        on_delete=models.CASCADE,
+        related_name="reviews",
+        verbose_name="Продукт",
+    )
+
+
+@receiver(post_save, sender=ProductReview)
+def order_created(
+    sender: Product,
+    instance: ProductReview,
+    created,
+    **kwargs,
+):
+    country = SiteRepository.get_country()
+    city = SiteRepository.get_city()
+    if created:
+        review = instance
+        text = (
+            f"*Новый отзыв на продукт оформлен!* 🎉\n\n"
+            f"*ID отзыва*: `{review.pk}`\n"
+            f"*Страна*: `{escape_markdown(country)}`\n"
+            f"*Город*: `{escape_markdown(city)}`\n"
+            f"*Имя автора*: `{escape_markdown(review.author_name)}`\n"
+            f"*Email автора*: `{escape_markdown(review.email)}`\n"
+            f"Вперёд за модерацию! 🚀"
+        )
+        send_message_to_telegram(text)
