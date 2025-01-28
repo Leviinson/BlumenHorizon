@@ -4,10 +4,12 @@ from django.db.models.manager import BaseManager
 from django.http import Http404
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
+from math import floor
 
 from cart.cart import BouquetCart, ProductCart
 from catalogue.forms import IndividualQuestionForm
 from catalogue.models import Bouquet, BouquetImage, Product, ProductImage
+from catalogue.services.types import AvgRating
 from core.services.dataclasses import RelatedModel
 from core.services.utils.recommended_items import get_recommended_items_with_first_image
 
@@ -53,6 +55,9 @@ class DetailViewMixin:
                 "individual_question_form": self._get_individual_question_form(),
                 "cart": self._get_cart(),
                 "recommended_products": self._get_recommended_products(),
+                "rating": self._get_rating(
+                    self.object.avg_rating,
+                ),
             }
         )
         return context
@@ -145,53 +150,20 @@ class DetailViewMixin:
             order_fields=["-amount_of_orders", "-amount_of_savings"],
         )
 
-    def get_context_data(self, *args, **kwargs) -> dict[str, Any]:
-        if not (self.category_url_name and self.subcategory_url_name):
-            raise ValueError(
-                "Category url and subcategory url name from urls.py must be specified."
+    def _get_rating(self, avg_rating: float | None) -> AvgRating:
+        if avg_rating:
+            integer_part = floor(avg_rating)
+            fractional_part = avg_rating - integer_part
+            return AvgRating(
+                value=avg_rating,
+                range=range(integer_part),
+                fractional_gte_5=fractional_part >= 0.5,
             )
-        context = super().get_context_data(*args, **kwargs)
-        context["meta_tags"] = self.object.meta_tags
-        context["breadcrumbs"] = [
-            {
-                "name": self.object.subcategory.category.name,
-                "url": reverse_lazy(
-                    f"catalogue:{self.category_url_name}",
-                    kwargs={
-                        "category_slug": self.object.subcategory.category.slug,
-                    },
-                ),
-            },
-            {
-                "name": self.object.subcategory.name,
-                "url": reverse_lazy(
-                    f"catalogue:{self.subcategory_url_name}",
-                    kwargs={
-                        "category_slug": self.object.subcategory.category.slug,
-                        "subcategory_slug": self.object.subcategory.slug,
-                    },
-                ),
-            },
-            {"name": self.object.name, "url": None},
-        ]
-        context["individual_question_form"] = IndividualQuestionForm()
-        context["cart"] = self.cart(
-            session=self.request.session, session_key=self.cart.session_key
+        return AvgRating(
+            value=0.0,
+            range=range(0),
+            fractional_gte_5=False,
         )
-        related_models = [
-            RelatedModel(model="subcategory", fields=["slug", "name"]),
-            RelatedModel(model="subcategory__category", fields=["slug"]),
-        ]
-        context["recommended_products"] = get_recommended_items_with_first_image(
-            model=self.model,
-            image_model=self.image_model,
-            related_models=related_models,
-            order_fields=[
-                "-amount_of_orders",
-                "-amount_of_savings",
-            ],
-        )
-        return context
 
     def get_queryset(self):
         qs = super().get_queryset()
