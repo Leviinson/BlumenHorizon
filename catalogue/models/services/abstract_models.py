@@ -139,3 +139,30 @@ class ProductAbstractModel(TimeStampAdbstractModel, MetaDataAbstractModel):
     @property
     def has_discount(self) -> bool:
         return self.discount and (timezone.now() < self.discount_expiration_datetime)
+
+
+class ItemReview(TimeStampAdbstractModel):
+    author_name = models.CharField(max_length=80, verbose_name="Имя автора")
+    email = models.EmailField(blank=True, null=True, verbose_name="Email автора")
+    rate = models.IntegerField(
+        validators=[MinValueValidator(1), MaxValueValidator(5)],
+        verbose_name="Рейтинг",
+    )
+    description = models.TextField(verbose_name="Описание")
+    is_published = models.BooleanField(default=False, verbose_name="Прошло модерацию?")
+
+    @property
+    def rate_range(self) -> range:
+        return range(self.rate)
+
+    class Meta:
+        verbose_name = "Отзыв"
+        verbose_name_plural = "Отзывы"
+        ordering = ['-created_at']
+        abstract = True
+
+    def short_description(self):
+        return self.description[:100] + ' ...' if len(self.description) > 100 else self.description
+
+    def __str__(self):
+        return f"{self.author_name} — {self.rate}"

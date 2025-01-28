@@ -5,6 +5,7 @@ from .models import (
     Bouquet,
     BouquetCategory,
     BouquetImage,
+    BouquetReview,
     BouquetSubcategory,
     CatalogPageModel,
     Color,
@@ -13,6 +14,7 @@ from .models import (
     Product,
     ProductCategory,
     ProductImage,
+    ProductReview,
     ProductSubcategory,
 )
 
@@ -101,10 +103,16 @@ class ProductImagesInLine(admin.StackedInline):
     max_num = 3
 
 
+class ProductReviewsStackedInline(admin.StackedInline):
+    model = ProductReview
+    extra = 0
+
+
 @admin.register(Product)
 class ProductAdmin(TranslationAdmin):
     inlines = [
         ProductImagesInLine,
+        ProductReviewsStackedInline,
     ]
     fieldsets = (
         (
@@ -321,11 +329,17 @@ class BouquetSubcategoryAdmin(TranslationAdmin):
     ordering = ("category",)
 
 
+class BouquetReviewsStackedInline(admin.StackedInline):
+    model = BouquetReview
+    extra = 0
+
+
 @admin.register(Bouquet)
 class BouquetAdmin(TranslationAdmin):
     inlines = [
         BouquetImagesInLine,
         # BouquetSizesInLine,
+        BouquetReviewsStackedInline,
     ]
     fieldsets = (
         (
