@@ -1,3 +1,4 @@
+from django.db.models import Prefetch, Avg
 from django.shortcuts import get_object_or_404
 from django.views.generic.base import TemplateResponseMixin
 from django.views.generic.detail import DetailView
@@ -16,6 +17,7 @@ from ..filters import BouquetFilter
 from ..models import (
     Bouquet,
     BouquetImage,
+    BouquetReview,
     BouquetSize,
     BouquetsListPageModel,
     Color,
@@ -104,6 +106,10 @@ class BouquetView(
             "colors",
             "flowers",
             "sizes",
+            Prefetch(
+                "reviews",
+                queryset=BouquetReview.objects.filter(is_published=True),
+            ),
         )
         .select_related(
             "subcategory",
@@ -129,6 +135,9 @@ class BouquetView(
             "colors__name",
             "colors__hex_code",
             "flowers__name",
+        )
+        .annotate(
+            avg_rating=Avg("reviews__rate"),
         )
     )
     context_object_name = "product"
