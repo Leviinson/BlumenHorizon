@@ -3,8 +3,8 @@ from typing import Any, Optional
 
 from django import forms
 from django.contrib.auth.models import AnonymousUser
-from django.utils.translation import gettext_lazy as _
 from django.db import transaction
+from django.utils.translation import gettext_lazy as _
 
 from accounts.models import User
 
@@ -200,7 +200,6 @@ class OrderForm(forms.ModelForm):
                     for bouquet in bouquets
                 ]
             )
-
 
     def clean_is_agreement_accepted(self):
         agreement = self.cleaned_data["is_agreement_accepted"]

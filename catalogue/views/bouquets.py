@@ -1,4 +1,4 @@
-from django.db.models import Prefetch, Avg
+from django.db.models import Avg, Prefetch
 from django.shortcuts import get_object_or_404
 from django.views.generic.base import TemplateResponseMixin
 from django.views.generic.detail import DetailView
