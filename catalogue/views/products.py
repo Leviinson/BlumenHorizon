@@ -1,13 +1,17 @@
+from django.urls import reverse_lazy
 from django.views.generic.base import TemplateResponseMixin
 from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView
 from django_filters.views import FilterView
 
 from cart.cart import ProductCart
 from core.services.mixins import CanonicalsContextMixin, CommonContextMixin
 from core.services.mixins.canonicals import CanonicalLinksMixin
+from core.services.utils.first_image_attaching import annotate_first_image_and_alt
 
 from ..filters import ProductFilter
-from ..models import Product, ProductImage, ProductsListPageModel
+from ..forms import ProductReviewForm
+from ..models import Product, ProductImage, ProductsListPageModel, BouquetImage, Bouquet
 from ..services.mixins.views.details_mixin import DetailViewMixin
 from ..services.mixins.views.list_mixin import ListViewMixin, ProductListViewMixin
 
@@ -86,3 +90,20 @@ class ProductListView(
     filterset_class = ProductFilter
     image_model = ProductImage
     page_model = ProductsListPageModel
+
+
+class CreateProductReviewView(CreateView):
+    form_class = ProductReviewForm
+    http_method_names = [
+        "get",
+        "post",
+    ]
+    template_name = "catalog/review.html"
+    success_url = reverse_lazy("mainpage:offers")
+    context_object_name = "item"
+
+    def form_valid(self, form):
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        return super().form_invalid(form)
