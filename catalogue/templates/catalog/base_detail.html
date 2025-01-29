@@ -42,7 +42,12 @@
             "aggregateRating": {
                 "@type": "AggregateRating",
                 "ratingValue": "{{ rating.value|floatformat:"2u" }}",
-                "ratingCount": "{{ rating.count }}"
+                "ratingCount": "{{ rating.count }}",
+                "bestRating": 5,
+                "itemReviewed": {
+                    "@type": "Product",
+                    "name": "{{ product.name }}"
+                }
             },
             "priceCurrency": "{{ currency_code }}",
             "price": "{{ product.tax_price_discounted|floatformat:'2u' }}",
