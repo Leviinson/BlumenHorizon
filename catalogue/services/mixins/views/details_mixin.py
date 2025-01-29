@@ -162,10 +162,10 @@ class DetailViewMixin:
                 count=rating_count,
             )
         return AvgRating(
-            value=0.0,
-            range=range(0),
+            value=1.0,
+            range=range(1),
             fractional_gte_5=False,
-            count=0,
+            count=1,
         )
 
     def get_queryset(self):
