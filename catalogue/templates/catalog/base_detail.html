@@ -36,19 +36,15 @@
             "url": "{{ product.subcategory.get_absolute_url }}"
         },
         "sku": "{{ product.sku }}",
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "{{ rating.value|floatformat:"2u" }}",
+            "ratingCount": "{{ rating.count }}",
+            "bestRating": 5
+        },
         "offers": {
             "@type": "Offer",
             "priceValidUntil": "{{ product.price_valid_until|date:"Y-m-d" }}",
-            "aggregateRating": {
-                "@type": "AggregateRating",
-                "ratingValue": "{{ rating.value|floatformat:"2u" }}",
-                "ratingCount": "{{ rating.count }}",
-                "bestRating": 5,
-                "itemReviewed": {
-                    "@type": "Product",
-                    "name": "{{ product.name }}"
-                }
-            },
             "priceCurrency": "{{ currency_code }}",
             "price": "{{ product.tax_price_discounted|floatformat:'2u' }}",
             "availability": "https://schema.org/InStock",
