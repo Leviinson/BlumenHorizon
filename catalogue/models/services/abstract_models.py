@@ -140,6 +140,17 @@ class ProductAbstractModel(TimeStampAdbstractModel, MetaDataAbstractModel):
     def has_discount(self) -> bool:
         return self.discount and (timezone.now() < self.discount_expiration_datetime)
 
+    @property
+    def price_valid_until(self) -> datetime:
+        from calendar import monthrange
+
+        if self.has_discount:
+            return self.discount_expiration_datetime
+        today = datetime.today()
+        last_day = monthrange(today.year, today.month)[1]
+        last_day_of_month = datetime(today.year, today.month, last_day)
+        return last_day_of_month
+
 
 class ItemReview(TimeStampAdbstractModel):
     author_name = models.CharField(max_length=80, verbose_name="Имя автора")
