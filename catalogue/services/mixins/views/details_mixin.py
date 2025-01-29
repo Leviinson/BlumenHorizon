@@ -57,6 +57,7 @@ class DetailViewMixin:
                 "recommended_products": self._get_recommended_products(),
                 "rating": self._get_rating(
                     self.object.avg_rating,
+                    self.object.rating_count,
                 ),
             }
         )
@@ -150,7 +151,7 @@ class DetailViewMixin:
             order_fields=["-amount_of_orders", "-amount_of_savings"],
         )
 
-    def _get_rating(self, avg_rating: float | None) -> AvgRating:
+    def _get_rating(self, avg_rating: float | None, rating_count: int) -> AvgRating:
         if avg_rating:
             integer_part = floor(avg_rating)
             fractional_part = avg_rating - integer_part
@@ -158,11 +159,13 @@ class DetailViewMixin:
                 value=avg_rating,
                 range=range(integer_part),
                 fractional_gte_5=fractional_part >= 0.5,
+                count=rating_count,
             )
         return AvgRating(
             value=0.0,
             range=range(0),
             fractional_gte_5=False,
+            count=0,
         )
 
     def get_queryset(self):
