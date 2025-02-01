@@ -1,6 +1,5 @@
 from typing import Optional
 
-from django.utils.translation import gettext_lazy as _
 from django.utils.translation import override
 
 from core.services.types import AbsoluteUrl
