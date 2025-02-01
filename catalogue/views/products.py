@@ -1,4 +1,4 @@
-from django.db.models import Avg, Count, Prefetch
+from django.db.models import Avg, Count, Prefetch, Q
 from django.urls import reverse_lazy
 from django.views.generic.base import TemplateResponseMixin
 from django.views.generic.detail import DetailView
@@ -54,7 +54,10 @@ class ProductView(
             "subcategory__category__slug",
             "subcategory__category__name",
         )
-        .annotate(avg_rating=Avg("reviews__rate"), rating_count=Count("reviews"))
+        .annotate(
+            avg_rating=Avg("reviews__rate", filter=Q(reviews__is_published=True)),
+            rating_count=Count("reviews", filter=Q(reviews__is_published=True)),
+        )
     )
     context_object_name = "product"
     slug_url_kwarg = "product_slug"
