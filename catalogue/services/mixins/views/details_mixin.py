@@ -39,6 +39,7 @@ class DetailViewMixin:
     cart: type[ProductCart] | type[BouquetCart]
     model: type[Product] | type[Bouquet]
     image_model: type[ProductImage] | type[BouquetImage]
+    item_details_viewname: str = None
 
     def get_context_data(self, *args, **kwargs) -> dict[str, Any]:
         """
@@ -58,6 +59,9 @@ class DetailViewMixin:
                 "rating": self._get_rating(
                     self.object.avg_rating,
                     self.object.rating_count,
+                ),
+                "reviews_uri": reverse_lazy(
+                    self.item_details_viewname, kwargs=self.kwargs
                 ),
             }
         )
@@ -162,8 +166,8 @@ class DetailViewMixin:
                 count=rating_count,
             )
         return AvgRating(
-            value=1.0,
-            range=range(1),
+            value=5.0,
+            range=range(5),
             fractional_gte_5=False,
             count=1,
         )
