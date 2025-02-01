@@ -33,6 +33,10 @@
     color: #6c757d;
 }
 
+#add-review-bottom {
+    display: none;
+}
+
 @media (max-width: 767px) {
     .info-block {
         padding: 1.5rem;
@@ -44,6 +48,14 @@
 
     .info-text {
         font-size: 0.95rem;
+    }
+    
+    #add-review-top {
+        display: none;
+    }
+
+    #add-review-bottom {
+        display: inline-block;
     }
 }
 
