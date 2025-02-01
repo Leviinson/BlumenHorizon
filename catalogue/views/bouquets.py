@@ -1,4 +1,4 @@
-from django.db.models import Avg, Count, Prefetch
+from django.db.models import Avg, Count, Prefetch, Q
 from django.shortcuts import get_object_or_404
 from django.views.generic.base import TemplateResponseMixin
 from django.views.generic.detail import DetailView
@@ -139,7 +139,7 @@ class BouquetView(
             "colors__hex_code",
             "flowers__name",
         )
-        .annotate(avg_rating=Avg("reviews__rate"), rating_count=Count("reviews"))
+        .annotate(avg_rating=Avg("reviews__rate", filter=Q(reviews__is_published=True)), rating_count=Count("reviews", filter=Q(reviews__is_published=True)))
     )
     context_object_name = "product"
     slug_url_kwarg = "bouquet_slug"
