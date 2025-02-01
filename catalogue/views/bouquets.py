@@ -216,4 +216,5 @@ class CreateBouquetReviewView(
     context_object_name = "item"
     slug_url_kwarg = "bouquet_slug"
     item_details_viewname = "catalogue:bouquet-details"
+    item_review_viewname = "catalogue:bouquet-review"
     image_model = BouquetImage
