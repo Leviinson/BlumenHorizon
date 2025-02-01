@@ -151,3 +151,4 @@ class CreateProductReviewView(
     slug_url_kwarg = "product_slug"
     image_model = ProductImage
     item_details_viewname = "catalogue:product-details"
+    item_review_viewname = "catalogue:product-review"
