@@ -5,6 +5,7 @@ from random import randint
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 from tinymce.models import HTMLField
 
 from core.base_models import TimeStampAdbstractModel
@@ -76,7 +77,7 @@ class ProductAbstractModel(TimeStampAdbstractModel, MetaDataAbstractModel):
         max_digits=10,
         decimal_places=2,
         verbose_name="Цена",
-        help_text="Цена продукта до 10ти значений, два из которых плавающая запятая. Т.е. до 99999999.99",
+        help_text="Цена продукта без налога до 10ти значений, два из которых плавающая запятая. Т.е. до 99999999.99",
     )
     discount = models.IntegerField(
         validators=(
@@ -84,6 +85,7 @@ class ProductAbstractModel(TimeStampAdbstractModel, MetaDataAbstractModel):
             MaxValueValidator(100),
         ),
         verbose_name="Скидка",
+        help_text="Будет рассчитано после налога",
         null=True,
         default=0,
     )
@@ -153,14 +155,23 @@ class ProductAbstractModel(TimeStampAdbstractModel, MetaDataAbstractModel):
 
 
 class ItemReview(TimeStampAdbstractModel):
-    author_name = models.CharField(max_length=80, verbose_name="Имя автора")
+    author_name = models.CharField(
+        default=_("Аноним"), max_length=80, verbose_name="Имя автора"
+    )
     email = models.EmailField(blank=True, null=True, verbose_name="Email автора")
     rate = models.IntegerField(
         validators=[MinValueValidator(1), MaxValueValidator(5)],
         verbose_name="Рейтинг",
     )
-    description = models.TextField(verbose_name="Описание")
-    is_published = models.BooleanField(default=False, verbose_name="Прошло модерацию?")
+    description = models.TextField(
+        null=True,
+        blank=True,
+        verbose_name="Описание",
+    )
+    is_published = models.BooleanField(
+        default=False,
+        verbose_name="Прошло модерацию?",
+    )
 
     @property
     def rate_range(self) -> range:
