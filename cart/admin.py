@@ -3,19 +3,22 @@ from django.contrib import admin
 from .models import Order, OrderBouquets, OrderProducts
 
 
-class OrderProductsTabularInline(admin.TabularInline):
+class OrderProductsStackedInline(admin.StackedInline):
     model = OrderProducts
     extra = 0
 
 
-class OrderBouquetsTabularInline(admin.TabularInline):
+class OrderBouquetsStackedInline(admin.StackedInline):
     model = OrderBouquets
     extra = 0
 
 
 @admin.register(Order)
 class OrderAdminModel(admin.ModelAdmin):
-    inlines = (OrderProductsTabularInline, OrderBouquetsTabularInline)
+    inlines = (
+        OrderProductsStackedInline,
+        OrderBouquetsStackedInline,
+    )
     fields = (
         "user",
         "status",
@@ -63,4 +66,9 @@ class OrderAdminModel(admin.ModelAdmin):
         "recipient_phonenumber",
         "code",
         "user",
+    )
+    search_fields = (
+        "code",
+        "recipient_phonenumber",
+        "email",
     )
