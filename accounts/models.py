@@ -47,14 +47,18 @@ class User(TimeStampAdbstractModel, AbstractUser, PermissionsMixin):
     is_active = models.BooleanField(
         "Активный?",
         default=False,
-        help_text=f"Определяет может ли пользователь авторизоваться."
-        f" Выберите это вместо удаления аккаунта!!!",
+        help_text=(
+            f"Определяет может ли пользователь авторизоваться."
+            f" Выберите это вместо удаления аккаунта!!!"
+        ),
     )
     is_superuser = models.BooleanField(
         "Суперпользователь?",
         default=False,
-        help_text=f"Определяет имеет ли пользователь доступ ко всему "
-        f"без предварительного разрешения.",
+        help_text=(
+            f"Определяет имеет ли пользователь доступ ко всему "
+            f"без предварительного разрешения."
+        ),
     )
     date_joined = models.DateTimeField("Дата регистрации", default=timezone.now)
 
