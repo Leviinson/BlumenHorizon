@@ -1,11 +1,9 @@
 import os
 
 from django.conf import settings
-from django.contrib.sites.shortcuts import get_current_site
 from django.utils.translation import get_language
 
 from core.services.repositories import SiteRepository
-from extended_contrib_models.models import ExtendedSite
 
 
 class CommonContextMixin:
