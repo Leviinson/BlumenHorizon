@@ -21,6 +21,7 @@ class CreateItemReviewViewMixin:
     context_object_name = "item"
     slug_url_kwarg: str = None
     item_details_viewname: str = None
+    item_review_viewname: str = None
     image_model: BouquetImage | ProductImage
 
     def get_context_data(self, *args, **kwargs):
@@ -52,7 +53,7 @@ class CreateItemReviewViewMixin:
 
     def get_success_url(self):
         return reverse_lazy(
-            self.item_details_viewname, args=self.args, kwargs=self.kwargs
+            self.item_review_viewname, args=self.args, kwargs=self.kwargs
         )
 
     def get_queryset(self):
