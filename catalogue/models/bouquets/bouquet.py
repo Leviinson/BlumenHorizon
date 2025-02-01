@@ -128,7 +128,7 @@ class BouquetSubcategory(
         verbose_name_plural = "5. Подкатегории букетов"
 
     def __str__(self):
-        return self.name
+        return f"{self.name} ({self.category.name})"
 
     def get_relative_url(self):
         return reverse_lazy(
