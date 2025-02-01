@@ -1,5 +1,4 @@
 import factory
-import faker
 from django.utils.text import slugify
 
 from catalogue.models import (
