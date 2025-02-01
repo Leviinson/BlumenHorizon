@@ -1,4 +1,4 @@
-from typing import NamedTuple, NewType
+from typing import NamedTuple
 
 from django.db.models.manager import BaseManager
 
