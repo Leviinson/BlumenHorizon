@@ -1,3 +1,5 @@
+from extended_contrib_models.models import ExtendedSite
+
 from ..caching import set_or_get_from_cache
 
 
@@ -47,4 +49,8 @@ class SiteRepository:
 
     @classmethod
     def get_alert_message(cls):
-        return set_or_get_from_cache("header_alert_message", 60 * 15)
+        return (
+            ExtendedSite.objects.only("header_alert_message")
+            .first()
+            .header_alert_message
+        )
