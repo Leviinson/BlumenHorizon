@@ -409,6 +409,14 @@
             </div>
         </div>
         <div id="reviews-body" class="card-body p-0 mt-3">
+            <div id="review-buttons" class="d-flex justify-content-center mb-3">
+                <a id="add-review-bottom"
+                   class="btn btn-dark-green"
+                   href="{{ reviews_uri }}">
+                   {% translate 'Добавить отзыв' %}
+                </a>
+            </div>
+            
             <div class="reviews-grid">
                 {% for review in product.reviews.all %}
                     <div class="card">
