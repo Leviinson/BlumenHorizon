@@ -1,0 +1,139 @@
+{% extends "templates/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block meta_tags %}
+<title>{% translate 'Добавить отзыв' %} | {{ site_name }}</title>
+<meta name="robots" content="noindex, nofollow">
+{% endblock %}
+
+{% block additional_head_styles %}
+<link rel="stylesheet" href="{% static 'catalog/styles/common.css' %}">
+<link rel="stylesheet" href="{% static 'catalog/styles/reviews.css' %}">
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div id="item-review">
+        <div id="review-header" class="d-flex flex-column align-items-center justify-content-center">
+            <div class="bg-image hover-overlay ripple image-wrapper p-0 mb-2" style="height: 130px; width: 130px;">
+                <img src="{{ item.first_image_url }}"
+                     class="square-image rounded img-thumbnail"
+                     alt="{{ item.first_image_alt }}"
+                     style="height: 130px; width: 130px;"/>
+            </div>
+            <h1>{% translate 'Чем Вы можете поделиться об этом продукте?' %}</h1>
+        </div>
+        <div class="d-flex justify-content-center align-items-center">
+            {% for message in messages %}
+                <div class="alert {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %} alert-success {% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %} alert-danger {% endif %}"
+                    role="alert"
+                    style="max-width: 700px;">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        <div id="review-body" class="d-flex flex-column align-items-center justify-content-center w-100">
+            {% if messages %}
+            <a href="{{ item_uri }}" class="btn btn-dark-green">{% translate 'Завершить' %}</a>
+            {% else %}
+                <div id="review-stars" class="d-flex justify-content-center gap-2">
+                    <i class="bi bi-star-fill fs-5 star" style="color: rgb(197, 172, 26);"></i>
+                    <i class="bi bi-star-fill fs-5 star" style="color: rgb(197, 172, 26);"></i>
+                    <i class="bi bi-star-fill fs-5 star" style="color: rgb(197, 172, 26);"></i>
+                    <i class="bi bi-star-fill fs-5 star" style="color: rgb(197, 172, 26);"></i>
+                    <i class="bi bi-star-fill fs-5 star" style="color: rgb(197, 172, 26);"></i>    
+                </div>
+            {% endif %}
+            {% if form.errors.rate %}
+            {% for error in form.errors.rate %}
+            <div class="form-text text-danger">
+            {{ error|striptags }}
+            </div>
+            {% endfor %}
+            {% endif %}
+            <form method="post" class="w-100" style="max-width: 700px;">
+                {% csrf_token %}
+                <fieldset {% if messages %} disabled {% endif %}>
+                    <input type="hidden" name="rate" value="5">
+                    <div class="mb-3">
+                        <label for="inputFirstName" class="form-label">{% translate 'Имя' %}</label>
+                        <input class="form-control text-start"
+                            id="inputFirstName"
+                            autocomplete="given-name"
+                            name="author_name"
+                            autofocus
+                            value="{% translate 'Аноним' %}">
+                        {% if form.errors.author_name %}
+                        {% for error in form.errors.author_name %}
+                        <div class="form-text text-danger">
+                        {{ error|striptags }}
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        <label for="reviewerEmail" class="form-label">Email</label>
+                        <input type="email"
+                            autocomplete="email"
+                            class="form-control text-start"
+                            id="reviewerEmail"
+                            name="email"
+                            placeholder="{% translate '(необязательное поле)' %}"
+                            autofocus>
+                    </div>
+                    <div class="mb-3">
+                        <label for="reviewDescription" class="form-label">{% translate 'Описание' %}</label>
+                        <textarea name="description"
+                                class="form-control text-start"
+                                placeholder="{% translate '(необязательное поле)' %}"></textarea>
+                        {% if form.errors.description %}
+                        {% for error in form.errors.description %}
+                        <div class="form-text text-danger">
+                        {{ error|striptags }}
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-dark-green">{% translate "Отправить на модерацию" %}</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const stars = document.querySelectorAll(".star");
+        const rateInput = document.querySelector("input[name='rate']");
+
+        stars.forEach((star, index) => {
+            star.addEventListener("mouseover", () => highlightStars(index));
+            star.addEventListener("click", () => setRating(index));
+            star.addEventListener("mouseout", restoreRating);
+        });
+
+        function highlightStars(index) {
+            stars.forEach((star, i) => {
+                star.classList.toggle("bi-star-fill", i <= index);
+                star.classList.toggle("bi-star", i > index);
+            });
+        }
+
+        function setRating(index) {
+            rateInput.value = index + 1;
+        }
+
+        function restoreRating() {
+            const savedRating = parseInt(rateInput.value, 10) || 0;
+            console.log(savedRating);
+            stars.forEach((star, i) => {
+                star.classList.toggle("bi-star-fill", i < savedRating);
+                star.classList.toggle("bi-star", i >= savedRating);
+            });
+        }
+    });
+</script>
+{% endblock %}
