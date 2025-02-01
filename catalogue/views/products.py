@@ -1,19 +1,20 @@
+from django.db.models import Avg, Count, Prefetch
 from django.urls import reverse_lazy
 from django.views.generic.base import TemplateResponseMixin
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import FormMixin
 from django_filters.views import FilterView
 
 from cart.cart import ProductCart
 from core.services.mixins import CanonicalsContextMixin, CommonContextMixin
 from core.services.mixins.canonicals import CanonicalLinksMixin
-from core.services.utils.first_image_attaching import annotate_first_image_and_alt
 
 from ..filters import ProductFilter
 from ..forms import ProductReviewForm
-from ..models import Product, ProductImage, ProductsListPageModel, BouquetImage, Bouquet
+from ..models import Product, ProductImage, ProductReview, ProductsListPageModel
 from ..services.mixins.views.details_mixin import DetailViewMixin
 from ..services.mixins.views.list_mixin import ListViewMixin, ProductListViewMixin
+from ..services.mixins.views.reviews import CreateItemReviewViewMixin
 
 
 class ProductView(
@@ -26,7 +27,13 @@ class ProductView(
     model = Product
     queryset = (
         Product.objects.filter(is_active=True)
-        .prefetch_related("images")
+        .prefetch_related(
+            "images",
+            Prefetch(
+                "reviews",
+                queryset=ProductReview.objects.filter(is_published=True),
+            ),
+        )
         .select_related(
             "subcategory",
             "subcategory__category",
@@ -47,6 +54,7 @@ class ProductView(
             "subcategory__category__slug",
             "subcategory__category__name",
         )
+        .annotate(avg_rating=Avg("reviews__rate"), rating_count=Count("reviews"))
     )
     context_object_name = "product"
     slug_url_kwarg = "product_slug"
@@ -57,6 +65,7 @@ class ProductView(
     cart = ProductCart
     model = Product
     image_model = ProductImage
+    item_details_viewname = "catalogue:product-review"
 
 
 class ProductListView(
@@ -90,9 +99,6 @@ class ProductListView(
     filterset_class = ProductFilter
     image_model = ProductImage
     page_model = ProductsListPageModel
-
-
-class CreateProductReviewView(CreateView):
     form_class = ProductReviewForm
     http_method_names = [
         "get",
@@ -107,3 +113,38 @@ class CreateProductReviewView(CreateView):
 
     def form_invalid(self, form):
         return super().form_invalid(form)
+
+
+class CreateProductReviewView(
+    CreateItemReviewViewMixin,
+    CommonContextMixin,
+    FormMixin,
+    DetailView,
+):
+    form_class = ProductReviewForm
+    http_method_names = [
+        "get",
+        "post",
+    ]
+    queryset = (
+        Product.objects.select_related("subcategory", "subcategory__category")
+        .only(
+            "name",
+            "slug",
+            "is_active",
+            "subcategory__is_active",
+            "subcategory__slug",
+            "subcategory__category__is_active",
+            "subcategory__category__slug",
+        )
+        .filter(
+            is_active=True,
+            subcategory__is_active=True,
+            subcategory__category__is_active=True,
+        )
+    )
+    template_name = "catalog/review.html"
+    context_object_name = "item"
+    slug_url_kwarg = "product_slug"
+    image_model = ProductImage
+    item_details_viewname = "catalogue:product-details"

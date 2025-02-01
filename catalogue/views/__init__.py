@@ -13,4 +13,4 @@ from .catalogue import (
     SubcategoryBouquetsListView,
     SubcategoryProductsListView,
 )
-from .products import ProductListView, ProductView, CreateProductReviewView
+from .products import CreateProductReviewView, ProductListView, ProductView
