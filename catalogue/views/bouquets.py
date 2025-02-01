@@ -1,18 +1,14 @@
 from django.db.models import Avg, Count, Prefetch
-from django.http import Http404
 from django.shortcuts import get_object_or_404
-from django.urls import reverse_lazy
-from django.utils.translation import gettext_lazy as _, get_language
 from django.views.generic.base import TemplateResponseMixin
 from django.views.generic.detail import DetailView
+from django.views.generic.edit import FormMixin
 from django_filters.views import FilterView
 from rest_framework import status
 from rest_framework.exceptions import NotFound
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from core.services.utils.first_image_attaching import annotate_first_image_and_alt
-
 
 from cart.cart import BouquetCart
 from core.services.mixins import CanonicalsContextMixin, CommonContextMixin
@@ -31,6 +27,7 @@ from ..models import (
 )
 from ..services.mixins.views.details_mixin import DetailViewMixin
 from ..services.mixins.views.list_mixin import BouquetListViewMixin, ListViewMixin
+from ..services.mixins.views.reviews import CreateItemReviewViewMixin
 from .serializers import BouquetSizeSerializer
 
 
@@ -152,6 +149,7 @@ class BouquetView(
     cart = BouquetCart
     model = Bouquet
     image_model = BouquetImage
+    item_details_viewname = "catalogue:bouquet-review"
 
 
 class BouquetListView(
@@ -191,15 +189,15 @@ class BouquetListView(
         return context
 
 
-class CreateBouquetReviewView(CommonContextMixin, DetailView):
+class CreateBouquetReviewView(
+    CreateItemReviewViewMixin,
+    CommonContextMixin,
+    FormMixin,
+    DetailView,
+):
     form_class = BouquetReviewForm
-    http_method_names = [
-        "get",
-        "post",
-    ]
     queryset = (
-        Bouquet.objects
-        .select_related("subcategory", "subcategory__category")
+        Bouquet.objects.select_related("subcategory", "subcategory__category")
         .only(
             "name",
             "slug",
@@ -215,42 +213,7 @@ class CreateBouquetReviewView(CommonContextMixin, DetailView):
             subcategory__category__is_active=True,
         )
     )
-    template_name = "catalog/review.html"
-    success_url = reverse_lazy("mainpage:offers")
     context_object_name = "item"
     slug_url_kwarg = "bouquet_slug"
-
-    def form_valid(self, form):
-        return super().form_valid(form)
-
-    def get_queryset(self):
-        qs = super().get_queryset()
-        return qs.filter(
-            is_active=True,
-            subcategory__is_active=True,
-            subcategory__category__is_active=True,
-        )
-
-    def get_object(self, queryset=None):
-        if queryset is None:
-            queryset = self.get_queryset()
-            queryset = annotate_first_image_and_alt(
-                queryset,
-                BouquetImage,
-                get_language()
-            )
-        try:
-            obj = queryset.get(
-                subcategory__category__slug=self.kwargs["category_slug"],
-                subcategory__slug=self.kwargs["subcategory_slug"],
-                slug=self.kwargs[self.slug_url_kwarg],
-            )
-        except queryset.model.DoesNotExist:
-            raise Http404(
-                _("Не найдено ни одного %(verbose_name)s совпадающего по запросу")
-                % {"verbose_name": queryset.model._meta.verbose_name}
-            )
-        return obj
-
-    def form_invalid(self, form):
-        return super().form_invalid(form)
+    item_details_viewname = "catalogue:bouquet-details"
+    image_model = BouquetImage
