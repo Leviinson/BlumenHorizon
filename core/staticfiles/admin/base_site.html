@@ -6,6 +6,10 @@
 <link rel="stylesheet" href="{% static 'styles/common.css' %}">
 {% endblock %}
 
+{% block extrahead %}
+<link rel="shortcut icon" href="{% static 'templates/favicon.png' %}">
+{% endblock %}
+
 {% block nav-global %}
 <div style="display: flex; align-items: center; justify-content: center; margin-top: 10px;">
       {% get_available_languages as LANGUAGES %}
