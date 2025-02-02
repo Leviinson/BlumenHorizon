@@ -186,6 +186,7 @@ class BouquetListView(
     filterset_class = BouquetFilter
     image_model = BouquetImage
     page_model = BouquetsListPageModel
+    allow_empty=True
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
