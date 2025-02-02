@@ -1,9 +1,10 @@
-from decimal import Decimal
+from decimal import ROUND_HALF_UP, Decimal
 
 from django.conf import settings
 
 from carton import module_loading
 from carton import settings as carton_settings
+from catalogue.models import Bouquet, Product
 
 
 class CartItem(object):
@@ -11,10 +12,11 @@ class CartItem(object):
     A cart item, with the associated product, its quantity and its price.
     """
 
-    def __init__(self, product, quantity, price):
+    def __init__(self, product: Product | Bouquet, quantity, price):
         self.product = product
         self.quantity = int(quantity)
-        self.price = Decimal(str(price))
+        self.price = Decimal(price)
+        self.tax_percent = self.product.tax_percent.value
 
     def __repr__(self):
         return "CartItem Object (%s)" % self.product
@@ -32,6 +34,12 @@ class CartItem(object):
         Subtotal for the cart item.
         """
         return self.price * self.quantity
+
+    @property
+    def tax_amount(self) -> Decimal:
+        return (
+            self.price * self.tax_percent / (100 + self.tax_percent) * self.quantity
+        ).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
 
 
 class Cart(object):

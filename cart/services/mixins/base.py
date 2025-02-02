@@ -23,7 +23,7 @@ class CartMixin:
         self.with_images = with_images
         return super().__init__(session, session_key, *args, **kwargs)
 
-    def get_quantity(self, product: Product | Bouquet) -> int:
+    def get_product_quantity(self, product: Product | Bouquet) -> int:
         """
         Возвращает кол-во продукта в корзине.
 
@@ -32,7 +32,7 @@ class CartMixin:
         if product in self.products:
             return self._items_dict[product.pk].quantity
 
-    def get_subtotal(self, product: Product | Bouquet) -> Decimal:
+    def get_product_grand_total(self, product: Product | Bouquet) -> Decimal:
         """
         Возвращает стоимость продукта в корзине (учитывая его кол-во).
 
@@ -40,6 +40,13 @@ class CartMixin:
         """
         if product in self.products:
             return self._items_dict[product.pk].subtotal
+
+    @property
+    def total_tax_amount(self):
+        """
+        Сумма заплаченных налогов за все продукты в корзине
+        """
+        return sum([item.tax_amount for item in self.items])
 
     def filter_products(
         self, queryset: QuerySet[Product | Bouquet]
@@ -81,7 +88,9 @@ class CartMixin:
         :param base_queryset: Отфильтрованный queryset силами django-carton.
         """
         optimized_queryset = base_queryset.select_related(
-            "subcategory", "subcategory__category"
+            "subcategory",
+            "subcategory__category",
+            "tax_percent",
         )
         return optimized_queryset
 

@@ -188,7 +188,7 @@ def order_created(sender: Order, instance: Order, created, **kwargs):
 
 
 class OrderItem(models.Model):
-    product_discount = models.IntegerField(
+    discount = models.IntegerField(
         validators=(
             MinValueValidator(0),
             MaxValueValidator(100),
@@ -197,25 +197,28 @@ class OrderItem(models.Model):
         null=True,
         default=0,
     )
-    product_price = models.DecimalField(
+    base_price = models.DecimalField(
         max_digits=10,
         decimal_places=2,
         verbose_name="Цена продукта",
     )
-    product_discount_price = models.DecimalField(
+    discount_price = models.DecimalField(
         max_digits=10,
         decimal_places=2,
         verbose_name="Цена продукта cо скидкой",
     )
-    product_tax_price = models.DecimalField(
+    tax_price = models.DecimalField(
         max_digits=10,
         decimal_places=2,
         verbose_name="Цена продукта с налогом",
     )
-    product_tax_price_discounted = models.DecimalField(
+    tax_price_discounted = models.DecimalField(
         max_digits=10,
         decimal_places=2,
         verbose_name="Цена продукта со скидкой и налогом",
+    )
+    taxes = models.DecimalField(
+        max_digits=10, decimal_places=2, verbose_name="Всего заплаченных налогов"
     )
     quantity = models.IntegerField(verbose_name="Количество продукта")
 

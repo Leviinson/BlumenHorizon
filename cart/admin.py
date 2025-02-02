@@ -24,7 +24,6 @@ class OrderAdminModel(admin.ModelAdmin):
         "status",
         "sub_total",
         "tax",
-        "tax_percent",
         "grand_total",
         "clarify_address",
         "country",
