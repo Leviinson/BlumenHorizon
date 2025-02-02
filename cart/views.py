@@ -1,5 +1,4 @@
 import logging
-from decimal import Decimal
 from typing import Any, Collection
 
 import stripe
@@ -12,7 +11,7 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 from django.views.generic.edit import BaseFormView, FormView
-from stripe import InvalidRequestError, TaxRate
+from stripe import InvalidRequestError
 
 from accounts.models import User
 from catalogue.models import Bouquet, BouquetImage, Product, ProductImage
@@ -65,7 +64,6 @@ class CartView(CommonContextMixin, FormView):
             order.products,
             order.bouquets,
             SiteRepository.get_currency_code(),
-            SiteRepository.get_tax_percent(),
         )
 
         self.add_order_in_user_session(self.request, order.code)
@@ -141,7 +139,6 @@ class CartView(CommonContextMixin, FormView):
         order_products: BaseManager[OrderProducts],
         order_bouquets: BaseManager[OrderBouquets],
         currency: str,
-        vat_percentage: int,
     ) -> list[dict[str, Any]]:
         """
         Генерирует список элементов для Stripe и прикрепляет первое изображение продукта.
@@ -154,7 +151,6 @@ class CartView(CommonContextMixin, FormView):
         order_products (BaseManager[OrderProducts]): Менеджер для получения продуктов из заказа.
         order_bouquets (BaseManager[OrderBouquets]): Менеджер для получения букетов из заказа.
         currency (str): Валюта, которая будет использована для отображения в Stripe.
-        domain (str): Домен сайта для формирования ссылок на изображения.
 
         Возвращает:
         tuple: Кортеж, содержащий:
@@ -163,15 +159,6 @@ class CartView(CommonContextMixin, FormView):
             - Список line items для Stripe (list[dict[str, str | int]]).
         """
         line_items = []
-        tax_rate = TaxRate.create(
-            display_name=_("НДС"),
-            inclusive=True,
-            percentage=vat_percentage,
-            active=True,
-            country=SiteRepository.get_country_code(),
-            jurisdiction=SiteRepository.get_country_code(),
-        )
-        tax_rate_id = tax_rate.id
         for order_product in order_products.all():
             if ProductImage := order_product.product.images.first():
                 order_product.product.first_image_url = ProductImage.absolute_url
@@ -181,7 +168,10 @@ class CartView(CommonContextMixin, FormView):
                 )
             line_items.append(
                 self.create_line_item(
-                    order_product, order_product.quantity, currency, tax_rate_id
+                    order_product,
+                    order_product.quantity,
+                    currency,
+                    order_product.product.tax_percent.stripe_id,
                 )
             )
         for order_bouquet in order_bouquets.all():
@@ -194,7 +184,10 @@ class CartView(CommonContextMixin, FormView):
 
             line_items.append(
                 self.create_line_item(
-                    order_bouquet, order_bouquet.quantity, currency, tax_rate_id
+                    order_bouquet,
+                    order_bouquet.quantity,
+                    currency,
+                    order_bouquet.product.tax_percent.stripe_id,
                 )
             )
         return line_items
@@ -287,13 +280,11 @@ class CartView(CommonContextMixin, FormView):
         bouquets_cart = BouquetCart(
             session=request.session, session_key=BouquetCart.session_key
         )
-        tax_percent = SiteRepository.get_tax_percent()
         language_code = get_language()
         return self.save_order_in_db(
             form,
             products_cart,
             bouquets_cart,
-            tax_percent,
             request.user,
             request.session.session_key,
             language_code,
@@ -304,7 +295,6 @@ class CartView(CommonContextMixin, FormView):
         form: OrderForm,
         products_cart: ProductCart,
         bouquets_cart: BouquetCart,
-        tax_percent: int,
         user: User | AnonymousUser,
         session_key: Any,
         language_code: str,
@@ -320,7 +310,6 @@ class CartView(CommonContextMixin, FormView):
         form (OrderForm): Форма, содержащая информацию о заказе.
         products_cart (ProductCart): Корзина продуктов для заказа.
         bouquets_cart (BouquetCart): Корзина букетов для заказа.
-        tax_percent (int): Процент налога, который будет применяться к заказу.
         user (User): Пользователь, совершивший заказ.
         session_key (Any): Сессионный ключ, связанный с текущим заказом.
         language_code (str): Код языка, используемый для оформления заказа.
@@ -331,7 +320,6 @@ class CartView(CommonContextMixin, FormView):
         order = form.save(
             products_cart=products_cart,
             bouquets_cart=bouquets_cart,
-            tax_percent=tax_percent,
             session_key=session_key,
             language_code=language_code,
             user=user,
@@ -342,6 +330,8 @@ class CartView(CommonContextMixin, FormView):
                 "products__product",
                 "bouquets",
                 "bouquets__product",
+                "products__product__tax_percent",
+                "bouquets__product__tax_percent",
                 "products__product__subcategory",
                 "bouquets__product__subcategory",
                 "products__product__images",
@@ -379,6 +369,8 @@ class CartView(CommonContextMixin, FormView):
                 "products__product__discount",
                 "products__product__price",
                 "products__product__discount_expiration_datetime",
+                "products__product__tax_percent__value",
+                "products__product__tax_percent__stripe_id",
                 "products__product__slug",
                 "products__product__subcategory__slug",
                 "products__product__subcategory__category__slug",
@@ -386,6 +378,8 @@ class CartView(CommonContextMixin, FormView):
                 "bouquets__product__discount",
                 "bouquets__product__price",
                 "bouquets__product__discount_expiration_datetime",
+                "bouquets__product__tax_percent__value",
+                "bouquets__product__tax_percent__stripe_id",
                 "bouquets__product__slug",
                 "bouquets__product__subcategory__slug",
                 "bouquets__product__subcategory__category__slug",
@@ -429,6 +423,7 @@ class CartView(CommonContextMixin, FormView):
         related_models = [
             RelatedModel(model="subcategory", fields=["slug", "name"]),
             RelatedModel(model="subcategory__category", fields=["slug"]),
+            RelatedModel(model="tax_percent", fields=["value"]),
         ]
         context["recommended_products"] = get_recommended_items_with_first_image(
             model=Product,
@@ -453,10 +448,11 @@ class CartView(CommonContextMixin, FormView):
         context["agb_url"] = reverse_lazy("mainpage:agb")
         context["privacy_policy_url"] = reverse_lazy("mainpage:privacy-and-policy")
 
-        tax_percent = SiteRepository.get_tax_percent()
-        grand_total = context["products_cart"].total + context["bouquets_cart"].total
-        sub_total = grand_total / Decimal(1 + tax_percent / 100)
-        tax = grand_total - sub_total
+        products_cart: ProductCart = context["products_cart"]
+        bouquets_cart: BouquetCart = context["bouquets_cart"]
+        grand_total = products_cart.total + bouquets_cart.total
+        tax = products_cart.total_tax_amount + bouquets_cart.total_tax_amount
+        sub_total = grand_total - tax
         context["tax"] = tax
         context["sub_total"] = sub_total
         context["grand_total"] = grand_total

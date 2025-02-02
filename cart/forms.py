@@ -1,4 +1,3 @@
-from decimal import Decimal
 from typing import Any, Optional
 
 from django import forms
@@ -71,7 +70,6 @@ class OrderForm(forms.ModelForm):
         self,
         products_cart: ProductCart,
         bouquets_cart: BouquetCart,
-        tax_percent: int,
         session_key: Any,
         language_code: str,
         user: User | AnonymousUser,
@@ -83,7 +81,6 @@ class OrderForm(forms.ModelForm):
         Параметры:
         products_cart (ProductCart): Корзина с продуктами пользователя.
         bouquets_cart (BouquetCart): Корзина с букетами пользователя.
-        tax_percent (int): Процент налога для расчёта.
         session_key (Any): Ключ сессии пользователя.
         language_code (str): Код языка для локализации заказа.
         commit (bool): Флаг для немедленного сохранения заказа в базу.
@@ -95,9 +92,7 @@ class OrderForm(forms.ModelForm):
         order = self._initialize_order(session_key, user, language_code)
 
         with transaction.atomic():
-            self._calculate_and_save_totals(
-                order, products_cart, bouquets_cart, tax_percent
-            )
+            self._calculate_and_save_totals(order, products_cart, bouquets_cart)
             self._save_order_products(order, products_cart)
             self._save_order_bouquets(order, bouquets_cart)
 
@@ -129,7 +124,6 @@ class OrderForm(forms.ModelForm):
         order: Order,
         products_cart: ProductCart,
         bouquets_cart: BouquetCart,
-        tax_percent: int,
     ):
         """
         Рассчитывает налог, сумму без налога, общую сумму заказа,
@@ -139,14 +133,12 @@ class OrderForm(forms.ModelForm):
         order (Order): Объект заказа, в котором будут сохранены вычисленные значения.
         products_cart (ProductCart): Корзина с продуктами.
         bouquets_cart (BouquetCart): Корзина с букетами.
-        tax_percent (int): Процент налога для расчёта.
         """
         grand_total = products_cart.total + bouquets_cart.total
-        sub_total = grand_total / Decimal(1 + tax_percent / 100)
-        tax = grand_total - sub_total
+        tax = products_cart.total_tax_amount + bouquets_cart.total_tax_amount
+        sub_total = grand_total - tax
 
         order.tax = tax
-        order.tax_percent = tax_percent
         order.grand_total = grand_total
         order.sub_total = sub_total
         order.save()
@@ -165,12 +157,14 @@ class OrderForm(forms.ModelForm):
                     OrderProducts(
                         order=order,
                         product=product,
-                        product_price=product.price,
-                        product_discount=product.discount,
-                        product_discount_price=product.discount_price,
-                        product_tax_price=product.tax_price,
-                        product_tax_price_discounted=product.tax_price_discounted,
-                        quantity=products_cart.get_quantity(product),
+                        price=product.price,
+                        discount=product.discount,
+                        discount_price=product.discount_price,
+                        tax_price=product.tax_price,
+                        tax_price_discounted=product.tax_price_discounted,
+                        taxes=product.taxes
+                        * products_cart.get_product_quantity(product),
+                        quantity=products_cart.get_product_quantity(product),
                     )
                     for product in products
                 ]
@@ -190,12 +184,14 @@ class OrderForm(forms.ModelForm):
                     OrderBouquets(
                         order=order,
                         product=bouquet,
-                        product_price=bouquet.price,
-                        product_discount=bouquet.discount,
-                        product_discount_price=bouquet.discount_price,
-                        product_tax_price=bouquet.tax_price,
-                        product_tax_price_discounted=bouquet.tax_price_discounted,
-                        quantity=bouquets_cart.get_quantity(bouquet),
+                        price=bouquet.price,
+                        discount=bouquet.discount,
+                        discount_price=bouquet.discount_price,
+                        tax_price=bouquet.tax_price,
+                        tax_price_discounted=bouquet.tax_price_discounted,
+                        taxes=bouquet.taxes
+                        * bouquets_cart.get_product_quantity(bouquet),
+                        quantity=bouquets_cart.get_product_quantity(bouquet),
                     )
                     for bouquet in bouquets
                 ]
