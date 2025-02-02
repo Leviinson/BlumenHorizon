@@ -49,8 +49,6 @@ def _get_value_for_key(key: str) -> Any:
         ValueError: Если обработка указанного ключа не поддерживается.
     """
     match key:
-        case "tax_percent":
-            return ExtendedSite.objects.only("tax_percent").first().tax_percent
         case "currency_symbol":
             return ExtendedSite.objects.only("currency_symbol").first().currency_symbol
         case "currency_code":

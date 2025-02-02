@@ -139,7 +139,10 @@ class BouquetView(
             "colors__hex_code",
             "flowers__name",
         )
-        .annotate(avg_rating=Avg("reviews__rate", filter=Q(reviews__is_published=True)), rating_count=Count("reviews", filter=Q(reviews__is_published=True)))
+        .annotate(
+            avg_rating=Avg("reviews__rate", filter=Q(reviews__is_published=True)),
+            rating_count=Count("reviews", filter=Q(reviews__is_published=True)),
+        )
     )
     context_object_name = "product"
     slug_url_kwarg = "bouquet_slug"

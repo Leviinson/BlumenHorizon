@@ -10,11 +10,9 @@
 
 from colorfield.fields import ColorField
 from django.contrib.sites.models import Site
-from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.utils.translation import gettext_lazy as _
 
 
 class ExtendedSite(models.Model):
@@ -33,15 +31,6 @@ class ExtendedSite(models.Model):
     currency_symbol = models.CharField(max_length=5, verbose_name="Знак валюты")
     country = models.CharField(max_length=40, verbose_name="Название страны")
     city = models.CharField(max_length=40, verbose_name="Название города")
-    tax_percent = models.IntegerField(
-        validators=(
-            MinValueValidator(0),
-            MaxValueValidator(100),
-        ),
-        verbose_name=_("НДС"),
-        null=True,
-        default=0,
-    )
     country_iso_3166_1_alpha_2 = models.CharField(
         max_length=2,
         verbose_name="Код страны ISO 3166-1 alpha-2",
