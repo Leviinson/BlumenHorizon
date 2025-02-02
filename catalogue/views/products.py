@@ -112,6 +112,7 @@ class ProductListView(
     template_name = "catalog/base_list.html"
     success_url = reverse_lazy("mainpage:offers")
     context_object_name = "item"
+    allow_empty=True
 
     def form_valid(self, form):
         return super().form_valid(form)
