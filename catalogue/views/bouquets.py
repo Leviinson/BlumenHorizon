@@ -166,6 +166,7 @@ class BouquetListView(
     model = Bouquet
     queryset = Bouquet.objects.select_related(
         "subcategory__category",
+        "tax_percent",
     ).only(
         "slug",
         "name",
@@ -178,6 +179,7 @@ class BouquetListView(
         "colors__name",
         "colors__hex_code",
         "flowers__name",
+        "tax_percent__value",
     )
     context_object_name = "products"
     template_name = "catalog/bouquets/bouquet_list.html"
@@ -200,7 +202,10 @@ class CreateBouquetReviewView(
 ):
     form_class = BouquetReviewForm
     queryset = (
-        Bouquet.objects.select_related("subcategory", "subcategory__category")
+        Bouquet.objects.select_related(
+            "subcategory",
+            "subcategory__category",
+        )
         .only(
             "name",
             "slug",

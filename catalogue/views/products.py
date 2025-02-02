@@ -84,6 +84,7 @@ class ProductListView(
         Product.objects.filter(is_active=True)
         .select_related(
             "subcategory__category",
+            "tax_percent"
         )
         .only(
             "slug",
@@ -94,6 +95,7 @@ class ProductListView(
             "discount_expiration_datetime",
             "subcategory__slug",
             "subcategory__category__slug",
+            "tax_percent__value"
         )
     )
     ordering = ("name",)
@@ -107,7 +109,7 @@ class ProductListView(
         "get",
         "post",
     ]
-    template_name = "catalog/review.html"
+    template_name = "catalog/base_list.html"
     success_url = reverse_lazy("mainpage:offers")
     context_object_name = "item"
 
