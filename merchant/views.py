@@ -7,9 +7,11 @@ from rest_framework.decorators import api_view
 from rest_framework.request import Request
 from rest_framework.response import Response
 from stripe import SignatureVerificationError, Webhook
+from telegram.helpers import escape_markdown
 
 from cart.models import Order
 from core.services.utils.carts import clear_user_cart
+from tg_bot import send_message_to_telegram
 
 from .services import OrderRepository, send_order_confirmation_email
 
@@ -154,7 +156,13 @@ def stripe_webhook(request: Request):
         try_clear_cart(order)
     except OrderNotFound as e:
         logger.debug(e, stack_info=True)
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+        text = (
+            f"Stripe попытался связаться с веб-хуком: \n\n"
+            f"{request.build_absolute_uri(request.get_full_path())}"
+        )
+
+        send_message_to_telegram(text)
+        return Response(status=status.HTTP_200_OK)
     except Exception as e:
         logger.debug(e, stack_info=True)
         return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
