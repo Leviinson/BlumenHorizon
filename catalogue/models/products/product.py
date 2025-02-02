@@ -110,6 +110,20 @@ class Product(ProductAbstractModel):
         related_name="products",
     )
     sku = models.CharField(max_length=25, unique=True, default=generate_sku, null=True)
+    tax_percent: TaxPercent = models.ForeignKey(
+        TaxPercent,
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        default=2,
+        related_name="products",
+        verbose_name="Налоговая ставка",
+        help_text="Выберите налоговую ставку, применимую к данному товару. Вычисляется до скидки.",
+    )
+
+    @property
+    def is_bouquet(self) -> bool:
+        return False
 
     class Meta:
         verbose_name = "Продукт"
@@ -124,21 +138,6 @@ class Product(ProductAbstractModel):
                 "product_slug": self.slug,
             },
         )
-
-    tax_percent: TaxPercent = models.ForeignKey(
-        TaxPercent,
-        default=2,
-        on_delete=models.PROTECT,
-        null=True,
-        blank=True,
-        related_name="products",
-        verbose_name="Налоговая ставка",
-        help_text="Выберите налоговую ставку, применимую к данному товару. Вычисляется до скидки.",
-    )
-
-    @property
-    def is_bouquet(self) -> bool:
-        return False
 
 
 class ProductReview(ItemReview):
