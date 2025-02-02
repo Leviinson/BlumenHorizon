@@ -5,3 +5,4 @@ from .abstract_models import (
     ProductAbstractModel,
     generate_sku,
 )
+from .taxes import TaxPercent

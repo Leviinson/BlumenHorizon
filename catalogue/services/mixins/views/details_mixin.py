@@ -147,6 +147,7 @@ class DetailViewMixin:
                 model="subcategory__category",
                 fields=["slug", "is_active"],
             ),
+            RelatedModel(model="tax_percent", fields=["value"]),
         ]
         return get_recommended_items_with_first_image(
             model=self.model,

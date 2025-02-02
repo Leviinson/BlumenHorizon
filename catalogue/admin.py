@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.html import format_html
 from modeltranslation.admin import TranslationAdmin
 
 from .models import (
@@ -16,7 +17,30 @@ from .models import (
     ProductImage,
     ProductReview,
     ProductSubcategory,
+    TaxPercent,
 )
+
+
+@admin.register(TaxPercent)
+class TaxPercentAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "value",
+        "stripe_id_display",
+        "created_at",
+        "updated_at",
+    )  # Красивое отображение
+    fields = ("value", "stripe_id", "created_at", "updated_at")  # Поля в форме
+    readonly_fields = ("created_at", "updated_at")  # Даты только для чтения
+    search_fields = ("value", "stripe_id")  # Поиск по значению налога и Stripe ID
+    list_filter = ("created_at", "updated_at")  # Фильтрация по дате
+    ordering = ("-created_at",)  # Сортировка от новых к старым
+
+    def stripe_id_display(self, obj):
+        """Выводит Stripe ID, если есть, иначе прочерк"""
+        return format_html("<code>{}</code>", obj.stripe_id) if obj.stripe_id else "—"
+
+    stripe_id_display.short_description = "Stripe ID"
 
 
 @admin.register(ProductCategory)
@@ -119,13 +143,14 @@ class ProductAdmin(TranslationAdmin):
             None,
             {
                 "fields": (
+                    "is_active",
                     "name",
                     "slug",
                     "sku",
                     "price",
                     "discount",
                     "discount_expiration_datetime",
-                    "is_active",
+                    "tax_percent",
                     "subcategory",
                     "amount_of_orders",
                     "amount_of_savings",
@@ -346,17 +371,18 @@ class BouquetAdmin(TranslationAdmin):
             None,
             {
                 "fields": (
+                    "is_active",
                     "name",
                     "slug",
                     "sku",
                     "price",
                     "discount",
                     "discount_expiration_datetime",
+                    "tax_percent",
                     "diameter",
                     "amount_of_savings",
                     "colors",
                     "flowers",
-                    "is_active",
                     "amount_of_flowers",
                     "amount_of_orders",
                     "subcategory",
