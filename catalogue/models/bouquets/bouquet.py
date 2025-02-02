@@ -19,6 +19,7 @@ from ..services import (
     ItemReview,
     MetaDataAbstractModel,
     ProductAbstractModel,
+    TaxPercent,
     generate_sku,
 )
 
@@ -166,6 +167,16 @@ class Bouquet(ProductAbstractModel):
         help_text="Выберите какие цветы в букете.",
     )
     sku = models.CharField(max_length=25, unique=True, default=generate_sku, null=True)
+    tax_percent = models.ForeignKey(
+        TaxPercent,
+        default=1,
+        null=True,
+        blank=True,
+        on_delete=models.PROTECT,
+        related_name="bouquets",
+        verbose_name="Налоговая ставка",
+        help_text="Выберите налоговую ставку, применимую к данному букету. Вычисляется до скидки.",
+    )
 
     class Meta:
         verbose_name = "Букет"

@@ -14,6 +14,7 @@ from ..services import (
     ItemReview,
     MetaDataAbstractModel,
     ProductAbstractModel,
+    TaxPercent,
     generate_sku,
 )
 
@@ -123,6 +124,17 @@ class Product(ProductAbstractModel):
                 "product_slug": self.slug,
             },
         )
+
+    tax_percent: TaxPercent = models.ForeignKey(
+        TaxPercent,
+        default=2,
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        related_name="products",
+        verbose_name="Налоговая ставка",
+        help_text="Выберите налоговую ставку, применимую к данному товару. Вычисляется до скидки.",
+    )
 
     @property
     def is_bouquet(self) -> bool:

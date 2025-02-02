@@ -25,13 +25,6 @@ class SiteRepository:
         return set_or_get_from_cache("currency_symbol", 60 * 15)
 
     @classmethod
-    def get_tax_percent(cls):
-        return set_or_get_from_cache(
-            "tax_percent",
-            60 * 15,
-        )
-
-    @classmethod
     def get_country(cls):
         return set_or_get_from_cache("country_name", 60 * 15)
 

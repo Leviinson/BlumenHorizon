@@ -18,4 +18,4 @@ from .products.product import (
     ProductsListPageModel,
     ProductSubcategory,
 )
-from .services import generate_sku
+from .services import TaxPercent, generate_sku

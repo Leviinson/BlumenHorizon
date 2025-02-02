@@ -5,11 +5,10 @@ from django.dispatch import receiver
 from telegram.helpers import escape_markdown
 from tinymce.models import HTMLField
 
+from catalogue.models.bouquets.bouquet import Bouquet
+from catalogue.models.products.product import Product
 from core.base_models import TimeStampAdbstractModel
 from tg_bot import send_message_to_telegram
-
-from .bouquets.bouquet import Bouquet
-from .products.product import Product
 
 
 class CatalogPageModel(models.Model):
