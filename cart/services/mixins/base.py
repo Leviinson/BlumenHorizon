@@ -155,5 +155,6 @@ class CartMixin:
             "subcategory__category__is_active",
             "subcategory__slug",
             "subcategory__category__slug",
+            "tax_percent__value",
         )
         return queryset_result
