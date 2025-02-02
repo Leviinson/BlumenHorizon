@@ -28,7 +28,6 @@ class ExtendedSiteAdmin(TranslationAdmin):
     list_display = (
         "site",
         "currency_code",
-        "tax_percent",
         "currency_symbol",
         "country",
         "city",
