@@ -42,7 +42,9 @@ class TestMainPage:
         socials: QuerySet[Social] = context["socials_right_bottom"]
         for social, expected_social in zip(socials, EXPECTED_SOCIALS):
             assert social["absolute_url"] == expected_social["absolute_url"]
-            assert social["background_hex_code"] == expected_social["background_hex_code"]
+            assert (
+                social["background_hex_code"] == expected_social["background_hex_code"]
+            )
             assert social["bootstrap_icon"] == expected_social["bootstrap_icon"]
             assert social["extended_site"] == site_extended
             assert social["icon_hex_code"] == expected_social["icon_hex_code"]
