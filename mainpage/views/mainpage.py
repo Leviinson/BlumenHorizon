@@ -143,6 +143,7 @@ class MainPageView(
         related_models = [
             RelatedModel(model="subcategory", fields=["slug", "name"]),
             RelatedModel(model="subcategory__category", fields=["slug"]),
+            RelatedModel(model="tax_percent", fields=["value"]),
         ]
         recommended_bouquets = processor(
             model=Bouquet,
