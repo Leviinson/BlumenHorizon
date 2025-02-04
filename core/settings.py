@@ -109,7 +109,9 @@ else:
     CORS_ALLOWED_ORIGINS = [
         f'https://{os.getenv("DOMAIN")}',
     ]
-FORCE_SCRIPT_NAME = '/athens'
+
+if not DEBUG:
+    FORCE_SCRIPT_NAME = '/athens'
 
 
 # Application definition
