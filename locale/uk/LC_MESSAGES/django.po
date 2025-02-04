@@ -1089,7 +1089,7 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"Квітковий магазин %(site_name)s у Берліні"
+"Квітковий магазин %(site_name)s у Мадриді"
 
 #: mainpage/templates/mainpage/index.html:148
 msgid "Вперёд"
