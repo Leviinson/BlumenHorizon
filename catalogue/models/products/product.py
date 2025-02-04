@@ -118,7 +118,7 @@ class Product(ProductAbstractModel):
         default=2,
         related_name="products",
         verbose_name="Налоговая ставка",
-        help_text="Выберите налоговую ставку, применимую к данному товару. Вычисляется до скидки.",
+        help_text="Выберите налоговую ставку, применимую к данному товару. Вычисляется после скидки.",
     )
 
     @property
