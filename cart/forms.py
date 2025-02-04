@@ -157,7 +157,7 @@ class OrderForm(forms.ModelForm):
                     OrderProducts(
                         order=order,
                         product=product,
-                        price=product.price,
+                        base_price=product.price,
                         discount=product.discount,
                         discount_price=product.discount_price,
                         tax_price=product.tax_price,
@@ -184,7 +184,7 @@ class OrderForm(forms.ModelForm):
                     OrderBouquets(
                         order=order,
                         product=bouquet,
-                        price=bouquet.price,
+                        base_price=bouquet.price,
                         discount=bouquet.discount,
                         discount_price=bouquet.discount_price,
                         tax_price=bouquet.tax_price,
