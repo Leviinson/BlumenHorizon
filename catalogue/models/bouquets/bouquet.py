@@ -175,7 +175,7 @@ class Bouquet(ProductAbstractModel):
         on_delete=models.PROTECT,
         related_name="bouquets",
         verbose_name="Налоговая ставка",
-        help_text="Выберите налоговую ставку, применимую к данному букету. Вычисляется до скидки.",
+        help_text="Выберите налоговую ставку, применимую к данному букету. Вычисляется после скидки.",
     )
 
     class Meta:
