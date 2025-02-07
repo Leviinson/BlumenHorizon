@@ -82,10 +82,7 @@ class ProductListView(
     model = Product
     queryset = (
         Product.objects.filter(is_active=True)
-        .select_related(
-            "subcategory__category",
-            "tax_percent"
-        )
+        .select_related("subcategory__category", "tax_percent")
         .only(
             "slug",
             "name",
@@ -95,7 +92,7 @@ class ProductListView(
             "discount_expiration_datetime",
             "subcategory__slug",
             "subcategory__category__slug",
-            "tax_percent__value"
+            "tax_percent__value",
         )
     )
     ordering = ("name",)
@@ -112,7 +109,7 @@ class ProductListView(
     template_name = "catalog/base_list.html"
     success_url = reverse_lazy("mainpage:offers")
     context_object_name = "item"
-    allow_empty=True
+    allow_empty = True
 
     def form_valid(self, form):
         return super().form_valid(form)
