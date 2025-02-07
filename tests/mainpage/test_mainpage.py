@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.contrib.sites.models import Site
 from django.db.models.query import QuerySet
 from django.template import Context
@@ -42,9 +41,11 @@ class TestMainPage:
         assert len(context["socials_right_bottom"]) == 3
         socials: QuerySet[Social] = context["socials_right_bottom"]
         for social, expected_social in zip(socials, EXPECTED_SOCIALS):
-            assert social.absolute_url == expected_social["absolute_url"]
-            assert social.background_hex_code == expected_social["background_hex_code"]
-            assert social.bootstrap_icon == expected_social["bootstrap_icon"]
-            assert social.extended_site == site_extended
-            assert social.icon_hex_code == expected_social["icon_hex_code"]
-            assert social.outline_hex_code == expected_social["outline_hex_code"]
+            assert social["absolute_url"] == expected_social["absolute_url"]
+            assert (
+                social["background_hex_code"] == expected_social["background_hex_code"]
+            )
+            assert social["bootstrap_icon"] == expected_social["bootstrap_icon"]
+            assert social["extended_site"] == site_extended
+            assert social["icon_hex_code"] == expected_social["icon_hex_code"]
+            assert social["outline_hex_code"] == expected_social["outline_hex_code"]

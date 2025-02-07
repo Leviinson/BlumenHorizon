@@ -10,11 +10,9 @@
 
 from colorfield.fields import ColorField
 from django.contrib.sites.models import Site
-from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.utils.translation import gettext_lazy as _
 
 
 class ExtendedSite(models.Model):
@@ -114,6 +112,16 @@ class Social(models.Model):
         Возвращает строку с классом иконки и ссылкой на соц. сеть.
         """
         return f"{self.bootstrap_icon} - {self.absolute_url}"
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "absolute_url": self.absolute_url,
+            "outline_hex_code": self.outline_hex_code,
+            "background_hex_code": self.background_hex_code,
+            "icon_hex_code": self.icon_hex_code,
+            "bootstrap_icon": self.bootstrap_icon,
+        }
 
 
 @receiver(post_save, sender=Site)

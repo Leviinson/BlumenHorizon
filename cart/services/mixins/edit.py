@@ -1,6 +1,6 @@
 import logging
 from abc import ABC, abstractmethod
-from decimal import ROUND_HALF_UP, Decimal
+from decimal import Decimal
 from typing import Type
 
 from django.db import transaction
@@ -12,7 +12,6 @@ from cart.cart import BouquetCart, ProductCart
 from cart.forms import CartForm
 from cart.services.dataclasses import CartAction
 from catalogue.models import Bouquet, Product
-from core.services.repositories import SiteRepository
 
 
 class CartEditAbstractMixin(ABC):
@@ -75,19 +74,16 @@ class CartEditAbstractMixin(ABC):
                     )
                 )
 
-        tax_percent = SiteRepository.get_tax_percent()
         cart_grand_total = cart.total + remaining_cart.total
-        cart_sub_total = (cart_grand_total / Decimal(1 + tax_percent / 100)).quantize(
-            Decimal("0.01"), rounding=ROUND_HALF_UP
-        )
-        taxes = cart_grand_total - cart_sub_total
+        taxes = cart.total_tax_amount + remaining_cart.total_tax_amount
+        cart_sub_total = cart_grand_total - taxes
         return self._action_response(
             detail=self.get_success_message(product),
             status=201,
             cart_grand_total=cart_grand_total,
             cart_sub_total=cart_sub_total,
-            product_quantity=cart.get_quantity(product),
-            product_grand_total=cart.get_subtotal(product),
+            product_quantity=cart.get_product_quantity(product),
+            product_grand_total=cart.get_product_grand_total(product),
             total_quantity=cart.count + remaining_cart.count,
             taxes=taxes,
         )

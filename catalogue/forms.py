@@ -1,7 +1,7 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
-from .models import Bouquet, IndividualQuestion, Product
+from .models import Bouquet, BouquetReview, IndividualQuestion, Product, ProductReview
 
 
 class BuyItemForm(forms.Form):
@@ -144,3 +144,30 @@ class IndividualQuestionForm(forms.ModelForm):
         related_field = self.cleaned_data.get("related_field")
         if related_object and related_field:
             setattr(question, related_field, related_object)
+
+
+class ReviewFormMixin(forms.ModelForm):
+    email = forms.EmailField(
+        required=False,
+    )
+    description = forms.CharField(
+        required=False,
+    )
+
+    class Meta:
+        fields = (
+            "author_name",
+            "email",
+            "rate",
+            "description",
+        )
+
+
+class BouquetReviewForm(ReviewFormMixin):
+    class Meta(ReviewFormMixin.Meta):
+        model = BouquetReview
+
+
+class ProductReviewForm(ReviewFormMixin):
+    class Meta(ReviewFormMixin.Meta):
+        model = ProductReview

@@ -29,13 +29,26 @@ class Order(TimeStampAdbstractModel, models.Model):
         verbose_name="Пользователь",
         on_delete=models.PROTECT,
         null=True,
-        blank=False,
+        blank=True,
     )
-    session_key = models.CharField(max_length=255)
-    clarify_address = models.BooleanField(default=False, verbose_name="Уточнить адрес?")
-    country = models.CharField(verbose_name="Страна", max_length=40)
-    city = models.CharField(verbose_name="Город", max_length=40)
-    email = models.EmailField(verbose_name="Почта")
+    session_key = models.CharField(
+        max_length=255,
+    )
+    clarify_address = models.BooleanField(
+        default=False,
+        verbose_name="Уточнить адрес?",
+    )
+    country = models.CharField(
+        verbose_name="Страна",
+        max_length=40,
+    )
+    city = models.CharField(
+        verbose_name="Город",
+        max_length=40,
+    )
+    email = models.EmailField(
+        verbose_name="Почта",
+    )
     address_form = models.CharField(
         max_length=20,
         choices=ADDRESS_FORM_CHOICES,
@@ -44,24 +57,42 @@ class Order(TimeStampAdbstractModel, models.Model):
     )
     name = models.CharField(verbose_name="Имя заказчика", max_length=80)
     postal_code = models.CharField(
-        verbose_name="Почтовый индекс", max_length=40, null=True, blank=True
+        verbose_name="Почтовый индекс",
+        max_length=40,
+        null=True,
+        blank=True,
     )
     street = models.CharField(
-        verbose_name="Улица", max_length=255, null=True, blank=True
+        verbose_name="Улица",
+        max_length=255,
+        null=True,
+        blank=True,
     )
     building = models.CharField(
-        verbose_name="Здание", max_length=40, null=True, blank=True
+        verbose_name="Здание",
+        max_length=40,
+        null=True,
+        blank=True,
     )
     flat = models.CharField(
-        verbose_name="Квартира/офис", max_length=40, null=True, blank=True
+        verbose_name="Квартира/офис",
+        max_length=40,
+        null=True,
+        blank=True,
     )
     delivery_date = models.DateField(verbose_name="Дата доставки")
     delivery_time = models.TimeField(verbose_name="Время доставки")
     message_card = models.TextField(
-        verbose_name="Записка к букету", max_length=10000, null=True, blank=True
+        verbose_name="Записка к букету",
+        max_length=10000,
+        null=True,
+        blank=True,
     )
     instructions = models.TextField(
-        verbose_name="Инструкции к доставке", max_length=800, null=True, blank=True
+        verbose_name="Инструкции к доставке",
+        max_length=800,
+        null=True,
+        blank=True,
     )
     recipient_address_form = models.CharField(
         max_length=20,
@@ -71,19 +102,25 @@ class Order(TimeStampAdbstractModel, models.Model):
     )
     recipient_name = models.CharField(verbose_name="Имя получателя", max_length=80)
     recipient_phonenumber = models.CharField(
-        verbose_name="Номер телефона получателя", max_length=30
+        verbose_name="Номер телефона получателя",
+        max_length=30,
     )
     is_recipient = models.BooleanField(
-        default=False, verbose_name="Заказчик - получатель?"
+        default=False,
+        verbose_name="Заказчик - получатель?",
     )
     is_surprise = models.BooleanField(
-        default=False, verbose_name="Доставка с сюрпризом?"
+        default=False,
+        verbose_name="Доставка с сюрпризом?",
     )
     is_agreement_accepted = models.BooleanField(
-        default=False, verbose_name="Соглашение с AGB и Datenschutz"
+        default=False,
+        verbose_name="Соглашение с AGB и Datenschutz",
     )
     code = models.CharField(
-        max_length=60, verbose_name="Код заказа", default=generate_sku
+        max_length=60,
+        verbose_name="Код заказа",
+        default=generate_sku,
     )
     status = models.CharField(
         max_length=20,
@@ -149,12 +186,7 @@ def order_created(sender: Order, instance: Order, created, **kwargs):
 
 
 class OrderItem(models.Model):
-    product_price = models.DecimalField(
-        max_digits=10,
-        decimal_places=2,
-        verbose_name="Цена продукта",
-    )
-    product_discount = models.IntegerField(
+    discount = models.IntegerField(
         validators=(
             MinValueValidator(0),
             MaxValueValidator(100),
@@ -163,20 +195,28 @@ class OrderItem(models.Model):
         null=True,
         default=0,
     )
-    product_discount_price = models.DecimalField(
+    base_price = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        verbose_name="Цена продукта",
+    )
+    discount_price = models.DecimalField(
         max_digits=10,
         decimal_places=2,
         verbose_name="Цена продукта cо скидкой",
     )
-    product_tax_price = models.DecimalField(
+    tax_price = models.DecimalField(
         max_digits=10,
         decimal_places=2,
         verbose_name="Цена продукта с налогом",
     )
-    product_tax_price_discounted = models.DecimalField(
+    tax_price_discounted = models.DecimalField(
         max_digits=10,
         decimal_places=2,
         verbose_name="Цена продукта со скидкой и налогом",
+    )
+    taxes = models.DecimalField(
+        max_digits=10, decimal_places=2, verbose_name="Всего заплаченных налогов"
     )
     quantity = models.IntegerField(verbose_name="Количество продукта")
 
@@ -186,10 +226,16 @@ class OrderItem(models.Model):
 
 class OrderProducts(TimeStampAdbstractModel, OrderItem):
     order = models.ForeignKey(
-        Order, related_name="products", verbose_name="Заказ", on_delete=models.PROTECT
+        Order,
+        related_name="products",
+        verbose_name="Заказ",
+        on_delete=models.PROTECT,
     )
     product = models.ForeignKey(
-        Product, related_name="orders", verbose_name="Продукт", on_delete=models.PROTECT
+        Product,
+        related_name="orders",
+        verbose_name="Продукт",
+        on_delete=models.PROTECT,
     )
 
     class Meta:

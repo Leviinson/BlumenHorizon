@@ -3,16 +3,23 @@ from decimal import ROUND_HALF_UP, Decimal
 from colorfield.fields import ColorField
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.urls import reverse_lazy
 from django.utils import timezone
+from telegram.helpers import escape_markdown
 from tinymce.models import HTMLField
 
 from core.base_models import TimeStampAdbstractModel
+from core.services.repositories import SiteRepository
+from tg_bot import send_message_to_telegram
 
 from ..services import (
     CategoryAbstractModel,
+    ItemReview,
     MetaDataAbstractModel,
     ProductAbstractModel,
+    TaxPercent,
     generate_sku,
 )
 
@@ -122,7 +129,7 @@ class BouquetSubcategory(
         verbose_name_plural = "5. Подкатегории букетов"
 
     def __str__(self):
-        return self.name
+        return f"{self.name} ({self.category.name})"
 
     def get_relative_url(self):
         return reverse_lazy(
@@ -160,6 +167,16 @@ class Bouquet(ProductAbstractModel):
         help_text="Выберите какие цветы в букете.",
     )
     sku = models.CharField(max_length=25, unique=True, default=generate_sku, null=True)
+    tax_percent = models.ForeignKey(
+        TaxPercent,
+        default=1,
+        null=True,
+        blank=True,
+        on_delete=models.PROTECT,
+        related_name="bouquets",
+        verbose_name="Налоговая ставка",
+        help_text="Выберите налоговую ставку, применимую к данному букету. Вычисляется после скидки.",
+    )
 
     class Meta:
         verbose_name = "Букет"
@@ -181,6 +198,38 @@ class Bouquet(ProductAbstractModel):
     @property
     def is_bouquet(self) -> bool:
         return True
+
+
+class BouquetReview(ItemReview):
+    item = models.ForeignKey(
+        Bouquet,
+        on_delete=models.CASCADE,
+        related_name="reviews",
+        verbose_name="Букет",
+    )
+
+
+@receiver(post_save, sender=BouquetReview)
+def order_created(
+    sender: BouquetReview,
+    instance: BouquetReview,
+    created,
+    **kwargs,
+):
+    country = SiteRepository.get_country()
+    city = SiteRepository.get_city()
+    if created:
+        review = instance
+        text = (
+            f"*Новый отзыв на букет оформлен!* 🎉\n\n"
+            f"*ID отзыва*: `{review.pk}`\n"
+            f"*Страна*: `{escape_markdown(country)}`\n"
+            f"*Город*: `{escape_markdown(city)}`\n"
+            f"*Имя автора*: `{escape_markdown(review.author_name)}`\n"
+            f"*Email автора*: `{escape_markdown(review.email)}`\n"
+            f"Вперёд за модерацию! 🚀"
+        )
+        send_message_to_telegram(text)
 
 
 class BouquetSize(models.Model):

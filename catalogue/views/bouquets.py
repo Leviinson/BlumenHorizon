@@ -1,6 +1,8 @@
+from django.db.models import Avg, Count, Prefetch, Q
 from django.shortcuts import get_object_or_404
 from django.views.generic.base import TemplateResponseMixin
 from django.views.generic.detail import DetailView
+from django.views.generic.edit import FormMixin
 from django_filters.views import FilterView
 from rest_framework import status
 from rest_framework.exceptions import NotFound
@@ -13,9 +15,11 @@ from core.services.mixins import CanonicalsContextMixin, CommonContextMixin
 from core.services.mixins.canonicals import CanonicalLinksMixin
 
 from ..filters import BouquetFilter
+from ..forms import BouquetReviewForm
 from ..models import (
     Bouquet,
     BouquetImage,
+    BouquetReview,
     BouquetSize,
     BouquetsListPageModel,
     Color,
@@ -23,6 +27,7 @@ from ..models import (
 )
 from ..services.mixins.views.details_mixin import DetailViewMixin
 from ..services.mixins.views.list_mixin import BouquetListViewMixin, ListViewMixin
+from ..services.mixins.views.reviews import CreateItemReviewViewMixin
 from .serializers import BouquetSizeSerializer
 
 
@@ -104,6 +109,10 @@ class BouquetView(
             "colors",
             "flowers",
             "sizes",
+            Prefetch(
+                "reviews",
+                queryset=BouquetReview.objects.filter(is_published=True),
+            ),
         )
         .select_related(
             "subcategory",
@@ -130,6 +139,10 @@ class BouquetView(
             "colors__hex_code",
             "flowers__name",
         )
+        .annotate(
+            avg_rating=Avg("reviews__rate", filter=Q(reviews__is_published=True)),
+            rating_count=Count("reviews", filter=Q(reviews__is_published=True)),
+        )
     )
     context_object_name = "product"
     slug_url_kwarg = "bouquet_slug"
@@ -139,6 +152,7 @@ class BouquetView(
     cart = BouquetCart
     model = Bouquet
     image_model = BouquetImage
+    item_details_viewname = "catalogue:bouquet-review"
 
 
 class BouquetListView(
@@ -152,6 +166,7 @@ class BouquetListView(
     model = Bouquet
     queryset = Bouquet.objects.select_related(
         "subcategory__category",
+        "tax_percent",
     ).only(
         "slug",
         "name",
@@ -164,15 +179,51 @@ class BouquetListView(
         "colors__name",
         "colors__hex_code",
         "flowers__name",
+        "tax_percent__value",
     )
     context_object_name = "products"
     template_name = "catalog/bouquets/bouquet_list.html"
     filterset_class = BouquetFilter
     image_model = BouquetImage
     page_model = BouquetsListPageModel
+    allow_empty=True
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context["colors"] = Color.objects.only("name", "hex_code").all()
         context["flowers"] = Flower.objects.only("name").all()
         return context
+
+
+class CreateBouquetReviewView(
+    CreateItemReviewViewMixin,
+    CommonContextMixin,
+    FormMixin,
+    DetailView,
+):
+    form_class = BouquetReviewForm
+    queryset = (
+        Bouquet.objects.select_related(
+            "subcategory",
+            "subcategory__category",
+        )
+        .only(
+            "name",
+            "slug",
+            "is_active",
+            "subcategory__is_active",
+            "subcategory__slug",
+            "subcategory__category__is_active",
+            "subcategory__category__slug",
+        )
+        .filter(
+            is_active=True,
+            subcategory__is_active=True,
+            subcategory__category__is_active=True,
+        )
+    )
+    context_object_name = "item"
+    slug_url_kwarg = "bouquet_slug"
+    item_details_viewname = "catalogue:bouquet-details"
+    item_review_viewname = "catalogue:bouquet-review"
+    image_model = BouquetImage

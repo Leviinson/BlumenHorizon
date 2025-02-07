@@ -1,4 +1,9 @@
-from .bouquets import BouquetListView, BouquetView, GetBouquetSizesView
+from .bouquets import (
+    BouquetListView,
+    BouquetView,
+    CreateBouquetReviewView,
+    GetBouquetSizesView,
+)
 from .catalogue import (
     BuyItemView,
     CatalogView,
@@ -8,4 +13,4 @@ from .catalogue import (
     SubcategoryBouquetsListView,
     SubcategoryProductsListView,
 )
-from .products import ProductListView, ProductView
+from .products import CreateProductReviewView, ProductListView, ProductView

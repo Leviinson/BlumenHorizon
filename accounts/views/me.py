@@ -1,4 +1,3 @@
-from dataclasses import dataclass, field
 from typing import TypedDict
 
 from django.contrib.auth import get_user_model
@@ -62,7 +61,9 @@ class UserDetailView(
     template_name = "accounts/index.html"
     context_object_name = "user"
     form_class = UserForm
-    extra_context = {"title": _("Личный кабинет")}
+    extra_context = {
+        "title": _("Личный кабинет"),
+    }
 
     def get_object(self, queryset=None):
         return self.request.user
