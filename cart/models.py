@@ -318,13 +318,13 @@ class OrderProducts(TimeStampAdbstractModel, OrderItem):
         Order,
         related_name="products",
         verbose_name="Заказ",
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
     )
     product = models.ForeignKey(
         Product,
         related_name="orders",
         verbose_name="Продукт",
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
     )
 
     class Meta:
