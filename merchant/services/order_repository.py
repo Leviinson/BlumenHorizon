@@ -10,7 +10,9 @@ class OrderRepository:
     """
 
     @classmethod
-    def get_order_code(cls, event_dict: dict[str, Any | str | dict | list]) -> str | None:
+    def get_order_code(
+        cls, event_dict: dict[str, Any | str | dict | list]
+    ) -> str | None:
         """
         Извлекает код заказа из данных события Stripe.
 

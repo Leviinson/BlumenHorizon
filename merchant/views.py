@@ -13,7 +13,7 @@ from cart.models import Order
 from core.services.utils.carts import clear_user_cart
 from tg_bot import send_message_to_telegram
 
-from .services import OrderRepository, send_order_confirmation_email, StripeEventDict
+from .services import OrderRepository, StripeEventDict, send_order_confirmation_email
 
 
 class OrderNotFound(Exception):

@@ -63,16 +63,10 @@ class Bill(TimeStampAdbstractModel, models.Model):
         blank=True,
     )
     number = models.CharField(
-        max_length=255,
-        verbose_name="Номер чека",
-        null=True,
-        blank=True
+        max_length=255, verbose_name="Номер чека", null=True, blank=True
     )
     image = models.ImageField(
-        upload_to="bills/%Y-%m-%d",
-        verbose_name="Фото чека",
-        null=True,
-        blank=True
+        upload_to="bills/%Y-%m-%d", verbose_name="Фото чека", null=True, blank=True
     )
 
     class Meta:
