@@ -71,7 +71,9 @@ def update_order_status(order: Order) -> None:
     order.save(update_fields=["status"])
 
 
-def verify_stripe_webhook(request: Request) -> tuple[StripeEventDict | None, Response | None]:
+def verify_stripe_webhook(
+    request: Request,
+) -> tuple[StripeEventDict | None, Response | None]:
     """Проверяет подпись и извлекает событие из webhook-запроса."""
     try:
         return (
