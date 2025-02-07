@@ -4,11 +4,12 @@ import django.core.validators
 import django.db.models.deletion
 from django.db import migrations, models
 
+
 def create_taxes(apps, schema_editor):
     TaxPercent = apps.get_model("catalogue", "TaxPercent")
 
-    TaxPercent.objects.create(value=7, stripe_id = "txr_1Qo2Z6KoL7GYbzW5MUO9oPjd")
-    TaxPercent.objects.create(value=19, stripe_id = "txr_1Qo2ZcKoL7GYbzW5N8WZgRBA")
+    TaxPercent.objects.create(value=7, stripe_id="txr_1Qo2Z6KoL7GYbzW5MUO9oPjd")
+    TaxPercent.objects.create(value=19, stripe_id="txr_1Qo2ZcKoL7GYbzW5N8WZgRBA")
 
 
 class Migration(migrations.Migration):
