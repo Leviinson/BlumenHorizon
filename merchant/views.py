@@ -13,7 +13,7 @@ from cart.models import Order
 from core.services.utils.carts import clear_user_cart
 from tg_bot import send_message_to_telegram
 
-from .services import OrderRepository, send_order_confirmation_email
+from .services import OrderRepository, send_order_confirmation_email, StripeEventDict
 
 
 class OrderNotFound(Exception):
@@ -71,14 +71,19 @@ def update_order_status(order: Order) -> None:
     order.save(update_fields=["status"])
 
 
-def verify_stripe_webhook(request: Request):
+def verify_stripe_webhook(
+    request: Request,
+) -> tuple[StripeEventDict | None, Response | None]:
     """Проверяет подпись и извлекает событие из webhook-запроса."""
     try:
-        return Webhook.construct_event(
-            request.body,
-            request.headers.get("STRIPE_SIGNATURE"),
-            os.getenv("STRIPE_WEBHOOK_SECRET"),
-        ).to_dict()
+        return (
+            Webhook.construct_event(
+                request.body,
+                request.headers.get("STRIPE_SIGNATURE"),
+                os.getenv("STRIPE_WEBHOOK_SECRET"),
+            ).to_dict(),
+            None,
+        )
     except ValueError as e:
         logging.getLogger("django_stripe").debug(e, stack_info=True)
         return None, Response("Invalid payload", status=status.HTTP_400_BAD_REQUEST)
@@ -160,7 +165,6 @@ def stripe_webhook(request: Request):
             f"Stripe попытался связаться с веб-хуком: \n\n"
             f"{request.build_absolute_uri(request.get_full_path())}"
         )
-
         send_message_to_telegram(text)
         return Response(status=status.HTTP_200_OK)
     except Exception as e:
