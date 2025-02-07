@@ -27,6 +27,9 @@ class Florist(TimeStampAdbstractModel, models.Model):
         blank=True,
     )
 
+    def __str__(self):
+        return f"{self.title}"
+
     class Meta:
         verbose_name = "ФЛОРИСТ"
         verbose_name_plural = "ФЛОРИСТЫ"
@@ -38,6 +41,15 @@ class Bill(TimeStampAdbstractModel, models.Model):
         models.PROTECT,
         verbose_name="Флорист выдавший чек",
         related_name="bills",
+    )
+    order = models.OneToOneField(
+        "Order",
+        models.PROTECT,
+        verbose_name="Заказ",
+        null=True,
+        blank=True,
+        related_name="bills",
+        unique=True,
     )
     brutto = models.DecimalField(
         max_digits=10,
@@ -72,6 +84,9 @@ class Bill(TimeStampAdbstractModel, models.Model):
     class Meta:
         verbose_name = "ЧЕК"
         verbose_name_plural = "ЧЕКИ"
+
+    def __str__(self):
+        return f"#{self.number} - {self.order.code} - {self.florist.title}"
 
 
 class Order(TimeStampAdbstractModel, models.Model):
@@ -221,21 +236,14 @@ class Order(TimeStampAdbstractModel, models.Model):
     language_code = models.CharField(
         max_length=2, verbose_name="Язык пользователя на сайте"
     )
-    florist = models.ForeignKey(
-        Florist,
-        models.PROTECT,
-        verbose_name="Флорист-исполнитель",
-        null=True,
-        blank=True,
-        related_name="orders",
-    )
-    bill = models.ForeignKey(
+    bill = models.OneToOneField(
         Bill,
         models.PROTECT,
         verbose_name="Чек",
         null=True,
         blank=True,
         related_name="orders",
+        unique=True,
     )
 
     class Meta:

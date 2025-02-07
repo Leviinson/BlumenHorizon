@@ -3,6 +3,18 @@ from django.contrib import admin
 from .models import Bill, Florist, Order, OrderBouquets, OrderProducts
 
 
+class BillInline(admin.StackedInline):
+    model = Bill
+    extra = 0
+    show_change_link = True
+
+
+class OrderInline(admin.StackedInline):
+    model = Order
+    extra = 0
+    show_change_link = True
+
+
 @admin.register(Florist)
 class FloristAdmin(admin.ModelAdmin):
     list_display = ("title", "contact", "address", "vat_id")
@@ -18,18 +30,29 @@ class FloristAdmin(admin.ModelAdmin):
         ),
     )
     ordering = ("title",)
+    inlines = [
+        BillInline,
+    ]
 
 
 @admin.register(Bill)
 class BillAdmin(admin.ModelAdmin):
-    list_display = ("number", "florist", "brutto", "netto", "tax", "created_at")
+    list_display = (
+        "number",
+        "florist",
+        "order",
+        "brutto",
+        "netto",
+        "tax",
+        "created_at",
+    )
     search_fields = ("number", "florist__title")
     list_filter = ("florist", "created_at")
     fieldsets = (
         (
             "Основная информация",
             {
-                "fields": ("number", "florist"),
+                "fields": ("number", "florist", "order"),
             },
         ),
         (
@@ -73,7 +96,6 @@ class OrderAdminModel(admin.ModelAdmin):
                 "fields": (
                     "user",
                     "status",
-                    "florist",
                     "bill",
                     "code",
                     "created_at",
