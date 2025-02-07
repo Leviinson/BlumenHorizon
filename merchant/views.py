@@ -163,7 +163,6 @@ def stripe_webhook(request: Request):
             f"Stripe попытался связаться с веб-хуком: \n\n"
             f"{request.build_absolute_uri(request.get_full_path())}"
         )
-
         send_message_to_telegram(text)
         return Response(status=status.HTTP_200_OK)
     except Exception as e:
