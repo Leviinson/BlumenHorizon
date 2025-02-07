@@ -104,7 +104,7 @@ document.querySelectorAll('.add-to-cart-form').forEach(function(form) {
         let removeProductLink;
         let decreaseProductLink;
         let increaseProductLink;
-        if (langValue === "de") {
+        if (langValue === "en") {
             removeProductLink = productInfo.isBouquet ? `/europe/cart/bouquet/remove/` : `/europe/cart/product/remove/`
             decreaseProductLink = productInfo.isBouquet ? `/europe/cart/bouquet/decrease/` : `/europe/cart/product/decrease/`
             increaseProductLink = productInfo.isBouquet ? `/europe/cart/bouquet/increase/` : `/europe/cart/product/increase/`
