@@ -337,10 +337,16 @@ class OrderProducts(TimeStampAdbstractModel, OrderItem):
 
 class OrderBouquets(TimeStampAdbstractModel, OrderItem):
     order = models.ForeignKey(
-        Order, related_name="bouquets", verbose_name="Заказ", on_delete=models.PROTECT
+        Order,
+        related_name="bouquets",
+        verbose_name="Заказ",
+        on_delete=models.CASCADE,
     )
     product = models.ForeignKey(
-        Bouquet, related_name="orders", verbose_name="Букет", on_delete=models.PROTECT
+        Bouquet,
+        related_name="orders",
+        verbose_name="Букет",
+        on_delete=models.CASCADE,
     )
 
     class Meta:
