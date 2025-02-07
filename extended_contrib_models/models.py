@@ -29,15 +29,6 @@ class ExtendedSite(models.Model):
         max_length=5, verbose_name="Код валюты", unique=True
     )
     currency_symbol = models.CharField(max_length=5, verbose_name="Знак валюты")
-    tax_percent = models.IntegerField(
-        validators=(
-            MinValueValidator(0),
-            MaxValueValidator(100),
-        ),
-        verbose_name=_("НДС"),
-        null=True,
-        default=0,
-    )
     country_iso_3166_1_alpha_2 = models.CharField(
         max_length=2,
         verbose_name="Код страны ISO 3166-1 alpha-2",
