@@ -316,7 +316,7 @@ class OrderProducts(TimeStampAdbstractModel, OrderItem):
         Order,
         related_name="products",
         verbose_name="Заказ",
-        on_delete=models.CASCADE,
+        on_delete=models.PROTECT,
     )
     product = models.ForeignKey(
         Product,
@@ -338,7 +338,7 @@ class OrderBouquets(TimeStampAdbstractModel, OrderItem):
         Order,
         related_name="bouquets",
         verbose_name="Заказ",
-        on_delete=models.CASCADE,
+        on_delete=models.PROTECT,
     )
     product = models.ForeignKey(
         Bouquet,
