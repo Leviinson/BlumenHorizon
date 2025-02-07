@@ -19,7 +19,6 @@ class CommonContextMixin:
         context["currency_symbol"] = SiteRepository.get_currency_symbol()
         context["currency_code"] = SiteRepository.get_currency_code()
         context["country_code"] = SiteRepository.get_country_code()
-        context["city"] = SiteRepository.get_city()
         context["socials_right_bottom"] = SiteRepository.get_socials()
         context["MEDIA_URL"] = settings.MEDIA_URL
         context["alert"] = SiteRepository.get_alert_message()
