@@ -10,7 +10,7 @@ class OrderRepository:
     """
 
     @classmethod
-    def get_order_code(cls, event_dict: dict[str, Any | str | dict | list]) -> str:
+    def get_order_code(cls, event_dict: dict[str, Any | str | dict | list]) -> str | None:
         """
         Извлекает код заказа из данных события Stripe.
 
@@ -30,4 +30,4 @@ class OrderRepository:
             KeyError: Если один из ожидаемых ключей
             ("data", "object", "metadata", "order_code") отсутствует в словаре.
         """
-        return event_dict["data"]["object"]["metadata"]["order_code"]
+        return event_dict["data"]["object"]["metadata"].get("order_code")

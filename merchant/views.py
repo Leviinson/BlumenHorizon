@@ -96,6 +96,10 @@ def process_order(event_dict):
     """Извлекает код заказа и обновляет его статус."""
     try:
         order_code = OrderRepository.get_order_code(event_dict)
+        if not order_code:
+            raise OrderNotFound(
+                f"Пришла оплата на Stripe с отсутствующим кодом заказа:\n\n{event_dict}"
+            )
         order = get_order_by_code(order_code)
         return order
     except Order.DoesNotExist:
