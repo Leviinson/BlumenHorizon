@@ -28,6 +28,6 @@ class OrderRepository:
 
         Raises:
             KeyError: Если один из ожидаемых ключей
-            ("data", "object", "metadata", "order_code") отсутствует в словаре.
+            ("data", "object", "metadata") отсутствует в словаре.
         """
         return event_dict["data"]["object"]["metadata"].get("order_code")
