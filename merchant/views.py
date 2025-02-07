@@ -85,10 +85,10 @@ def verify_stripe_webhook(
             None,
         )
     except ValueError as e:
-        logging.getLogger("django_stripe").debug(e, stack_info=True)
+        logging.getLogger("django_stripe_debug").debug(e, stack_info=True)
         return None, Response("Invalid payload", status=status.HTTP_400_BAD_REQUEST)
     except SignatureVerificationError as e:
-        logging.getLogger("django_stripe").debug(e, stack_info=True)
+        logging.getLogger("django_stripe_debug").debug(e, stack_info=True)
         return None, Response("Invalid signature", status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -127,7 +127,7 @@ def try_clear_cart(order):
     try:
         clear_user_cart(order.session_key)
     except Exception as e:
-        logging.getLogger("django_stripe").debug(e, stack_info=True)
+        logging.getLogger("django_stripe_debug").debug(e, stack_info=True)
 
 
 @api_view(["POST"])
@@ -154,7 +154,7 @@ def stripe_webhook(request: Request):
     Исключения:
     - OrderNotFound: Если заказ с указанным кодом не найден.
     """
-    logger = logging.getLogger("django_stripe")
+    logger = logging.getLogger("django_stripe_info")
     try:
         event_dict, error_response = verify_stripe_webhook(request)
         if error_response:
@@ -164,7 +164,7 @@ def stripe_webhook(request: Request):
         handle_order_confirmation(order)
         try_clear_cart(order)
     except OrderNotFound as e:
-        logger.debug(e, stack_info=True)
+        logger.error(e, stack_info=True)
         text = (
             f"Stripe попытался связаться с веб-хуком: \n\n"
             f"{request.build_absolute_uri(request.get_full_path())}"
@@ -172,7 +172,7 @@ def stripe_webhook(request: Request):
         send_message_to_telegram(text)
         return Response(status=status.HTTP_200_OK)
     except Exception as e:
-        logger.debug(e, stack_info=True)
+        logger.error(e, stack_info=True)
         return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     return Response(status=status.HTTP_200_OK)

@@ -11,6 +11,75 @@ from core.base_models import TimeStampAdbstractModel
 from tg_bot import send_message_to_telegram
 
 
+class Florist(TimeStampAdbstractModel, models.Model):
+    title = models.CharField(verbose_name="Название", max_length=255)
+    contact = models.TextField(verbose_name="Контакт флориста")
+    address = models.TextField(verbose_name="Адрес флориста", null=True, blank=True)
+    vat_id = models.CharField(
+        max_length=15,
+        verbose_name="НДС/Налоговый номер флориста",
+        null=True,
+        blank=True,
+    )
+    description = models.TextField(
+        verbose_name="Описание флориста",
+        null=True,
+        blank=True,
+    )
+
+    class Meta:
+        verbose_name = "ФЛОРИСТ"
+        verbose_name_plural = "ФЛОРИСТЫ"
+
+
+class Bill(TimeStampAdbstractModel, models.Model):
+    florist = models.ForeignKey(
+        Florist,
+        models.PROTECT,
+        verbose_name="Флорист выдавший чек",
+        related_name="bills",
+    )
+    brutto = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        verbose_name="Себестоимость",
+        help_text="С налогом",
+        null=True,
+        blank=True,
+    )
+    netto = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        verbose_name="Себестоимость",
+        help_text="Без налога",
+        null=True,
+        blank=True,
+    )
+    tax = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        verbose_name="Налог",
+        null=True,
+        blank=True,
+    )
+    number = models.CharField(
+        max_length=255,
+        verbose_name="Номер чека",
+        null=True,
+        blank=True
+    )
+    image = models.ImageField(
+        upload_to="bills/%Y-%m-%d",
+        verbose_name="Фото чека",
+        null=True,
+        blank=True
+    )
+
+    class Meta:
+        verbose_name = "ЧЕК"
+        verbose_name_plural = "ЧЕКИ"
+
+
 class Order(TimeStampAdbstractModel, models.Model):
     STATUS_CHOICES = [
         ("processing", _("В обработке")),
@@ -157,6 +226,22 @@ class Order(TimeStampAdbstractModel, models.Model):
     )
     language_code = models.CharField(
         max_length=2, verbose_name="Язык пользователя на сайте"
+    )
+    florist = models.ForeignKey(
+        Florist,
+        models.PROTECT,
+        verbose_name="Флорист-исполнитель",
+        null=True,
+        blank=True,
+        related_name="orders",
+    )
+    bill = models.ForeignKey(
+        Bill,
+        models.PROTECT,
+        verbose_name="Чек",
+        null=True,
+        blank=True,
+        related_name="orders",
     )
 
     class Meta:
