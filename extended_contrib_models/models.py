@@ -128,6 +128,4 @@ def create_extended_site(sender, instance, created, **kwargs):
             site=instance,
             currency_code="USD",
             currency_symbol="$",
-            country="Германия",
-            city="Берлин",
         )

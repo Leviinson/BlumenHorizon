@@ -18,7 +18,6 @@ class CommonContextMixin:
         context["merchant_id"] = os.getenv("MERCHANT_ID")
         context["currency_symbol"] = SiteRepository.get_currency_symbol()
         context["currency_code"] = SiteRepository.get_currency_code()
-        context["country"] = SiteRepository.get_country()
         context["country_code"] = SiteRepository.get_country_code()
         context["city"] = SiteRepository.get_city()
         context["socials_right_bottom"] = SiteRepository.get_socials()

@@ -156,15 +156,12 @@ def order_created(
     created,
     **kwargs,
 ):
-    country = SiteRepository.get_country()
-    city = SiteRepository.get_city()
     if created:
         review = instance
         text = (
             f"*Новый отзыв на продукт оформлен!* 🎉\n\n"
             f"*ID отзыва*: `{review.pk}`\n"
-            f"*Страна*: `{escape_markdown(country)}`\n"
-            f"*Город*: `{escape_markdown(city)}`\n"
+            f"*Общий регион*\n"
             f"*Имя автора*: `{escape_markdown(review.author_name)}`\n"
             f"*Email автора*: `{escape_markdown(review.email)}`\n"
             f"Вперёд за модерацию! 🚀"
