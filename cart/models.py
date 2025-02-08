@@ -77,7 +77,7 @@ class Bill(TimeStampAdbstractModel, models.Model):
         verbose_name_plural = "ЧЕКИ"
 
     def __str__(self):
-        return f"#{self.number} - {self.order.code} - {self.florist.title}"
+        return f"#{self.number} - {self.florist.title}"
 
 
 class Order(TimeStampAdbstractModel, models.Model):
