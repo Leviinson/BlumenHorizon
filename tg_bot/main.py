@@ -11,7 +11,6 @@ bot = Bot(token=TELEGRAM_BOT_TOKEN)
 
 async def send_message_to_telegram_async(chat_id, text):
     try:
-        raise ValueError()
         await bot.send_message(chat_id, text, parse_mode="Markdown")
     except Exception as e:
         logger = logging.getLogger("telegramBot")
