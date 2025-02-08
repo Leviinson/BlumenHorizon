@@ -63,6 +63,7 @@ class BillAdmin(admin.ModelAdmin):
                 "fields": (
                     "brutto",
                     "netto",
+                    "tax",
                 ),
             },
         ),
