@@ -286,11 +286,9 @@ LOGGING_HANDLERS = {
             "class": "django.utils.log.AdminEmailHandler",
             "include_html": True,
         }
-        if not DEBUG
-        else None
     ),
     "telegram_file": {
-        "level": "ERROR",
+         "level": "ERROR",
         "class": "logging.FileHandler",
         "filename": os.path.join(BASE_DIR, "logs/telegram/bot.log"),
         "formatter": "verbose",
@@ -349,7 +347,7 @@ LOGGING = (
                     ]
                 ),
                 "level": "ERROR",
-                "propagate": False,
+                "propagate": True,
             },
             "django.server": {
                 "handlers": (
@@ -361,48 +359,46 @@ LOGGING = (
                     ]
                 ),
                 "level": "ERROR",
-                "propagate": False,
+                "propagate": True,
             },
             "celery.task": {
                 "handlers": (
                     ["celery_info", "mail_admins"] if not DEBUG else ["celery_info"]
                 ),
                 "level": "INFO",
-                "propagate": False,
+                "propagate": True,
             },
             "django.db.backends": {
                 "handlers": (
                     ["mysql_error", "mail_admins"] if not DEBUG else ["mysql_error"]
                 ),
                 "level": "ERROR",
-                "propagate": False,
+                "propagate": True,
             },
             "django_redis": {
                 "handlers": (
                     ["redis_error", "mail_admins"] if not DEBUG else ["redis_error"]
                 ),
                 "level": "ERROR",
-                "propagate": False,
+                "propagate": True,
             },
             "telegramBot": {
                 "handlers": ["telegram_file"],
                 "level": "ERROR",
-                "propagate": False,
+                "propagate": True,
             },
             "stripe": {
                 "handlers": ["stripe_debug", "stripe_info"],
                 "level": "DEBUG",
-                "propagate": False,
+                "propagate": True,
             },
             "django_stripe": {
                 "handlers": ["django_stripe_debug", "django_stripe_info"],
                 "level": "DEBUG",
-                "propagate": False,
+                "propagate": True,
             },
         },
     }
-    if not DEBUG
-    else None
 )
 
 # Cache
