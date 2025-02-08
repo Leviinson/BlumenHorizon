@@ -218,14 +218,13 @@ class Order(TimeStampAdbstractModel, models.Model):
         verbose_name=_("Налоговая стоимость"),
         help_text="Стоимость налога",
     )
-    tax_percent = models.IntegerField(
-        validators=(
-            MinValueValidator(0),
-            MaxValueValidator(100),
-        ),
-        verbose_name=_("НДС"),
-        help_text="%",
-        default=0,
+    stripe_taxes = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        verbose_name="Налог Stripe за транзакцию",
+        help_text="Спросить у Виталика",
+        null=True,
+        blank=True
     )
     grand_total = models.DecimalField(
         max_digits=10,
@@ -305,7 +304,9 @@ class OrderItem(models.Model):
         verbose_name="Цена продукта со скидкой и налогом",
     )
     taxes = models.DecimalField(
-        max_digits=10, decimal_places=2, verbose_name="Всего заплаченных налогов"
+        max_digits=10,
+        decimal_places=2,
+        verbose_name="Всего заплаченных налогов",
     )
     quantity = models.IntegerField(verbose_name="Количество продукта")
 
