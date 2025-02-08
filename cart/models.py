@@ -69,7 +69,10 @@ class Bill(TimeStampAdbstractModel, models.Model):
         max_length=255, verbose_name="Номер чека", null=True, blank=True
     )
     image = models.FileField(
-        upload_to="bills/%Y-%m-%d", verbose_name="Фото/PDF-файл чека", null=True, blank=True
+        upload_to="bills/%Y-%m-%d",
+        verbose_name="Фото/PDF-файл чека",
+        null=True,
+        blank=True,
     )
 
     class Meta:
@@ -215,7 +218,7 @@ class Order(TimeStampAdbstractModel, models.Model):
         verbose_name="Налог Stripe за транзакцию",
         help_text="Спросить у Виталика",
         null=True,
-        blank=True
+        blank=True,
     )
     grand_total = models.DecimalField(
         max_digits=10,
