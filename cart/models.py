@@ -42,15 +42,6 @@ class Bill(TimeStampAdbstractModel, models.Model):
         verbose_name="Флорист выдавший чек",
         related_name="bills",
     )
-    order = models.OneToOneField(
-        "Order",
-        models.PROTECT,
-        verbose_name="Заказ",
-        null=True,
-        blank=True,
-        related_name="bills",
-        unique=True,
-    )
     brutto = models.DecimalField(
         max_digits=10,
         decimal_places=2,
