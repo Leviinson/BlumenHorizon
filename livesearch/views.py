@@ -1,10 +1,12 @@
 import hashlib
 from collections import defaultdict
 
-from django.core.cache import cache
+from django.core.cache import caches
 from django.http import HttpRequest, JsonResponse
 
 from catalogue.models import Bouquet, Product
+
+cache = caches["default"]
 
 
 def generate_cache_key(query: str) -> str:
