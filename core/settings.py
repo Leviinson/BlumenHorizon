@@ -109,7 +109,10 @@ else:
     CORS_ALLOWED_ORIGINS = [
         f'https://{os.getenv("DOMAIN")}',
     ]
-FORCE_SCRIPT_NAME = '/europe'
+
+if not DEBUG:
+    FORCE_SCRIPT_NAME = '/europe'
+    CACHE_MIDDLEWARE_KEY_PREFIX = 'europe:'
 
 # Application definition
 
