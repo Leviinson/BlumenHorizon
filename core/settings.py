@@ -112,6 +112,7 @@ else:
 
 if not DEBUG:
     FORCE_SCRIPT_NAME = '/athens'
+    CACHE_MIDDLEWARE_KEY_PREFIX = 'athens:'
 
 
 # Application definition
