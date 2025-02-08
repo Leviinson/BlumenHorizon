@@ -42,15 +42,6 @@ class Bill(TimeStampAdbstractModel, models.Model):
         verbose_name="Флорист выдавший чек",
         related_name="bills",
     )
-    order = models.OneToOneField(
-        "Order",
-        models.PROTECT,
-        verbose_name="Заказ",
-        null=True,
-        blank=True,
-        related_name="bills",
-        unique=True,
-    )
     brutto = models.DecimalField(
         max_digits=10,
         decimal_places=2,
@@ -77,8 +68,8 @@ class Bill(TimeStampAdbstractModel, models.Model):
     number = models.CharField(
         max_length=255, verbose_name="Номер чека", null=True, blank=True
     )
-    image = models.ImageField(
-        upload_to="bills/%Y-%m-%d", verbose_name="Фото чека", null=True, blank=True
+    image = models.FileField(
+        upload_to="bills/%Y-%m-%d", verbose_name="Фото/PDF-файл чека", null=True, blank=True
     )
 
     class Meta:
@@ -218,14 +209,13 @@ class Order(TimeStampAdbstractModel, models.Model):
         verbose_name=_("Налоговая стоимость"),
         help_text="Стоимость налога",
     )
-    tax_percent = models.IntegerField(
-        validators=(
-            MinValueValidator(0),
-            MaxValueValidator(100),
-        ),
-        verbose_name=_("НДС"),
-        help_text="%",
-        default=0,
+    stripe_taxes = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        verbose_name="Налог Stripe за транзакцию",
+        help_text="Спросить у Виталика",
+        null=True,
+        blank=True
     )
     grand_total = models.DecimalField(
         max_digits=10,
@@ -303,7 +293,9 @@ class OrderItem(models.Model):
         verbose_name="Цена продукта со скидкой и налогом",
     )
     taxes = models.DecimalField(
-        max_digits=10, decimal_places=2, verbose_name="Всего заплаченных налогов"
+        max_digits=10,
+        decimal_places=2,
+        verbose_name="Всего заплаченных налогов",
     )
     quantity = models.IntegerField(verbose_name="Количество продукта")
 
