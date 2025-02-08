@@ -40,7 +40,6 @@ class BillAdmin(admin.ModelAdmin):
     list_display = (
         "number",
         "florist",
-        "order",
         "brutto",
         "netto",
         "tax",
@@ -52,13 +51,19 @@ class BillAdmin(admin.ModelAdmin):
         (
             "Основная информация",
             {
-                "fields": ("number", "florist", "order"),
+                "fields": (
+                    "number",
+                    "florist",
+                ),
             },
         ),
         (
             "Цены",
             {
-                "fields": ("brutto", "netto", "tax"),
+                "fields": (
+                    "brutto",
+                    "netto",
+                ),
             },
         ),
         (
@@ -110,6 +115,7 @@ class OrderAdminModel(admin.ModelAdmin):
                     "sub_total",
                     "tax",
                     "grand_total",
+                    "stripe_taxes",
                 ),
             },
         ),
