@@ -7,6 +7,7 @@ from telegram.helpers import escape_markdown
 from tinymce.models import HTMLField
 
 from core.base_models import TimeStampAdbstractModel
+from core.services.repositories import SiteRepository
 from tg_bot import send_message_to_telegram
 
 
@@ -78,11 +79,15 @@ class IndividualOrder(models.Model):
 
 @receiver(post_save, sender=IndividualOrder)
 def individual_order_created(sender, instance: IndividualOrder, created, **kwargs):
+    country = SiteRepository.get_country()
+    city = SiteRepository.get_city()
     if created:
         individual_order = instance
         text = (
             f"*Индивидуальный заказ в общем регионе!* 🎉\n\n"
             f"*ID вопроса*: `{escape_markdown(str(individual_order.id))}`\n"
+            f"*Страна*: `{escape_markdown(country)}`\n"
+            f"*Город*: `{escape_markdown(city)}`\n"
             f"*Имя*: `{escape_markdown(individual_order.first_name)}`\n"
             f"*Способ связи*: \n `{escape_markdown(individual_order.contact_method)}`\n\n"
             f"Вперёд за работу! 🚀"
