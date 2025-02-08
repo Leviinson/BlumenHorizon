@@ -111,8 +111,11 @@ else:
     ]
 
 if not DEBUG:
-    FORCE_SCRIPT_NAME = '/madrid'
-    CACHE_MIDDLEWARE_KEY_PREFIX = 'madrid:'
+    FORCE_SCRIPT_NAME = "/madrid"
+    CACHE_MIDDLEWARE_KEY_PREFIX = "madrid:"
+else:
+    FORCE_SCRIPT_NAME = None
+    CACHE_MIDDLEWARE_KEY_PREFIX = None
 
 # Application definition
 
@@ -288,7 +291,7 @@ LOGGING_HANDLERS = {
         }
     ),
     "telegram_file": {
-         "level": "ERROR",
+        "level": "ERROR",
         "class": "logging.FileHandler",
         "filename": os.path.join(BASE_DIR, "logs/telegram/bot.log"),
         "formatter": "verbose",
@@ -321,85 +324,83 @@ LOGGING_HANDLERS = {
 LOGGING_HANDLERS = {k: v for k, v in LOGGING_HANDLERS.items() if v is not None}
 
 
-LOGGING = (
-    {
-        "version": 1,
-        "disable_existing_loggers": False,
-        "formatters": {
-            "verbose": {
-                "format": "[%(asctime)s: %(levelname)s/%(name)s] %(message)s",
-                "datefmt": "%Y-%m-%d %H:%M:%S",
-            },
-            "django": {
-                "format": "[%(asctime)s: %(levelname)s/%(name)s] %(message)s %(status_code)s %(request)s",
-                "datefmt": "%Y-%m-%d %H:%M:%S",
-            },
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "[%(asctime)s: %(levelname)s/%(name)s] %(message)s",
+            "datefmt": "%Y-%m-%d %H:%M:%S",
         },
-        "handlers": LOGGING_HANDLERS,
-        "loggers": {
-            "django.request": {
-                "handlers": (
-                    ["django_error", "django_info", "mail_admins"]
-                    if not DEBUG
-                    else [
-                        "django_error",
-                        "django_info",
-                    ]
-                ),
-                "level": "ERROR",
-                "propagate": True,
-            },
-            "django.server": {
-                "handlers": (
-                    ["django_error", "django_info", "mail_admins"]
-                    if not DEBUG
-                    else [
-                        "django_error",
-                        "django_info",
-                    ]
-                ),
-                "level": "ERROR",
-                "propagate": True,
-            },
-            "celery.task": {
-                "handlers": (
-                    ["celery_info", "mail_admins"] if not DEBUG else ["celery_info"]
-                ),
-                "level": "INFO",
-                "propagate": True,
-            },
-            "django.db.backends": {
-                "handlers": (
-                    ["mysql_error", "mail_admins"] if not DEBUG else ["mysql_error"]
-                ),
-                "level": "ERROR",
-                "propagate": True,
-            },
-            "django_redis": {
-                "handlers": (
-                    ["redis_error", "mail_admins"] if not DEBUG else ["redis_error"]
-                ),
-                "level": "ERROR",
-                "propagate": True,
-            },
-            "telegramBot": {
-                "handlers": ["telegram_file"],
-                "level": "ERROR",
-                "propagate": True,
-            },
-            "stripe": {
-                "handlers": ["stripe_debug", "stripe_info"],
-                "level": "DEBUG",
-                "propagate": True,
-            },
-            "django_stripe": {
-                "handlers": ["django_stripe_debug", "django_stripe_info"],
-                "level": "DEBUG",
-                "propagate": True,
-            },
+        "django": {
+            "format": "[%(asctime)s: %(levelname)s/%(name)s] %(message)s %(status_code)s %(request)s",
+            "datefmt": "%Y-%m-%d %H:%M:%S",
         },
-    }
-)
+    },
+    "handlers": LOGGING_HANDLERS,
+    "loggers": {
+        "django.request": {
+            "handlers": (
+                ["django_error", "django_info", "mail_admins"]
+                if not DEBUG
+                else [
+                    "django_error",
+                    "django_info",
+                ]
+            ),
+            "level": "ERROR",
+            "propagate": True,
+        },
+        "django.server": {
+            "handlers": (
+                ["django_error", "django_info", "mail_admins"]
+                if not DEBUG
+                else [
+                    "django_error",
+                    "django_info",
+                ]
+            ),
+            "level": "ERROR",
+            "propagate": True,
+        },
+        "celery.task": {
+            "handlers": (
+                ["celery_info", "mail_admins"] if not DEBUG else ["celery_info"]
+            ),
+            "level": "INFO",
+            "propagate": True,
+        },
+        "django.db.backends": {
+            "handlers": (
+                ["mysql_error", "mail_admins"] if not DEBUG else ["mysql_error"]
+            ),
+            "level": "ERROR",
+            "propagate": True,
+        },
+        "django_redis": {
+            "handlers": (
+                ["redis_error", "mail_admins"] if not DEBUG else ["redis_error"]
+            ),
+            "level": "ERROR",
+            "propagate": True,
+        },
+        "telegramBot": {
+            "handlers": ["telegram_file"],
+            "level": "ERROR",
+            "propagate": True,
+        },
+        "stripe": {
+            "handlers": ["stripe_debug", "stripe_info"],
+            "level": "DEBUG",
+            "propagate": True,
+        },
+        "django_stripe": {
+            "handlers": ["django_stripe_debug", "django_stripe_info"],
+            "level": "DEBUG",
+            "propagate": True,
+        },
+    },
+}
 
 # Cache
 # https://docs.djangoproject.com/en/5.1/topics/cache/#redis
@@ -411,6 +412,7 @@ CACHES = {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
             "SERIALIZER": "django_redis.serializers.json.JSONSerializer",
         },
+        "KEY_PREFIX": None,
     }
 }
 
