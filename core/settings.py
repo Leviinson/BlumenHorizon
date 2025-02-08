@@ -110,6 +110,9 @@ else:
         f'https://{os.getenv("DOMAIN")}',
     ]
 
+if not DEBUG:
+    FORCE_SCRIPT_NAME = '/larnaca'
+    CACHE_MIDDLEWARE_KEY_PREFIX = 'larnaca:'
 
 # Application definition
 
