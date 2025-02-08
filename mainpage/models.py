@@ -81,7 +81,7 @@ def individual_order_created(sender, instance: IndividualOrder, created, **kwarg
     if created:
         individual_order = instance
         text = (
-            f"*Индивидуальный заказ!* 🎉\n\n"
+            f"*Индивидуальный заказ в общем регионе!* 🎉\n\n"
             f"*ID вопроса*: `{escape_markdown(str(individual_order.id))}`\n"
             f"*Имя*: `{escape_markdown(individual_order.first_name)}`\n"
             f"*Способ связи*: \n `{escape_markdown(individual_order.contact_method)}`\n\n"

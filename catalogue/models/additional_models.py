@@ -76,7 +76,7 @@ def individual_question_created(
     if created:
         individual_question = instance
         text = (
-            f"*Индивидуальный вопрос по продукту!* 🎉\n\n"
+            f"*Индивидуальный вопрос по продукту в общем регионе!* 🎉\n\n"
             f"*ID заказа*: `{escape_markdown(str(individual_question.id))}`\n"
             f"*Продукт*: `{escape_markdown(individual_question.product.name if individual_question.product else individual_question.bouquet.name)}`\n"
             f"*Способ связи*: \n `{escape_markdown(individual_question.contact_method)}`\n\n"
