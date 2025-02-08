@@ -78,7 +78,7 @@ class Bill(TimeStampAdbstractModel, models.Model):
         max_length=255, verbose_name="Номер чека", null=True, blank=True
     )
     image = models.FileField(
-        upload_to="bills/%Y-%m-%d", verbose_name="Фото чека", null=True, blank=True
+        upload_to="bills/%Y-%m-%d", verbose_name="Фото/PDF-файл чека", null=True, blank=True
     )
 
     class Meta:
