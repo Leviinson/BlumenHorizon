@@ -8,7 +8,6 @@ from tinymce.models import HTMLField
 from catalogue.models.bouquets.bouquet import Bouquet
 from catalogue.models.products.product import Product
 from core.base_models import TimeStampAdbstractModel
-from core.services.repositories import SiteRepository
 from tg_bot import send_message_to_telegram
 
 
@@ -74,15 +73,11 @@ class IndividualQuestion(TimeStampAdbstractModel, models.Model):
 def individual_question_created(
     sender, instance: IndividualQuestion, created, **kwargs
 ):
-    country = SiteRepository.get_country()
-    city = SiteRepository.get_city()
     if created:
         individual_question = instance
         text = (
             f"*Индивидуальный вопрос по продукту в общем регионе!* 🎉\n\n"
             f"*ID заказа*: `{escape_markdown(str(individual_question.id))}`\n"
-            f"*Страна*: `{escape_markdown(country)}`\n"
-            f"*Город*: `{escape_markdown(city)}`\n"
             f"*Продукт*: `{escape_markdown(individual_question.product.name if individual_question.product else individual_question.bouquet.name)}`\n"
             f"*Способ связи*: \n `{escape_markdown(individual_question.contact_method)}`\n\n"
             f"Вперёд за работу! 🚀"
