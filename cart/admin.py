@@ -52,7 +52,7 @@ class BillAdmin(admin.ModelAdmin):
         "netto",
         "tax",
         "created_at",
-        "is_paid"
+        "is_paid",
     )
     search_fields = ("number", "florist__title")
     list_filter = ("florist", "account_paid_funds", "created_at")
