@@ -1,7 +1,7 @@
 from typing import Any, Callable
 
 import requests
-from django.core.cache import cache
+from django.core.cache import caches
 from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
@@ -27,6 +27,8 @@ from core.services.utils.recommended_items import get_recommended_items_with_fir
 from ..forms import IndividualOrderForm
 from ..models import MainPageModel, MainPageSeoBlock, MainPageSliderImages
 from .types import Categories, RecommendedItems
+
+cache = caches["default"]
 
 
 class MainPageView(

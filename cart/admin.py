@@ -1,6 +1,14 @@
 from django.contrib import admin
 
-from .models import Bill, Florist, Order, OrderBouquets, OrderProducts
+from .models import (
+    BankAccount,
+    Bill,
+    Florist,
+    Order,
+    OrderBouquets,
+    OrderProducts,
+    RefundReceipt,
+)
 
 
 class BillInline(admin.StackedInline):
@@ -44,9 +52,10 @@ class BillAdmin(admin.ModelAdmin):
         "netto",
         "tax",
         "created_at",
+        "is_paid"
     )
     search_fields = ("number", "florist__title")
-    list_filter = ("florist", "created_at")
+    list_filter = ("florist", "account_paid_funds", "created_at")
     fieldsets = (
         (
             "Основная информация",
@@ -54,6 +63,9 @@ class BillAdmin(admin.ModelAdmin):
                 "fields": (
                     "number",
                     "florist",
+                    "account_paid_funds",
+                    "refund_receipt",
+                    "is_paid",
                 ),
             },
         ),
@@ -76,6 +88,104 @@ class BillAdmin(admin.ModelAdmin):
     )
     ordering = ("-created_at",)
     autocomplete_fields = ("florist",)
+
+
+@admin.register(RefundReceipt)
+class RefundReceiptAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "issue_date",
+        "receipt_date",
+        "refund_amount",
+        "account_received_funds",
+        "image_display",
+    )
+
+    list_filter = (
+        "account_received_funds__title",
+        "issue_date",
+        "receipt_date",
+    )
+
+    search_fields = (
+        "account_received_funds__title",
+        "account_received_funds__number",
+        "refund_amount",
+    )
+
+    fieldsets = (
+        (
+            "Основная информация",
+            {
+                "fields": (
+                    "image",
+                    "issue_date",
+                    "receipt_date",
+                    "refund_amount",
+                ),
+            },
+        ),
+        (
+            "Дополнительно",
+            {
+                "fields": ("account_received_funds",),
+            },
+        ),
+    )
+
+    def image_display(self, obj):
+        if obj.image:
+            return f"\u2714 {obj.image.name}"
+        return "\u2718 Нет файла"
+
+    image_display.short_description = "Файл подтверждения"
+    ordering = ("-receipt_date",)
+
+
+@admin.register(BankAccount)
+class BankAccountAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "title",
+        "owner_name",
+        "number",
+        "created_at",
+        "updated_at",
+    )
+
+    search_fields = (
+        "title",
+        "owner_name",
+        "number",
+    )
+
+    list_filter = (
+        "created_at",
+        "updated_at",
+    )
+
+    ordering = ("-created_at",)
+
+    fieldsets = (
+        (
+            "Основная информация",
+            {
+                "fields": (
+                    "title",
+                    "owner_name",
+                    "number",
+                ),
+            },
+        ),
+        (
+            "Дополнительно",
+            {
+                "fields": ("created_at", "updated_at"),
+            },
+        ),
+    )
+
+    readonly_fields = ("created_at", "updated_at")
 
 
 class OrderProductsStackedInline(admin.StackedInline):
@@ -113,9 +223,9 @@ class OrderAdminModel(admin.ModelAdmin):
             "Стоимость",
             {
                 "fields": (
+                    "grand_total",
                     "sub_total",
                     "tax",
-                    "grand_total",
                     "stripe_taxes",
                 ),
             },

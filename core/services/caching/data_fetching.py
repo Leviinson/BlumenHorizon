@@ -1,9 +1,11 @@
 from typing import Any
 
 from django.contrib.sites.models import Site
-from django.core.cache import cache
+from django.core.cache import caches
 
 from extended_contrib_models.models import ExtendedSite
+
+cache = caches["default"]
 
 
 def set_or_get_from_cache(key: str, timeout: int) -> Any:
