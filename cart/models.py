@@ -35,6 +35,56 @@ class Florist(TimeStampAdbstractModel, models.Model):
         verbose_name_plural = "ФЛОРИСТЫ"
 
 
+class BankAccount(TimeStampAdbstractModel, models.Model):
+    title = models.CharField(verbose_name="Название банка", max_length=255)
+    owner_name = models.CharField(verbose_name="Имя владельца счёта", max_length=255)
+    number = models.CharField(verbose_name="Номер счёта", max_length=255, unique=True)
+
+    class Meta:
+        verbose_name = "“Банковский счёт”"
+        verbose_name_plural = "“Банковские счета”"
+
+    def __str__(self):
+        return f"{self.title} [{self.number}]"
+
+
+class RefundReceipt(TimeStampAdbstractModel, models.Model):
+    image = models.FileField(
+        upload_to="bills/%Y-%m-%d",
+        verbose_name="Подтверждение возврата от флориста",
+        help_text="В случае если флорист сделал свою работу плохо и мы добились возврата (фото/PDF-файл)",
+        null=True,
+        blank=True,
+    )
+    issue_date = models.DateTimeField(
+        verbose_name="Дата выдачи",
+    )
+    receipt_date = models.DateTimeField(
+        verbose_name="Дата поступления",
+    )
+    refund_amount = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        verbose_name="Сумма возврата",
+        help_text="Указано в чеке возврата",
+        null=True,
+        blank=True,
+    )
+    account_received_funds = models.ForeignKey(
+        BankAccount,
+        models.PROTECT,
+        verbose_name="Банковский счёт на который вернули деньги",
+        related_name="refund_receipts",
+    )
+
+    class Meta:
+        verbose_name = "“Чек возврата”"
+        verbose_name_plural = "“Чеки возврата”"
+
+    def __str__(self):
+        return f"Чек возврата на сумму {self.refund_amount}"
+
+
 class Bill(TimeStampAdbstractModel, models.Model):
     florist = models.ForeignKey(
         Florist,
@@ -73,6 +123,27 @@ class Bill(TimeStampAdbstractModel, models.Model):
         verbose_name="Фото/PDF-файл чека",
         null=True,
         blank=True,
+    )
+    refund_receipt = models.ForeignKey(
+        RefundReceipt,
+        models.PROTECT,
+        verbose_name="Чек возврата от флориста",
+        help_text="В случае если флорист сделал свою работу плохо и мы добились возврата",
+        related_name="bills",
+        null=True,
+        blank=True,
+    )
+    account_paid_funds = models.ForeignKey(
+        BankAccount,
+        models.PROTECT,
+        verbose_name="Банковский счёт с которого провели оплату",
+        related_name="bills",
+        null=True,
+        blank=True,
+    )
+    is_paid = models.BooleanField(
+        "Оплачено?",
+        default=True,
     )
 
     class Meta:
