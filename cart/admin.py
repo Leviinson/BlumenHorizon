@@ -1,6 +1,16 @@
 from django.contrib import admin
 
-from .models import Bill, Florist, Order, OrderBouquets, OrderProducts
+from .models import (
+    BankAccount,
+    Bill,
+    Florist,
+    Order,
+    OrderBouquets,
+    OrderCreditAdjustment,
+    OrderDebitAdjustment,
+    OrderProducts,
+    RefundReceipt,
+)
 
 
 class BillInline(admin.StackedInline):
@@ -44,9 +54,10 @@ class BillAdmin(admin.ModelAdmin):
         "netto",
         "tax",
         "created_at",
+        "is_paid",
     )
     search_fields = ("number", "florist__title")
-    list_filter = ("florist", "created_at")
+    list_filter = ("florist", "account_paid_funds", "created_at")
     fieldsets = (
         (
             "Основная информация",
@@ -54,6 +65,9 @@ class BillAdmin(admin.ModelAdmin):
                 "fields": (
                     "number",
                     "florist",
+                    "account_paid_funds",
+                    "refund_receipt",
+                    "is_paid",
                 ),
             },
         ),
@@ -73,9 +87,120 @@ class BillAdmin(admin.ModelAdmin):
                 "fields": ("image",),
             },
         ),
+        (
+            "Дополнительная информация",
+            {
+                "fields": ("comment",),
+            },
+        ),
     )
     ordering = ("-created_at",)
     autocomplete_fields = ("florist",)
+
+
+@admin.register(RefundReceipt)
+class RefundReceiptAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "issue_date",
+        "receipt_date",
+        "refund_amount",
+        "account_received_funds",
+        "image_display",
+    )
+
+    list_filter = (
+        "account_received_funds__title",
+        "issue_date",
+        "receipt_date",
+    )
+
+    search_fields = (
+        "account_received_funds__title",
+        "account_received_funds__number",
+        "refund_amount",
+    )
+
+    fieldsets = (
+        (
+            "Основная информация",
+            {
+                "fields": (
+                    "image",
+                    "issue_date",
+                    "receipt_date",
+                    "refund_amount",
+                ),
+            },
+        ),
+        (
+            "Дополнительно",
+            {
+                "fields": (
+                    "account_received_funds",
+                    "comment",
+                ),
+            },
+        ),
+    )
+
+    def image_display(self, obj):
+        if obj.image:
+            return f"\u2714 {obj.image.name}"
+        return "\u2718 Нет файла"
+
+    image_display.short_description = "Файл подтверждения"
+    ordering = ("-receipt_date",)
+
+
+@admin.register(BankAccount)
+class BankAccountAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "title",
+        "owner_name",
+        "number",
+        "created_at",
+        "updated_at",
+    )
+
+    search_fields = (
+        "title",
+        "owner_name",
+        "number",
+    )
+
+    list_filter = (
+        "created_at",
+        "updated_at",
+    )
+
+    ordering = ("-created_at",)
+
+    fieldsets = (
+        (
+            "Основная информация",
+            {
+                "fields": (
+                    "title",
+                    "owner_name",
+                    "number",
+                ),
+            },
+        ),
+        (
+            "Дополнительно",
+            {
+                "fields": (
+                    "created_at",
+                    "updated_at",
+                    "comment",
+                ),
+            },
+        ),
+    )
+
+    readonly_fields = ("created_at", "updated_at")
 
 
 class OrderProductsStackedInline(admin.StackedInline):
@@ -88,11 +213,34 @@ class OrderBouquetsStackedInline(admin.StackedInline):
     extra = 0
 
 
+class OrderCreditAdjustmentInline(admin.StackedInline):
+    model = OrderCreditAdjustment
+    extra = 0
+    verbose_name = "Корректировка (Кредит)"
+    verbose_name_plural = "Корректировки (Кредит)"
+    fk_name = "order"
+
+
+class OrderDebitAdjustmentInline(admin.StackedInline):
+    model = OrderDebitAdjustment
+    extra = 0
+    verbose_name = "Корректировка (Дебит)"
+    verbose_name_plural = "Корректировки (Дебит)"
+    fk_name = "order"
+
+    readonly_fields = (
+        "paid_amount",
+        "transfer_date",
+    )
+
+
 @admin.register(Order)
 class OrderAdminModel(admin.ModelAdmin):
     inlines = (
         OrderProductsStackedInline,
         OrderBouquetsStackedInline,
+        OrderCreditAdjustmentInline,
+        OrderDebitAdjustmentInline,
     )
 
     fieldsets = (
@@ -106,6 +254,8 @@ class OrderAdminModel(admin.ModelAdmin):
                     "code",
                     "created_at",
                     "updated_at",
+                    "is_reported_to_tax",
+                    "reporting_date"
                 ),
             },
         ),
@@ -113,9 +263,9 @@ class OrderAdminModel(admin.ModelAdmin):
             "Стоимость",
             {
                 "fields": (
+                    "grand_total",
                     "sub_total",
                     "tax",
-                    "grand_total",
                     "stripe_taxes",
                 ),
             },
@@ -171,6 +321,12 @@ class OrderAdminModel(admin.ModelAdmin):
                 "fields": ("is_agreement_accepted",),
             },
         ),
+        (
+            "Дополнительная информация",
+            {
+                "fields": ("comment",),
+            },
+        ),
     )
 
     readonly_fields = (
@@ -199,3 +355,82 @@ class OrderAdminModel(admin.ModelAdmin):
     )
 
     ordering = ("-created_at",)
+
+
+@admin.register(OrderCreditAdjustment)
+class OrderCreditAdjustmentAdmin(admin.ModelAdmin):
+    fieldsets = (
+        (
+            None,
+            {
+                "fields": (
+                    "order",
+                    "paid_amount",
+                    "receipt_date",
+                    "taxes",
+                    "comment",
+                )
+            },
+        ),
+        (
+            "Банковская информация",
+            {
+                "fields": ("account_received_funds", "image", "external_reference"),
+            },
+        ),
+        (
+            "Налоговая информация",
+            {
+                "fields": ("tax_percent", "is_reported_to_tax", "reporting_date"),
+            },
+        ),
+    )
+
+    list_display = (
+        "order",
+        "paid_amount",
+        "receipt_date",
+        "taxes",
+        "tax_percent",
+        "created_at",
+    )
+    search_fields = ("order__code", "comment", "external_reference")
+    list_filter = ("tax_percent", "order__status", "created_at")
+    ordering = ("-created_at",)
+
+    list_per_page = 20
+
+
+@admin.register(OrderDebitAdjustment)
+class OrderDebitAdjustmentAdmin(admin.ModelAdmin):
+    fieldsets = (
+        (
+            None,
+            {
+                "fields": (
+                    "order",
+                    "paid_amount",
+                    "transfer_date",
+                    "comment",
+                )
+            },
+        ),
+        (
+            "Банковская информация",
+            {
+                "fields": ("account_received_funds", "image", "external_reference"),
+            },
+        ),
+    )
+
+    list_display = (
+        "order",
+        "paid_amount",
+        "transfer_date",
+        "created_at",
+    )
+    search_fields = ("order__code", "comment", "external_reference")
+    list_filter = ("order__status", "created_at")
+    ordering = ("-created_at",)
+
+    list_per_page = 20

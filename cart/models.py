@@ -6,7 +6,7 @@ from django.dispatch import receiver
 from django.utils.translation import gettext_lazy as _
 from telegram.helpers import escape_markdown
 
-from catalogue.models import Bouquet, Product, generate_sku
+from catalogue.models import Bouquet, Product, generate_sku, TaxPercent
 from core.base_models import TimeStampAdbstractModel
 from tg_bot import send_message_to_telegram
 
@@ -31,8 +31,68 @@ class Florist(TimeStampAdbstractModel, models.Model):
         return f"{self.title}"
 
     class Meta:
-        verbose_name = "ФЛОРИСТ"
-        verbose_name_plural = "ФЛОРИСТЫ"
+        verbose_name = "3. Флорист"
+        verbose_name_plural = "3. Флористы"
+
+
+class BankAccount(TimeStampAdbstractModel, models.Model):
+    title = models.CharField(verbose_name="Название банка", max_length=255)
+    owner_name = models.CharField(verbose_name="Имя владельца счёта", max_length=255)
+    number = models.CharField(verbose_name="Номер счёта", max_length=255, unique=True)
+    comment = models.TextField(
+        verbose_name="Комментарий",
+        null=True,
+        blank=True,
+    )
+
+    class Meta:
+        verbose_name = "5. Банковский счёт"
+        verbose_name_plural = "5. Банковские счета"
+
+    def __str__(self):
+        return f"{self.title} [{self.number}]"
+
+
+class RefundReceipt(TimeStampAdbstractModel, models.Model):
+    image = models.FileField(
+        upload_to="refund_receipts/%Y-%m-%d",
+        verbose_name="Подтверждение возврата от флориста",
+        help_text="В случае если флорист сделал свою работу плохо и мы добились возврата (фото/PDF-файл)",
+        null=True,
+        blank=True,
+    )
+    issue_date = models.DateTimeField(
+        verbose_name="Дата выдачи",
+    )
+    receipt_date = models.DateTimeField(
+        verbose_name="Дата поступления",
+    )
+    refund_amount = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        verbose_name="Сумма возврата",
+        help_text="Указано в чеке возврата",
+        null=True,
+        blank=True,
+    )
+    account_received_funds = models.ForeignKey(
+        BankAccount,
+        models.PROTECT,
+        verbose_name="Банковский счёт на который вернули деньги",
+        related_name="refund_receipts",
+    )
+    comment = models.TextField(
+        verbose_name="Комментарий",
+        null=True,
+        blank=True,
+    )
+
+    class Meta:
+        verbose_name = "4. Чек возврата от флориста"
+        verbose_name_plural = "4. Чеки возвратов от флористов"
+
+    def __str__(self):
+        return f"Чек возврата на сумму {self.refund_amount}"
 
 
 class Bill(TimeStampAdbstractModel, models.Model):
@@ -69,18 +129,58 @@ class Bill(TimeStampAdbstractModel, models.Model):
         max_length=255, verbose_name="Номер чека", null=True, blank=True
     )
     image = models.FileField(
-        upload_to="bills/%Y-%m-%d", verbose_name="Фото/PDF-файл чека", null=True, blank=True
+        upload_to="bills/%Y-%m-%d",
+        verbose_name="Фото/PDF-файл чека",
+        null=True,
+        blank=True,
+    )
+    refund_receipt = models.ForeignKey(
+        RefundReceipt,
+        models.PROTECT,
+        verbose_name="Чек возврата от флориста",
+        help_text="В случае если флорист сделал свою работу плохо и мы добились возврата",
+        related_name="bills",
+        null=True,
+        blank=True,
+    )
+    account_paid_funds = models.ForeignKey(
+        BankAccount,
+        models.PROTECT,
+        verbose_name="Банковский счёт с которого провели оплату",
+        related_name="bills",
+        null=True,
+        blank=True,
+    )
+    is_paid = models.BooleanField(
+        "Оплачено?",
+        default=True,
+    )
+    comment = models.TextField(
+        verbose_name="Комментарий",
+        null=True,
+        blank=True,
     )
 
     class Meta:
-        verbose_name = "ЧЕК"
-        verbose_name_plural = "ЧЕКИ"
+        verbose_name = "2. Чек"
+        verbose_name_plural = "2. Чеки"
 
     def __str__(self):
         return f"#{self.number} - {self.florist.title}"
 
 
 class Order(TimeStampAdbstractModel, models.Model):
+    is_reported_to_tax = models.BooleanField(
+        default=False,
+        verbose_name="Сообщено в налоговую",
+        help_text="Отметьте, если заказ был отправлен в налоговую",
+    )
+    reporting_date = models.DateTimeField(
+        blank=True,
+        null=True,
+        verbose_name="Дата отправки в налоговую",
+        help_text="Дата, когда заказ был отправлен в налоговую",
+    )
     STATUS_CHOICES = [
         ("processing", _("В обработке")),
         ("declined", _("Отказан")),
@@ -215,7 +315,7 @@ class Order(TimeStampAdbstractModel, models.Model):
         verbose_name="Налог Stripe за транзакцию",
         help_text="Спросить у Виталика",
         null=True,
-        blank=True
+        blank=True,
     )
     grand_total = models.DecimalField(
         max_digits=10,
@@ -235,10 +335,15 @@ class Order(TimeStampAdbstractModel, models.Model):
         related_name="orders",
         unique=True,
     )
+    comment = models.TextField(
+        verbose_name="Комментарий",
+        null=True,
+        blank=True,
+    )
 
     class Meta:
-        verbose_name = "Заказ"
-        verbose_name_plural = "Заказы"
+        verbose_name = "1. Заказ"
+        verbose_name_plural = "1. Заказы"
 
     def __str__(self):
         return f"{self.code} - {self.status}"
@@ -304,6 +409,9 @@ class OrderItem(models.Model):
     class Meta:
         abstract = True
 
+    def __str__(self):
+        return f"«{self.product.name}»"
+
 
 class OrderProducts(TimeStampAdbstractModel, OrderItem):
     order = models.ForeignKey(
@@ -322,9 +430,6 @@ class OrderProducts(TimeStampAdbstractModel, OrderItem):
     class Meta:
         verbose_name = "Продукт в заказе"
         verbose_name_plural = "Продукты в заказе"
-
-    def __str__(self):
-        return f"{self.pk}"
 
 
 class OrderBouquets(TimeStampAdbstractModel, OrderItem):
@@ -347,3 +452,138 @@ class OrderBouquets(TimeStampAdbstractModel, OrderItem):
 
         def __str__(self):
             return f"{self.pk}"
+
+
+class AbstractOrderAdjustment(models.Model):
+    paid_amount = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        verbose_name="Сумма",
+        help_text="Сумма корректировки",
+    )
+    comment = models.TextField(
+        verbose_name="Комментарий",
+        blank=True,
+        null=True,
+        help_text="Опишите причину корректировки или дополнительные детали",
+    )
+    processed_by = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Обработано сотрудником",
+        help_text="Сотрудник, который обработал данную транзакцию",
+    )
+    external_reference = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True,
+        verbose_name="Внешняя ссылка",
+        help_text="Ссылка на внешний источник или номер транзакции",
+    )
+    is_reported_to_tax = models.BooleanField(
+        default=False,
+        verbose_name="Сообщено в налоговую",
+        help_text="Отметьте, если транзакция была отправлена в налоговую",
+    )
+    reporting_date = models.DateTimeField(
+        blank=True,
+        null=True,
+        verbose_name="Дата отправки в налоговую",
+        help_text="Дата, когда транзакция была отправлена в налоговую",
+    )
+    issue_date = models.DateTimeField(
+        verbose_name="Дата инициации",
+        help_text="Дата, когда была инициирована корректировка",
+    )
+
+    class Meta:
+        abstract = True
+
+    def __str__(self):
+        return f"{self.get_adjustment_type_display()} - {self.paid_amount} ({self.issue_date})"
+
+
+class OrderCreditAdjustment(TimeStampAdbstractModel, AbstractOrderAdjustment):
+    order = models.ForeignKey(
+        Order,
+        on_delete=models.PROTECT,
+        related_name="credit_adjustments",
+        verbose_name="Заказ",
+        help_text="Заказ, к которому относится корректировка",
+    )
+    image = models.FileField(
+        upload_to="order_adjustments/credit/%Y-%m-%d",
+        verbose_name="Изображение",
+        help_text="Загрузите фото или PDF-файл, подтверждающий транзакцию",
+        null=True,
+        blank=True,
+    )
+    receipt_date = models.DateTimeField(
+        verbose_name="Дата поступления средств",
+        help_text="Дата, когда средства были зачислены на счет",
+    )
+    account_received_funds = models.ForeignKey(
+        BankAccount,
+        models.PROTECT,
+        verbose_name="Банковский счёт на который поступили деньги",
+        related_name="orders_credit_adjustments",
+        help_text="Выберите банковский счёт, на который были зачислены средства",
+    )
+    tax_percent = models.ForeignKey(
+        TaxPercent,
+        default=1,
+        on_delete=models.PROTECT,
+        related_name="orders_credit_adjustments",
+        verbose_name="Налоговая ставка",
+        help_text="Выберите налоговую ставку, применимую к данной операции. Вычисляется после скидки.",
+    )
+    taxes = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        verbose_name="Всего заплаченных налогов клиентом",
+        help_text="Сумма налога, уплаченная клиентом в рамках этой корректировки",
+    )
+
+    class Meta:
+        verbose_name = "Корректировка (начисление)"
+        verbose_name_plural = "Корректировки (начисления)"
+
+    def __str__(self):
+        return f"Credit Adjustment - {self.paid_amount} ({self.issue_date})"
+
+
+class OrderDebitAdjustment(TimeStampAdbstractModel, AbstractOrderAdjustment):
+    order = models.ForeignKey(
+        Order,
+        on_delete=models.PROTECT,
+        related_name="debit_adjustments",
+        verbose_name="Заказ",
+        help_text="Заказ, к которому относится корректировка",
+    )
+    image = models.FileField(
+        upload_to="order_adjustments/debit/%Y-%m-%d",
+        verbose_name="Изображение",
+        help_text="Загрузите фото или PDF-файл, подтверждающий транзакцию",
+        null=True,
+        blank=True,
+    )
+    transfer_date = models.DateTimeField(
+        verbose_name="Дата отправки средств",
+        help_text="Дата, когда средства были отправлены клиенту",
+    )
+    account_received_funds = models.ForeignKey(
+        BankAccount,
+        models.PROTECT,
+        verbose_name="Банковский счёт с которого вернули деньги",
+        related_name="orders_debit_adjustments",
+        help_text="Выберите банковский счёт, с которого были возвращены средства",
+    )
+
+    class Meta:
+        verbose_name = "Корректировка (возврат)"
+        verbose_name_plural = "Корректировки (возвраты)"
+
+    def __str__(self):
+        return f"Debit Adjustment - {self.paid_amount} ({self.issue_date})"
