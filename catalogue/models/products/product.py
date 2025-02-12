@@ -113,8 +113,6 @@ class Product(ProductAbstractModel):
     tax_percent: TaxPercent = models.ForeignKey(
         TaxPercent,
         on_delete=models.PROTECT,
-        null=True,
-        blank=True,
         default=2,
         related_name="products",
         verbose_name="Налоговая ставка",

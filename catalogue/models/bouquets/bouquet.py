@@ -170,8 +170,6 @@ class Bouquet(ProductAbstractModel):
     tax_percent = models.ForeignKey(
         TaxPercent,
         default=1,
-        null=True,
-        blank=True,
         on_delete=models.PROTECT,
         related_name="bouquets",
         verbose_name="Налоговая ставка",
