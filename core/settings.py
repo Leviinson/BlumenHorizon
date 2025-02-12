@@ -211,7 +211,8 @@ DATABASES = {
         "USER": os.getenv("MYSQL_USER"),
         "PASSWORD": os.getenv("MYSQL_PASSWORD"),
         "OPTIONS": {
-            "init_command": "SET NAMES 'utf8mb4' COLLATE 'utf8mb4_unicode_ci';"
+            "init_command": "SET NAMES 'utf8mb4' COLLATE 'utf8mb4_unicode_ci';",
+            "charset": "utf8mb4",
         },
     }
 }
@@ -412,7 +413,7 @@ CACHES = {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
             "SERIALIZER": "django_redis.serializers.json.JSONSerializer",
         },
-        "KEY_PREFIX": CACHE_MIDDLEWARE_KEY_PREFIX
+        "KEY_PREFIX": CACHE_MIDDLEWARE_KEY_PREFIX,
     }
 }
 
