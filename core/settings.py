@@ -112,10 +112,8 @@ else:
 
 
 if not DEBUG:
-    FORCE_SCRIPT_NAME = "/athens"
     CACHE_MIDDLEWARE_KEY_PREFIX = "athens:"
 else:
-    FORCE_SCRIPT_NAME = None
     CACHE_MIDDLEWARE_KEY_PREFIX = None
 
 
