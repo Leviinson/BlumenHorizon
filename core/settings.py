@@ -113,8 +113,6 @@ else:
 
 if not DEBUG:
     CACHE_MIDDLEWARE_KEY_PREFIX = "athens:"
-else:
-    CACHE_MIDDLEWARE_KEY_PREFIX = None
 
 
 # Application definition
