@@ -1,5 +1,9 @@
-upstream app {
+upstream gunicorn_berlin {
     server 127.0.0.1:8000;
+}
+
+upstream gunicorn_global_region {
+    server 127.0.0.1:8001;
 }
 
 # Сервер для редиректа с HTTP на HTTPS
@@ -23,14 +27,13 @@ server {
     listen 443 ssl http2;
     server_name blumenhorizon.de;
 
-    
     if ($host !~ ^(blumenhorizon\.de|www\.blumenhorizon\.de)$) {
         return 444;
     }
 
     # SSL настройки
-    ssl_certificate /root/ssl/blumenhorizon_de/blumenhorizon_de_chain.crt;
-    ssl_certificate_key /root/ssl/blumenhorizon.key;
+    ssl_certificate /root/ssl/berlin/blumenhorizon_de/blumenhorizon_de_chain.crt;
+    ssl_certificate_key /root/ssl/berlin/blumenhorizon.key;
 
     ssl_protocols TLSv1.2 TLSv1.3;
     ssl_prefer_server_ciphers on;
@@ -48,6 +51,21 @@ server {
     root /var/www/blumenhorizon/;
 
     # Статические файлы
+
+    location /europe/static/ {
+        alias /var/www/blumenhorizon_global/static/;
+        include /etc/nginx/mime.types;
+        expires 30d;
+        add_header Cache-Control "public";
+    }
+
+    location /europe/media/ {
+        alias /var/www/blumenhorizon_global/media/;
+        include /etc/nginx/mime.types;
+        expires 30d;
+        add_header Cache-Control "public";
+    }
+
     location /static/ {
         alias /var/www/blumenhorizon/static/;
         include /etc/nginx/mime.types;
@@ -63,8 +81,18 @@ server {
     }
 
     # Проксирование для динамических запросов
+    location /europe/ {
+        proxy_pass http://gunicorn_global_region/;
+        proxy_set_header X-Real-IP $remote_addr;
+	proxy_set_header X-Script-Name /europe;
+	proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $host;
+        proxy_redirect off;
+    }
+
     location / {
-        proxy_pass http://app;
+        proxy_pass http://gunicorn_berlin;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-Proto $scheme;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -77,11 +105,10 @@ server {
 server {
     listen 443 ssl http2;
     server_name www.blumenhorizon.de;
-    
+
     if ($host !~ ^(blumenhorizon\.de|www\.blumenhorizon\.de)$) {
         return 444;
     }
-    
 
     # Редирект с www на без www
     return 301 https://blumenhorizon.de$request_uri;
