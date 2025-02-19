@@ -18,9 +18,9 @@
         {% for lang_code, lang_name in LANGUAGES %}
         {% if lang_code == CURRENT_LANGUAGE_CODE %}
         {% elif lang_code == 'en' %}
-        <li style="list-style: none; padding: 0; margin-right: 5px;"><a href="/madrid/admin">{{ lang_name }}</a></li>
+        <li style="list-style: none; padding: 0; margin-right: 5px;"><a href="/admin">{{ lang_name }}</a></li>
         {% else %}
-        <li style="list-style: none; padding: 0; margin-right: 5px;"><a href="/madrid/{{ lang_code }}/admin">{{ lang_name }}</a></li>
+        <li style="list-style: none; padding: 0; margin-right: 5px;"><a href="/{{ lang_code }}/admin">{{ lang_name }}</a></li>
         {% endif %}
         {% endfor %}
       </ul>

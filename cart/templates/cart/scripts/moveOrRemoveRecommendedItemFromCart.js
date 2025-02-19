@@ -105,13 +105,13 @@ document.querySelectorAll('.add-to-cart-form').forEach(function(form) {
         let decreaseProductLink;
         let increaseProductLink;
         if (langValue === "en") {
-            removeProductLink = productInfo.isBouquet ? `/madrid/cart/bouquet/remove/` : `/madrid/cart/product/remove/`
-            decreaseProductLink = productInfo.isBouquet ? `/madrid/cart/bouquet/decrease/` : `/madrid/cart/product/decrease/`
-            increaseProductLink = productInfo.isBouquet ? `/madrid/cart/bouquet/increase/` : `/madrid/cart/product/increase/`
+            removeProductLink = productInfo.isBouquet ? `/cart/bouquet/remove/` : `/cart/product/remove/`
+            decreaseProductLink = productInfo.isBouquet ? `/cart/bouquet/decrease/` : `/cart/product/decrease/`
+            increaseProductLink = productInfo.isBouquet ? `/cart/bouquet/increase/` : `/cart/product/increase/`
         } else {
-            removeProductLink = productInfo.isBouquet ? `/madrid/${langValue}/cart/bouquet/remove/` : `/madrid/${langValue}/cart/product/remove/`
-            decreaseProductLink = productInfo.isBouquet ? `/madrid/${langValue}/cart/bouquet/decrease/` : `/madrid/${langValue}/cart/product/decrease/`
-            increaseProductLink = productInfo.isBouquet ? `/madrid/${langValue}/cart/bouquet/increase/` : `/madrid/${langValue}/cart/product/increase/`
+            removeProductLink = productInfo.isBouquet ? `/${langValue}/cart/bouquet/remove/` : `/${langValue}/cart/product/remove/`
+            decreaseProductLink = productInfo.isBouquet ? `/${langValue}/cart/bouquet/decrease/` : `/${langValue}/cart/product/decrease/`
+            increaseProductLink = productInfo.isBouquet ? `/${langValue}/cart/bouquet/increase/` : `/${langValue}/cart/product/increase/`
         }
 
         let needsHr = true;
