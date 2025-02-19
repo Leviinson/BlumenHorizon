@@ -105,13 +105,13 @@ document.querySelectorAll('.add-to-cart-form').forEach(function(form) {
         let decreaseProductLink;
         let increaseProductLink;
         if (langValue === "en") {
-            removeProductLink = productInfo.isBouquet ? `/limassol/cart/bouquet/remove/` : `/limassol/cart/product/remove/`
-            decreaseProductLink = productInfo.isBouquet ? `/limassol/cart/bouquet/decrease/` : `/limassol/cart/product/decrease/`
-            increaseProductLink = productInfo.isBouquet ? `/limassol/cart/bouquet/increase/` : `/limassol/cart/product/increase/`
+            removeProductLink = productInfo.isBouquet ? `/cart/bouquet/remove/` : `/cart/product/remove/`
+            decreaseProductLink = productInfo.isBouquet ? `/cart/bouquet/decrease/` : `/cart/product/decrease/`
+            increaseProductLink = productInfo.isBouquet ? `/cart/bouquet/increase/` : `/cart/product/increase/`
         } else {
-            removeProductLink = productInfo.isBouquet ? `/limassol/${langValue}/cart/bouquet/remove/` : `/limassol/${langValue}/cart/product/remove/`
-            decreaseProductLink = productInfo.isBouquet ? `/limassol/${langValue}/cart/bouquet/decrease/` : `/limassol/${langValue}/cart/product/decrease/`
-            increaseProductLink = productInfo.isBouquet ? `/limassol/${langValue}/cart/bouquet/increase/` : `/limassol/${langValue}/cart/product/increase/`
+            removeProductLink = productInfo.isBouquet ? `/${langValue}/cart/bouquet/remove/` : `/${langValue}/cart/product/remove/`
+            decreaseProductLink = productInfo.isBouquet ? `/${langValue}/cart/bouquet/decrease/` : `/${langValue}/cart/product/decrease/`
+            increaseProductLink = productInfo.isBouquet ? `/${langValue}/cart/bouquet/increase/` : `/${langValue}/cart/product/increase/`
         }
 
         let needsHr = true;

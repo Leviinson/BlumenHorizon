@@ -111,11 +111,7 @@ else:
     ]
 
 if not DEBUG:
-    FORCE_SCRIPT_NAME = "/limassol"
     CACHE_MIDDLEWARE_KEY_PREFIX = "limassol:"
-else:
-    FORCE_SCRIPT_NAME = None
-    CACHE_MIDDLEWARE_KEY_PREFIX = None
 
 # Application definition
 

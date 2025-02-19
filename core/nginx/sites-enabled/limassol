@@ -1,36 +1,34 @@
-upstream app {
-    server 127.0.0.1:8000;
+upstream gunicorn_limassol {
+    server 127.0.0.1:8005;
 }
 
-# Сервер для редиректа с HTTP на HTTPS
 server {
     listen 80;
-    server_name blumenhorizon.de www.blumenhorizon.de;
+    server_name limassol-flowers.shop www.limassol-flowers.shop;
 
     # Проверка хоста
-    if ($host !~ ^(blumenhorizon\.de|www\.blumenhorizon\.de)$) {
+    if ($host !~ ^(limassol-flowers\.shop|www\.limassol-flowers\.shop)$) {
         return 444;
     }
 
     # Редирект с HTTP на HTTPS, также с www на без www
     location / {
-        return 301 https://blumenhorizon.de$request_uri;
+        return 301 https://limassol-flowers.shop$request_uri;
     }
 }
 
 # Основной сервер для HTTPS
 server {
     listen 443 ssl http2;
-    server_name blumenhorizon.de;
+    server_name limassol-flowers.shop;
 
-    
-    if ($host !~ ^(blumenhorizon\.de|www\.blumenhorizon\.de)$) {
+    if ($host !~ ^(limassol-flowers\.shop|www\.limassol-flowers\.shop)$) {
         return 444;
     }
 
     # SSL настройки
-    ssl_certificate /root/ssl/blumenhorizon_de/blumenhorizon_de_chain.crt;
-    ssl_certificate_key /root/ssl/blumenhorizon.key;
+    ssl_certificate /root/ssl/limassol/limassolflowers_shop/limassolflowers_shop_chain.crt;
+    ssl_certificate_key /root/ssl/limassol/limassolflowers.key;
 
     ssl_protocols TLSv1.2 TLSv1.3;
     ssl_prefer_server_ciphers on;
@@ -45,26 +43,24 @@ server {
     add_header X-XSS-Protection "1; mode=block";
     add_header Referrer-Policy "no-referrer-when-downgrade";
 
-    root /var/www/blumenhorizon/;
+    root /var/www/blumenhorizon_limassol/;
 
-    # Статические файлы
     location /static/ {
-        alias /var/www/blumenhorizon/static/;
+        alias /var/www/blumenhorizon_limassol/static/;
         include /etc/nginx/mime.types;
         expires 30d;
         add_header Cache-Control "public";
     }
 
     location /media/ {
-        alias /var/www/blumenhorizon/media/;
+        alias /var/www/blumenhorizon_limassol/media/;
         include /etc/nginx/mime.types;
         expires 30d;
         add_header Cache-Control "public";
     }
 
-    # Проксирование для динамических запросов
     location / {
-        proxy_pass http://app;
+        proxy_pass http://gunicorn_limassol;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-Proto $scheme;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -73,16 +69,15 @@ server {
     }
 }
 
-# Сервер для обработки HTTPS с редиректом с www на без www
+
 server {
     listen 443 ssl http2;
-    server_name www.blumenhorizon.de;
-    
-    if ($host !~ ^(blumenhorizon\.de|www\.blumenhorizon\.de)$) {
+    server_name www.limassol-flowers.shop;
+
+    if ($host !~ ^(limassol-flowers\.shop|www\.limassol-flowers\.shop)$) {
         return 444;
     }
-    
 
     # Редирект с www на без www
-    return 301 https://blumenhorizon.de$request_uri;
+    return 301 https://limassol-flowers.shop$request_uri;
 }
