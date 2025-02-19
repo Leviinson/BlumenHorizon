@@ -111,11 +111,7 @@ else:
     ]
 
 if not DEBUG:
-    FORCE_SCRIPT_NAME = "/larnaca"
     CACHE_MIDDLEWARE_KEY_PREFIX = "larnaca:"
-else:
-    FORCE_SCRIPT_NAME = None
-    CACHE_MIDDLEWARE_KEY_PREFIX = None
 
 # Application definition
 
