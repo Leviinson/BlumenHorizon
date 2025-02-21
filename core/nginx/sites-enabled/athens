@@ -6,6 +6,9 @@ server {
     listen 80;
     server_name athensflowers.shop www.athensflowers.shop;
 
+    error_log /var/www/blumenhorizon/logs/nginx/error.log;
+    access_log /var/www/blumenhorizon/logs/nginx/access.log;
+
     # Проверка хоста
     if ($host !~ ^(athensflowers\.shop|www\.athensflowers\.shop)$) {
         return 444;
@@ -21,6 +24,9 @@ server {
 server {
     listen 443 ssl http2;
     server_name athensflowers.shop;
+
+    error_log /var/www/blumenhorizon_athens/logs/nginx/error.log;
+    access_log /var/www/blumenhorizon_athens/logs/nginx/access.log;
 
     if ($host !~ ^(athensflowers\.shop|www\.athensflowers\.shop)$) {
         return 444;
@@ -73,6 +79,9 @@ server {
 server {
     listen 443 ssl http2;
     server_name www.athensflowers.shop;
+
+    error_log /var/www/blumenhorizon_athens/logs/nginx/error.log;
+    access_log /var/www/blumenhorizon_athens/logs/nginx/access.log;
 
     if ($host !~ ^(athensflowers\.shop|www\.athensflowers\.shop)$) {
         return 444;

@@ -25,5 +25,14 @@
         "tests"
     ],
     "python.testing.unittestEnabled": false,
-    "python.testing.pytestEnabled": true
+    "python.testing.pytestEnabled": true,
+    "python.poetryPath": "~/.local/bin/poetry",
+    "python.defaultInterpreterPath": ".venv/bin/python",
+    "python.analysis.autoFormatStrings": true,
+    "python.analysis.autoImportCompletions": true,
+    "python.analysis.completeFunctionParens": true,
+    // "python.analysis.displayEnglishDiagnostics": true,
+    "python.analysis.extraCommitChars": true,
+    "python.analysis.generateWithTypeAnnotation": true,
+    "python.analysis.logLevel": "Trace",
 }
