@@ -1,5 +1,5 @@
 upstream gunicorn_madrid {
-    server 127.0.0.1:8003;
+    server 127.0.0.1:8004;
 }
 
 server {
