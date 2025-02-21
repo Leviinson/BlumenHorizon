@@ -11,6 +11,9 @@ server {
     listen 80;
     server_name blumenhorizon.de www.blumenhorizon.de;
 
+    error_log /var/www/blumenhorizon/logs/nginx/error.log;
+    access_log /var/www/blumenhorizon/logs/nginx/access.log;
+
     # Проверка хоста
     if ($host !~ ^(blumenhorizon\.de|www\.blumenhorizon\.de)$) {
         return 444;
@@ -26,6 +29,9 @@ server {
 server {
     listen 443 ssl http2;
     server_name blumenhorizon.de;
+
+    error_log /var/www/blumenhorizon/logs/nginx/error.log;
+    access_log /var/www/blumenhorizon/logs/nginx/access.log;
 
     if ($host !~ ^(blumenhorizon\.de|www\.blumenhorizon\.de)$) {
         return 444;
@@ -105,6 +111,9 @@ server {
 server {
     listen 443 ssl http2;
     server_name www.blumenhorizon.de;
+
+    error_log /var/www/blumenhorizon/logs/nginx/error.log;
+    access_log /var/www/blumenhorizon/logs/nginx/access.log;
 
     if ($host !~ ^(blumenhorizon\.de|www\.blumenhorizon\.de)$) {
         return 444;
