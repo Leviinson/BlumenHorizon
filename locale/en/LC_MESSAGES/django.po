@@ -1096,7 +1096,7 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"Flower shop %(site_name)s in Monaco"
+"Flower shop %(site_name)s in Paris"
 
 #: mainpage/templates/mainpage/index.html:148
 msgid "Вперёд"
