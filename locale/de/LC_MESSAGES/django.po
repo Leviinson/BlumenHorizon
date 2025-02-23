@@ -1101,7 +1101,7 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"Blumenladen %(site_name)s in Paris"
+"Blumenladen %(site_name)s in Cannes"
 
 #: mainpage/templates/mainpage/index.html:148
 msgid "Вперёд"

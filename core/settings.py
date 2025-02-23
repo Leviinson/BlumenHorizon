@@ -112,7 +112,7 @@ else:
 
 
 if not DEBUG:
-    CACHE_MIDDLEWARE_KEY_PREFIX = "paris:"
+    CACHE_MIDDLEWARE_KEY_PREFIX = "cannes:"
 
 
 # Application definition
