@@ -411,7 +411,7 @@ CACHES = {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
             "SERIALIZER": "django_redis.serializers.json.JSONSerializer",
         },
-        "KEY_PREFIX": CACHE_MIDDLEWARE_KEY_PREFIX
+        "KEY_PREFIX": CACHE_MIDDLEWARE_KEY_PREFIX if not DEBUG else None
     }
 }
 
