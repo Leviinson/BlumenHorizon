@@ -470,6 +470,7 @@ LANGUAGES = [
     ("de", "🇩🇪 Deutsch"),
     ("ru", "🇷🇺 Русский"),
     ("uk", "🇺🇦 Українська"),
+    ("gr", "🇬🇷 Ελληνικά")
 ]
 
 TIME_ZONE = "Europe/Berlin"
