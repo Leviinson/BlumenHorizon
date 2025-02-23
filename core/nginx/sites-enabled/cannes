@@ -1,40 +1,40 @@
-upstream gunicorn_paris {
+upstream gunicorn_cannes {
     server 127.0.0.1:8000;
 }
 
 server {
     listen 80;
-    server_name parisfloral.shop www.parisfloral.shop;
+    server_name cannesflowers.shop www.cannesflowers.shop;
 
-    error_log /var/www/blumenhorizon_paris/logs/nginx/error.log;
-    access_log /var/www/blumenhorizon_paris/logs/nginx/access.log;
+    error_log /var/www/blumenhorizon_cannes/logs/nginx/error.log;
+    access_log /var/www/blumenhorizon_cannes/logs/nginx/access.log;
 
     # Проверка хоста
-    if ($host !~ ^(parisfloral\.shop|www\.parisfloral\.shop)$) {
+    if ($host !~ ^(cannesflowers\.shop|www\.cannesflowers\.shop)$) {
         return 444;
     }
 
     # Редирект с HTTP на HTTPS, также с www на без www
     location / {
-        return 301 https://parisfloral.shop$request_uri;
+        return 301 https://cannesflowers.shop$request_uri;
     }
 }
 
 # Основной сервер для HTTPS
 server {
     listen 443 ssl http2;
-    server_name parisfloral.shop;
+    server_name cannesflowers.shop;
 
-    error_log /var/www/blumenhorizon_paris/logs/nginx/error.log;
-    access_log /var/www/blumenhorizon_paris/logs/nginx/access.log;
+    error_log /var/www/blumenhorizon_cannes/logs/nginx/error.log;
+    access_log /var/www/blumenhorizon_cannes/logs/nginx/access.log;
 
-    if ($host !~ ^(parisfloral\.shop|www\.parisfloral\.shop)$) {
+    if ($host !~ ^(cannesflowers\.shop|www\.cannesflowers\.shop)$) {
         return 444;
     }
 
     # SSL настройки
-    ssl_certificate /root/ssl/paris/parisfloral_shop/parisfloral_shop_chain.crt;
-    ssl_certificate_key /root/ssl/paris/parisfloral.key;
+    ssl_certificate /root/ssl/cannes/cannesflowers_shop/cannesflowers_shop_chain.crt;
+    ssl_certificate_key /root/ssl/cannes/cannesflowers.key;
 
     ssl_protocols TLSv1.2 TLSv1.3;
     ssl_prefer_server_ciphers on;
@@ -49,24 +49,24 @@ server {
     add_header X-XSS-Protection "1; mode=block";
     add_header Referrer-Policy "no-referrer-when-downgrade";
 
-    root /var/www/blumenhorizon_paris/;
+    root /var/www/blumenhorizon_cannes/;
 
     location /static/ {
-        alias /var/www/blumenhorizon_paris/static/;
+        alias /var/www/blumenhorizon_cannes/static/;
         include /etc/nginx/mime.types;
         expires 30d;
         add_header Cache-Control "public";
     }
 
     location /media/ {
-        alias /var/www/blumenhorizon_paris/media/;
+        alias /var/www/blumenhorizon_cannes/media/;
         include /etc/nginx/mime.types;
         expires 30d;
         add_header Cache-Control "public";
     }
 
     location / {
-        proxy_pass http://gunicorn_paris;
+        proxy_pass http://gunicorn_cannes;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-Proto $scheme;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -78,15 +78,15 @@ server {
 
 server {
     listen 443 ssl http2;
-    server_name www.parisfloral.shop;
+    server_name www.cannesflowers.shop;
 
-    error_log /var/www/blumenhorizon_paris/logs/nginx/error.log;
-    access_log /var/www/blumenhorizon_paris/logs/nginx/access.log;
+    error_log /var/www/blumenhorizon_cannes/logs/nginx/error.log;
+    access_log /var/www/blumenhorizon_cannes/logs/nginx/access.log;
 
-    if ($host !~ ^(parisfloral\.shop|www\.parisfloral\.shop)$) {
+    if ($host !~ ^(cannesflowers\.shop|www\.cannesflowers\.shop)$) {
         return 444;
     }
 
     # Редирект с www на без www
-    return 301 https://parisfloral.shop$request_uri;
+    return 301 https://cannesflowers.shop$request_uri;
 }
