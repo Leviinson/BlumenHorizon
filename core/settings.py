@@ -409,7 +409,7 @@ CACHES = {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
             "SERIALIZER": "django_redis.serializers.json.JSONSerializer",
         },
-        "KEY_PREFIX": CACHE_MIDDLEWARE_KEY_PREFIX,
+        "KEY_PREFIX": CACHE_MIDDLEWARE_KEY_PREFIX if not DEBUG else None,
     }
 }
 
@@ -462,12 +462,13 @@ LOGOUT_REDIRECT_URL = "accounts:signin"
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = "de" if not TEST_MODE else "ru"
+LANGUAGE_CODE = "en" if not TEST_MODE else "ru"
 LANGUAGES = [
-    ("de", "🇩🇪 Deutsch"),
     ("en", "🇺🇸 English"),
+    ("de", "🇩🇪 Deutsch"),
     ("ru", "🇷🇺 Русский"),
     ("uk", "🇺🇦 Українська"),
+    ("el", "🇬🇷 Ελληνικά"),
 ]
 
 TIME_ZONE = "Europe/Berlin"

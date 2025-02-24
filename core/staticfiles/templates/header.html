@@ -16,40 +16,56 @@
         <ul id="fillers-links" class="text-end d-flex justify-content-end list-unstyled gap-2 align-items-center m-0 me-2">
           <div class="d-flex gap-2">
             <li class="nav-item">
-              <a class="nav-link active text-light text-start" href="{% url 'mainpage:offers' %}" style="white-space: nowrap;">{% translate 'Главная' %}</a>
+              <a class="nav-link active text-light text-start" href="{% url 'mainpage:offers' %}" style="white-space: nowrap;">
+                {% translate 'Главная' %}
+              </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-light text-start" href="{% url 'catalogue:catalog' %}" style="white-space: nowrap;">{% translate 'Каталог' %}</a>
+              <a class="nav-link text-light text-start" href="{% url 'catalogue:catalog' %}" style="white-space: nowrap;">
+                {% translate 'Каталог' %}
+              </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-light text-start" href="{% url 'mainpage:about' %}" style="white-space: nowrap;">{% translate 'О нас' %}</a>
+              <a class="nav-link text-light text-start" href="{% url 'mainpage:about' %}" style="white-space: nowrap;">
+                {% translate 'О нас' %}
+              </a>
             </li>
           </div>
           <div class="d-flex gap-2">
             <li class="nav-item">
-              <a class="nav-link text-light text-start" href="{% url 'mainpage:delivery' %}" style="white-space: nowrap;">{% translate 'Доставка' %}</a>
+              <a class="nav-link text-light text-start" href="{% url 'mainpage:delivery' %}" style="white-space: nowrap;">
+                {% translate 'Доставка' %}
+              </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-light text-start me-2" href="{% url 'mainpage:contact' %}" style="white-space: nowrap;">{% translate 'Контакты' %}</a>
+              <a class="nav-link text-light text-start me-2" href="{% url 'mainpage:contact' %}" style="white-space: nowrap;">
+                {% translate 'Контакты' %}
+              </a>
             </li>
           </div>
       </div>
       <div id="header-right-panel" class="d-flex justify-content-center">
         <div class="dropdown me-2">
           {% get_available_languages as LANGUAGES %}
+
           <button class="btn btn-dark-green dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
             {% get_current_language as CURRENT_LANGUAGE_CODE %}
-            {% get_language_info for CURRENT_LANGUAGE_CODE as lang %}
-            {{ lang.name_translated }}
+            {% for lang_code, lang_name in LANGUAGES %}
+                {% if lang_code == CURRENT_LANGUAGE_CODE %}
+                    {{ lang_name }}
+                {% endif %}
+            {% endfor %}
           </button>
+
           <ul class="dropdown-menu">
             {% for lang_code, lang_name in LANGUAGES %}
-            {% if lang_code == CURRENT_LANGUAGE_CODE %}
-            {% elif lang_code == 'de' %}
-            <li><a class="dropdown-item" href="/">{{ lang_name }}</a></li>
-            {% else %}
-            <li><a class="dropdown-item" href="/{{ lang_code }}/">{{ lang_name }}</a></li>
-            {% endif %}
+              {% if lang_code == CURRENT_LANGUAGE_CODE %}
+
+              {% elif lang_code == 'en' %}
+                <li><a class="dropdown-item" href="/">{{ lang_name }}</a></li>
+              {% else %}
+                <li><a class="dropdown-item" href="/{{ lang_code }}/">{{ lang_name }}</a></li>
+              {% endif %}
             {% endfor %}
           </ul>
         </div>
