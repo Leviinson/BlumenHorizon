@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-01 12:52+0100\n"
+"POT-Creation-Date: 2025-02-24 14:38+0100\n"
 "PO-Revision-Date: 2025-02-01 12:50+0100\n"
 "Last-Translator: Vitalii Melnykov <blumenhorizon@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -173,6 +173,25 @@ msgstr "Registrierung"
 msgid "{site_name} | Подтвердите Ваш Email"
 msgstr "{site_name} | Bestätigen Sie Ihre E-Mail-Adresse"
 
+#: accounts/views/signup.py:76
+#, python-brace-format
+msgid ""
+"Дорогой пользователь, зайдите на почту {to_email} и подтвердите активацию "
+"аккаунта."
+msgstr ""
+"Lieber Benutzer / Liebe Benutzerin, bitte gehen Sie zu Ihrer E-Mail-Adresse "
+"{to_email} und bestätigen Sie die Aktivierung Ihres Kontos."
+
+#: accounts/views/signup.py:83
+#, python-brace-format
+msgid ""
+"Дорогой пользователь, неудалось отправить письмо с просьбой о подтверждении "
+"почты. Проверьте правильно ли она написана: {email}"
+msgstr ""
+"Lieber Benutzer / Liebe Benutzerin, es ist nicht gelungen, die E-Mail mit "
+"der Bestätigungsanfrage zu senden. Bitte überprüfen Sie, ob die E-Mail-"
+"Adresse korrekt ist: {email}."
+
 #: accounts/views/signup.py:104
 msgid "Ваша почта успешно подтверждена, теперь Вы можете пойти в аккаунт."
 msgstr ""
@@ -183,57 +202,53 @@ msgstr ""
 msgid "Ссылка для подтверждения почты истекла или неверна."
 msgstr "Der Bestätigungslink ist abgelaufen oder ungültig."
 
-#: cart/forms.py:208
+#: cart/forms.py:204
 msgid "Вы должны согласиться с данными правилами."
 msgstr "Sie müssen diesen Bedingungen zustimmen."
 
-#: cart/models.py:16
+#: cart/models.py:185
 msgid "В обработке"
 msgstr "In Bearbeitung"
 
-#: cart/models.py:17
+#: cart/models.py:186
 msgid "Отказан"
 msgstr "Abgelehnt"
 
-#: cart/models.py:18
+#: cart/models.py:187
 msgid "Ожидание оплаты"
 msgstr "Zahlung ausstehend"
 
-#: cart/models.py:19
+#: cart/models.py:188
 msgid "В доставке"
 msgstr "In Lieferung"
 
-#: cart/models.py:20
+#: cart/models.py:189
 msgid "Доставлен"
 msgstr "Geliefert"
 
-#: cart/models.py:23 cart/templates/cart/index.html:433
+#: cart/models.py:192 cart/templates/cart/index.html:433
 #: cart/templates/cart/index.html:566
 msgid "Уважаемый"
 msgstr "Herr"
 
-#: cart/models.py:24 cart/templates/cart/index.html:434
+#: cart/models.py:193 cart/templates/cart/index.html:434
 #: cart/templates/cart/index.html:567
 msgid "Уважаемая"
 msgstr "Frau"
 
-#: cart/models.py:134 cart/templates/cart/index.html:348
+#: cart/models.py:303 cart/templates/cart/index.html:348
 msgid "Чистая стоимость"
 msgstr "Nettowert"
 
-#: cart/models.py:140 cart/templates/cart/index.html:358
+#: cart/models.py:309 cart/templates/cart/index.html:358
 msgid "Налоговая стоимость"
 msgstr "MwSt-betrag"
 
-#: cart/models.py:148 cart/views.py:167 extended_contrib_models/models.py:41
-msgid "НДС"
-msgstr "MwSt"
-
-#: cart/models.py:155 cart/templates/cart/index.html:373
+#: cart/models.py:323 cart/templates/cart/index.html:373
 msgid "Итоговая стоимость"
 msgstr "Gesamtbetrag"
 
-#: cart/services/mixins/edit.py:74
+#: cart/services/mixins/edit.py:73
 msgid ""
 "Ой-ой, мы неправильно обработали Вашу корзину. Скоро администрация это "
 "исправит!"
@@ -241,8 +256,8 @@ msgstr ""
 "Oh nein, wir haben Ihren Warenkorb falsch bearbeitet. Die Verwaltung wird "
 "das bald beheben!"
 
-#: cart/services/mixins/edit.py:104 cart/views.py:577
-#: catalogue/views/catalogue.py:390 mainpage/views/mainpage.py:220
+#: cart/services/mixins/edit.py:100 cart/views.py:573
+#: catalogue/views/catalogue.py:390 mainpage/views/mainpage.py:223
 msgid "Метод не разрешен. Используйте POST."
 msgstr "Methode nicht erlaubt. Bitte verwenden Sie POST."
 
@@ -376,7 +391,7 @@ msgid "Резюме заказа"
 msgstr "Bestellübersicht"
 
 #: cart/templates/cart/index.html:367 core/staticfiles/templates/footer.html:36
-#: core/staticfiles/templates/header.html:30
+#: core/staticfiles/templates/header.html:37
 msgid "Доставка"
 msgstr "Lieferung"
 
@@ -666,68 +681,68 @@ msgstr ""
 msgid "Задать вопрос"
 msgstr "Frage stellen"
 
-#: cart/views.py:473
+#: cart/views.py:469
 #, python-brace-format
 msgid "Букет \"{product_name}\" успешно добавлен в корзину."
 msgstr ""
 "Der Blumenstrauß \"{product_name}\" wurde erfolgreich zum Warenkorb "
 "hinzugefügt."
 
-#: cart/views.py:478
+#: cart/views.py:474
 msgid "Ошибка добавления букета в корзину."
 msgstr "Fehler beim Hinzufügen des Blumenstraußes zum Warenkorb."
 
-#: cart/views.py:488
+#: cart/views.py:484
 #, python-brace-format
 msgid "Продукт \"{product_name}\" успешно добавлен в корзину."
 msgstr ""
 "Das Produkt \"{product_name}\" wurde erfolgreich zum Warenkorb hinzugefügt."
 
-#: cart/views.py:493
+#: cart/views.py:489
 msgid "Ошибка добавления продукта в корзину."
 msgstr "Fehler beim Hinzufügen des Produkts zum Warenkorb."
 
-#: cart/views.py:503
+#: cart/views.py:499
 #, python-brace-format
 msgid "Букет \"{product_name}\" успешно убран из корзины."
 msgstr ""
 "Der Blumenstrauß \"{product_name}“ wurde erfolgreich aus dem Warenkorb "
 "entfernt."
 
-#: cart/views.py:508
+#: cart/views.py:504
 msgid "Ошибка удаления букета из корзины."
 msgstr "Fehler beim Entfernen des Blumenstraußes aus dem Warenkorb."
 
-#: cart/views.py:518
+#: cart/views.py:514
 #, python-brace-format
 msgid "Продукт \"{product_name}\" успешно убран из корзины."
 msgstr ""
 "Das Produkt \"{product_name}“ wurde erfolgreich aus dem Warenkorb entfernt."
 
-#: cart/views.py:523
+#: cart/views.py:519
 msgid "Ошибка удаления продукта из корзины."
 msgstr "Fehler beim Entfernen des Produkts aus dem Warenkorb."
 
-#: cart/views.py:533
+#: cart/views.py:529
 #, python-brace-format
 msgid "Количество букета \"{product_name}\" успешно уменьшено."
 msgstr ""
 "Die Menge des Blumenstraußes “{product_name}” wurde erfolgreich reduziert."
 
-#: cart/views.py:538
+#: cart/views.py:534
 msgid "Ошибка уменьшения количества букета в корзине."
 msgstr "Fehler beim Verringern der Menge des Blumenstraußes im Warenkorb."
 
-#: cart/views.py:548
+#: cart/views.py:544
 #, python-brace-format
 msgid "Количество продукта \"{product_name}\" успешно уменьшено."
 msgstr "Die Menge des Produkts “{product_name}” wurde erfolgreich reduziert."
 
-#: cart/views.py:553
+#: cart/views.py:549
 msgid "Ошибка уменьшения количества продукта в корзине."
 msgstr "Fehler beim Verringern der Menge des Produkts im Warenkorb."
 
-#: cart/views.py:568
+#: cart/views.py:564
 msgid "Корзина очищена"
 msgstr "Der Warenkorb wurde geleert."
 
@@ -769,13 +784,13 @@ msgstr "Maximale Anzahl der Blumen im Blumenstrauß"
 msgid "Данный продукт был удалён или стал неактивным."
 msgstr "Dieses Produkt wurde entfernt oder ist nicht mehr verfügbar."
 
-#: catalogue/models/services/abstract_models.py:159
+#: catalogue/models/services/abstract_models.py:233
 #: catalogue/templates/catalog/review.html:66
 msgid "Аноним"
 msgstr "Anonym"
 
-#: catalogue/services/mixins/views/details_mixin.py:194
-#: catalogue/services/mixins/views/reviews.py:80
+#: catalogue/services/mixins/views/details_mixin.py:195
+#: catalogue/services/mixins/views/reviews.py:81
 #, python-format
 msgid "Не найдено ни одного %(verbose_name)s совпадающего по запросу"
 msgstr ""
@@ -797,7 +812,7 @@ msgstr "Alphabetisch"
 msgid "Со скидкой"
 msgstr "Mit Rabatt"
 
-#: catalogue/services/mixins/views/reviews.py:48
+#: catalogue/services/mixins/views/reviews.py:49
 msgid "Отзыв успешно отправлен на модерацию, благодарим за обратную связь ☺️"
 msgstr ""
 "Die Bewertung wurde erfolgreich zur Moderation gesendet, vielen Dank für Ihr "
@@ -883,9 +898,9 @@ msgid "Купить"
 msgstr "Kaufen"
 
 #: catalogue/templates/catalog/base_detail.html:297
-#: catalogue/templates/catalog/review.html:86 mainpage/models.py:25
-#: mainpage/models.py:119 mainpage/models.py:144 mainpage/models.py:169
-#: mainpage/models.py:194 mainpage/models.py:212
+#: catalogue/templates/catalog/review.html:86 mainpage/models.py:26
+#: mainpage/models.py:124 mainpage/models.py:149 mainpage/models.py:174
+#: mainpage/models.py:199 mainpage/models.py:217
 msgid "Описание"
 msgstr "Beschreibung"
 
@@ -912,11 +927,12 @@ msgid "Отзывы"
 msgstr "Bewertungen"
 
 #: catalogue/templates/catalog/base_detail.html:396
+#: catalogue/templates/catalog/base_detail.html:416
 #: catalogue/templates/catalog/review.html:6
 msgid "Добавить отзыв"
 msgstr "Bewertung hinzufügen"
 
-#: catalogue/templates/catalog/base_detail.html:440
+#: catalogue/templates/catalog/base_detail.html:448
 #, python-format
 msgid ""
 "\n"
@@ -927,7 +943,7 @@ msgstr ""
 "\n"
 "“%(author_name)s” hat dieses Produkt bewertet"
 
-#: catalogue/templates/catalog/base_detail.html:470
+#: catalogue/templates/catalog/base_detail.html:478
 msgid ""
 "\n"
 "                    К сожалению пока отзывы пусты, <br>\n"
@@ -1022,7 +1038,7 @@ msgstr ""
 "Dieses Produkt wurde kürzlich von unseren Administratoren aus dem Katalog "
 "entfernt"
 
-#: catalogue/views/catalogue.py:371 mainpage/views/mainpage.py:201
+#: catalogue/views/catalogue.py:371 mainpage/views/mainpage.py:204
 msgid "Мы скоро с Вами свяжемся, а пока выпейте чаю 😊"
 msgstr ""
 "Wir werden uns bald mit Ihnen in Verbindung setzen, und währenddessen "
@@ -1085,12 +1101,12 @@ msgid "Компания"
 msgstr "Unternehmen"
 
 #: core/staticfiles/templates/footer.html:31
-#: core/staticfiles/templates/header.html:25
+#: core/staticfiles/templates/header.html:30
 msgid "О нас"
 msgstr "Über uns"
 
 #: core/staticfiles/templates/footer.html:41
-#: core/staticfiles/templates/header.html:33
+#: core/staticfiles/templates/header.html:42
 msgid "Контакты"
 msgstr "Kontakte"
 
@@ -1102,16 +1118,16 @@ msgstr "FAQs"
 msgid "Все права защищены"
 msgstr "Alle Rechte vorbehalten"
 
-#: core/staticfiles/templates/header.html:19
+#: core/staticfiles/templates/header.html:20
 msgid "Главная"
 msgstr "Startseite"
 
-#: core/staticfiles/templates/header.html:22
+#: core/staticfiles/templates/header.html:25
 msgid "Каталог"
 msgstr "Katalog"
 
-#: core/staticfiles/templates/header.html:69
-#: core/staticfiles/templates/header.html:70
+#: core/staticfiles/templates/header.html:85
+#: core/staticfiles/templates/header.html:86
 msgid "Поиск"
 msgstr "Suche"
 
@@ -1159,7 +1175,7 @@ msgstr ""
 msgid "Тел. номер в любой соц. сети или ссылка профиля"
 msgstr "Telefonnummer in einem beliebigen sozialen Netzwerk oder Profil-Link"
 
-#: mainpage/views/mainpage.py:210
+#: mainpage/views/mainpage.py:213
 msgid "Вы неправильно заполнили форму:"
 msgstr "Sie haben das Formular falsch ausgefüllt:"
 
@@ -1168,22 +1184,8 @@ msgstr "Sie haben das Formular falsch ausgefüllt:"
 msgid "{site_name} | Подтверждение заказа {order_code}"
 msgstr "{site_name} | Bestellbestätigung {order_code}"
 
-#, python-brace-format
-#~ msgid ""
-#~ "Дорогой пользователь, зайдите на почту {to_email} и подтвердите активацию "
-#~ "аккаунта."
-#~ msgstr ""
-#~ "Lieber Benutzer / Liebe Benutzerin, bitte gehen Sie zu Ihrer E-Mail-"
-#~ "Adresse {to_email} und bestätigen Sie die Aktivierung Ihres Kontos."
-
-#, python-brace-format
-#~ msgid ""
-#~ "Дорогой пользователь, неудалось отправить письмо с просьбой о "
-#~ "подтверждении почты. Проверьте правильно ли она написана: {email}"
-#~ msgstr ""
-#~ "Lieber Benutzer / Liebe Benutzerin, es ist nicht gelungen, die E-Mail mit "
-#~ "der Bestätigungsanfrage zu senden. Bitte überprüfen Sie, ob die E-Mail-"
-#~ "Adresse korrekt ist: {email}."
+#~ msgid "НДС"
+#~ msgstr "MwSt"
 
 #~ msgid "НДС Германия"
 #~ msgstr "MwSt Deutschland"
