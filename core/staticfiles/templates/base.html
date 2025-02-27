@@ -4,17 +4,20 @@
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}">
 <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id={{ GTAG_ID }}"></script>
-    <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', '{{ gtag_id }}');
-    </script>
-
     <meta charset="UTF-8">
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('consent', 'default', {
+                'ad_storage': 'denied',
+                'ad_user_data': 'denied',
+                'ad_personalization': 'denied',
+                'analytics_storage': 'denied'
+            });
+    
+        gtag('config', '{{ gtag_id }}');
+    </script>
     <script>
         function setCookie(name, value, days) {
             var expires = "";
@@ -38,6 +41,12 @@
         }
 
         function consentGrantedAdStorage() {
+            gtag('consent', 'update', {
+                    'ad_storage': 'granted',
+                    'ad_user_data': 'granted',
+                    'ad_personalization': 'granted',
+                    'analytics_storage': 'granted'
+            });
             document.getElementById('cookieConsentBanner').style.display = 'none';
             setCookie('cookies_accepted', 'yes', 365);
         };
@@ -50,7 +59,14 @@
         document.addEventListener("DOMContentLoaded", function (){
             if (!(getCookie('cookies_accepted') === 'yes')) {
                 document.getElementById('cookieConsentBanner').style.display = 'block';
-            };
+            } else if (getCookie('cookies_accepted') === 'yes') {
+                gtag('consent', 'update', {
+                    'ad_storage': 'granted',
+                    'ad_user_data': 'granted',
+                    'ad_personalization': 'granted',
+                    'analytics_storage': 'granted'
+                });
+            }
         });
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
