@@ -249,7 +249,7 @@ class OrderAdminModel(admin.ModelAdmin):
             {
                 "fields": (
                     "user",
-                    "status",
+                    "status", # TODO: добавить статус "Возврат" или переименовать "Отказан"
                     "bill",
                     "code",
                     "created_at",
@@ -276,7 +276,7 @@ class OrderAdminModel(admin.ModelAdmin):
                 "fields": (
                     "address_form",
                     "name",
-                    "email",
+                    "email", # TODO: переименовать на "способ связи с заказчиком"
                 ),
             },
         ),
