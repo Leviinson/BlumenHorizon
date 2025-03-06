@@ -249,7 +249,7 @@ class OrderAdminModel(admin.ModelAdmin):
             {
                 "fields": (
                     "user",
-                    "status", # TODO: добавить статус "Возврат" или переименовать "Отказан"
+                    "status",
                     "bill",
                     "code",
                     "created_at",
@@ -266,7 +266,7 @@ class OrderAdminModel(admin.ModelAdmin):
                     "grand_total",
                     "sub_total",
                     "tax",
-                    "stripe_taxes", # TODO: переименовать на "Комиссия системы приёма платежа"
+                    "payment_system_fee",
                 ),
             },
         ),
@@ -276,7 +276,7 @@ class OrderAdminModel(admin.ModelAdmin):
                 "fields": (
                     "address_form",
                     "name",
-                    "email", # TODO: переименовать на "способ связи с заказчиком"
+                    "email",
                 ),
             },
         ),
