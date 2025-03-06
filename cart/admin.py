@@ -336,6 +336,8 @@ class OrderAdminModel(admin.ModelAdmin):
     )
 
     list_display = (
+        "country",
+        "city",
         "grand_total",
         "delivery_date",
         "delivery_time",
