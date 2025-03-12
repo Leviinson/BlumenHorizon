@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-02-01 12:52+0100\n"
-"PO-Revision-Date: 2025-02-01 12:50+0100\n"
+"PO-Revision-Date: 2025-02-24 18:51+0100\n"
 "Last-Translator: Vitalii Melnykov <blumenhorizon@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -313,8 +313,11 @@ msgid ""
 "                            "
 msgstr ""
 "\n"
-"<strong>Bitte beachten Sie:</strong> Das Erscheinungsbild des Blumenstraußes kann aufgrund der Saisonalität geringfügig vom Bild abweichen. Diese Abweichung ist gemäß § 434 BGB rechtlich zulässig.  \n"
-"Über alle Änderungen werden wir Sie persönlich vor der Zusammenstellung des Straußes informieren 🌸"
+"<strong>Bitte beachten Sie:</strong> Das Erscheinungsbild des Blumenstraußes "
+"kann aufgrund der Saisonalität geringfügig vom Bild abweichen. Diese "
+"Abweichung ist gemäß § 434 BGB rechtlich zulässig.  \n"
+"Über alle Änderungen werden wir Sie persönlich vor der Zusammenstellung des "
+"Straußes informieren 🌸"
 
 #: cart/templates/cart/index.html:207
 msgid "Способы оплаты:"
@@ -356,7 +359,8 @@ msgstr "revolut logo"
 msgid "stripe логотип"
 msgstr "stripe logo"
 
-#: cart/templates/cart/index.html:225 mainpage/templates/mainpage/index.html:38
+#: cart/templates/cart/index.html:225
+#: mainpage/templates/mainpage/index.html:38
 #: mainpage/templates/mainpage/index.html:176
 msgid "Рекомендуемые букеты к покупке"
 msgstr "Empfohlene Blumensträuße zum Kauf"
@@ -785,8 +789,8 @@ msgstr "Mit Rabatt"
 #: catalogue/services/mixins/views/reviews.py:48
 msgid "Отзыв успешно отправлен на модерацию, благодарим за обратную связь ☺️"
 msgstr ""
-"Die Bewertung wurde erfolgreich zur Moderation gesendet, vielen Dank für Ihr "
-"Feedback ☺️"
+"Die Bewertung wurde erfolgreich zur Moderation gesendet, vielen Dank für Ihr"
+" Feedback ☺️"
 
 #: catalogue/templates/catalog/base_detail.html:98
 #: catalogue/templates/catalog/base_list.html:31
@@ -905,8 +909,7 @@ msgstr "Bewertung hinzufügen"
 #, python-format
 msgid ""
 "\n"
-"                                            \"%(author_name)s\" оценил(-а) "
-"этот продукт\n"
+"                                            \"%(author_name)s\" оценил(-а) этот продукт\n"
 "                                        "
 msgstr ""
 "\n"
@@ -920,8 +923,7 @@ msgid ""
 "                    "
 msgstr ""
 "\n"
-"Leider sind die Bewertungen derzeit leer, <br> aber Sie können die erste "
-"Bewertung verfassen!"
+"Leider sind die Bewertungen derzeit leer, <br> aber Sie können die erste Bewertung verfassen!"
 
 #: catalogue/templates/catalog/base_list.html:51
 msgid "Сортировка"
@@ -1151,13 +1153,13 @@ msgstr "{site_name} | Bestellbestätigung {order_code}"
 #~ "Дорогой пользователь, зайдите на почту {to_email} и подтвердите активацию "
 #~ "аккаунта."
 #~ msgstr ""
-#~ "Lieber Benutzer / Liebe Benutzerin, bitte gehen Sie zu Ihrer E-Mail-"
-#~ "Adresse {to_email} und bestätigen Sie die Aktivierung Ihres Kontos."
+#~ "Lieber Benutzer / Liebe Benutzerin, bitte gehen Sie zu Ihrer E-Mail-Adresse "
+#~ "{to_email} und bestätigen Sie die Aktivierung Ihres Kontos."
 
 #, python-brace-format
 #~ msgid ""
-#~ "Дорогой пользователь, неудалось отправить письмо с просьбой о "
-#~ "подтверждении почты. Проверьте правильно ли она написана: {email}"
+#~ "Дорогой пользователь, неудалось отправить письмо с просьбой о подтверждении "
+#~ "почты. Проверьте правильно ли она написана: {email}"
 #~ msgstr ""
 #~ "Lieber Benutzer / Liebe Benutzerin, es ist nicht gelungen, die E-Mail mit "
 #~ "der Bestätigungsanfrage zu senden. Bitte überprüfen Sie, ob die E-Mail-"
