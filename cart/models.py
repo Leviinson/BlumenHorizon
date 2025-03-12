@@ -200,7 +200,7 @@ class Order(TimeStampAdbstractModel, models.Model):
         null=True,
         blank=True,
     )
-    user = models.ForeignKey(
+    manager = models.ForeignKey(
         get_user_model(),
         related_name="earned_orders",
         verbose_name="Менеджер принёсший заказ",
