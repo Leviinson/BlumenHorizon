@@ -200,6 +200,14 @@ class Order(TimeStampAdbstractModel, models.Model):
         null=True,
         blank=True,
     )
+    user = models.ForeignKey(
+        get_user_model(),
+        related_name="earned_orders",
+        verbose_name="Менеджер принёсший заказ",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+    )
     session_key = models.CharField(
         max_length=255,
     )
@@ -405,27 +413,6 @@ class OrderItem(models.Model):
         verbose_name="Всего заплаченных налогов",
     )
     quantity = models.IntegerField(verbose_name="Количество продукта")
-    supplier_paid_taxes = models.DecimalField(
-        max_digits=10,
-        decimal_places=2,
-        verbose_name="Всего заплаченных налогов за продукт у поставщика",
-        null=True,
-        blank=True,
-    )
-    supplier_vat_rate = models.DecimalField(
-        max_digits=10,
-        decimal_places=2,
-        verbose_name="Ставка НДС от поставщика",
-        null=True,
-        blank=True,
-    )
-    supplier_paid_amount = models.DecimalField(
-        max_digits=10,
-        decimal_places=2,
-        verbose_name="Заплаченная себестоимость поставщику",
-        null=True,
-        blank=True,
-    )
 
     class Meta:
         abstract = True
