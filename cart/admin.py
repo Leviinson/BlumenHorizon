@@ -266,7 +266,7 @@ class OrderAdminModel(admin.ModelAdmin):
                     "grand_total",
                     "sub_total",
                     "tax",
-                    "stripe_taxes",
+                    "payment_system_fee",
                 ),
             },
         ),
