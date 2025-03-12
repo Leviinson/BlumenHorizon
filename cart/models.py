@@ -183,7 +183,7 @@ class Order(TimeStampAdbstractModel, models.Model):
     )
     STATUS_CHOICES = [
         ("processing", _("В обработке")),
-        ("declined", _("Отказан")),
+        ("declined", _("Возврат")),
         ("awaiting_payment", _("Ожидание оплаты")),
         ("shipping", _("В доставке")),
         ("delivered", _("Доставлен")),
@@ -216,7 +216,7 @@ class Order(TimeStampAdbstractModel, models.Model):
         max_length=40,
     )
     email = models.EmailField(
-        verbose_name="Почта",
+        verbose_name="Способ связи с заказчиком",
     )
     address_form = models.CharField(
         max_length=20,
@@ -309,10 +309,10 @@ class Order(TimeStampAdbstractModel, models.Model):
         verbose_name=_("Налоговая стоимость"),
         help_text="Стоимость налога",
     )
-    stripe_taxes = models.DecimalField(
+    payment_system_fee = models.DecimalField(
         max_digits=10,
         decimal_places=2,
-        verbose_name="Налог Stripe за транзакцию",
+        verbose_name="Комиссия системы приёма платежей",
         help_text="Спросить у Виталика",
         null=True,
         blank=True,
@@ -403,6 +403,27 @@ class OrderItem(models.Model):
         verbose_name="Всего заплаченных налогов",
     )
     quantity = models.IntegerField(verbose_name="Количество продукта")
+    supplier_paid_taxes = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        verbose_name="Всего заплаченных налогов за продукт у поставщика",
+        null=True,
+        blank=True,
+    )
+    supplier_vat_rate = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        verbose_name="Ставка НДС от поставщика",
+        null=True,
+        blank=True,
+    )
+    supplier_paid_amount = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        verbose_name="Заплаченная себестоимость поставщику",
+        null=True,
+        blank=True,
+    )
 
     class Meta:
         abstract = True

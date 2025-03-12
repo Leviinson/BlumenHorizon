@@ -314,8 +314,7 @@ msgid ""
 "                            "
 msgstr ""
 "\n"
-"<strong>Please note:</strong> The appearance of the bouquet may slightly differ from the image due to seasonality. This allowance is legally permitted under § 434 BGB.  \n"
-"We will inform you personally about any changes before assembling the bouquet 🌸"
+"<strong>Please note:</strong> The appearance of the bouquet may slightly differ from the image due to seasonality or availability of flowers. We will inform you personally about any changes 🌸. This may include changes in the color of some flowers in the bouquet or replacing missing flowers with those available, in accordance with §434 BGB. If you are not satisfied with the proposed option, we will discuss another one with you or offer a refund."
 
 #: cart/templates/cart/index.html:207
 msgid "Способы оплаты:"
