@@ -249,6 +249,7 @@ class OrderAdminModel(admin.ModelAdmin):
             {
                 "fields": (
                     "user",
+                    "manager",
                     "status",
                     "bill",
                     "code",
