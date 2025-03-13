@@ -259,6 +259,24 @@ class Order(TimeStampAdbstractModel, models.Model):
     )
     delivery_date = models.DateField(verbose_name="Дата доставки")
     delivery_time = models.TimeField(verbose_name="Время доставки")
+    delivery_vat_rate = models.IntegerField(
+        validators=(
+            MinValueValidator(0),
+            MaxValueValidator(100),
+        ),
+        verbose_name="Процент НДС на доставку",
+        null=True,
+        blank=True,
+        default=0,
+    )
+    delivery_price = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        verbose_name="Стоимость доставки",
+        help_text="С налогом",
+        null=True,
+        blank=True,
+    )
     message_card = models.TextField(
         verbose_name="Записка к букету",
         max_length=10000,
