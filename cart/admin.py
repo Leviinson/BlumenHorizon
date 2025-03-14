@@ -295,8 +295,8 @@ class OrderAdminModel(admin.ModelAdmin):
             "Доставка",
             {
                 "fields": (
-                    "delivery_vat_rate",
                     "delivery_price",
+                    "delivery_vat_rate",
                     "delivery_date",
                     "delivery_time",
                     "instructions",
