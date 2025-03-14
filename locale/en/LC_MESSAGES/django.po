@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-01 12:52+0100\n"
+"POT-Creation-Date: 2025-03-14 12:24+0100\n"
 "PO-Revision-Date: 2025-02-24 18:52+0100\n"
 "Last-Translator: Vitalii Melnykov <blumenhorizon@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -171,22 +171,6 @@ msgstr "Registration"
 msgid "{site_name} | Подтвердите Ваш Email"
 msgstr "{site_name} | Confirm your Email"
 
-#: accounts/views/signup.py:76
-#, python-brace-format
-msgid ""
-"Дорогой пользователь, зайдите на почту {to_email} и подтвердите активацию "
-"аккаунта."
-msgstr "Dear user, go to {to_email} and confirm account activation."
-
-#: accounts/views/signup.py:83
-#, python-brace-format
-msgid ""
-"Дорогой пользователь, неудалось отправить письмо с просьбой о подтверждении "
-"почты. Проверьте правильно ли она написана: {email}"
-msgstr ""
-"Dear user, it was not possible to send an email requesting email "
-"confirmation. Check if it is written correctly: {email}"
-
 #: accounts/views/signup.py:104
 msgid "Ваша почта успешно подтверждена, теперь Вы можете пойти в аккаунт."
 msgstr ""
@@ -205,8 +189,8 @@ msgid "В обработке"
 msgstr "In processing"
 
 #: cart/models.py:186
-msgid "Отказан"
-msgstr "Declined"
+msgid "Возврат"
+msgstr ""
 
 #: cart/models.py:187
 msgid "Ожидание оплаты"
@@ -230,15 +214,15 @@ msgstr "Mr."
 msgid "Уважаемая"
 msgstr "Mrs."
 
-#: cart/models.py:303 cart/templates/cart/index.html:348
+#: cart/models.py:329 cart/templates/cart/index.html:348
 msgid "Чистая стоимость"
 msgstr "Sub total"
 
-#: cart/models.py:309 cart/templates/cart/index.html:358
+#: cart/models.py:335 cart/templates/cart/index.html:358
 msgid "Налоговая стоимость"
 msgstr "Taxes"
 
-#: cart/models.py:323 cart/templates/cart/index.html:373
+#: cart/models.py:349 cart/templates/cart/index.html:373
 msgid "Итоговая стоимость"
 msgstr "Grand total"
 
@@ -323,7 +307,12 @@ msgid ""
 "                            "
 msgstr ""
 "\n"
-"<strong>Please note:</strong> The appearance of the bouquet may slightly differ from the image due to seasonality or availability of flowers. We will inform you personally about any changes 🌸. This may include changes in the color of some flowers in the bouquet or replacing missing flowers with those available, in accordance with §434 BGB. If you are not satisfied with the proposed option, we will discuss another one with you or offer a refund."
+"<strong>Please note:</strong> The appearance of the bouquet may slightly "
+"differ from the image due to seasonality or availability of flowers. We will "
+"inform you personally about any changes 🌸. This may include changes in the "
+"color of some flowers in the bouquet or replacing missing flowers with those "
+"available, in accordance with §434 BGB. If you are not satisfied with the "
+"proposed option, we will discuss another one with you or offer a refund."
 
 #: cart/templates/cart/index.html:207
 msgid "Способы оплаты:"
@@ -1164,6 +1153,23 @@ msgstr "You filled out the form incorrectly:"
 #, python-brace-format
 msgid "{site_name} | Подтверждение заказа {order_code}"
 msgstr "{site_name} | Order confirmation {order_code}"
+
+#, python-brace-format
+#~ msgid ""
+#~ "Дорогой пользователь, зайдите на почту {to_email} и подтвердите активацию "
+#~ "аккаунта."
+#~ msgstr "Dear user, go to {to_email} and confirm account activation."
+
+#, python-brace-format
+#~ msgid ""
+#~ "Дорогой пользователь, неудалось отправить письмо с просьбой о "
+#~ "подтверждении почты. Проверьте правильно ли она написана: {email}"
+#~ msgstr ""
+#~ "Dear user, it was not possible to send an email requesting email "
+#~ "confirmation. Check if it is written correctly: {email}"
+
+#~ msgid "Отказан"
+#~ msgstr "Declined"
 
 #~ msgid "НДС"
 #~ msgstr "VAT"
