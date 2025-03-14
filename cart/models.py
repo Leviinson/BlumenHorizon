@@ -349,6 +349,14 @@ class Order(TimeStampAdbstractModel, models.Model):
         verbose_name=_("Итоговая стоимость"),
         help_text="С налогом",
     )
+    refund_currency_convertasion_fee = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        verbose_name="Разница конвертации валюты",
+        help_text="При возврате",
+        null=True,
+        blank=True
+    )
     language_code = models.CharField(
         max_length=2, verbose_name="Язык пользователя на сайте"
     )
