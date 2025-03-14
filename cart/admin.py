@@ -268,6 +268,7 @@ class OrderAdminModel(admin.ModelAdmin):
                     "sub_total",
                     "tax",
                     "payment_system_fee",
+                    "refund_currency_convertasion_fee"
                 ),
             },
         ),
