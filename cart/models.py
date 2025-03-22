@@ -602,6 +602,14 @@ class OrderCreditAdjustment(TimeStampAdbstractModel, AbstractOrderAdjustment):
         verbose_name="Всего заплаченных налогов клиентом",
         help_text="Сумма налога, уплаченная клиентом в рамках этой корректировки",
     )
+    payment_system_fee = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        verbose_name="Комиссия системы приёма платежей",
+        help_text="Спросить у Виталика",
+        null=True,
+        blank=True,
+    )
 
     class Meta:
         verbose_name = "Корректировка (начисление)"
