@@ -372,6 +372,7 @@ class OrderCreditAdjustmentAdmin(admin.ModelAdmin):
                     "paid_amount",
                     "receipt_date",
                     "taxes",
+                    "payment_system_fee",
                     "comment",
                 )
             },
