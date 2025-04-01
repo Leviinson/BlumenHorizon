@@ -111,7 +111,6 @@ else:
     ]
 
 if not DEBUG:
-    FORCE_SCRIPT_NAME = "/europe"
     CACHE_MIDDLEWARE_KEY_PREFIX = "europe:"
 else:
     FORCE_SCRIPT_NAME = None
