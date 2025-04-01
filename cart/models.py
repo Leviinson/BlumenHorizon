@@ -439,6 +439,30 @@ class OrderItem(models.Model):
         verbose_name="Всего заплаченных налогов",
     )
     quantity = models.IntegerField(verbose_name="Количество продукта")
+    supplier_paid_taxes = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        verbose_name="Всего заплаченных налогов за продукт у поставщика",
+        null=True,
+        blank=True,
+    )
+    supplier_vat_rate = models.IntegerField(
+        validators=(
+            MinValueValidator(0),
+            MaxValueValidator(100),
+        ),
+        verbose_name="Ставка НДС от поставщика",
+        null=True,
+        blank=True,
+        default=0,
+    )
+    supplier_paid_amount = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        verbose_name="Заплаченная себестоимость поставщику",
+        null=True,
+        blank=True,
+    )
 
     class Meta:
         abstract = True
