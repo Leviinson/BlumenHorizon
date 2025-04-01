@@ -2,10 +2,6 @@ upstream gunicorn_berlin {
     server 127.0.0.1:8000;
 }
 
-upstream gunicorn_global_region {
-    server 127.0.0.1:8001;
-}
-
 # Сервер для редиректа с HTTP на HTTPS
 server {
     listen 80;
@@ -57,21 +53,6 @@ server {
     root /var/www/blumenhorizon/;
 
     # Статические файлы
-
-    location /europe/static/ {
-        alias /var/www/blumenhorizon_global/static/;
-        include /etc/nginx/mime.types;
-        expires 30d;
-        add_header Cache-Control "public";
-    }
-
-    location /europe/media/ {
-        alias /var/www/blumenhorizon_global/media/;
-        include /etc/nginx/mime.types;
-        expires 30d;
-        add_header Cache-Control "public";
-    }
-
     location /static/ {
         alias /var/www/blumenhorizon/static/;
         include /etc/nginx/mime.types;
@@ -87,19 +68,6 @@ server {
     }
 
     # Проксирование для динамических запросов
-    location /europe/ {
-        error_log /var/www/blumenhorizon/logs/nginx/error.log;
-        access_log /var/www/blumenhorizon/logs/nginx/access.log;
-
-        proxy_pass http://gunicorn_global_region/;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Script-Name /europe;
-        proxy_set_header X-Forwarded-Proto $scheme;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header Host $host;
-        proxy_redirect off;
-    }
-
     location / {
         proxy_pass http://gunicorn_berlin;
         proxy_set_header X-Real-IP $remote_addr;
