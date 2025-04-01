@@ -451,6 +451,7 @@ class OrderItem(models.Model):
         ),
         verbose_name="Ставка НДС от поставщика",
         null=True,
+        blank=True,
         default=0,
     )
     supplier_paid_amount = models.DecimalField(
