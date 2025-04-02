@@ -9,8 +9,33 @@ class Migration(migrations.Migration):
     dependencies = [
         ("cart", "0003_ordercreditadjustment_payment_system_fee"),
     ]
-
     operations = [
+        migrations.AddField(
+            "orderbouquets",
+            "supplier_vat_rate",
+            models.IntegerField(
+                default=0,
+                null=True,
+                validators=[
+                    django.core.validators.MinValueValidator(0),
+                    django.core.validators.MaxValueValidator(100),
+                ],
+                verbose_name="Ставка НДС от поставщика",
+            ),
+        ),
+        migrations.AddField(
+            "orderproducts",
+            "supplier_vat_rate",
+            models.IntegerField(
+                default=0,
+                null=True,
+                validators=[
+                    django.core.validators.MinValueValidator(0),
+                    django.core.validators.MaxValueValidator(100),
+                ],
+                verbose_name="Ставка НДС от поставщика",
+            ),
+        ),
         migrations.AlterField(
             model_name="orderbouquets",
             name="supplier_vat_rate",
