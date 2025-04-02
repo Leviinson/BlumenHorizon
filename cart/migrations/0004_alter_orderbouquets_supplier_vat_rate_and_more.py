@@ -12,24 +12,24 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AddField(
             "orderbouquets",
-            "supplier_paid_taxes",
+            "supplier_paid_amount",
             models.DecimalField(
                 blank=True,
                 decimal_places=2,
                 max_digits=10,
                 null=True,
-                verbose_name="Всего заплаченных налогов за продукт у поставщика",
+                verbose_name="Заплаченная себестоимость поставщику",
             ),
         ),
         migrations.AddField(
             "orderproducts",
-            "supplier_paid_taxes",
+            "supplier_paid_amount",
             models.DecimalField(
                 blank=True,
                 decimal_places=2,
                 max_digits=10,
                 null=True,
-                verbose_name="Всего заплаченных налогов за продукт у поставщика",
+                verbose_name="Заплаченная себестоимость поставщику",
             ),
         ),
         migrations.AlterField(
