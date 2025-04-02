@@ -12,32 +12,6 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AddField(
             "orderbouquets",
-            "supplier_vat_rate",
-            models.IntegerField(
-                default=0,
-                null=True,
-                validators=[
-                    django.core.validators.MinValueValidator(0),
-                    django.core.validators.MaxValueValidator(100),
-                ],
-                verbose_name="Ставка НДС от поставщика",
-            ),
-        ),
-        migrations.AddField(
-            "orderproducts",
-            "supplier_vat_rate",
-            models.IntegerField(
-                default=0,
-                null=True,
-                validators=[
-                    django.core.validators.MinValueValidator(0),
-                    django.core.validators.MaxValueValidator(100),
-                ],
-                verbose_name="Ставка НДС от поставщика",
-            ),
-        ),
-        migrations.AddField(
-            "orderbouquets",
             "supplier_paid_taxes",
             models.DecimalField(
                 blank=True,
