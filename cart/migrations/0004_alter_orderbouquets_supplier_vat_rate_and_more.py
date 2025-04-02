@@ -36,6 +36,28 @@ class Migration(migrations.Migration):
                 verbose_name="Ставка НДС от поставщика",
             ),
         ),
+        migrations.AddField(
+            "orderbouquets",
+            "supplier_paid_taxes",
+            models.DecimalField(
+                blank=True,
+                decimal_places=2,
+                max_digits=10,
+                null=True,
+                verbose_name="Всего заплаченных налогов за продукт у поставщика",
+            ),
+        ),
+        migrations.AddField(
+            "orderproducts",
+            "supplier_paid_taxes",
+            models.DecimalField(
+                blank=True,
+                decimal_places=2,
+                max_digits=10,
+                null=True,
+                verbose_name="Всего заплаченных налогов за продукт у поставщика",
+            ),
+        ),
         migrations.AlterField(
             model_name="orderbouquets",
             name="supplier_vat_rate",
