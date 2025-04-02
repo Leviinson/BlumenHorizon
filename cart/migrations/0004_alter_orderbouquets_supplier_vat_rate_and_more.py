@@ -10,28 +10,6 @@ class Migration(migrations.Migration):
         ("cart", "0003_ordercreditadjustment_payment_system_fee"),
     ]
     operations = [
-        migrations.AddField(
-            "orderbouquets",
-            "supplier_paid_amount",
-            models.DecimalField(
-                blank=True,
-                decimal_places=2,
-                max_digits=10,
-                null=True,
-                verbose_name="Заплаченная себестоимость поставщику",
-            ),
-        ),
-        migrations.AddField(
-            "orderproducts",
-            "supplier_paid_amount",
-            models.DecimalField(
-                blank=True,
-                decimal_places=2,
-                max_digits=10,
-                null=True,
-                verbose_name="Заплаченная себестоимость поставщику",
-            ),
-        ),
         migrations.AlterField(
             model_name="orderbouquets",
             name="supplier_vat_rate",
