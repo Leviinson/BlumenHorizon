@@ -42,7 +42,7 @@ class MainPageModelAdmin(TranslationAdmin):
         "json_ld_description",
         "description",
     ]
-    list_display = ["id"]
+    list_display = ["__str__"]
 
 
 @admin.register(FAQPageModel)
@@ -53,7 +53,7 @@ class FAQPageModelAdmin(TranslationAdmin):
         "meta_tags",
         "description",
     ]
-    list_display = ["id"]
+    list_display = ["__str__"]
 
 
 @admin.register(ContactsPageModel)
@@ -64,7 +64,7 @@ class ContactsPageModelAdmin(TranslationAdmin):
         "meta_tags",
         "description",
     ]
-    list_display = ["id"]
+    list_display = ["__str__"]
 
 
 @admin.register(DeliveryPageModel)
@@ -75,7 +75,7 @@ class DeliveryPageModelAdmin(TranslationAdmin):
         "meta_tags",
         "description",
     ]
-    list_display = ["id"]
+    list_display = ["__str__"]
 
 
 @admin.register(AboutUsPageModel)
@@ -86,7 +86,7 @@ class AboutUsPageModelAdmin(TranslationAdmin):
         "meta_tags",
         "description",
     ]
-    list_display = ["id"]
+    list_display = ["__str__"]
 
 
 @admin.register(AGBPageModel)
@@ -95,7 +95,7 @@ class AGBPageModelAdmin(TranslationAdmin):
         "meta_tags",
         "description",
     ]
-    list_display = ["id"]
+    list_display = ["__str__"]
 
 
 @admin.register(PrivacyAndPolicyPageModel)
@@ -104,7 +104,7 @@ class PrivacyAndPolicyPageModelAdmin(TranslationAdmin):
         "meta_tags",
         "description",
     ]
-    list_display = ["id"]
+    list_display = ["__str__"]
 
 
 @admin.register(ImpressumPageModel)
@@ -113,7 +113,7 @@ class ImpressumPageModelAdmin(TranslationAdmin):
         "meta_tags",
         "description",
     ]
-    list_display = ["id"]
+    list_display = ["__str__"]
 
 
 @admin.register(ReturnPolicyPageModel)
@@ -122,4 +122,4 @@ class ReturnPolicyPageModelAdmin(TranslationAdmin):
         "meta_tags",
         "description",
     ]
-    list_display = ["id"]
+    list_display = ["__str__"]
