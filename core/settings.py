@@ -463,6 +463,7 @@ LOGOUT_REDIRECT_URL = "accounts:signin"
 
 LANGUAGE_CODE = "en" if not TEST_MODE else "ru"
 LANGUAGES = [
+    ("es", "🇪🇸 Spanish"),
     ("en", "🇺🇸 English"),
     ("de", "🇩🇪 Deutsch"),
     ("ru", "🇷🇺 Русский"),
