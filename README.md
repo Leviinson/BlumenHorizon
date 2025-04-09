@@ -1,3 +1,10 @@
+⚠️ License & Usage
+
+This code is proprietary and all rights are reserved © 2025 Vitalii Melnykov / BlumenHorizon (Einzelunternehmen).  
+The source code is published for **reference purposes only**.  
+**Commercial or public use is strictly prohibited** without written permission.  
+For licensing inquiries, contact: [service@blumenhorizon.de](mailto:service@blumenhorizon.de)
+
 # Документация по установке и инициализации
 
 ## Установка
