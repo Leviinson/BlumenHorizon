@@ -6,7 +6,7 @@ from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import EmailMessage
 from django.db import transaction
-from django.http import HttpRequest, HttpResponseRedirect
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
@@ -53,8 +53,10 @@ class UserSignUpView(
         user: Type[AbstractBaseUser],
         to_email: str,
     ):
+        site_name = SiteRepository.get_name()
+
         mail_subject = _("{site_name} | Подтвердите Ваш Email").format(
-            site_name=SiteRepository.get_name()
+            site_name=site_name
         )
 
         message = render_to_string(
@@ -63,12 +65,14 @@ class UserSignUpView(
                 "first_name": first_name,
                 "last_name": last_name,
                 "domain": SiteRepository.get_domain(),
+                "site_name": site_name,
                 "uid": urlsafe_base64_encode(force_bytes(user.pk)),
                 "token": default_token_generator.make_token(user),
                 "protocol": "https" if request.is_secure() else "http",
             },
         )
         email = EmailMessage(mail_subject, message, to=[to_email])
+        email.content_subtype = "html"
         if email.send():
             messages.success(
                 request,
@@ -85,29 +89,67 @@ class UserSignUpView(
             )
 
 
-def activate_user_account(request, uidb64, token):
+def decode_uid(uidb64: str) -> str:
+    """
+    Декодирует UID из base64 в строку.
+
+    :param uidb64: Закодированный в base64 идентификатор пользователя.
+    :return: UID в виде строки.
+    """
+    return force_str(urlsafe_base64_decode(uidb64))
+
+
+def get_user_by_uid(uid: str):
+    """
+    Получает пользователя по UID.
+
+    :param uid: Идентификатор пользователя.
+    :return: Объект пользователя или None, если не найден.
+    """
     User = get_user_model()
     try:
-        uid = force_str(urlsafe_base64_decode(uidb64))
-        user = User.objects.only("pk").get(pk=uid)
+        return User.objects.only("pk").get(pk=uid)
     except (TypeError, ValueError, OverflowError, User.DoesNotExist):
-        user = None
+        return None
+
+
+def activate_user(user) -> None:
+    """
+    Активирует пользователя, установив флаг is_active в True.
+
+    :param user: Объект пользователя.
+    """
+    user.is_active = True
+    user.save(update_fields=["is_active"])
+
+
+def activate_user_account(
+    request: HttpRequest, uidb64: str, token: str
+) -> HttpResponse:
+    """
+    Активация учётной записи пользователя по ссылке, полученной на почту.
+
+    Декодирует UID, получает пользователя, проверяет токен и активирует аккаунт.
+    Отображает соответствующее сообщение и перенаправляет пользователя.
+
+    :param request: HTTP-запрос.
+    :param uidb64: Закодированный UID пользователя.
+    :param token: Токен подтверждения.
+    :return: HTTP-ответ с перенаправлением.
+    """
+    uid = decode_uid(uidb64)
+    user = get_user_by_uid(uid)
 
     if user is not None and default_token_generator.check_token(user, token):
-        user.is_active = True
-        user.save(
-            update_fields=["is_active"],
-        )
-
+        activate_user(user)
         messages.success(
             request,
             _("Ваша почта успешно подтверждена, теперь Вы можете пойти в аккаунт."),
         )
         return redirect("accounts:signin")
-    else:
-        messages.error(
-            request, _("Ссылка для подтверждения почты истекла или неверна.")
-        )
-        redirect("accounts:signup")
 
-    return redirect("accounts:me")
+    messages.error(
+        request,
+        _("Ссылка для подтверждения почты истекла или неверна."),
+    )
+    return redirect("accounts:signup")
