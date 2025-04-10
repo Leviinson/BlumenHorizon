@@ -1,19 +1,53 @@
 {% load i18n %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px; color: #333; margin: 0;">
+  <div style="max-width: 600px; margin: 0 auto; background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ddd;">
+    <div style="text-align: center; margin-bottom: 20px;">
+      <img src="{{ protocol }}://{{ domain }}{% static 'defaults/logo-rectangle.png' %}" alt="Логотип магазина" style="width: 100px; height: 100px; object-fit: contain;">
+      <h1>{{ site_name }}</h1>
+    </div>
+    
+    <div style="font-size: 16px; margin-bottom: 20px;">
+      {% if first_name %}
+        {% blocktranslate %}
+        Уважаемый {{ first_name }},
+        {% endblocktranslate %}
+      {% elif last_name %}
+        {% blocktranslate %}
+        Уважаемый {{ last_name }},
+        {% endblocktranslate %}
+      {% else %}
+        {% translate 'Уважаемый пользователь,' %}
+      {% endif %}
+    </div>
 
-{% autoescape off %}
-{% if first_name %}
-{% blocktranslate %}
-Уважаемый {{ first_name }},
-{% endblocktranslate %}
-{% elif last_name %}
-{% blocktranslate %}
-Уважаемый {{ last_name }},
-{% endblocktranslate %}
-{% else %}
-{% translate 'Уважаемый пользователь,' %}
-{% endif %}
-Пожалуйста, нажмите на ссылку ниже чтобы подтвердить Вашу почту.
+    <p>{% translate 'Пожалуйста, нажмите на ссылку ниже чтобы подтвердить Вашу почту.' %}</p>
 
-
-{{ protocol }}://{{ domain }}{% url 'accounts:activate' uidb64=uid token=token %}
-{% endautoescape %}
+    <div style="text-align: center; margin: 30px 0;">
+      <a style="display: inline-block; padding: 10px 15px; background-color: #2c494b; color: white; text-decoration: none; border-radius: 4px; font-weight: bold;"
+         href="{{ protocol }}://{{ domain }}{% url 'accounts:activate' uidb64=uid token=token %}">
+        {% translate 'Подтвердить почту' %}
+      </a>
+    </div>
+    
+    <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; font-size: 12px; color: #777; text-align: center;">
+        <p>
+            <a href="{{ protocol }}://{{ domain }}{% url 'mainpage:agb' %}" style="color: #777; text-decoration: none; margin: 0 10px;">
+                {% translate 'Условия и положения' %}
+            </a>
+            <a href="{{ protocol }}://{{ domain }}{% url 'mainpage:privacy-and-policy' %}" style="color: #777; text-decoration: none; margin: 0 10px;">
+                {% translate 'Политика конфиденциальности' %}
+            </a>
+        </p>
+        <p style="margin-top: 10px;">
+            © {% now "Y" %} {{ site_name }}. {% translate 'Все права защищены' %}.
+        </p>
+    </div>
+  </div>
+</body>
+</html>
