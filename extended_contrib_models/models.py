@@ -115,6 +115,19 @@ class Social(models.Model):
             "icon_hex_code": self.icon_hex_code,
             "bootstrap_icon": self.bootstrap_icon,
         }
+    
+
+class Filial(models.Model):
+    extended_site = models.ForeignKey(
+        ExtendedSite,
+        on_delete=models.PROTECT,
+        related_name="filials",
+    )
+    title = models.CharField(
+        max_length=60,
+        verbose_name="Название “Город/Страна”",
+        help_text="ISO" 
+    )
 
 
 @receiver(post_save, sender=Site)

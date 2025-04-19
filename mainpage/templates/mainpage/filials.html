@@ -1,0 +1,26 @@
+{% extends "templates/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block json_ld %}
+{% endblock %}
+
+{% block localization_meta_tags %}
+    <link rel="{{ canonical_link.rel }}" href="{{ canonical_link.href }}">
+    {% for alternate_link in alternate_links %}
+        <link rel="{{ alternate_link.rel }}" hreflang="{{ alternate_link.hreflang }}" href="{{ alternate_link.href }}">
+    {% endfor %}
+    <link rel="{{ xdefault_link.rel }}" hreflang="{{ xdefault_link.hreflang }}" href="{{ xdefault_link.href }}">
+{% endblock %}
+
+{% block additional_head_styles %}
+{% endblock %}
+
+{% block body %}
+    <div class="container mx-auto d-flex flex-column align-items-center">
+        <h1>ПроверОчка</h1>
+    </div>
+{% endblock %}
+
+{% block additional_scripts %}
+{% endblock %}
