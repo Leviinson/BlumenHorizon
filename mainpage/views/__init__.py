@@ -1,3 +1,3 @@
 from .conditions import AGBView, ImpressumView, PrivacyAndPolicyView, ReturnPolicyView
-from .fillers import AboutDeliveryView, AboutUsView, ContactUsView
+from .fillers import AboutDeliveryView, AboutUsView, ContactUsView, FilialsView
 from .mainpage import IndividualOrderView, MainPageView
