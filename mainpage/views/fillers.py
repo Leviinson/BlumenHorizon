@@ -58,7 +58,7 @@ class AboutUsView(
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context["filials"] = Filial.objects.only("title", "url").order_by("title").all()
+        context["show_filials"] = True
         return context
 
 
