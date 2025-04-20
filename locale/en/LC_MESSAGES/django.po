@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-21 01:34+0200\n"
+"POT-Creation-Date: 2025-04-21 01:47+0200\n"
 "PO-Revision-Date: 2025-02-24 18:52+0100\n"
 "Last-Translator: Vitalii Melnykov <blumenhorizon@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -960,6 +960,12 @@ msgstr "Sorting"
 
 #: catalogue/templates/catalog/base_list.html:65
 msgid "Фильтры"
+msgstr "Filters"
+
+#: catalogue/templates/catalog/base_list.html:91
+#, fuzzy
+#| msgid "Фильтры"
+msgid "Фильтровать"
 msgstr "Filters"
 
 #: catalogue/templates/catalog/base_list.html:219
