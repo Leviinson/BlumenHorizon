@@ -419,6 +419,7 @@ CACHEOPS = {
     "sites.site": {"ops": "all", "timeout": 60 * 15},
     "extended_contrib_models.extendedsite": {"ops": "all", "timeout": 60 * 15},
     "*.*": {"timeout": 60 * 15},
+    "extended_contrib_models.filial": {"ops": "all", "timeout": 60 * 15},
 }
 
 # Celery
