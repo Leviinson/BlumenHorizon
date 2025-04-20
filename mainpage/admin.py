@@ -1,6 +1,8 @@
 from django.contrib import admin
 from modeltranslation.admin import TranslationAdmin
 
+from extended_contrib_models.models import Filial
+
 from .models import (
     AboutUsPageModel,
     AGBPageModel,
@@ -122,4 +124,10 @@ class ReturnPolicyPageModelAdmin(TranslationAdmin):
         "meta_tags",
         "description",
     ]
+    list_display = ["__str__"]
+
+
+@admin.register(Filial)
+class FilialModelAdmin(TranslationAdmin):
+    fields = ["title", "url"]
     list_display = ["__str__"]

@@ -4,6 +4,7 @@ from django.conf import settings
 from django.utils.translation import get_language
 
 from core.services.repositories import SiteRepository
+from extended_contrib_models.models import Filial
 
 
 class CommonContextMixin:
@@ -22,6 +23,7 @@ class CommonContextMixin:
         context["socials_right_bottom"] = SiteRepository.get_socials()
         context["MEDIA_URL"] = settings.MEDIA_URL
         context["alert"] = SiteRepository.get_alert_message()
+        context["filials"] = Filial.objects.only("title", "url").order_by("title").all()
         return context
 
 
