@@ -117,6 +117,29 @@ class Social(models.Model):
         }
 
 
+class Filial(models.Model):
+    extended_site = models.ForeignKey(
+        ExtendedSite,
+        default=1,
+        on_delete=models.PROTECT,
+        related_name="filials",
+    )
+    title = models.CharField(
+        max_length=60, verbose_name="Название “Город/Страна”", help_text="ISO"
+    )
+    url = models.URLField("Ссылка на филиал")
+
+    class Meta:
+        verbose_name = "Филиал"
+        verbose_name_plural = "Филиалы"
+
+    def to_dict(self):
+        return {"url": self.url, "title": self.title}
+
+    def __str__(self) -> str:
+        return self.title
+
+
 @receiver(post_save, sender=Site)
 def create_extended_site(sender, instance, created, **kwargs):
     """
