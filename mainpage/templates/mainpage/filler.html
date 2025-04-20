@@ -25,6 +25,22 @@
     <div class="mt-5">
         {{ description|safe }}
     </div>
+    {% if filials %}
+        <div>
+            {% blocktranslate %}
+            <p>
+                Цветочный магазин BlumenHorizon имеет филиалы и в других городах Европы.
+                Ниже представлен список наших городских сайтов, где вы можете заказать цветы с доставкой.
+                Каждый филиал предоставляет обслуживание с тем же качеством и сервисом.
+            </p>
+            {% endblocktranslate %}
+            <ul>
+                {% for filial in filials %}
+                <li><a href="{{ filial.url }}">{{ filial.title }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
 </div>
 {% endblock %}
 
