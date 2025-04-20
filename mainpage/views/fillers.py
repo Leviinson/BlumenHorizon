@@ -1,8 +1,9 @@
 from django.urls import reverse_lazy
 from django.views.generic.base import TemplateView
 
-from core.services.mixins import CommonContextMixin
+from core.services.mixins import CanonicalsContextMixin, CommonContextMixin
 from core.services.mixins.canonicals import CanonicalLinksMixin
+from extended_contrib_models.models import Filial
 
 from ..models import (
     AboutUsPageModel,
@@ -26,11 +27,11 @@ class FillerViewMixin:
     page_model: (
         AboutUsPageModel | DeliveryPageModel | ContactsPageModel | FAQPageModel
     ) = None
-    url = None
+    relative_url: str = None
 
     def get_context_data(self, *args, **kwargs):
-        if not any((self.page_model, self.url)):
-            raise AttributeError("Attributes “page_model” or “url” are not specified.")
+        if not self.page_model:
+            raise NotImplementedError("Attribute “page_model” must be specified.")
 
         context = super().get_context_data(*args, **kwargs)
         page = self.page_model.objects.first()
@@ -38,61 +39,65 @@ class FillerViewMixin:
         context["meta_tags"] = page.meta_tags
         context["image_url"] = page.image.url
         context["image_alt"] = page.image_alt
-        context["url"] = self.url
         return context
-
-    @property
-    def relative_url(self):
-        return self.url
 
 
 class AboutUsView(
     FillerViewMixin,
     CommonContextMixin,
-    TemplateView,
+    CanonicalsContextMixin,
     CanonicalLinksMixin,
+    TemplateView,
 ):
     """
     Контроллер который показывает страницу «О нас»
     """
 
     page_model = AboutUsPageModel
-    url = reverse_lazy("mainpage:about")
+    relative_url = reverse_lazy("mainpage:about")
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context["show_filials"] = True
+        return context
 
 
 class AboutDeliveryView(
     FillerViewMixin,
     CommonContextMixin,
-    TemplateView,
+    CanonicalsContextMixin,
     CanonicalLinksMixin,
+    TemplateView,
 ):
     """
     Контроллер который показывает страницу «Доставка»
     """
 
     page_model = DeliveryPageModel
-    url = reverse_lazy("mainpage:delivery")
+    relative_url = reverse_lazy("mainpage:delivery")
 
 
 class ContactUsView(
     FillerViewMixin,
     CommonContextMixin,
-    TemplateView,
+    CanonicalsContextMixin,
     CanonicalLinksMixin,
+    TemplateView,
 ):
     """
     Контроллер который показывает страницу «Контакты»
     """
 
     page_model = ContactsPageModel
-    url = reverse_lazy("mainpage:contact")
+    relative_url = reverse_lazy("mainpage:contact")
 
 
 class FAQView(
     FillerViewMixin,
     CommonContextMixin,
-    TemplateView,
+    CanonicalsContextMixin,
     CanonicalLinksMixin,
+    TemplateView,
 ):
     """
     Контроллер который показывает страницу «Часто задаваемые вопросы».
@@ -102,4 +107,4 @@ class FAQView(
     """
 
     page_model = FAQPageModel
-    url = reverse_lazy("mainpage:faq")
+    relative_url = reverse_lazy("mainpage:faq")
