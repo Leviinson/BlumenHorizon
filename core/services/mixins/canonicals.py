@@ -10,6 +10,12 @@ from ..types import AlternateLink, AvailableLanguage, CanonicalLink, XDefaultLin
 
 
 class CanonicalLinksMixin(CanonicalLinksAbstract):
+
+    def get_context_data(self, *args, **kwargs):
+        if not self.relative_url:
+            raise NotImplementedError("Attribute “relative_url” must be specified.")
+        return super().get_context_data(*args, **kwargs)
+
     def get_canonical_link(self, current_lang_code: str) -> CanonicalLink:
         """
         Генерирует canonical ссылку для каталога.
