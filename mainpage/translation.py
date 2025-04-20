@@ -1,5 +1,7 @@
 from modeltranslation.translator import TranslationOptions, register
 
+from extended_contrib_models.models import Filial
+
 from .models import (
     AboutUsPageModel,
     AGBPageModel,
@@ -110,3 +112,8 @@ class ReturnPolicyPageModelTranslationOptions(TranslationOptions):
         "meta_tags",
         "description",
     )
+
+
+@register(Filial)
+class FilialModelTranslationOptions(TranslationOptions):
+    fields = ("title", "url")

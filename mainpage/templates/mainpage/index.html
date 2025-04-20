@@ -3,6 +3,7 @@
 {% load i18n %}
 {% load chunk_filters %}
 
+
 {% block localization_meta_tags %}
     <link rel="{{ canonical_link.rel }}" href="{{ canonical_link.href }}">
     {% for alternate_link in alternate_links %}
@@ -12,20 +13,25 @@
 {% endblock %}
 
 {% block json_ld %}
+{% get_available_languages as LANGUAGES  %}
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "OnlineStore",
+    "@id": "https://{{ domain_name }}",
     "name": "{{ site_name }}",
-    "legalName": "{{ site_name }}",
     "logo": "https://{{ domain_name }}{% static 'defaults/logo.png' %}",
-    "slogan": "Empowering individuals, delighting the chosen",
     "description": "{{ json_ld_description }}",
+    "hasMerchantReturnPolicy": {
+              "@type": "MerchantReturnPolicy",
+              "applicableCountry": "{{ country_code|upper }}",
+              "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"
+            },
     "contactPoint": {
       "@type": "ContactPoint",
       "email": "{{ company_email }}",
       "contactType": "Customer Service",
-      "areaServed": "EU",
+      "areaServed": "DE",
       "availableLanguage": [{% for lang_code, lang_name in LANGUAGES %}"{{ lang_code }}"{% if not forloop.last %},{% endif %}{% endfor %}]
     },
     "sameAs": [
