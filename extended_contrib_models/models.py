@@ -48,6 +48,7 @@ class ExtendedSite(models.Model):
         max_length=50,
         default="service@blumenhorizon.de",
     )
+    parent_organization_url = models.URLField("Ссылка на родительскую организацию")
 
     def __str__(self):
         """
