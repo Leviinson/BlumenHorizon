@@ -33,6 +33,7 @@ class ExtendedSiteAdmin(TranslationAdmin):
         "city",
         "email",
         "header_alert_message",
+        "parent_organization_url",
     )
     search_fields = (
         "site__domain",
