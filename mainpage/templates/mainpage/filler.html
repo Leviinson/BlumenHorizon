@@ -17,7 +17,7 @@
                 "@type": "MerchantReturnPolicy",
                 "applicableCountry": "{{ country_code|upper }}",
                 "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"
-              },
+            },
             "contactPoint": {
                 "@type": "ContactPoint",
                 "email": "{{ company_email }}",
@@ -31,9 +31,9 @@
                 {% endfor %}
             ],
             "parentOrganization": {
-                    "@type": "OnlineStore",
-                    "@id": "{{ parent_organization_url }}#flowershop"
-                }
+                "@type": "OnlineStore",
+                "@id": "{{ parent_organization_url }}#flowershop"
+            }
         }
     {% endif %}
 </script>
