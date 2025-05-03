@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-04-21 01:51+0200\n"
-"PO-Revision-Date: 2025-05-01 13:19+0200\n"
+"PO-Revision-Date: 2025-05-03 20:29+0200\n"
 "Last-Translator: Vitalii Melnykov <blumenhorizon@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -145,6 +145,8 @@ msgstr "Шановний користувач,"
 #: accounts/templates/accounts/email_confirmation/email_body.html:29
 msgid "Пожалуйста, нажмите на ссылку ниже чтобы подтвердить Вашу почту."
 msgstr ""
+"Будь ласка, натисніть на посилання нижче, щоб підтвердити свою електронну "
+"пошту."
 
 #: accounts/templates/accounts/email_confirmation/email_body.html:34
 #| msgid "Добавить отзыв"
@@ -224,7 +226,7 @@ msgstr "В обробці"
 
 #: cart/models.py:186
 msgid "Возврат"
-msgstr ""
+msgstr "Повернення"
 
 #: cart/models.py:187
 msgid "Ожидание оплаты"
@@ -1085,7 +1087,7 @@ msgstr "Часті питання"
 
 #: core/staticfiles/templates/footer.html:70
 msgid "Другие филиалы"
-msgstr ""
+msgstr "Інші філії"
 
 #: core/staticfiles/templates/header.html:19
 msgid "Главная"
