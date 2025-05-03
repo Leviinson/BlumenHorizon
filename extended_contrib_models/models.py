@@ -42,7 +42,7 @@ class ExtendedSite(models.Model):
         null=True,
         blank=True,
     )
-    parent_organization_url = models.URLField(name="Ссылка на родительскую организацию")
+    parent_organization_url = models.URLField(verbose_name="Ссылка на родительскую организацию")
 
     email = models.CharField(
         "Email компании",
