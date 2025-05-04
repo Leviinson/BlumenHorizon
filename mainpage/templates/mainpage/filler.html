@@ -30,15 +30,10 @@
                     "{{ social.absolute_url }}"{% if not forloop.last %},{% endif %}
                 {% endfor %}
             ],
-            "subOrganization": [
-                {% for filial in filials %}
-                {
-                    "@type": "OnlineStore",
-                    "@id": "{{ filial.url}}"
-                }{% if not forloop.last %},{% endif %}
-                {% endfor %}
-            ]
-
+            "parentOrganization": {
+                "@type": "OnlineStore",
+                "@id": "{{ parent_organization_url }}",
+            }
         }
     {% endif %}
 </script>

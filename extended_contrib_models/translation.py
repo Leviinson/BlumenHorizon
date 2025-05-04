@@ -9,4 +9,5 @@ class SiteExtensionsTranslationOptions(TranslationOptions):
         "country",
         "city",
         "header_alert_message",
+        "parent_organization_url",
     )
