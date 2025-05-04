@@ -110,11 +110,6 @@ else:
         f'https://{os.getenv("DOMAIN")}',
     ]
 
-if not DEBUG:
-    CACHE_MIDDLEWARE_KEY_PREFIX = "europe:"
-else:
-    FORCE_SCRIPT_NAME = None
-    CACHE_MIDDLEWARE_KEY_PREFIX = None
 
 # Application definition
 
@@ -412,6 +407,7 @@ CACHES = {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
             "SERIALIZER": "django_redis.serializers.json.JSONSerializer",
         },
+        "KEY_PREFIX": "globally",
     }
 }
 
