@@ -3,7 +3,7 @@ from django.views.generic.base import TemplateView
 
 from core.services.mixins import CanonicalsContextMixin, CommonContextMixin
 from core.services.mixins.canonicals import CanonicalLinksMixin
-from extended_contrib_models.models import Filial
+from extended_contrib_models.models import ExtendedSite, Filial
 
 from ..models import (
     AboutUsPageModel,
@@ -65,7 +65,11 @@ class AboutUsView(
             .first()
             .json_ld_description
         )
-        context["filials"] = Filial.objects.only("url").all()
+        context["parent_organization_url"] = (
+            ExtendedSite.objects.only("parent_organization_url")
+            .first()
+            .parent_organization_url
+        )
         return context
 
 
