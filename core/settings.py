@@ -416,7 +416,7 @@ CACHES = {
 }
 
 CACHEOPS_REDIS = os.getenv("CACHEOPS_REDIS")
-CACHEOPS_PREFIX = lambda _: "prefix"
+CACHEOPS_PREFIX = lambda _: "paris:"
 CACHEOPS = {
     "sites.site": {"ops": "all", "timeout": 60 * 15},
     "extended_contrib_models.extendedsite": {"ops": "all", "timeout": 60 * 15},
